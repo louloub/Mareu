@@ -8,106 +8,72 @@
     tools:context=".view.ui.CreateMeetingActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/appBarLayout_abl_AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_tb_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
+    <!-- TODO : utiliser chips dans textinputlayout pour les mails -->
+    <!-- TODO : convention de nomage prendre exemple sur TEXTIPNUTLAYOUT en dessous (theme_abreviation_nom) -->
+    <!-- 0dp = pour dire que ce sont les contraintes qui vont définir la taille du L -->
+
+    <!-- START SUBJECT -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/create_meeting_til_subject"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.771" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_abl_AppBarLayout">
 
-    <EditText
-        android:id="@+id/meeting_subject"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/subject"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- END SUBJECT -->
+
+    <!-- START PARTICIPANT -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/create_meeting_til_listOfParticipant"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_subject">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/participant"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- END PARTICIPANT -->
+
+    <CalendarView
+        android:id="@+id/chooseDate_cv_calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="@string/subject"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="77dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_subject"/>
 
-    <EditText
-        android:id="@+id/email_adresse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:text="@string/adresse_email"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="137dp" />
-
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date"
-        android:text="@string/date"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="199dp" />
-
-    <EditText
-        android:id="@+id/hour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time"
-        android:text="@string/heure"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="257dp" />
-
-    <TextView
-        android:id="@+id/tv_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sujet_de_la_reunion"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="79dp" />
-
-    <TextView
-        android:id="@+id/tv_email_adresse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/adresse_email"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="140dp" />
-
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/date"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="201dp" />
-
-    <TextView
-        android:id="@+id/tv_hour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Heure"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="262dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
