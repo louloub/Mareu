@@ -18,7 +18,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
+        floatingButton();
+    }
 
+    public void launchCreateMeeting() {
+        Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivityJava.class);
+        startActivity(intent);
+    }
+
+    public void floatingButton(){
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,10 +34,5 @@ public class MainActivity extends AppCompatActivity {
                 launchCreateMeeting();
             }
         });
-    }
-
-    public void launchCreateMeeting() {
-        Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
-        startActivity(intent);
     }
 }
