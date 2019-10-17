@@ -6,6 +6,5 @@
         android:id="@+id/action_settings"
         android:title="action_settings"
         android:icon="@drawable/ic_filter_list_white_24dp"
-        app:showAsAction="ifRoom">
-    </item>
+        app:showAsAction="ifRoom"></item>
 </menu>

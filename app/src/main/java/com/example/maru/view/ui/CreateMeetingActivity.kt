@@ -1,15 +1,15 @@
 package com.example.maru.view.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
+import androidx.appcompat.app.AppCompatActivity
 import com.example.maru.R
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_create_meeting.*
 
-class CreateMeetingActivity2 : AppCompatActivity() {
+class CreateMeetingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,12 +19,12 @@ class CreateMeetingActivity2 : AppCompatActivity() {
 
         /*
         * Listening to text changes in the TextInputEditext field and generate new chip on entering a comma */
-        create_meeting_teit_listOfParticipant.addTextChangedListener(object: TextWatcher {
+        create_meeting_teit_listOfParticipant.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable?) {
                 val trimmed = s.toString().trim { it <= ' ' }
                 if (trimmed.length > 1 && trimmed.endsWith(",")) {
-                    val chip = Chip(this@CreateMeetingActivity2)
+                    val chip = Chip(this@CreateMeetingActivity)
                     chip.text = trimmed.substring(0, trimmed.length - 1)
                     chip.isCloseIconVisible = true
                     chip.setOnCloseIconClickListener {
