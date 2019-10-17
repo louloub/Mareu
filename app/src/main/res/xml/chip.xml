@@ -6,4 +6,5 @@
     app:chipBackgroundColor="@color/colorAccent"
     app:chipIcon="@drawable/ic_email_bleue_24dp"
     app:closeIconEnabled="true"
-    app:closeIconTint="@android:color/white" />
+    app:closeIconTint="@android:color/white"
+    />

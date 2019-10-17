@@ -26,9 +26,7 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- TODO : utiliser chips dans textinputlayout pour les mails -->
-    <!-- TODO : convention de nomage prendre exemple sur TEXTIPNUTLAYOUT en dessous (theme_abreviation_nom) -->
-    <!-- 0dp = pour dire que ce sont les contraintes qui vont définir la taille du L -->
+    <!-- TODO : 0dp = pour dire que ce sont les contraintes qui vont définir la taille du L -->
 
     <!-- START SUBJECT -->
     <com.google.android.material.textfield.TextInputLayout
@@ -59,11 +57,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_subject">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <HorizontalScrollView
+            android:id="@+id/horizontal_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/participant"/>
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="503dp">
+
+                <!--ChipGroup to hold multiple CreateChips and help in removal by getting child elements-->
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/create_meeting_teit_listOfParticipant"
+                    app:layout_constraintEnd_toStartOf="@+id/create_meeting_teit_listOfParticipant"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/create_meeting_teit_listOfParticipant" />
+
+                <!--Entering chip generation text and using commas to detect when a new chip is to be generated-->
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_meeting_teit_listOfParticipant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/participant"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chipGroup"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </HorizontalScrollView>
+
     </com.google.android.material.textfield.TextInputLayout>
     <!-- END PARTICIPANT -->
 

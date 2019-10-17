@@ -16,19 +16,24 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class CreateMeetingActivity extends AppCompatActivity {
 
+    // int SpannedLength = 0,chipLength = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
-        chip();
+        // chip();
     }
 
-    public void chip () {
+    /*public void chip () {
 
-        final int SpannedLength = 0,chipLength = 4;
-        TextInputEditText Participant = findViewById(R.id.create_meeting_tiet_subject);
+        // int SpannedLength = 0,chipLength = 4;
+        TextInputEditText Participant = findViewById(R.id.create_meeting_teit_listOfParticipant);
+
+        // AppCompatEditText Participant = findViewById(R.id.create_meeting_teit_listOfParticipant);
+
 
         Participant.addTextChangedListener(new TextWatcher() {
             @Override
@@ -38,26 +43,27 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                /*if (charSequence.length() == SpannedLength - chipLength)
+                *//*if (charSequence.length() == SpannedLength - chipLength)
                 {
                     SpannedLength = charSequence.length();
-                }*/
+                }*//*
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if(editable.length() - SpannedLength == chipLength) {
+                *//*if(editable.length() - SpannedLength == chipLength) {
                     ChipDrawable chip = ChipDrawable.createFromResource(getApplicationContext(), R.xml.chip );
 
-                    // ChipDrawable chip = ChipDrawable.createFromResource(getContext(), R.value.chip);
-                    /*chip.setChipText(editable.subSequence(SpannedLength,editable.length()));
+                    // chip.setChip(editable.subSequence(SpannedLength,editable.length()));
+
+                    // chip.setChipText(editable.subSequence(SpannedLength,editable.length()));
                     chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
                     ImageSpan span = new ImageSpan(chip);
                     editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    SpannedLength = editable.length();*/
-                }
+                    SpannedLength = editable.length();
+                }*//*
             }
         });
-    }
+    }*/
 }
