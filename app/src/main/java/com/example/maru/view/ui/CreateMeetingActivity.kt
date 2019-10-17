@@ -17,8 +17,6 @@ class CreateMeetingActivity : AppCompatActivity() {
         horizontal_scroll_view.background = create_meeting_teit_listOfParticipant.background
         create_meeting_teit_listOfParticipant.background = null
 
-        /*
-        * Listening to text changes in the TextInputEditext field and generate new chip on entering a comma *//*
         create_meeting_teit_listOfParticipant.addTextChangedListener(object : TextWatcher {
 
             override fun afterTextChanged(s: Editable?) {
@@ -42,8 +40,6 @@ class CreateMeetingActivity : AppCompatActivity() {
             }
         })
 
-        *//*
-        * Deleting chips on pressing backspace on kepad*//*
         create_meeting_teit_listOfParticipant.setOnKeyListener { _, _, event ->
             if (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL) {
                 if (create_meeting_teit_listOfParticipant.length() == 0 && chipGroup.childCount > 0) {
@@ -52,6 +48,6 @@ class CreateMeetingActivity : AppCompatActivity() {
                 }
             }
             false
-        }*/
+        }
     }
 }
