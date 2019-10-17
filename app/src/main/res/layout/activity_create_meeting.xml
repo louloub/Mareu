@@ -98,6 +98,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     <!-- END PARTICIPANT -->
 
+    <!-- START CALENDAR  -->
     <CalendarView
         android:id="@+id/chooseDate_cv_calendarView"
         android:layout_width="wrap_content"
@@ -106,5 +107,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_subject" />
+    <!-- END CALENDAR  -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

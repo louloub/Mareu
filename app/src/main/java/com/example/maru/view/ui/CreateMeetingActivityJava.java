@@ -2,25 +2,42 @@ package com.example.maru.view.ui;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.widget.HorizontalScrollView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.maru.R;
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.textfield.TextInputEditText;
 
-import kotlin.text.StringsKt;
-
 public class CreateMeetingActivityJava extends AppCompatActivity {
+
+    final TextInputEditText textInputEditText = findViewById(R.id.create_meeting_teit_listOfParticipant);
+    private int SpannedLength = 0,chipLength = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
+        retrieveXML();
+        chipsForParticipant();
+    }
+
+    public void retrieveXML(){
+
         HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
-        TextInputEditText textInputEditText = findViewById(R.id.create_meeting_teit_listOfParticipant);
+
         horizontalScrollView.setBackground(textInputEditText.getBackground());
+
         TextInputEditText textInputEditText1 = findViewById(R.id.create_meeting_teit_listOfParticipant);
         textInputEditText1.setBackground(null);
+
+        ChipDrawable chipDrawable = ChipDrawable.createFromResource(getApplicationContext(), R.xml.chip);
+        chipDrawable.setBounds(0,0,chipDrawable.getIntrinsicHeight(),chipDrawable.getIntrinsicHeight());
+    }
+
+    public void chipsForParticipant(){
         textInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -28,41 +45,27 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                if (charSequence.length() == SpannedLength - chipLength)
+                {
+                    SpannedLength = charSequence.length();
+                }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                String retrievedText = s.toString();
-                CharSequence retrievedTextCharSequence = retrievedText;
-                int startIndex = 0;
-                int endIndex = retrievedTextCharSequence.length()-1;
-                boolean startFound = false;
+            public void afterTextChanged(Editable editable) {
 
-                while(startIndex <= endIndex){
-                    int index = !startFound ? startIndex : endIndex;
-                    char it = retrievedTextCharSequence.charAt(index);
-                    boolean var = false;
-                    boolean match = it <= ' ';
-                    if (!startFound) {
-                        if (!match) {
-                            startFound = true;
-                        } else {
-                            ++startIndex;
-                        }
-                    } else {
-                        if (!match) {
-                            break;
-                        }
-                        --endIndex;
-                    }
+                if (editable.length() - SpannedLength == chipLength) {
+                    ChipDrawable chip = ChipDrawable.createFromResource(getApplicationContext(), R.xml.chip);
+                    chip.setChipText(editable.subSequence(SpannedLength,editable.length()));
+                    chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+                    ImageSpan span = new ImageSpan(chip);
+
+                    // Editable editable = textInputEditText.getText();
+
+                    editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    SpannedLength = editable.length();
                 }
-                Object object = null;
-                String trimmed = retrievedTextCharSequence.subSequence(startIndex,endIndex+1).toString();
-                /*if (trimmed.length() > 1 && StringsKt.endsWith(trimmed, ",", false,2,object)){
-
-                }*/
             }
         });
     }

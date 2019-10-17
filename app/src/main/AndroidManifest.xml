@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.ui.CreateMeetingActivity"></activity>
-        <activity android:name=".view.ui.CreateMeetingActivityJava"></activity>
 
         <activity
             android:name=".view.ui.MainActivity"
