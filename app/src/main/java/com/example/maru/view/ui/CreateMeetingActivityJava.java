@@ -62,6 +62,15 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
+                if (editable.toString().contains(",")){
+                    ChipDrawable chip = ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip);
+                    // chip.setChipText(editable.subSequence(SpannedLength,editable.length()));
+                    chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+                    ImageSpan span = new ImageSpan(chip);
+                    editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    SpannedLength = editable.length();
+                }
+
                 if (textInputEditText.getText().toString().contains(",")){
                     ChipDrawable chip = ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip);
                     // chip.setChipText(editable.subSequence(SpannedLength,editable.length()));

@@ -2,6 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:checkable="false"
-    app:chipIcon="@drawable/abc_vector_test"
+    app:chipIcon="@drawable/ic_email_bleue_24dp"
     app:iconStartPadding="5dp"
     style="@style/Widget.MaterialComponents.Chip.Entry"/>
