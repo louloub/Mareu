@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <chip
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:textAppearance="@style/ChipTextApperance"
-    app:chipBackgroundColor="@color/colorAccent"
-    app:chipIcon="@drawable/ic_email_bleue_24dp"
-    app:closeIconEnabled="true"
-    app:closeIconTint="@android:color/white" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:checkable="false"
+    app:chipIcon="@drawable/abc_vector_test"
+    app:iconStartPadding="5dp"
+    style="@style/Widget.MaterialComponents.Chip.Entry"/>

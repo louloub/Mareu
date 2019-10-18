@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.example.maru.R;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CreateMeetingActivityJava extends AppCompatActivity {
 
     private int SpannedLength = 0,chipLength = 4;
+    Context context = getBaseContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +36,15 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
         HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
         horizontalScrollView.setBackground(textInputEditText.getBackground());
 
-        TextInputEditText textInputEditText1 = findViewById(R.id.create_meeting_teit_listOfParticipant);
-        textInputEditText1.setBackground(null);
+        // TextInputEditText textInputEditText1 = findViewById(R.id.create_meeting_teit_listOfParticipant);
+        textInputEditText.setBackground(null);
 
         /*
         ChipDrawable chipDrawable = ChipDrawable.createFromResource(this.getBaseContext(), R.xml.chip);
         chipDrawable.setBounds(0,0,chipDrawable.getIntrinsicHeight(),chipDrawable.getIntrinsicHeight());*/
     }
 
-    public void chipsForParticipant(TextInputEditText textInputEditText){
+    public void chipsForParticipant(final TextInputEditText textInputEditText){
         textInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,16 +62,14 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-
-                /*if (editable.length() - SpannedLength == chipLength) {
-
-                    ChipDrawable chip = ChipDrawable.createFromResource(getApplicationContext(), R.xml.chip);
+                if (textInputEditText.getText().toString().contains(",")){
+                    ChipDrawable chip = ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip);
                     // chip.setChipText(editable.subSequence(SpannedLength,editable.length()));
                     chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
                     ImageSpan span = new ImageSpan(chip);
                     editable.setSpan(span, SpannedLength, editable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     SpannedLength = editable.length();
-                }*/
+                }
             }
         });
     }
