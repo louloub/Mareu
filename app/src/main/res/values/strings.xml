@@ -7,4 +7,5 @@
     <string name="date">Date</string>
     <string name="heure">Heure</string>
     <string name="room">Numéro de salle</string>
+    <string name="Salle">Salle</string>
 </resources>

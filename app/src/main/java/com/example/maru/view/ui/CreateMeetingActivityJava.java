@@ -1,5 +1,7 @@
 package com.example.maru.view.ui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -202,22 +204,19 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     public void roomOfMeeting(Spinner roomOfMeeting){
 
-        // Spinner click listener
-        // roomOfMeeting.setOnItemSelectedListener();
-
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view,
-                                       int position, long id) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
-                if (item != null) {
-                    Toast.makeText(CreateMeetingActivityJava.this, item.toString(),
-                            Toast.LENGTH_SHORT).show();
+                if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
+                    /*Toast.makeText(CreateMeetingActivityJava.this, item.toString(),
+                            Toast.LENGTH_SHORT).show();*/
+                    /*Toast.makeText(CreateMeetingActivityJava.this, "Salle numéro " +item.toString()+ " sélectionnée" ,
+                            Toast.LENGTH_SHORT).show();*/
                 }
-                Toast.makeText(CreateMeetingActivityJava.this, "Selected",
-                        Toast.LENGTH_SHORT).show();
-
+                /*Toast.makeText(CreateMeetingActivityJava.this, "Salle numéro " +item.toString()+ " sélectionnée" ,
+                        Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
@@ -250,6 +249,22 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         roomOfMeeting.setAdapter(dataAdapter);
     }
 
+    // check if activity is launch for the first time for TOAST in "roomOfMeeting" method
+    public static class MyPreferencesFirstLaunch {
+
+        private static final String MY_PREFERENCES = "my_preferences";
+
+        public static boolean isFirst(Context context){
+            final SharedPreferences reader = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+            final boolean first = reader.getBoolean("is_first", true);
+            if(first){
+                final SharedPreferences.Editor editor = reader.edit();
+                editor.putBoolean("is_first", false);
+                editor.commit();
+            }
+            return first;
+        }
+    }
 
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
@@ -266,6 +281,5 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 }
