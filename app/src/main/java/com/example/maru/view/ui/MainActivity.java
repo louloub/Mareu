@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchCreateMeeting() {
+        // Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
         Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivityJava.class);
+
         startActivity(intent);
     }
 
