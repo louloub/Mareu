@@ -2,14 +2,13 @@ package com.example.maru.view.ui;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.style.ImageSpan;
-import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +17,12 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
-public class CreateMeetingActivityJava extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private int SpannedLength = 0,chipLength = 4;
     private int keycodeEnterPressed = 1;
@@ -30,30 +33,33 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
         retrieveXML();
+        AndroidThreeTen.init(this);
     }
 
     public void retrieveXML(){
-        TextInputEditText textInputEditText = findViewById(R.id.create_meeting_teit_listOfParticipant);
+        TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
+        Spinner roomOfMeeting = findViewById(R.id.create_meeting_spi_room);
         HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
-        horizontalScrollView.setBackground(textInputEditText.getBackground());
-        textInputEditText.setBackground(null);
-        chipsForParticipant(textInputEditText,chipGroup);
-        // whenKeyIsCliqued(textInputEditText);
+        horizontalScrollView.setBackground(listOfParticipant.getBackground());
+        listOfParticipant.setBackground(null);
+        chipsForParticipant(listOfParticipant,chipGroup);
+        // whenKeyIsCliqued(listOfParticipant);
+        roomOfMeeting(roomOfMeeting);
     }
 
-    /*public void whenKeyIsCliqued(final TextInputEditText textInputEditText){
-        textInputEditText.setOnKeyListener(new View.OnKeyListener() {
+    /*public void whenKeyIsCliqued(final TextInputEditText listOfParticipant){
+        listOfParticipant.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_ENTER:
                         keycodeEnterPressed = 1;
-                        // chipsForParticipant(textInputEditText);
+                        // chipsForParticipant(listOfParticipant);
                         return true;
                     case KeyEvent.KEYCODE_DEL:
                         keycodeEnterPressed = 2;
-                        // chipsForParticipant(textInputEditText);
+                        // chipsForParticipant(listOfParticipant);
                         return true;
                     default:
                         return false;
@@ -62,8 +68,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
         });
     }
 */
-    public void chipsForParticipant(final TextInputEditText textInputEditText, final ChipGroup chipGroup){
-        textInputEditText.addTextChangedListener(new TextWatcher() {
+    public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup){
+        listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -79,7 +85,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                /*textInputEditText.setOnKeyListener(new View.OnKeyListener() {
+                /*listOfParticipant.setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
                         switch (keyCode) {
@@ -147,6 +153,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
                     // return chip;
                 }*/
 
+                // CLOSE ICON WORKS AND "," FOR WRITE NEW CHIP
                 if (editable.length() > 1 && editable.toString().endsWith(",")) {
                     final Chip chip = new Chip(CreateMeetingActivityJava.this);
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip));
@@ -191,5 +198,74 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
                 }*/
             }
         });
+    }
+
+    public void roomOfMeeting(Spinner roomOfMeeting){
+
+        // Spinner click listener
+        // roomOfMeeting.setOnItemSelectedListener();
+
+        roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                Object item = adapterView.getItemAtPosition(position);
+                if (item != null) {
+                    Toast.makeText(CreateMeetingActivityJava.this, item.toString(),
+                            Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(CreateMeetingActivityJava.this, "Selected",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+        // Spinner Drop down elements
+        List<Integer> categories = new ArrayList<Integer>();
+        categories.add(1);
+        categories.add(2);
+        categories.add(3);
+        categories.add(4);
+        categories.add(5);
+        categories.add(6);
+        categories.add(7);
+        categories.add(8);
+        categories.add(9);
+        categories.add(10);
+
+        // Creating adapter for spinner
+        ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        roomOfMeeting.setAdapter(dataAdapter);
+    }
+
+
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
