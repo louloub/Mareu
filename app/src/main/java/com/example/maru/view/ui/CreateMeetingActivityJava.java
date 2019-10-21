@@ -131,7 +131,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
                 }*/
 
                 // CLOSE ICON WORKS BUT BUG WITH WRITE TEXT
-                if (editable.length() > 1 && editable.toString().endsWith(",")) {
+                /*if (editable.length() > 1 && editable.toString().endsWith(",")) {
                     final Chip chip = new Chip(CreateMeetingActivityJava.this);
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip));
                     int paddingDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
@@ -144,6 +144,23 @@ public class CreateMeetingActivityJava extends AppCompatActivity {
                         }
                     });
                     chipGroup.addView(chip);
+                    // return chip;
+                }*/
+
+                if (editable.length() > 1 && editable.toString().endsWith(",")) {
+                    final Chip chip = new Chip(CreateMeetingActivityJava.this);
+                    chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip));
+                    // int paddingDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+                    // chip.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
+                    chip.setText(editable.subSequence(SpannedLength,editable.length()-1));
+                    chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            chipGroup.removeView(chip);
+                        }
+                    });
+                    chipGroup.addView(chip);
+                    editable.clear();
                     // return chip;
                 }
 
