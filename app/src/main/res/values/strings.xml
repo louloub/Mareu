@@ -4,8 +4,8 @@
     <string name="HelloWorld">Hello World!</string>
     <string name="subject">Sujet</string>
     <string name="participant">Participant</string>
-    <string name="date">Date</string>
-    <string name="heure">Heure</string>
+    <string name="heure">Choisir lheure</string>
+    <string name="date">Choisir la date</string>
     <string name="room">Numéro de salle</string>
     <string name="Salle">Salle</string>
 </resources>

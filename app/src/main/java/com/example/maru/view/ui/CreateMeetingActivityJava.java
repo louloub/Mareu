@@ -1,5 +1,6 @@
 package com.example.maru.view.ui;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +10,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
@@ -25,11 +28,7 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -45,6 +44,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         retrieveXML();
         AndroidThreeTen.init(this);
         launchTimerPickerDialog();
+        launchDatePickerDialog();
     }
 
     public void retrieveXML(){
@@ -82,20 +82,50 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     public void launchTimerPickerDialog(){
         final EditText chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
-        final TextView clickOnTextViewForOpenTimePickerDialog = findViewById(R.id.create_meeting_tv_date);
-        clickOnTextViewForOpenTimePickerDialog.setOnClickListener(new View.OnClickListener() {
+        // TODO : change visibilité of "chooseHour" if is empty
+        Button button = findViewById(R.id.create_meeting_bt_hour);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        // TODO : change showing format :
                         chooseHour.setText(hourOfDay + ":" + minutes);
                     }
-                }, 0, 0, false);
+                }, 0, 0, true);
                 timePickerDialog.show();
             }
         });
     }
+
+    public void launchDatePickerDialog(){
+        final EditText chooseDate = findViewById(R.id.create_meeting_et_edit_date);
+        Button button = findViewById(R.id.create_meeting_bt_date);
+
+
+
+        // TODO : change thr first date showing to actual date
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(CreateMeetingActivityJava.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        chooseDate.setText(dayOfMonth + "/" + month + "/" + year );
+                    }
+                }, 0,0,0);
+                datePickerDialog.show();
+            }
+        });
+    }
+
+    /*@Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                context, CreateMeetingActivityJava.this, startYear, starthMonth, startDay);
+
+    }*/
 
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup){
         listOfParticipant.addTextChangedListener(new TextWatcher() {
@@ -275,6 +305,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         // attaching data adapter to spinner
         roomOfMeeting.setAdapter(dataAdapter);
     }
+
+
 
     // check if activity is launch for the first time for TOAST in "roomOfMeeting" method
     public static class MyPreferencesFirstLaunch {
