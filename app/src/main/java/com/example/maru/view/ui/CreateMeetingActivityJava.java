@@ -1,5 +1,6 @@
 package com.example.maru.view.ui;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,8 +9,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +25,11 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -48,6 +56,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         chipsForParticipant(listOfParticipant,chipGroup);
         // whenKeyIsCliqued(listOfParticipant);
         roomOfMeeting(roomOfMeeting);
+        EditText chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
+        choseTimeForMeeting(chooseHour);
     }
 
     /*public void whenKeyIsCliqued(final TextInputEditText listOfParticipant){
@@ -70,6 +80,22 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         });
     }
 */
+
+    public void choseTimeForMeeting(final TextView chooseHour){
+        chooseHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        chooseHour.setText(hourOfDay + ":" + minutes);
+                    }
+                }, 0, 0, false);
+                timePickerDialog.show();
+            }
+        });
+    }
+
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup){
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
@@ -264,10 +290,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             }
             return first;
         }
-    }
-
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
     }
 
     @Override
