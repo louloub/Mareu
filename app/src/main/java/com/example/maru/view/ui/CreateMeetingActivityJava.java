@@ -44,6 +44,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         setContentView(R.layout.activity_create_meeting);
         retrieveXML();
         AndroidThreeTen.init(this);
+        launchTimerPickerDialog();
     }
 
     public void retrieveXML(){
@@ -56,8 +57,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         chipsForParticipant(listOfParticipant,chipGroup);
         // whenKeyIsCliqued(listOfParticipant);
         roomOfMeeting(roomOfMeeting);
-        EditText chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
-        choseTimeForMeeting(chooseHour);
     }
 
     /*public void whenKeyIsCliqued(final TextInputEditText listOfParticipant){
@@ -81,8 +80,10 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 */
 
-    public void choseTimeForMeeting(final TextView chooseHour){
-        chooseHour.setOnClickListener(new View.OnClickListener() {
+    public void launchTimerPickerDialog(){
+        final EditText chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
+        final TextView clickOnTextViewForOpenTimePickerDialog = findViewById(R.id.create_meeting_tv_date);
+        clickOnTextViewForOpenTimePickerDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener() {
