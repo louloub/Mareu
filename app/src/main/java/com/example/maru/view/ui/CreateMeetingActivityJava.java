@@ -29,6 +29,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -102,9 +103,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     public void launchDatePickerDialog(){
         final EditText chooseDate = findViewById(R.id.create_meeting_et_edit_date);
         Button button = findViewById(R.id.create_meeting_bt_date);
-
-
-
         // TODO : change thr first date showing to actual date
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,18 +112,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         chooseDate.setText(dayOfMonth + "/" + month + "/" + year );
                     }
-                }, 0,0,0);
+                }, Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
                 datePickerDialog.show();
             }
         });
     }
-
-    /*@Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                context, CreateMeetingActivityJava.this, startYear, starthMonth, startDay);
-
-    }*/
 
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup){
         listOfParticipant.addTextChangedListener(new TextWatcher() {
