@@ -66,9 +66,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="503dp">
+                android:layout_height="wrap_content">
 
                 <!--ChipGroup to hold multiple CreateChips and help in removal by getting child elements-->
 
@@ -122,8 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/create_meeting_til_listOfParticipant"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/create_meeting_tv_choose_room"
         app:layout_constraintTop_toTopOf="@+id/create_meeting_tv_choose_room" />
@@ -137,27 +134,25 @@
         android:layout_margin="16dp"
         android:text="@string/heure"
         android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/create_meeting_et_edit_hour"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_meeting_tv_choose_room" />
     <!-- END HOUR BUTTON -->
 
-    <!-- START HOUR EDITTEXT -->
-    <EditText
+    <!-- START HOUR TEXTVIEW -->
+    <TextView
         android:id="@+id/create_meeting_et_edit_hour"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:ems="10"
-        android:inputType="datetime"
-        app:layout_constraintBottom_toTopOf="@+id/create_meeting_bt_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/create_meeting_bt_hour"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_meeting_tv_choose_room" />
-    <!-- END HOUR EDITTEXT -->
+        app:layout_constraintTop_toTopOf="@+id/create_meeting_bt_hour" />
+    <!-- END HOUR TEXTVIEW -->
 
     <!-- START BUTTON DATE -->
     <Button
@@ -174,18 +169,17 @@
         app:layout_constraintTop_toBottomOf="@+id/create_meeting_bt_hour" />
     <!-- END BUTTON DATE -->
 
-    <!-- START DATE EDITTEXT -->
-    <EditText
+    <!-- START DATE TEXTVIEW -->
+    <TextView
         android:id="@+id/create_meeting_et_edit_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="datetime"
         android:layout_margin="16dp"
+        android:ems="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/create_meeting_bt_date"
-        app:layout_constraintTop_toBottomOf="@+id/create_meeting_et_edit_hour" />
-    <!-- END DATE EDITTEXT -->
+        app:layout_constraintTop_toTopOf="@+id/create_meeting_bt_date" />
+    <!-- END DATE TEXTVIEW -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

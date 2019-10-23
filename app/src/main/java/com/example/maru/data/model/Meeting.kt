@@ -1,4 +1,4 @@
-package com.example.maru.service.model
+package com.example.maru.data.model
 
 import java.util.*
 

@@ -82,7 +82,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 */
 
     public void launchTimerPickerDialog(){
-        final EditText chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
+        final TextView chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
         // TODO : change visibilité of "chooseHour" if is empty
         Button button = findViewById(R.id.create_meeting_bt_hour);
         button.setOnClickListener(new View.OnClickListener() {
@@ -92,18 +92,17 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                         // TODO : change showing format :
-                        chooseHour.setText(hourOfDay + ":" + minutes);
+                        chooseHour.setText(hourOfDay + "h" + minutes);
                     }
-                }, 0, 0, true);
+                }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
                 timePickerDialog.show();
             }
         });
     }
 
     public void launchDatePickerDialog(){
-        final EditText chooseDate = findViewById(R.id.create_meeting_et_edit_date);
+        final TextView chooseDate = findViewById(R.id.create_meeting_et_edit_date);
         Button button = findViewById(R.id.create_meeting_bt_date);
-        // TODO : change thr first date showing to actual date
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +111,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         chooseDate.setText(dayOfMonth + "/" + month + "/" + year );
                     }
-                }, Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+                }, Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
             }
         });
@@ -132,6 +131,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 }
             }
 
+            // TODO : delete button delete chip
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -296,8 +296,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         // attaching data adapter to spinner
         roomOfMeeting.setAdapter(dataAdapter);
     }
-
-
 
     // check if activity is launch for the first time for TOAST in "roomOfMeeting" method
     public static class MyPreferencesFirstLaunch {
