@@ -91,7 +91,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        // TODO : change showing format :
+                        // TODO : change showing format when it's 12:06 it's show 12:6
+                        // TODO : save selected hour for when want to change hour it's showing previous choice
                         chooseHour.setText(hourOfDay + "h" + minutes);
                     }
                 }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
@@ -109,6 +110,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(CreateMeetingActivityJava.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // TODO : save selected day monthe year for when want to change hour it's showing previous choice
                         chooseDate.setText(dayOfMonth + "/" + month + "/" + year );
                     }
                 }, Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
