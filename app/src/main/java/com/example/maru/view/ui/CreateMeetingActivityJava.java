@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -61,7 +62,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     public void retrieveXMLandLaunchMethod() {
-        // Text Input XML and Method
+        // Text Input XML and Method for subject
+        TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
+        subjectOfMeeting(subjectOfMeeting);
+
+        // Text Input XML and Method for list of participant
         TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
         listOfParticipant.setBackground(null);
 
@@ -81,6 +86,27 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
         onValidMeetingClick(validMeeting);
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+    }
+
+    private void subjectOfMeeting(TextInputEditText subjectOfMeeting) {
+
+        subjectOfMeeting.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                meeting.setSubject(editable.toString());
+            }
+        });
+
     }
 
     // TimerPickerDialog
@@ -187,7 +213,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     });
                     chipGroup.addView(chip);
                     editable.clear();
-                    Log.d(TAG, "listOfParticipant in afterTextChanged = " +listOfParticipantChip );
+                    meeting.setListOfEmailOfParticipant(listOfParticipantChip);
+                    Log.d(TAG, "listOfParticipant in afterTextChanged = " +listOfParticipantChip+ " & meeting =" +meeting );
 
                 } // END OF IF
             } // END OF afterTextChanged
@@ -277,6 +304,9 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 mViewModel.addNewProperty();
+                // for test
+                Log.d(TAG, " meeting = " +meeting );
+
             }
         });
     }
