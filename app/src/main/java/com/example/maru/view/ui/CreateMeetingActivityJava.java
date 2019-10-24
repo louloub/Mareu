@@ -36,6 +36,7 @@ import org.threeten.bp.LocalTime;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     private int SpannedLength = 0, chipLength = 4;
     private MainViewModel mViewModel;
     Meeting meeting = new Meeting();
+    private static final String TAG = "TAG" ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +92,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener() {
-                    private static final String TAG = "TAG" ;
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -134,6 +136,9 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     // Chip For Participant
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
+
+        final List<String> listOfParticipantChip = new ArrayList<>();
+
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -154,24 +159,38 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 // CLOSE ICON WORKS AND "," FOR WRITE NEW CHIP
                 if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n"))) {
                     final Chip chip = new Chip(CreateMeetingActivityJava.this);
-                    List<String> listOfParticipant = new ArrayList<String>();
-
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip));
-                    String participantMailFromChip = (String) editable.subSequence(SpannedLength, editable.length() - 1);
+                    final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(SpannedLength, editable.length() - 1);
+                    chip.setText(charSequenceParticipantMailFromChip);
 
-                    chip.setText(participantMailFromChip);
-                    listOfParticipant.add(participantMailFromChip);
+                    // String str = String.valueOf(editable.subSequence(SpannedLength, editable.length() - 1));
+
+                    listOfParticipantChip.add(listOfParticipantChip.size(),charSequenceParticipantMailFromChip.toString());
 
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             chipGroup.removeView(chip);
+
+                            // TODO : remove participant from listOfParticipantChip when it's delete from ChipGroup
+
+                            /*// int i = indexOf(chip);
+                            int i = Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip);
+                            String str = charSequenceParticipantMailFromChip.toString();
+                            // int j = Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip);
+
+                            listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(str));*/
+
+                            // listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip));
+                            Log.d(TAG, "listOfParticipant in afterTextChanged = " +listOfParticipantChip );
                         }
                     });
                     chipGroup.addView(chip);
                     editable.clear();
-                }
-            }
+                    Log.d(TAG, "listOfParticipant in afterTextChanged = " +listOfParticipantChip );
+
+                } // END OF IF
+            } // END OF afterTextChanged
         });
     }
 
