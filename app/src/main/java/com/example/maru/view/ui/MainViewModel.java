@@ -9,6 +9,9 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.maru.service.model.Meeting;
+import com.example.maru.view.ui.model.PropertyUiModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +19,21 @@ public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
 
-    @NonNull
+    /*@NonNull
     private final AddressDao mAddressDao;
     @NonNull
-    private final PropertyDao mPropertyDao;
+    private final PropertyDao mPropertyDao;*/
 
-    public MainViewModel(@NonNull AddressDao addressDao, @NonNull PropertyDao propertyDao) {
-        mAddressDao = addressDao;
-        mPropertyDao = propertyDao;
+    @NonNull
+    private Meeting mMeeting;
 
-        wireUpMediator();
+    public MainViewModel(@NonNull Meeting meeting) {
+        mMeeting = meeting;
+        // wireUpMediator();
     }
 
-    private void wireUpMediator() {
-        final LiveData<List<Property>> propertiesLiveData = mPropertyDao.getPropertiesLiveData();
+    /*private void wireUpMediator() {
+        final LiveData<List<Meeting>> meetingLiveData = new LiveData<List<Meeting>>;
         final LiveData<List<Address>> addressesLiveData = mAddressDao.getAddressesLiveData();
 
         mUiModelsLiveData.addSource(propertiesLiveData, new Observer<List<Property>>() {
@@ -45,10 +49,10 @@ public class MainViewModel extends ViewModel {
                 mUiModelsLiveData.setValue(combinePropertiesAndAddresses(propertiesLiveData.getValue(), addresses));
             }
         });
-    }
+    }*/
 
-    @Nullable
-    private List<PropertyUiModel> combinePropertiesAndAddresses(@Nullable List<Property> properties, @Nullable List<Address> addresses) {
+    /*@Nullable
+    private List<PropertyUiModel> combinePropertiesAndAddresses(@Nullable List<Meeting> meeting) {
         if (properties == null || addresses == null) {
             return null;
         }
@@ -70,35 +74,37 @@ public class MainViewModel extends ViewModel {
         }
 
         return result;
-    }
+    }*/
 
     LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
 
     void addNewProperty() {
-        new InsertDataAsyncTask(mAddressDao, mPropertyDao).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new InsertDataAsyncTask(mMeeting).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private static class InsertDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @NonNull
-        private final AddressDao mAddressDao;
-        @NonNull
-        private final PropertyDao mPropertyDao;
+        private Meeting mMeeting;
 
-        private InsertDataAsyncTask(@NonNull AddressDao addressDao, @NonNull PropertyDao propertyDao) {
-            mAddressDao = addressDao;
-            mPropertyDao = propertyDao;
+        private InsertDataAsyncTask(@NonNull Meeting meeting) {
+            mMeeting = meeting;
         }
-
 
         @Override
         protected Void doInBackground(Void... voids) {
 
+            /*
+
             long newAddressId = mAddressDao.insertAddress(new Address(Mock.getAddress()));
 
             mPropertyDao.insertProperty(new Property(Mock.getType(), newAddressId));
+
+            return null;
+
+            */
 
             return null;
         }

@@ -180,6 +180,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/create_meeting_bt_date"
         app:layout_constraintTop_toTopOf="@+id/create_meeting_bt_date" />
-    <!-- END DATE TEXTVIEW -->
+
+    <!-- START BUTTON VALID MEETING -->
+
+    <Button
+        android:id="@+id/create_meeting_bt_valid_meeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/valider_ma_reunion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_bt_date" />
+    <!-- END BUTTON VALID MEETING -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

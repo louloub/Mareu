@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,8 +20,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maru.R;
+import com.example.maru.service.model.Meeting;
+import com.example.maru.view.ViewModelFactory;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -30,35 +34,53 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private int SpannedLength = 0, chipLength = 4;
+    private MainViewModel mViewModel;
+    Meeting meeting = new Meeting();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
-        retrieveXML();
+        retrieveXMLandLaunchMethod();
         AndroidThreeTen.init(this);
         launchTimerPickerDialog();
         launchDatePickerDialog();
     }
 
-    public void retrieveXML() {
+    public void retrieveXMLandLaunchMethod() {
+        // Text Input XML and Method
         TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
-        Spinner roomOfMeeting = findViewById(R.id.create_meeting_spi_room);
-        HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
-        ChipGroup chipGroup = findViewById(R.id.chipGroup);
-        horizontalScrollView.setBackground(listOfParticipant.getBackground());
         listOfParticipant.setBackground(null);
-        chipsForParticipant(listOfParticipant, chipGroup);
+
+        // Spinner for room
+        Spinner roomOfMeeting = findViewById(R.id.create_meeting_spi_room);
         roomOfMeeting(roomOfMeeting);
+
+        // ScrollView for Chip
+        HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
+        horizontalScrollView.setBackground(listOfParticipant.getBackground());
+
+        // Chip & ChipGroup
+        ChipGroup chipGroup = findViewById(R.id.chipGroup);
+        chipsForParticipant(listOfParticipant, chipGroup);
+
+        // Button for valid meeting & method
+        Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
+        onValidMeetingClick(validMeeting);
+        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
+    // TimerPickerDialog
     public void launchTimerPickerDialog() {
         final TextView chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
         // TODO : change visibilité of "chooseHour" if is empty
@@ -67,10 +89,16 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener() {
+                    private static final String TAG = "TAG" ;
+
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
                         // TODO : save selected hour for when want to change hour it's showing previous choice
                         chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
+                        String hourInString = String.valueOf(hourOfDay);
+                        String minutesInString = String.valueOf(minutes);
+                        String hour = hourInString+ "h" +minutesInString;
+                        meeting.setHour(hour);
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
                 timePickerDialog.show();
@@ -79,6 +107,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         });
     }
 
+    // DatePickerDialo
     public void launchDatePickerDialog() {
         final TextView chooseDate = findViewById(R.id.create_meeting_et_edit_date);
         Button button = findViewById(R.id.create_meeting_bt_date);
@@ -90,6 +119,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         // TODO : save selected day month year for when want to change hour it's showing previous choice
                         chooseDate.setText(dayOfMonth + "/" + month + "/" + year);
+                        String yearInString = String.valueOf(year);
+                        String monthInString = String.valueOf(month);
+                        String dayInString = String.valueOf(dayOfMonth);
+                        String date = yearInString+ "/" +monthInString+ "/" +dayInString;
+                        meeting.setDate(date);
                     }
                 }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.show();
@@ -98,6 +132,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         });
     }
 
+    // Chip For Participant
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
@@ -119,10 +154,14 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 // CLOSE ICON WORKS AND "," FOR WRITE NEW CHIP
                 if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n"))) {
                     final Chip chip = new Chip(CreateMeetingActivityJava.this);
+                    List<String> listOfParticipant = new ArrayList<String>();
+
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip));
-                    // int paddingDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
-                    // chip.setPadding(paddingDp, paddingDp, paddingDp, paddingDp);
-                    chip.setText(editable.subSequence(SpannedLength, editable.length() - 1));
+                    String participantMailFromChip = (String) editable.subSequence(SpannedLength, editable.length() - 1);
+
+                    chip.setText(participantMailFromChip);
+                    listOfParticipant.add(participantMailFromChip);
+
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -136,6 +175,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         });
     }
 
+    // Spinner for room of meeting
     public void roomOfMeeting(Spinner roomOfMeeting) {
 
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -210,6 +250,15 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
+    public void onPointerCaptureChanged(boolean hasCapture) {}
+
+    // Listener on button for validate meeting
+    public void onValidMeetingClick(Button validMeeting){
+        validMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.addNewProperty();
+            }
+        });
     }
 }

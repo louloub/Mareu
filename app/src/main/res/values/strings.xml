@@ -9,4 +9,5 @@
     <string name="room">Numéro de salle</string>
     <string name="Salle">Salle</string>
     <string name="meeting_empty">Pas de réunion actuellement</string>
+    <string name="valider_ma_reunion">Valider ma réunion</string>
 </resources>

@@ -1,7 +1,10 @@
 package com.example.maru.data.model
 
-data class Meeting(var date: String = "2019-10-17'T'18:00:00",
-                   val place: String,
-                   val subject: String,
-                   val listOfEmailOfParticipant: List<String>) {
+import java.util.*
+
+class Meeting(var date: String = "2019-10-17",
+              var hour: String = "",
+              var place: String = "",
+              var subject: String = "",
+              var listOfEmailOfParticipant: List<String> = Arrays.asList("")) {
 }
