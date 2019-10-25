@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+
         mViewModel.getUiModelsLiveData().observe(this, new Observer<List<PropertyUiModel>>() {
             @Override
             public void onChanged(List<PropertyUiModel> propertyUiModels) {

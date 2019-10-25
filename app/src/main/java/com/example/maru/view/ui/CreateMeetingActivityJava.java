@@ -50,7 +50,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     Meeting meeting = new Meeting();
     private static final String TAG = "TAG" ;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +105,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 meeting.setSubject(editable.toString());
             }
         });
-
     }
 
     // TimerPickerDialog
@@ -230,6 +228,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
+
+                    meeting.setPlace(item.toString());
                     /*Toast.makeText(CreateMeetingActivityJava.this, item.toString(),
                             Toast.LENGTH_SHORT).show();*/
                     /*Toast.makeText(CreateMeetingActivityJava.this, "Salle numéro " +item.toString()+ " sélectionnée" ,
@@ -304,9 +304,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 mViewModel.addNewProperty();
-                // for test
                 Log.d(TAG, " meeting = " +meeting );
-
             }
         });
     }
