@@ -14,24 +14,25 @@ import com.example.maru.R;
 import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingViewHolder>  {
 
     private Context mCtx;
-    private List<MeetingJava> listMeeting;
-    private MeetingJava mMeeting;
+    private ArrayList<MeetingJava> listMeeting;
+    // private MeetingJava mMeeting;
 
-    public SimpleAdapter(Context mCtx, List<MeetingJava> listMeeting) {
+    public SimpleAdapter(Context mCtx, ArrayList<MeetingJava> listMeeting) {
         this.mCtx = mCtx;
-        this.mMeeting = mMeeting;
+        // this.mMeeting = mMeeting;
         this.listMeeting = listMeeting;
     }
 
     @Override
     public MeetingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.main_item, null);
+        View view = inflater.inflate(R.layout.main_item_test, null);
         return new MeetingViewHolder(view);
     }
 
@@ -40,12 +41,13 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         MeetingJava meeting = listMeeting.get(position);
 
         String subject = meeting.getSubject();
-        List<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
+        ArrayList<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
         String room = meeting.getPlace();
         String hour = meeting.getHour();
         String date = meeting.getDate();
 
         holder.tvMeetingInformation.setText(subject);
+        holder.tvMeetingAddress.setText(room);
     }
 
     @Override
@@ -54,25 +56,12 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
     class MeetingViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvMeetingInformation, tvMeetingAddress;
-        ImageView ivPhoto, ivFacebook, ivSoundcloud, ivBeatport, ivMixcloud, ivTwitter, ivResidentAdvisor, ivInstagram, ivSite;
 
         public MeetingViewHolder(View itemView) {
             super(itemView);
 
-            tvMeetingInformation = itemView.findViewById(R.id.item_main_tv_meeting_information);
-            tvMeetingAddress = itemView.findViewById(R.id.item_main_tv_participant_address);
-
-            /*tvBio = itemView.findViewById(R.id.tvBio);
-            ivPhoto = itemView.findViewById(R.id.ivPhoto);
-            ivFacebook = itemView.findViewById(R.id.ivFacebook);
-            ivSoundcloud = itemView.findViewById(R.id.ivSoundcloud);
-            ivBeatport = itemView.findViewById(R.id.ivBeatport);
-            ivMixcloud = itemView.findViewById(R.id.ivMixcloud);
-            ivTwitter = itemView.findViewById(R.id.ivTwitter);
-            ivResidentAdvisor = itemView.findViewById(R.id.ivResidentAdvisor);
-            ivInstagram = itemView.findViewById(R.id.ivInstagram);
-            ivSite = itemView.findViewById(R.id.ivSite);*/
-
+            tvMeetingInformation = itemView.findViewById(R.id.test1);
+            tvMeetingAddress = itemView.findViewById(R.id.test2);
         }
     }
 }

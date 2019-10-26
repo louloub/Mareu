@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 listMeeting = new ArrayList<>();
             }
             listMeeting.add(meeting);
-            recyclerView.setHasFixedSize(true);
+            recyclerView.setHasFixedSize(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listMeeting);
             recyclerView.setAdapter(simpleAdapter);

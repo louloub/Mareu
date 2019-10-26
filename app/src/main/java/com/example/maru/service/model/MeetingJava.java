@@ -12,9 +12,9 @@ public class MeetingJava implements Serializable {
     private String hour;
     private String place;
     private String subject;
-    private List<String> listOfEmailOfParticipant;
+    private ArrayList<String> listOfEmailOfParticipant;
 
-    public MeetingJava(String date, String hour, String place, String subject, List<String> listOfEmailOfParticipant) {
+    public MeetingJava(String date, String hour, String place, String subject, ArrayList<String> listOfEmailOfParticipant) {
         this.date = date;
         this.hour = hour;
         this.place = place;
@@ -56,11 +56,11 @@ public class MeetingJava implements Serializable {
         this.subject = subject;
     }
 
-    public List<String> getListOfEmailOfParticipant() {
+    public ArrayList<String> getListOfEmailOfParticipant() {
         return listOfEmailOfParticipant;
     }
 
-    public void setListOfEmailOfParticipant(List<String> listOfEmailOfParticipant) {
+    public void setListOfEmailOfParticipant(ArrayList<String> listOfEmailOfParticipant) {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
 }

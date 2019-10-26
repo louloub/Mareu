@@ -177,7 +177,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     // Chip For Participant
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
 
-        final List<String> listOfParticipantChip = new ArrayList<>();
+        final ArrayList<String> listOfParticipantChip = new ArrayList<>();
 
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
