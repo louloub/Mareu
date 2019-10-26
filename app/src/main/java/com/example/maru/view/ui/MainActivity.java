@@ -33,11 +33,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.main_rv);
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
         floatingButton();
+        launcher();
+        // launchRecyclerView();
         // retriveMeetingFromIntent();
-        recyclerView = findViewById(R.id.main_rv);
+        /*recyclerView = findViewById(R.id.main_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listMeeting);
@@ -53,11 +56,25 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(simpleAdapter);
         } else {
             Log.d(TAG, "meeting is null ");
-        }
+        }*/
     }
 
     public void launcher () {
-        // If meeting retrive from intent is not null, launch launch recycler view
+        // TODO :  If meeting retrive from intent is not null, launch launch recycler view
+        MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
+        listMeeting = new ArrayList<>();
+        if (meeting != null) {
+            if (listMeeting.isEmpty()) {
+                listMeeting = new ArrayList<>();
+            }
+            listMeeting.add(meeting);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listMeeting);
+            recyclerView.setAdapter(simpleAdapter);
+        } else {
+            Log.d(TAG, "meeting is null ");
+        }
     }
 
     public void retriveMeetingFromIntent(){
@@ -66,17 +83,23 @@ public class MainActivity extends AppCompatActivity {
         // launchRecyclerView();
     }
 
-    public void launchRecyclerView(RecyclerView.Adapter simpleAdapter){
-        MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
-        Log.d(TAG, "meeting subject from intent = " +meeting);
+    public void launchRecyclerView(){
+        // recyclerView = findViewById(R.id.main_rv);
+        /*recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listMeeting);*/
+
+        // launchRecyclerView(simpleAdapter);
+        // MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
 
         // listMeeting.add(meeting);
-        if (meeting != null) {
+        /*if (meeting != null) {
+            String test = meeting.getSubject();
             listMeeting.add(meeting);
             recyclerView.setAdapter(simpleAdapter);
         } else {
             Log.d(TAG, "meeting is null ");
-        }
+        }*/
     }
 
     public void launchCreateMeeting() {
