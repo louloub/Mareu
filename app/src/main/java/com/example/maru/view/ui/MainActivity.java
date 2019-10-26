@@ -17,13 +17,17 @@ import com.example.maru.view.ui.adapter.SimpleAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
     private MainViewModel mViewModel;
     RecyclerView recyclerView;
-    MeetingJava meeting;
+    // MeetingJava meeting;
+    private ArrayList<MeetingJava> listMeeting;
+    // meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,32 +36,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
         floatingButton();
-        launchRecyclerView();
-        retriveMeetingFromIntent();
-
-        /*// TODO : create method with adapter and recycler view in MainActivity
-        final MainAdapter adapter = new MainAdapter();
-        RecyclerView recyclerView = findViewById(R.id.main_rv);
+        // retriveMeetingFromIntent();
+        recyclerView = findViewById(R.id.main_rv);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listMeeting);
+        // launchRecyclerView(simpleAdapter);
+        listMeeting = new ArrayList<>();
+        MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
+        Log.d(TAG, "meeting subject from intent = " +meeting);
 
-        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+        // listMeeting.add(meeting);
+        if (meeting != null) {
+            String test = meeting.getSubject();
+            listMeeting.add(meeting);
+            recyclerView.setAdapter(simpleAdapter);
+        } else {
+            Log.d(TAG, "meeting is null ");
+        }
+    }
 
-        mViewModel.getUiModelsLiveData().observe(this, new Observer<List<PropertyUiModel>>() {
-            @Override
-            public void onChanged(List<PropertyUiModel> propertyUiModels) {
-                adapter.submitList(propertyUiModels);
-            }
-        });*/
-
-        /*// TODO : à déplacer dans CreateMeeting quand on click sur OK pour valider la réunion
-        Button insertRandomPropertyButton = findViewById(R.id.create_meeting_bt_valid_meeting);
-        insertRandomPropertyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.addNewProperty();
-            }
-        });*/
+    public void launcher () {
+        // If meeting retrive from intent is not null, launch launch recycler view
     }
 
     public void retriveMeetingFromIntent(){
@@ -66,13 +66,17 @@ public class MainActivity extends AppCompatActivity {
         // launchRecyclerView();
     }
 
-    public void launchRecyclerView(){
-        meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
-        recyclerView = findViewById(R.id.main_rv);
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), meeting);
-        recyclerView.setAdapter(simpleAdapter);
+    public void launchRecyclerView(RecyclerView.Adapter simpleAdapter){
+        MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
+        Log.d(TAG, "meeting subject from intent = " +meeting);
+
+        // listMeeting.add(meeting);
+        if (meeting != null) {
+            listMeeting.add(meeting);
+            recyclerView.setAdapter(simpleAdapter);
+        } else {
+            Log.d(TAG, "meeting is null ");
+        }
     }
 
     public void launchCreateMeeting() {

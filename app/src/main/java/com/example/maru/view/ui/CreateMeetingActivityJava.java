@@ -40,6 +40,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +56,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     private MainViewModel mViewModel;
     MeetingJava meeting = new MeetingJava();
     private static final String TAG = "TAG" ;
+    // private List<MeetingJava> listMeeting;
     // RecyclerView recyclerView;
 
     @Override
@@ -319,6 +321,12 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onClick(View v) {
                 // mViewModel.addNewProperty();
                 Log.d(TAG, " meeting = " +meeting );
+
+                // listMeeting.add(meeting);
+                // Log.d(TAG, " list meeting = " +listMeeting);
+
+                // TODO : pressback button send list of meeting in intent
+                // CreateMeetingActivityJava.super.onBackPressed();
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("Meeting", meeting);

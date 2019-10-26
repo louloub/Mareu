@@ -19,12 +19,13 @@ import java.util.List;
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingViewHolder>  {
 
     private Context mCtx;
-    private List<MeetingJava> ListMeeting;
+    private List<MeetingJava> listMeeting;
     private MeetingJava mMeeting;
 
-    public SimpleAdapter(Context mCtx, MeetingJava mMeeting) {
+    public SimpleAdapter(Context mCtx, List<MeetingJava> listMeeting) {
         this.mCtx = mCtx;
         this.mMeeting = mMeeting;
+        this.listMeeting = listMeeting;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
 
     @Override
     public void onBindViewHolder(MeetingViewHolder holder, int position) {
-        MeetingJava meeting = new MeetingJava();
+        MeetingJava meeting = listMeeting.get(position);
 
         String subject = meeting.getSubject();
         List<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
@@ -48,7 +49,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
     }
 
     @Override
-    public int getItemCount() {return ListMeeting.size();}
+    public int getItemCount() {return listMeeting.size();}
 
     class MeetingViewHolder extends RecyclerView.ViewHolder {
 
