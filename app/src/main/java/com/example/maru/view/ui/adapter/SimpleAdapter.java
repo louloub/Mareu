@@ -60,8 +60,15 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         public MeetingViewHolder(View itemView) {
             super(itemView);
 
-            tvMeetingInformation = itemView.findViewById(R.id.test1);
-            tvMeetingAddress = itemView.findViewById(R.id.test2);
+            /*tvMeetingInformation = itemView.findViewById(R.id.test1);
+            tvMeetingAddress = itemView.findViewById(R.id.test2);*/
+
+            tvMeetingInformation = itemView.findViewById(R.id.test3);
+            tvMeetingAddress = itemView.findViewById(R.id.test4);
+
+        /*    tvMeetingInformation = itemView.findViewById(R.id.create_meeting_tiet_subject);
+            tvMeetingAddress = itemView.findViewById(R.id.create_meeting_teit_listOfParticipant);
+        */
         }
     }
 }
