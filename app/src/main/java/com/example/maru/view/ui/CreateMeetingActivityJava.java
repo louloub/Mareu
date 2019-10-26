@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
+import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.adapter.SimpleAdapter;
@@ -319,17 +320,16 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // mViewModel.addNewProperty();
+                MeetingManager.getInstance();
+                MeetingManager.addMeeting(meeting);
                 Log.d(TAG, " meeting = " +meeting );
 
-                // listMeeting.add(meeting);
-                // Log.d(TAG, " list meeting = " +listMeeting);
-
-                // TODO : pressback button send list of meeting in intent
-                // CreateMeetingActivityJava.super.onBackPressed();
-
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Réunion enregistrée",
+                        Toast.LENGTH_SHORT);
+                toast.show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("Meeting", meeting);
+                // intent.putExtra("Meeting", meeting);
                 startActivity(intent);
             }
         });

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
+import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.adapter.SimpleAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -25,9 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TAG";
     private MainViewModel mViewModel;
     RecyclerView recyclerView;
-    // MeetingJava meeting;
     private ArrayList<MeetingJava> listMeeting;
-    // meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +37,23 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         floatingButton();
         launcher();
-        // launchRecyclerView();
-        // retriveMeetingFromIntent();
-        /*recyclerView = findViewById(R.id.main_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listMeeting);
-        // launchRecyclerView(simpleAdapter);
-        listMeeting = new ArrayList<>();
-        MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
-        Log.d(TAG, "meeting subject from intent = " +meeting);
-
-        // listMeeting.add(meeting);
-        if (meeting != null) {
-            String test = meeting.getSubject();
-            listMeeting.add(meeting);
-            recyclerView.setAdapter(simpleAdapter);
-        } else {
-            Log.d(TAG, "meeting is null ");
-        }*/
     }
 
     public void launcher () {
-        // TODO :  If meeting retrive from intent is not null, launch launch recycler view
+
+        MeetingManager.getInstance();
+        ArrayList<MeetingJava> list =  MeetingManager.getMeeting();
+        if (list != null)
+        {
+            recyclerView.setHasFixedSize(false);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list);
+            recyclerView.setAdapter(simpleAdapter);
+        } else {
+            Log.d(TAG, "meeting list is null ");
+        }
+
+        /*
         MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
         listMeeting = new ArrayList<>();
         if (meeting != null) {
@@ -74,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(simpleAdapter);
         } else {
             Log.d(TAG, "meeting is null ");
-        }
+        }*/
     }
 
     public void retriveMeetingFromIntent(){
