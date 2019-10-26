@@ -19,11 +19,6 @@ public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
 
-    /*@NonNull
-    private final AddressDao mAddressDao;
-    @NonNull
-    private final PropertyDao mPropertyDao;*/
-
     @NonNull
     private Meeting mMeeting;
 
@@ -39,21 +34,21 @@ public class MainViewModel extends ViewModel {
         mUiModelsLiveData.addSource(propertiesLiveData, new Observer<List<Property>>() {
             @Override
             public void onChanged(List<Property> properties) {
-                mUiModelsLiveData.setValue(combinePropertiesAndAddresses(properties, addressesLiveData.getValue()));
+                mUiModelsLiveData.setValue(combineMeeting(properties, addressesLiveData.getValue()));
             }
         });
 
         mUiModelsLiveData.addSource(addressesLiveData, new Observer<List<Address>>() {
             @Override
             public void onChanged(List<Address> addresses) {
-                mUiModelsLiveData.setValue(combinePropertiesAndAddresses(propertiesLiveData.getValue(), addresses));
+                mUiModelsLiveData.setValue(combineMeeting(propertiesLiveData.getValue(), addresses));
             }
         });
     }*/
 
     /*@Nullable
-    private List<PropertyUiModel> combinePropertiesAndAddresses(@Nullable List<Meeting> meeting) {
-        if (properties == null || addresses == null) {
+    private List<PropertyUiModel> combineMeeting(@Nullable List<Meeting> meeting) {
+        if (mMeeting == null) {
             return null;
         }
 

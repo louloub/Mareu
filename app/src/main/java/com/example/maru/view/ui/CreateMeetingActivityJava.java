@@ -3,6 +3,7 @@ package com.example.maru.view.ui;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,10 +22,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
 import com.example.maru.service.model.Meeting;
+import com.example.maru.service.model.MeetingJava;
 import com.example.maru.view.ViewModelFactory;
+import com.example.maru.view.ui.adapter.MainAdapter;
+import com.example.maru.view.ui.adapter.SimpleAdapter;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -47,8 +53,9 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     private int SpannedLength = 0, chipLength = 4;
     private MainViewModel mViewModel;
-    Meeting meeting = new Meeting();
+    MeetingJava meeting = new MeetingJava();
     private static final String TAG = "TAG" ;
+    // RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,13 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         AndroidThreeTen.init(this);
         launchTimerPickerDialog();
         launchDatePickerDialog();
+        // launchRecyclerView();
+    }
+
+    public void launchRecyclerView(){
+        /*recyclerView = findViewById(R.id.main_rv);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
     }
 
     public void retrieveXMLandLaunchMethod() {
@@ -303,8 +317,12 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.addNewProperty();
+                // mViewModel.addNewProperty();
                 Log.d(TAG, " meeting = " +meeting );
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("Meeting", meeting);
+                startActivity(intent);
             }
         });
     }

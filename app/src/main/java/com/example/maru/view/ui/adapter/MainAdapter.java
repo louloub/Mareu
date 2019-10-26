@@ -38,8 +38,8 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
         MainViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewType = itemView.findViewById(R.id.item_main_tv_type);
-            textViewAddress = itemView.findViewById(R.id.item_main_tv_address);
+            textViewType = itemView.findViewById(R.id.item_main_tv_meeting_information);
+            textViewAddress = itemView.findViewById(R.id.item_main_tv_participant_address);
         }
 
         void bind(PropertyUiModel model) {
