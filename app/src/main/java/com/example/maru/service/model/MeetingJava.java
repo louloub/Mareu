@@ -1,5 +1,7 @@
 package com.example.maru.service.model;
 
+import com.example.maru.view.ui.adapter.ParticipantOnMeetingAdapter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
