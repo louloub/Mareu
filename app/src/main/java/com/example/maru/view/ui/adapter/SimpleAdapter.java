@@ -43,6 +43,18 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         holder.tvMeetingSubject.setText(subject);
         holder.tvMeetingHour.setText(hour);
         holder.tvMeetingRoom.setText(room);
+
+        ParticipantOnMeetingAdapter artistesAdapter = new ParticipantOnMeetingAdapter(mCtx,artistesFromList);
+        holder.recyclerViewArtistesEventList.setAdapter(artistesAdapter);
+
+
+        // holder.tvMeetingParticipant.setText(listOfEmailOfParticipant.get(position));
+
+        /*for (int i = 0; i < listOfEmailOfParticipant.size(); i++) {
+            String participantMail = String.valueOf(listOfEmailOfParticipant.get(i));
+            holder.tvMeetingParticipant.setText(participantMail);
+        }*/
+
         // holder.tvMeetingParticipant.setText((CharSequence) listOfEmailOfParticipant);
 
     }
