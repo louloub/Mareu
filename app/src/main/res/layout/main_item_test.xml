@@ -99,9 +99,8 @@
                 </TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_gravity="center"
                     android:id="@+id/create_meeting_rc_participant_meeting"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@id/meeting_cl_constraint_layout"
                     app:layout_constraintEnd_toEndOf="@id/meeting_cl_constraint_layout"
