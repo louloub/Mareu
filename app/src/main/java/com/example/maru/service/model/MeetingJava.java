@@ -1,23 +1,20 @@
 package com.example.maru.service.model;
 
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MeetingJava implements Serializable {
 
     private String date;
     private String hour;
-    private String place;
+    private String room;
     private String subject;
     private ArrayList<String> listOfEmailOfParticipant;
 
-    public MeetingJava(String date, String hour, String place, String subject, ArrayList<String> listOfEmailOfParticipant) {
+    public MeetingJava(String date, String hour, String room, String subject, ArrayList<String> listOfEmailOfParticipant) {
         this.date = date;
         this.hour = hour;
-        this.place = place;
+        this.room = room;
         this.subject = subject;
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
@@ -40,12 +37,12 @@ public class MeetingJava implements Serializable {
         this.hour = hour;
     }
 
-    public String getPlace() {
-        return place;
+    public String getRoom() {
+        return room;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setRoom(String room) {
+        this.room = room;
     }
 
     public String getSubject() {

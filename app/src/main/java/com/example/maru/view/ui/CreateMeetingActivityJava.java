@@ -22,16 +22,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
-import com.example.maru.view.ui.adapter.MainAdapter;
-import com.example.maru.view.ui.adapter.SimpleAdapter;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -41,15 +36,9 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 
-import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.TimeZone;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -57,8 +46,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     private MainViewModel mViewModel;
     MeetingJava meeting = new MeetingJava();
     private static final String TAG = "TAG" ;
-    // private List<MeetingJava> listMeeting;
-    // RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,7 +224,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     // Spinner for room of meeting
-    public void roomOfMeeting(Spinner roomOfMeeting) {
+    public void roomOfMeeting(final Spinner roomOfMeeting) {
 
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -246,7 +233,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
 
-                    meeting.setPlace(item.toString());
+                    meeting.setRoom(item.toString());
+                    Log.d(TAG, "place = " +item.toString());
                     /*Toast.makeText(CreateMeetingActivityJava.this, item.toString(),
                             Toast.LENGTH_SHORT).show();*/
                     /*Toast.makeText(CreateMeetingActivityJava.this, "Salle numéro " +item.toString()+ " sélectionnée" ,
@@ -329,7 +317,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                // intent.putExtra("Meeting", meeting);
                 startActivity(intent);
             }
         });

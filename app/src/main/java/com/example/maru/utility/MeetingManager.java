@@ -1,6 +1,5 @@
 package com.example.maru.utility;
 
-import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
 
 import java.util.ArrayList;

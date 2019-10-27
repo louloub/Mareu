@@ -31,6 +31,7 @@
         android:id="@+id/main_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:height="0dp"
         android:scrollbars="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

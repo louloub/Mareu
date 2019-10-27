@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -19,20 +20,45 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/test3"
-                android:padding="16dp"
+            <!--  FIRST LIGN WITH SUBJECT HOUR AND ROOM  -->
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="test3">
-            </TextView>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/create_meeting_tv_subject_meeting"
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sujet">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/create_meeting_tv_hour_meeting"
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14h30">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/create_meeting_tv_room_meeting"
+                    android:padding="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salle 1">
+                </TextView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!--  SCOND LIGN WITH PARTICIPANT -->
             <TextView
-                android:id="@+id/test4"
+                android:id="@+id/create_meeting_tv_participant_meeting"
                 android:padding="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="test4">
+                android:text="harold@yourdj.fr, toi@yourdj.fr, kevin@yourdj.fr">
             </TextView>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

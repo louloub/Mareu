@@ -42,15 +42,15 @@ public class MainActivity extends AppCompatActivity {
     public void launcher () {
 
         MeetingManager.getInstance();
-        ArrayList<MeetingJava> list =  MeetingManager.getMeeting();
-        if (list != null)
+        ArrayList<MeetingJava> listOfMeeting =  MeetingManager.getMeeting();
+        if (listOfMeeting != null)
         {
-            recyclerView.setHasFixedSize(false);
+            // recyclerView.setHasFixedSize(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), list);
+            SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listOfMeeting);
             recyclerView.setAdapter(simpleAdapter);
         } else {
-            Log.d(TAG, "meeting list is null ");
+            Log.d(TAG, "meeting listOfMeeting is null ");
         }
 
         /*
