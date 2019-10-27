@@ -39,24 +39,18 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         ArrayList<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
         String room = meeting.getRoom();
         String hour = meeting.getHour();
+
+        // TODO : mettre la date dans la liste de mainactivity ? (elle n'est pas sur le screen demandé)
         String date = meeting.getDate();
 
-        holder.tvMeetingSubject.setText(subject);
+        holder.tvMeetingSubject.setText("" +subject+ " à " +hour+ " le " +date+ " dans la salle n° " +room );
+
+        /*holder.tvMeetingSubject.setText(subject);
         holder.tvMeetingHour.setText(hour);
-        holder.tvMeetingRoom.setText(room);
+        holder.tvMeetingRoom.setText(room);*/
 
         ParticipantOnMeetingAdapter participantMeetingAdapter = new ParticipantOnMeetingAdapter(mCtx,listOfEmailOfParticipant);
         holder.rvParticipantMeeting.setAdapter(participantMeetingAdapter);
-
-        // holder.tvMeetingParticipant.setText(listOfEmailOfParticipant.get(position));
-
-        /*for (int i = 0; i < listOfEmailOfParticipant.size(); i++) {
-            String participantMail = String.valueOf(listOfEmailOfParticipant.get(i));
-            holder.tvMeetingParticipant.setText(participantMail);
-        }*/
-
-        // holder.tvMeetingParticipant.setText((CharSequence) listOfEmailOfParticipant);
-
     }
 
     @Override
@@ -71,8 +65,8 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
             super(itemView);
 
             tvMeetingSubject = itemView.findViewById(R.id.create_meeting_tv_subject_meeting);
-            tvMeetingHour = itemView.findViewById(R.id.create_meeting_tv_hour_meeting);
-            tvMeetingRoom = itemView.findViewById(R.id.create_meeting_tv_room_meeting);
+            // tvMeetingHour = itemView.findViewById(R.id.create_meeting_tv_hour_meeting);
+            // tvMeetingRoom = itemView.findViewById(R.id.create_meeting_tv_room_meeting);
             // tvMeetingParticipant = itemView.findViewById(R.id.create_meeting_tv_participant_meeting);
             rvParticipantMeeting = itemView.findViewById(R.id.create_meeting_rc_participant_meeting);
             // Affichage horizontal des artistes dans la liste des événements
