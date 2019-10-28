@@ -21,6 +21,15 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
+                <!--<ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_email_bleue_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/create_meeting_tv_subject_meeting"
+                    app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
+                </ImageView>-->
+
                 <TextView
                     android:id="@+id/create_meeting_tv_subject_meeting"
                     android:padding="16dp"
@@ -29,15 +38,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
-                    android:text="Sujet">
+                    android:text="Sjet + heure + date + salle">
                 </TextView>
 
-                <View
+               <!-- <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"
                     app:layout_constraintTop_toBottomOf="@id/create_meeting_tv_subject_meeting"
-                    />
+                    />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/create_meeting_rc_participant_meeting"
