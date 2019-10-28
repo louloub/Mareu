@@ -21,6 +21,19 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/meeting_iv_logo_of_meeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/create_meeting_tv_subject_meeting"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_email_bleue_24dp"
+                    >
+                </androidx.appcompat.widget.AppCompatImageView>
+
+                <!-- ALL INFORMATION IN FIRST LIGN -->
                 <TextView
                     android:id="@+id/create_meeting_tv_subject_meeting"
                     android:padding="16dp"
@@ -29,31 +42,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
-                    android:text="Sujet">
+                    android:text="Sujet + hour + date + room">
                 </TextView>
 
-                <!--<TextView
-                    android:id="@+id/create_meeting_tv_hour_meeting"
-                    android:padding="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/create_meeting_tv_subject_meeting"
-                    app:layout_constraintEnd_toStartOf="@id/create_meeting_tv_room_meeting"
-                    app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
-                    android:text="14h30">
-                </TextView>-->
-
-                <!--<TextView
-                    android:id="@+id/create_meeting_tv_room_meeting"
-                    android:padding="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/create_meeting_tv_hour_meeting"
-                    app:layout_constraintEnd_toEndOf="@id/meeting_cl_constraint_layout"
-                    app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
-                    android:text="Salle 1">
-                </TextView>-->
-
+                <!-- HORIZONTAL LIGN -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -61,14 +53,28 @@
                     app:layout_constraintTop_toBottomOf="@id/create_meeting_tv_subject_meeting"
                     />
 
+                <!-- RECYCLER VIEW FOR PARTICIPANT -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/create_meeting_rc_participant_meeting"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/meeting_cl_constraint_layout"
-                    app:layout_constraintEnd_toEndOf="@id/meeting_cl_constraint_layout"
+                    app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
+                    app:layout_constraintEnd_toStartOf="@id/meeting_bt_delete_meeting"
                     app:layout_constraintTop_toBottomOf="@id/create_meeting_tv_subject_meeting"
                     android:orientation="horizontal"/>
+
+                <!-- BUTTON DELETE -->
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/meeting_bt_delete_meeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_email_bleue_24dp"
+                    app:layout_constraintStart_toEndOf="@id/create_meeting_tv_subject_meeting"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+                </androidx.appcompat.widget.AppCompatImageButton>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
