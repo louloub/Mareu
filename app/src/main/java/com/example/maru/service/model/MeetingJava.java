@@ -1,7 +1,5 @@
 package com.example.maru.service.model;
 
-import com.example.maru.view.ui.adapter.ParticipantOnMeetingAdapter;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,11 +7,11 @@ public class MeetingJava implements Serializable {
 
     private String date;
     private String hour;
-    private String room;
+    private int room;
     private String subject;
     private ArrayList<String> listOfEmailOfParticipant;
 
-    public MeetingJava(String date, String hour, String room, String subject, ArrayList<String> listOfEmailOfParticipant) {
+    public MeetingJava(String date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
         this.date = date;
         this.hour = hour;
         this.room = room;
@@ -39,11 +37,11 @@ public class MeetingJava implements Serializable {
         this.hour = hour;
     }
 
-    public String getRoom() {
+    public int getRoom() {
         return room;
     }
 
-    public void setRoom(String room) {
+    public void setRoom(int room) {
         this.room = room;
     }
 

@@ -21,6 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TAG";
     private MainViewModel mViewModel;
     RecyclerView recyclerView;
-    private ArrayList<MeetingJava> listMeeting;
+    private ArrayList<MeetingJava> listOfMeeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void launcher () {
         MeetingManager.getInstance();
-        ArrayList<MeetingJava> listOfMeeting =  MeetingManager.getMeeting();
+        listOfMeeting =  MeetingManager.getMeeting();
         if (listOfMeeting != null)
         {
             // recyclerView.setHasFixedSize(false);
@@ -103,5 +105,26 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void sortData(boolean asc)
+    {
+        //SORT ARRAY ASCENDING AND DESCENDING
+        if (asc)
+        {
+            // return Integer.valueOf(lhs.getDistance()).compareTo(rhs.getDistance());
+
+            // Collections.sort(listOfMeeting,Comparator.comparing());
+            // Collections.sort(listOfMeeting,Comparator);
+            // Collections.sort(ArrayList<MeetingJava> listOfMeeting);
+        }
+        else
+        {
+            // Collections.reverse(spacecrafts);
+        }
+
+        //ADAPTER
+        /*adapter = new MyAdapter(this, spacecrafts);
+        rv.setAdapter(adapter);*/
+
+    }
 
 }

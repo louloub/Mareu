@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +39,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
 
         String subject = meeting.getSubject();
         ArrayList<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
-        String room = meeting.getRoom();
+        int room = meeting.getRoom();
         String hour = meeting.getHour();
         String date = meeting.getDate();
 
@@ -55,6 +56,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
                 listMeeting.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
                 notifyItemRangeChanged(holder.getAdapterPosition(), listMeeting.size());
+                Toast.makeText(v.getContext(), "Réunion supprimée", Toast.LENGTH_SHORT).show();
             }
         });
 

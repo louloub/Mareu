@@ -233,7 +233,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
 
-                    meeting.setRoom(item.toString());
+                    meeting.setRoom(Integer.parseInt(item.toString()));
                     Log.d(TAG, "place = " +item.toString());
                     /*Toast.makeText(CreateMeetingActivityJava.this, item.toString(),
                             Toast.LENGTH_SHORT).show();*/
