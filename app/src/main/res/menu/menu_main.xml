@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.maru.view.ui.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/toolbar_bt_sort_meeting"
         android:title="action_settings"
         android:icon="@drawable/ic_filter_list_white_24dp"
         app:showAsAction="ifRoom"></item>

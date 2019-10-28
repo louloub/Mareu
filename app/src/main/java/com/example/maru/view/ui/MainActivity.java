@@ -1,8 +1,10 @@
 package com.example.maru.view.ui;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launcher () {
-
         MeetingManager.getInstance();
         ArrayList<MeetingJava> listOfMeeting =  MeetingManager.getMeeting();
         if (listOfMeeting != null)
@@ -52,22 +53,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "meeting listOfMeeting is null ");
         }
-
-        /*
-        MeetingJava meeting = (MeetingJava) getIntent().getSerializableExtra("Meeting");
-        listMeeting = new ArrayList<>();
-        if (meeting != null) {
-            if (listMeeting.isEmpty()) {
-                listMeeting = new ArrayList<>();
-            }
-            listMeeting.add(meeting);
-            recyclerView.setHasFixedSize(false);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listMeeting);
-            recyclerView.setAdapter(simpleAdapter);
-        } else {
-            Log.d(TAG, "meeting is null ");
-        }*/
     }
 
     public void retriveMeetingFromIntent(){
@@ -110,4 +95,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
 }
