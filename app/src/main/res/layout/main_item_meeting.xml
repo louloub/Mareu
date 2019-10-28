@@ -28,16 +28,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/create_meeting_tv_subject_meeting"
+                    app:layout_constraintEnd_toStartOf="@id/meeting_tv_information"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:src="@drawable/ic_account_circle_bleue_48dp"
-                    >
+                    android:src="@drawable/ic_account_circle_bleue_48dp">
                 </androidx.appcompat.widget.AppCompatImageView>
 
                 <!-- ALL INFORMATION IN FIRST LIGN -->
                 <TextView
-                    android:id="@+id/create_meeting_tv_subject_meeting"
+                    android:id="@+id/meeting_tv_information"
                     android:padding="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +61,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
                     app:layout_constraintEnd_toStartOf="@id/meeting_bt_delete_meeting"
-                    app:layout_constraintTop_toBottomOf="@id/create_meeting_tv_subject_meeting"
+                    app:layout_constraintTop_toBottomOf="@id/meeting_tv_information"
                     android:orientation="horizontal"/>
 
                 <!-- BUTTON DELETE -->
@@ -72,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_delete_bleue_24dp"
-                    app:layout_constraintStart_toEndOf="@id/create_meeting_tv_subject_meeting"
+                    app:layout_constraintStart_toEndOf="@id/meeting_tv_information"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

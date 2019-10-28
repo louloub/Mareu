@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,30 +28,36 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
     @Override
     public MeetingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.main_item_test, null);
+        View view = inflater.inflate(R.layout.main_item_meeting, null);
         return new MeetingViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MeetingViewHolder holder, int position) {
+    public void onBindViewHolder(final MeetingViewHolder holder, int position) {
         MeetingJava meeting = listMeeting.get(position);
 
         String subject = meeting.getSubject();
         ArrayList<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
         String room = meeting.getRoom();
         String hour = meeting.getHour();
-
-        // TODO : mettre la date dans la liste de mainactivity ? (elle n'est pas sur le screen demandé)
         String date = meeting.getDate();
 
-        holder.tvMeetingSubject.setText("" +subject+ " à " +hour+ " le " +date+ " dans la salle n° " +room );
+        holder.tvMeetingInformation.setText(subject+ " à " +hour+ " le " +date+ " dans la salle n° " +room);
 
-        /*holder.tvMeetingSubject.setText(subject);
-        holder.tvMeetingHour.setText(hour);
-        holder.tvMeetingRoom.setText(room);*/
-
+        // Adapter for list of participant
         ParticipantOnMeetingAdapter participantMeetingAdapter = new ParticipantOnMeetingAdapter(mCtx,listOfEmailOfParticipant);
         holder.rvParticipantMeeting.setAdapter(participantMeetingAdapter);
+
+        // Delete button
+        holder.btDeleteMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listMeeting.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+                notifyItemRangeChanged(holder.getAdapterPosition(), listMeeting.size());
+            }
+        });
+
     }
 
     @Override
@@ -58,23 +65,18 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
 
     class MeetingViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvMeetingSubject, tvMeetingHour, tvMeetingRoom, tvMeetingParticipant;
+        AppCompatImageButton btDeleteMeeting;
+        TextView tvMeetingInformation;
         RecyclerView rvParticipantMeeting;
 
         public MeetingViewHolder(View itemView) {
             super(itemView);
 
-            tvMeetingSubject = itemView.findViewById(R.id.create_meeting_tv_subject_meeting);
-            // tvMeetingHour = itemView.findViewById(R.id.create_meeting_tv_hour_meeting);
-            // tvMeetingRoom = itemView.findViewById(R.id.create_meeting_tv_room_meeting);
-            // tvMeetingParticipant = itemView.findViewById(R.id.create_meeting_tv_participant_meeting);
+            btDeleteMeeting = itemView.findViewById(R.id.meeting_bt_delete_meeting);
+            tvMeetingInformation = itemView.findViewById(R.id.meeting_tv_information);
             rvParticipantMeeting = itemView.findViewById(R.id.create_meeting_rc_participant_meeting);
             // Affichage horizontal des artistes dans la liste des événements
             rvParticipantMeeting.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-            // Affichage d'une bar entre chaque artistes de la liste
-            // recyclerViewArtistesEventList.addItemDecoration(new DividerItemDecoration(itemView.getContext(), DividerItemDecoration.HORIZONTAL));
-
         }
     }
 }

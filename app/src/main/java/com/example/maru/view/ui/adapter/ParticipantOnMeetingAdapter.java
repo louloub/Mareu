@@ -50,7 +50,7 @@ public class ParticipantOnMeetingAdapter extends RecyclerView.Adapter<Participan
         String hour = meeting.getHour();
         String date = meeting.getDate();
 
-        holder.tvMeetingSubject.setText(subject);
+        holder.tvMeetingInformation.setText(subject);
         holder.tvMeetingHour.setText(hour);
         holder.tvMeetingRoom.setText(room);
 
@@ -81,7 +81,7 @@ public class ParticipantOnMeetingAdapter extends RecyclerView.Adapter<Participan
 
             tvParticipantName = itemView.findViewById(R.id.main_activity_tv_participant);
 
-            /*tvMeetingSubject = itemView.findViewById(R.id.create_meeting_tv_subject_meeting);
+            /*tvMeetingInformation = itemView.findViewById(R.id.create_meeting_tv_subject_meeting);
             tvMeetingHour = itemView.findViewById(R.id.create_meeting_tv_hour_meeting);
             tvMeetingRoom = itemView.findViewById(R.id.create_meeting_tv_room_meeting);
             tvMeetingParticipant = itemView.findViewById(R.id.create_meeting_tv_participant_meeting);*/
