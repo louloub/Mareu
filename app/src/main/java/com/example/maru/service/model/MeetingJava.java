@@ -3,7 +3,7 @@ package com.example.maru.service.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MeetingJava implements Serializable {
+public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
     private String date;
     private String hour;
@@ -59,5 +59,15 @@ public class MeetingJava implements Serializable {
 
     public void setListOfEmailOfParticipant(ArrayList<String> listOfEmailOfParticipant) {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
+    }
+    @Override
+    public int compareTo(MeetingJava meetingJava) {
+        return (this.room - meetingJava.room);
+    }
+    @Override
+    //this is required to print the user-friendly information about the Employee
+    public String toString() {
+        return "[sujet=" + this.subject + ", heure=" + this.hour + ", date=" + this.date + ", salle=" +
+                this.room + "]";
     }
 }

@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel mViewModel;
     RecyclerView recyclerView;
     private ArrayList<MeetingJava> listOfMeeting;
+    private boolean ascending = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,11 +109,37 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
+            sortData(ascending);
+        } else {
+            // ELSE
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Comparator to sort employees list or array in order of Salary
+    public static Comparator<MeetingJava> MeetingComparator = new Comparator<MeetingJava>() {
+
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (int) (e1.getRoom() - e2.getRoom());
+        }
+    };
+
     private void sortData(boolean asc)
     {
         //SORT ARRAY ASCENDING AND DESCENDING
         if (asc)
         {
+            Log.d(TAG, "we are on sort data ");
+
+            Collections.sort(listOfMeeting,MeetingComparator);
+
+            // ArrayList.sort(listOfMeeting);
+            // Collections.sort(listOfMeeting, MeetingJava> );
             // return Integer.valueOf(lhs.getDistance()).compareTo(rhs.getDistance());
 
             // Collections.sort(listOfMeeting,Comparator.comparing());
@@ -122,9 +152,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //ADAPTER
-        /*adapter = new MyAdapter(this, spacecrafts);
-        rv.setAdapter(adapter);*/
+        SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
+        recyclerView.setAdapter(adapter);
 
     }
 
 }
+
+    /*
+    Comparable
+
+    A comparable object is capable of comparing itself with another object. The class itself must
+    implements the java.lang.Comparable interface in order to be able to compare its instances.
+
+    Comparator
+
+    A comparator object is capable of comparing two different objects. The class is not comparing
+    its instances, but some other class’s instances. This comparator class must implement
+    the java.util.Comparator interface.
+    */
+
