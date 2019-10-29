@@ -15,6 +15,7 @@ import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingViewHolder>  {
 
@@ -41,7 +42,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         ArrayList<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
         int room = meeting.getRoom();
         String hour = meeting.getHour();
-        String date = meeting.getDate();
+        Date date = meeting.getDate();
 
         holder.tvMeetingInformation.setText(subject+ " à " +hour+ " le " +date+ " dans la salle n° " +room);
 

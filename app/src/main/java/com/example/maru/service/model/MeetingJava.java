@@ -2,16 +2,17 @@ package com.example.maru.service.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
-    private String date;
+    private Date date;
     private String hour;
     private int room;
     private String subject;
     private ArrayList<String> listOfEmailOfParticipant;
 
-    public MeetingJava(String date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
+    public MeetingJava(Date date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
         this.date = date;
         this.hour = hour;
         this.room = room;
@@ -21,11 +22,11 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
     public MeetingJava(){}
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -70,4 +71,9 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
         return "[sujet=" + this.subject + ", heure=" + this.hour + ", date=" + this.date + ", salle=" +
                 this.room + "]";
     }
+
+    /*@Override
+    public int compareTo(MeetingJava meetingJava) {
+        return getDate().compareTo(o.getDate());
+    }*/
 }

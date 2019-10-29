@@ -36,9 +36,13 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -152,7 +156,14 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         String yearInString = String.valueOf(year);
                         String monthInString = String.valueOf(month);
                         String dayInString = String.valueOf(dayOfMonth);
-                        String date = yearInString+ "/" +monthInString+ "/" +dayInString;
+                        String dateString = yearInString+ "-" +monthInString+ "-" +dayInString;
+                        SimpleDateFormat dateSimpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        Date date = null;
+                        try {
+                            date = dateSimpleFormat.parse(dateString);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         meeting.setDate(date);
                     }
                 }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());

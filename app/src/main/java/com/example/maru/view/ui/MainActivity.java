@@ -1,6 +1,5 @@
 package com.example.maru.view.ui;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,17 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.adapter.SimpleAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel mViewModel;
     RecyclerView recyclerView;
     private ArrayList<MeetingJava> listOfMeeting;
-    private boolean ascending = true;
+    private boolean ascendingRoom = true;
+    private boolean ascendingDate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,17 +93,6 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
             alertDialogChoiceSort();
-            /*if (ascending) {
-                sortRoom(ascending);
-                Toast toastCrescent = Toast.makeText(MainActivity.this, "Trie croissant", Toast.LENGTH_SHORT);
-                toastCrescent.show();
-                ascending =! ascending;
-            } else if (!ascending) {
-                sortRoom(ascending);
-                Toast toastDecrease = Toast.makeText(MainActivity.this, "Trie décroissant", Toast.LENGTH_SHORT);
-                toastDecrease.show();
-                ascending =! ascending;
-            }*/
         } else {
             // ELSE
         }
@@ -140,15 +125,18 @@ public class MainActivity extends AppCompatActivity {
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Choisis le trie que tu souhaites");
+
         // Ddd a radio button list
         String[] sortChoice = {"Croissant salle", "Decroissant salle", "Croissant date", "Decroissant date"};
 
+        // Setup list of choice
         myPopup.setSingleChoiceItems(sortChoice,checkedItems, (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
         }));
 
+        // Setup button VALIDER
         myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -156,13 +144,32 @@ public class MainActivity extends AppCompatActivity {
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
 
-                if (checkedItemObject.toString()=="Croissant salle") {
-                    sortRoom(ascending);
-                }
+                // Action whith selected choice
+                switch (checkedItemObject.toString()) {
+                    case "Croissant salle" :
+                        sortRoom(ascendingRoom);
+                        Toast toastCrescentRoom = Toast.makeText(MainActivity.this, "Trie croissant", Toast.LENGTH_SHORT);
+                        toastCrescentRoom.show();
+                        ascendingRoom =!ascendingRoom;
 
-                // FOR RELOAD CONTENT WHEN CITY IS CHOICE
-                // finish();
-                // startActivity(getIntent());
+                    case "Decroissant Salle" :
+                        sortRoom(ascendingRoom);
+                        Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant", Toast.LENGTH_SHORT);
+                        toastDecreaseRoom.show();
+                        ascendingRoom =!ascendingRoom;
+
+                    case "Croissant date" :
+                        sortDate(ascendingDate);
+                        Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie décroissant", Toast.LENGTH_SHORT);
+                        toastCrescentDate.show();
+                        ascendingDate =!ascendingDate;
+
+                    case "Decroissant date" :
+                        sortDate(ascendingDate);
+                        Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie décroissant", Toast.LENGTH_SHORT);
+                        toastDecreaseDate.show();
+                        ascendingDate =!ascendingDate;
+                }
             }
         }));
 
@@ -174,10 +181,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Comparator to sort meeting list in order of room
-    public static Comparator<MeetingJava> MeetingComparator = new Comparator<MeetingJava>() {
+    public static Comparator<MeetingJava> RoomComparator = new Comparator<MeetingJava>() {
         @Override
         public int compare(MeetingJava e1, MeetingJava e2) {
             return (e1.getRoom() - e2.getRoom());
+        }
+    };
+
+    // Comparator to sort meeting list in order of room
+    public static Comparator<MeetingJava> DateComparator = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getDate().compareTo(e2.getDate()));
         }
     };
 
@@ -187,7 +202,24 @@ public class MainActivity extends AppCompatActivity {
         //SORT ARRAY ASCENDING AND DESCENDING
         if (asc)
         {
-            Collections.sort(listOfMeeting,MeetingComparator);
+            Collections.sort(listOfMeeting, RoomComparator);
+        }
+        else
+        {
+            Collections.reverse(listOfMeeting);
+        }
+        //ADAPTER
+        SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
+        recyclerView.setAdapter(adapter);
+    }
+
+    // Sort date
+    private void sortDate(boolean asc)
+    {
+        // SORT ARRAY ASCENDING AND DESCENDING
+        if (asc)
+        {
+            Collections.sort(listOfMeeting, DateComparator);
         }
         else
         {
