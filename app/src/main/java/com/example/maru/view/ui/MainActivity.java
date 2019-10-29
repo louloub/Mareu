@@ -98,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
             alertDialogChoiceSort();
             /*if (ascending) {
-                sortData(ascending);
+                sortRoom(ascending);
                 Toast toastCrescent = Toast.makeText(MainActivity.this, "Trie croissant", Toast.LENGTH_SHORT);
                 toastCrescent.show();
                 ascending =! ascending;
             } else if (!ascending) {
-                sortData(ascending);
+                sortRoom(ascending);
                 Toast toastDecrease = Toast.makeText(MainActivity.this, "Trie décroissant", Toast.LENGTH_SHORT);
                 toastDecrease.show();
                 ascending =! ascending;
@@ -126,12 +126,11 @@ public class MainActivity extends AppCompatActivity {
         if (sortChoiceSharedPreferences==null) {
             checkedItems = 0;
         } else {
-
             if(sortChoiceSharedPreferences.equals("Croissant salle"))
-            { checkedItems = 0; }
+            { checkedItems = 0;}
             else if (sortChoiceSharedPreferences.equals("Decroissant salle"))
-            { checkedItems = 1;
-            } else if (sortChoiceSharedPreferences.equals("Croissant date")) {
+            { checkedItems = 1;}
+            else if (sortChoiceSharedPreferences.equals("Croissant date")) {
                 checkedItems = 2;
             } else if (sortChoiceSharedPreferences.equals("Decroissant date")) {
                 checkedItems = 3;
@@ -156,50 +155,16 @@ public class MainActivity extends AppCompatActivity {
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
+
+                if (checkedItemObject.toString()=="Croissant salle") {
+                    sortRoom(ascending);
+                }
+
+                // FOR RELOAD CONTENT WHEN CITY IS CHOICE
                 // finish();
+                // startActivity(getIntent());
             }
         }));
-
-
-        /*myPopup.setSingleChoiceItems(sortChoice, checkedItems, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                AlertDialog.Builder valider = myPopup.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ListView lw = ((AlertDialog) dialog).getListView();
-                        Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
-                        Toast.makeText(getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });*/
-
-        /*myPopup.setSingleChoiceItems(sortChoice, checkedItems, (dialog, which) -> {
-        });*/
-
-        /*myPopup.setPositiveButton("Valider", (dialogInterface, i) -> {
-            ListView lw = ((AlertDialog)dialogInterface).getListView();
-            Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
-            Toast.makeText(getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
-            String checkedItemString = checkedItemObject.toString();
-
-            // EDITOR SHARED PREFERENCE
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString("MyCityChoice", checkedItemString);
-            editor.apply();
-
-            // FOR RELOAD CONTENT WHEN CITY IS CHOICE
-            finish();
-            startActivity(getIntent());
-        });*/
-
-        /*myPopup.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(), "Vous avez cliquez sur Non", Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
         myPopup.setCancelable(false);
 
@@ -217,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     // Sort room
-    private void sortData(boolean asc)
+    private void sortRoom(boolean asc)
     {
         //SORT ARRAY ASCENDING AND DESCENDING
         if (asc)
