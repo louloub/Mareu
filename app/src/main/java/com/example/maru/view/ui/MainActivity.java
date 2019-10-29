@@ -113,19 +113,30 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
-            sortData(ascending);
+            // sortData(ascending);
+            if (ascending) {
+                sortData(ascending);
+                Toast toastCrescent = Toast.makeText(MainActivity.this, "Trie croissant", Toast.LENGTH_SHORT);
+                toastCrescent.show();
+                ascending =! ascending;
+            } else if (!ascending) {
+                sortData(ascending);
+                Toast toastDecrease = Toast.makeText(MainActivity.this, "Trie décroissant", Toast.LENGTH_SHORT);
+                toastDecrease.show();
+                ascending =! ascending;
+            }
         } else {
             // ELSE
         }
         return super.onOptionsItemSelected(item);
     }
 
-    // Comparator to sort employees list or array in order of Salary
+    // Comparator to sort meeting list in order of room
     public static Comparator<MeetingJava> MeetingComparator = new Comparator<MeetingJava>() {
 
         @Override
         public int compare(MeetingJava e1, MeetingJava e2) {
-            return (int) (e1.getRoom() - e2.getRoom());
+            return (e1.getRoom() - e2.getRoom());
         }
     };
 
@@ -134,41 +145,16 @@ public class MainActivity extends AppCompatActivity {
         //SORT ARRAY ASCENDING AND DESCENDING
         if (asc)
         {
-            Log.d(TAG, "we are on sort data ");
-
+            Log.d(TAG, "sortDate trie croissant ");
             Collections.sort(listOfMeeting,MeetingComparator);
-
-            // ArrayList.sort(listOfMeeting);
-            // Collections.sort(listOfMeeting, MeetingJava> );
-            // return Integer.valueOf(lhs.getDistance()).compareTo(rhs.getDistance());
-
-            // Collections.sort(listOfMeeting,Comparator.comparing());
-            // Collections.sort(listOfMeeting,Comparator);
-            // Collections.sort(ArrayList<MeetingJava> listOfMeeting);
         }
         else
         {
-            // Collections.reverse(spacecrafts);
+            Log.d(TAG, "sortDate trie decroissant ");
+            Collections.reverse(listOfMeeting);
         }
-
         //ADAPTER
         SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
         recyclerView.setAdapter(adapter);
-
     }
-
 }
-
-    /*
-    Comparable
-
-    A comparable object is capable of comparing itself with another object. The class itself must
-    implements the java.lang.Comparable interface in order to be able to compare its instances.
-
-    Comparator
-
-    A comparator object is capable of comparing two different objects. The class is not comparing
-    its instances, but some other class’s instances. This comparator class must implement
-    the java.util.Comparator interface.
-    */
-
