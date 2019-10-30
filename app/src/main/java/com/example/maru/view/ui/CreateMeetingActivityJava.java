@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -38,6 +40,9 @@ import org.threeten.bp.LocalTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -149,6 +154,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(CreateMeetingActivityJava.this, new DatePickerDialog.OnDateSetListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         // TODO : save selected day month year for when want to change hour it's showing previous choice
@@ -157,14 +163,35 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         String monthInString = String.valueOf(month);
                         String dayInString = String.valueOf(dayOfMonth);
                         String dateString = yearInString+ "-" +monthInString+ "-" +dayInString;
-                        SimpleDateFormat dateSimpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                        SimpleDateFormat dateSimpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        /*DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
+                        TemporalAccessor dateTest = fmt.parse(dateString);*/
+
+
+
                         Date date = null;
                         try {
                             date = dateSimpleFormat.parse(dateString);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
+                        try {
+                            dateSimpleFormat.parse(dateString);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        // TODO : how to seDate with short format
                         meeting.setDate(date);
+
+                        /*Date date = null;
+                        try {
+                            date = dateSimpleFormat.parse(dateString);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        meeting.setDate(date);*/
                     }
                 }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.show();

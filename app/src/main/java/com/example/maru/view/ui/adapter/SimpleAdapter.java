@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
@@ -30,7 +29,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
     @Override
     public MeetingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.main_item_meeting, null);
+        View view = inflater.inflate(R.layout.main_item_meeting, parent, false);
         return new MeetingViewHolder(view);
     }
 
@@ -47,8 +46,8 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         holder.tvMeetingInformation.setText(subject+ " à " +hour+ " le " +date+ " dans la salle n° " +room);
 
         // Adapter for list of participant
-        ParticipantOnMeetingAdapter participantMeetingAdapter = new ParticipantOnMeetingAdapter(mCtx,listOfEmailOfParticipant);
-        holder.rvParticipantMeeting.setAdapter(participantMeetingAdapter);
+        /*ParticipantOnMeetingAdapter participantMeetingAdapter = new ParticipantOnMeetingAdapter(mCtx,listOfEmailOfParticipant);
+        holder.tvParticipantMeeting.setAdapter(participantMeetingAdapter);*/
 
         // Delete button
         holder.btDeleteMeeting.setOnClickListener(new View.OnClickListener() {
@@ -68,18 +67,19 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
 
     class MeetingViewHolder extends RecyclerView.ViewHolder {
 
-        AppCompatImageButton btDeleteMeeting;
+        AppCompatImageView btDeleteMeeting;
         TextView tvMeetingInformation;
-        RecyclerView rvParticipantMeeting;
+        TextView tvParticipantMeeting;
 
         public MeetingViewHolder(View itemView) {
             super(itemView);
 
             btDeleteMeeting = itemView.findViewById(R.id.meeting_bt_delete_meeting);
             tvMeetingInformation = itemView.findViewById(R.id.meeting_tv_information);
-            rvParticipantMeeting = itemView.findViewById(R.id.create_meeting_rc_participant_meeting);
+            tvParticipantMeeting = itemView.findViewById(R.id.create_meeting_rc_participant_meeting);
+            // tvParticipantMeeting = itemView.findViewById(R.id.create_meeting_rc_participant_meeting);
             // Affichage horizontal des artistes dans la liste des événements
-            rvParticipantMeeting.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+            // tvParticipantMeeting.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         }
     }
 }
