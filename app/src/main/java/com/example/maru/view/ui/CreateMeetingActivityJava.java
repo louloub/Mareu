@@ -37,11 +37,11 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -158,20 +158,26 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         // TODO : save selected day month year for when want to change hour it's showing previous choice
-                        chooseDate.setText(dayOfMonth + "/" + month + "/" + year);
+
+                        String dayInString = String.format("%02d", dayOfMonth);
+                        chooseDate.setText(dayInString + "/" + month + "/" + year);
                         String yearInString = String.valueOf(year);
                         String monthInString = String.valueOf(month);
-                        String dayInString = String.valueOf(dayOfMonth);
                         String dateString = yearInString+ "-" +monthInString+ "-" +dayInString;
 
-                        SimpleDateFormat dateSimpleFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                        LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
+
+                        Log.d(TAG, "datetest = " +localDate);
+
+                        meeting.setDate(localDate);
 
                         /*DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
                         TemporalAccessor dateTest = fmt.parse(dateString);*/
 
-
-
-                        Date date = null;
+                        /*// TODO : use LocalDate
+                        LocalDate date = null;
                         try {
                             date = dateSimpleFormat.parse(dateString);
                         } catch (ParseException e) {
@@ -183,7 +189,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                             e.printStackTrace();
                         }
                         // TODO : how to seDate with short format
-                        meeting.setDate(date);
+                        meeting.setDate(date);*/
 
                         /*Date date = null;
                         try {

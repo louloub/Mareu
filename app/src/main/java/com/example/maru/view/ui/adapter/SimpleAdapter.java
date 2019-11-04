@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
 
+import org.threeten.bp.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -41,7 +43,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         ArrayList<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
         int room = meeting.getRoom();
         String hour = meeting.getHour();
-        Date date = meeting.getDate();
+        LocalDate date = meeting.getDate();
 
         holder.tvMeetingInformation.setText(subject+ " à " +hour+ " le " +date+ " dans la salle n° " +room);
 

@@ -1,18 +1,20 @@
 package com.example.maru.service.model;
 
+import org.threeten.bp.LocalDate;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
-    private Date date;
+    private LocalDate date;
     private String hour;
     private int room;
     private String subject;
     private ArrayList<String> listOfEmailOfParticipant;
 
-    public MeetingJava(Date date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
+    public MeetingJava(LocalDate date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
         this.date = date;
         this.hour = hour;
         this.room = room;
@@ -22,11 +24,11 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
     public MeetingJava(){}
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
