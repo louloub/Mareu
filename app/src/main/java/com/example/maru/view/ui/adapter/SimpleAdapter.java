@@ -16,9 +16,8 @@ import com.example.maru.service.model.MeetingJava;
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingViewHolder>  {
+public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingViewHolder> {
 
     private Context mCtx;
     private ArrayList<MeetingJava> listMeeting;
@@ -45,7 +44,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         String hour = meeting.getHour();
         LocalDate date = meeting.getDate();
 
-        holder.tvMeetingInformation.setText(subject+ " à " +hour+ " le " +date+ " salle n° " +room);
+        holder.tvMeetingInformation.setText(subject + " à " + hour + " le " + date + " salle n° " + room);
 
         // TODO : show list of participant
         // Adapter for list of participant
@@ -66,7 +65,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
     }
 
     @Override
-    public int getItemCount() {return listMeeting.size();}
+    public int getItemCount() {
+        return listMeeting.size();
+    }
 
     class MeetingViewHolder extends RecyclerView.ViewHolder {
 

@@ -39,22 +39,16 @@ import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.ZoneOffset;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    private static final String TAG = "TAG";
+    MeetingJava meeting = new MeetingJava();
     private int SpannedLength = 0, chipLength = 4;
     private MainViewModel mViewModel;
-    MeetingJava meeting = new MeetingJava();
-    private static final String TAG = "TAG" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +59,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         launchTimerPickerDialog();
         launchDatePickerDialog();
         // launchRecyclerView();
-    }
-
-    public void launchRecyclerView(){
-        /*recyclerView = findViewById(R.id.main_rv);
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
     }
 
     public void retrieveXMLandLaunchMethod() {
@@ -137,12 +125,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
                         String hourInString = String.valueOf(hourOfDay);
                         String minutesInString = String.valueOf(minutes);
-                        String hour = hourInString+ "h" +minutesInString;
+                        String hour = hourInString + "h" + minutesInString;
                         meeting.setHour(hour);
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
                 timePickerDialog.show();
-                // Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
             }
         });
     }
@@ -164,20 +151,19 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         chooseDate.setText(dayInString + "/" + month + "/" + year);
                         String yearInString = String.valueOf(year);
                         String monthInString = String.valueOf(month);
-                        String dateString = yearInString+ "-" +monthInString+ "-" +dayInString;
+                        String dateString = yearInString + "-" + monthInString + "-" + dayInString;
 
                         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
                         LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
 
-                        Log.d(TAG, "datetest = " +localDate);
+                        Log.d(TAG, "datetest = " + localDate);
 
                         meeting.setDate(localDate);
 
                     }
                 }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.show();
-                // Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
             }
         });
     }
@@ -213,7 +199,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                     // String str = String.valueOf(editable.subSequence(SpannedLength, editable.length() - 1));
 
-                    listOfParticipantChip.add(listOfParticipantChip.size(),charSequenceParticipantMailFromChip.toString());
+                    listOfParticipantChip.add(listOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
@@ -230,13 +216,13 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                             listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(str));*/
 
                             // listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip));
-                            Log.d(TAG, "listOfParticipant in afterTextChanged = " +listOfParticipantChip );
+                            Log.d(TAG, "listOfParticipant in afterTextChanged = " + listOfParticipantChip);
                         }
                     });
                     chipGroup.addView(chip);
                     editable.clear();
                     meeting.setListOfEmailOfParticipant(listOfParticipantChip);
-                    Log.d(TAG, "listOfParticipant in afterTextChanged = " +listOfParticipantChip+ " & meeting =" +meeting );
+                    Log.d(TAG, "listOfParticipant in afterTextChanged = " + listOfParticipantChip + " & meeting =" + meeting);
 
                 } // END OF IF
             } // END OF afterTextChanged
@@ -252,16 +238,9 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
-
                     meeting.setRoom(Integer.parseInt(item.toString()));
-                    Log.d(TAG, "place = " +item.toString());
-                    /*Toast.makeText(CreateMeetingActivityJava.this, item.toString(),
-                            Toast.LENGTH_SHORT).show();*/
-                    /*Toast.makeText(CreateMeetingActivityJava.this, "Salle numéro " +item.toString()+ " sélectionnée" ,
-                            Toast.LENGTH_SHORT).show();*/
+                    Log.d(TAG, "place = " + item.toString());
                 }
-                /*Toast.makeText(CreateMeetingActivityJava.this, "Salle numéro " +item.toString()+ " sélectionnée" ,
-                        Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
@@ -294,6 +273,38 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         roomOfMeeting.setAdapter(dataAdapter);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+    }
+
+    // Listener on button for validate meeting
+    public void onValidMeetingClick(Button validMeeting) {
+        validMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MeetingManager.getInstance();
+                MeetingManager.addMeeting(meeting);
+                Log.d(TAG, " meeting = " + meeting);
+
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Réunion enregistrée",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     // check if activity is launch for the first time for TOAST in "roomOfMeeting" method
     public static class MyPreferencesFirstLaunch {
 
@@ -309,36 +320,5 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             }
             return first;
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {}
-
-    // Listener on button for validate meeting
-    public void onValidMeetingClick(Button validMeeting){
-        validMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MeetingManager.getInstance();
-                MeetingManager.addMeeting(meeting);
-                Log.d(TAG, " meeting = " +meeting );
-
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Réunion enregistrée",
-                        Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

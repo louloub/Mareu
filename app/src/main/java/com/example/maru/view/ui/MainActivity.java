@@ -1,9 +1,7 @@
 package com.example.maru.view.ui;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,12 +29,26 @@ import java.util.Comparator;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
-    private MainViewModel mViewModel;
+    // Comparator to sort meeting list in order of room
+    public static Comparator<MeetingJava> RoomComparator = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getRoom() - e2.getRoom());
+        }
+    };
+    // Comparator to sort meeting list in order of room
+    public static Comparator<MeetingJava> DateComparator = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getDate().compareTo(e2.getDate()));
+        }
+    };
     RecyclerView recyclerView;
+    int checkedItems = 0;
+    private MainViewModel mViewModel;
     private ArrayList<MeetingJava> listOfMeeting;
     private boolean ascendingRoom = true;
     private boolean ascendingDate = true;
-    int checkedItems = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +61,10 @@ public class MainActivity extends AppCompatActivity {
         launcher();
     }
 
-    public void launcher () {
+    public void launcher() {
         MeetingManager.getInstance();
-        listOfMeeting =  MeetingManager.getMeeting();
-        if (listOfMeeting != null)
-        {
+        listOfMeeting = MeetingManager.getMeeting();
+        if (listOfMeeting != null) {
             // recyclerView.setHasFixedSize(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listOfMeeting);
@@ -100,28 +111,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void alertDialogChoiceSort(){
-
-        // int checkedItems = 0;
-
-        /*SharedPreferences settings = getSharedPreferences("MySortChoice", Context.MODE_PRIVATE);
-        String sortChoiceSharedPreferences = settings.getString("MySortChoice",null);
-
-        assert sortChoiceSharedPreferences != null;
-
-        if (sortChoiceSharedPreferences==null) {
-            checkedItems = 0;
-        } else {
-            if(sortChoiceSharedPreferences.equals("Croissant salle"))
-            { checkedItems = 0; sortRoom(ascendingRoom);ascendingRoom =! ascendingRoom; }
-            else if (sortChoiceSharedPreferences.equals("Decroissant salle"))
-            { checkedItems = 1; sortRoom(ascendingRoom);ascendingRoom =! ascendingRoom; }
-            else if (sortChoiceSharedPreferences.equals("Croissant date")) {
-                checkedItems = 2;
-            } else if (sortChoiceSharedPreferences.equals("Decroissant date")) {
-                checkedItems = 3;
-            } else { checkedItems = 0; }
-        }*/
+    public void alertDialogChoiceSort() {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
@@ -131,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         String[] sortChoice = {"Croissant salle", "Decroissant salle", "Croissant date", "Decroissant date"};
 
         // Setup list of choice
-        myPopup.setSingleChoiceItems(sortChoice,checkedItems, (new DialogInterface.OnClickListener() {
+        myPopup.setSingleChoiceItems(sortChoice, checkedItems, (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -149,25 +139,25 @@ public class MainActivity extends AppCompatActivity {
                     sortRoom(ascendingRoom);
                     Toast toastCrescentRoom = Toast.makeText(MainActivity.this, "Trie croissant salle", Toast.LENGTH_SHORT);
                     toastCrescentRoom.show();
-                    ascendingRoom =!ascendingRoom;
+                    ascendingRoom = !ascendingRoom;
                     checkedItems = 0;
                 } else if (checkedItemObject.toString().equals("Decroissant salle")) {
                     sortRoom(ascendingRoom);
                     Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
                     toastDecreaseRoom.show();
-                    ascendingRoom =!ascendingRoom;
+                    ascendingRoom = !ascendingRoom;
                     checkedItems = 1;
                 } else if (checkedItemObject.toString().equals("Croissant date")) {
                     sortDate(ascendingDate);
                     Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
                     toastCrescentDate.show();
-                    ascendingDate =!ascendingDate;
+                    ascendingDate = !ascendingDate;
                     checkedItems = 2;
                 } else if (checkedItemObject.toString().equals("Decroissant date")) {
                     sortDate(ascendingDate);
                     Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie decroissant date", Toast.LENGTH_SHORT);
                     toastDecreaseDate.show();
-                    ascendingDate =!ascendingDate;
+                    ascendingDate = !ascendingDate;
                     checkedItems = 3;
                 }
             }
@@ -180,32 +170,12 @@ public class MainActivity extends AppCompatActivity {
         myPopup.show();
     }
 
-    // Comparator to sort meeting list in order of room
-    public static Comparator<MeetingJava> RoomComparator = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getRoom() - e2.getRoom());
-        }
-    };
-
-    // Comparator to sort meeting list in order of room
-    public static Comparator<MeetingJava> DateComparator = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getDate().compareTo(e2.getDate()));
-        }
-    };
-
     // Sort room
-    private void sortRoom(boolean asc)
-    {
+    private void sortRoom(boolean asc) {
         //SORT ARRAY ASCENDING AND DESCENDING
-        if (asc)
-        {
+        if (asc) {
             Collections.sort(listOfMeeting, RoomComparator);
-        }
-        else
-        {
+        } else {
             Collections.reverse(listOfMeeting);
         }
         //ADAPTER
@@ -214,15 +184,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Sort date
-    private void sortDate(boolean asc)
-    {
+    private void sortDate(boolean asc) {
         // SORT ARRAY ASCENDING AND DESCENDING
-        if (asc)
-        {
+        if (asc) {
             Collections.sort(listOfMeeting, DateComparator);
-        }
-        else
-        {
+        } else {
             Collections.reverse(listOfMeeting);
         }
         //ADAPTER

@@ -3,16 +3,13 @@ package com.example.maru.view.ui;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.Meeting;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainViewModel extends ViewModel {

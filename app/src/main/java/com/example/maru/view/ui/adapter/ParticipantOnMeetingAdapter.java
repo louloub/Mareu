@@ -12,7 +12,7 @@ import com.example.maru.R;
 
 import java.util.ArrayList;
 
-public class ParticipantOnMeetingAdapter extends RecyclerView.Adapter<ParticipantOnMeetingAdapter.ParticpantMeetingViewHolder>  {
+public class ParticipantOnMeetingAdapter extends RecyclerView.Adapter<ParticipantOnMeetingAdapter.ParticpantMeetingViewHolder> {
 
     private Context mCtx;
     private ArrayList<String> listParticipantMeeting;
@@ -70,7 +70,9 @@ public class ParticipantOnMeetingAdapter extends RecyclerView.Adapter<Participan
     }
 
     @Override
-    public int getItemCount() {return listParticipantMeeting.size();}
+    public int getItemCount() {
+        return listParticipantMeeting.size();
+    }
 
     class ParticpantMeetingViewHolder extends RecyclerView.ViewHolder {
 
