@@ -154,35 +154,17 @@ public class MainActivity extends AppCompatActivity {
                     Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
                     toastDecreaseRoom.show();
                     ascendingRoom =!ascendingRoom;
+                } else if (checkedItemObject.toString().equals("Croissant date")) {
+                    sortDate(ascendingDate);
+                    Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
+                    toastCrescentDate.show();
+                    ascendingDate =!ascendingDate;
+                } else if (checkedItemObject.toString().equals("Decroissant date")) {
+                    sortDate(ascendingDate);
+                    Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie decroissant date", Toast.LENGTH_SHORT);
+                    toastDecreaseDate.show();
+                    ascendingDate =!ascendingDate;
                 }
-
-
-                // Action whith selected choice
-                /*switch (checkedItemObject.toString()) {
-                    case "Croissant salle" :
-                        sortRoom(ascendingRoom);
-                        Toast toastCrescentRoom = Toast.makeText(MainActivity.this, "Trie croissant salle", Toast.LENGTH_SHORT);
-                        toastCrescentRoom.show();
-                        ascendingRoom =!ascendingRoom;
-
-                    case "Decroissant Salle" :
-                        sortRoom(ascendingRoom);
-                        Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
-                        toastDecreaseRoom.show();
-                        ascendingRoom =!ascendingRoom;
-
-                    case "Croissant date" :
-                        sortDate(ascendingDate);
-                        Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
-                        toastCrescentDate.show();
-                        ascendingDate =!ascendingDate;
-
-                    case "Decroissant date" :
-                        sortDate(ascendingDate);
-                        Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie décroissant date", Toast.LENGTH_SHORT);
-                        toastDecreaseDate.show();
-                        ascendingDate =!ascendingDate;
-                }*/
             }
         }));
 
