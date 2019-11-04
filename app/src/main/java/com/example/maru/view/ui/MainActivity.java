@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         testListOfMeetingInSingleton();
     }
 
+
     // Test list of meeting in singleton
     public void testListOfMeetingInSingleton() {
         MeetingManager.getInstance();
