@@ -100,6 +100,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
+    // Subject of meeting
     private void subjectOfMeeting(TextInputEditText subjectOfMeeting) {
 
         subjectOfMeeting.addTextChangedListener(new TextWatcher() {
@@ -173,31 +174,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                         meeting.setDate(localDate);
 
-                        /*DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
-                        TemporalAccessor dateTest = fmt.parse(dateString);*/
-
-                        /*// TODO : use LocalDate
-                        LocalDate date = null;
-                        try {
-                            date = dateSimpleFormat.parse(dateString);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            dateSimpleFormat.parse(dateString);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        // TODO : how to seDate with short format
-                        meeting.setDate(date);*/
-
-                        /*Date date = null;
-                        try {
-                            date = dateSimpleFormat.parse(dateString);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        meeting.setDate(date);*/
                     }
                 }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.show();

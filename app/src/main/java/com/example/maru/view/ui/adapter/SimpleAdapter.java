@@ -45,8 +45,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         String hour = meeting.getHour();
         LocalDate date = meeting.getDate();
 
-        holder.tvMeetingInformation.setText(subject+ " à " +hour+ " le " +date+ " dans la salle n° " +room);
+        holder.tvMeetingInformation.setText(subject+ " à " +hour+ " le " +date+ " salle n° " +room);
 
+        // TODO : show list of participant
         // Adapter for list of participant
         /*ParticipantOnMeetingAdapter participantMeetingAdapter = new ParticipantOnMeetingAdapter(mCtx,listOfEmailOfParticipant);
         holder.tvParticipantMeeting.setAdapter(participantMeetingAdapter);*/
