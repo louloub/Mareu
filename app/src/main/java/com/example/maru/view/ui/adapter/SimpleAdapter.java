@@ -61,7 +61,6 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
                 Toast.makeText(v.getContext(), "Réunion supprimée", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override

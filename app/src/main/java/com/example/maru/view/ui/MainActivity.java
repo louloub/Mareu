@@ -3,7 +3,6 @@ package com.example.maru.view.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,15 @@ import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
+    RecyclerView recyclerView;
+    int checkedItems = 0;
+    private MainViewModel mViewModel;
+    private ArrayList<MeetingJava> listOfMeeting;
+    private boolean ascendingRoom = true;
+    private boolean ascendingDate = true;
+
     private static final String TAG = "TAG";
+
     // Comparator to sort meeting list in order of room
     public static Comparator<MeetingJava> RoomComparator = new Comparator<MeetingJava>() {
         @Override
@@ -36,19 +43,14 @@ public class MainActivity extends AppCompatActivity {
             return (e1.getRoom() - e2.getRoom());
         }
     };
-    // Comparator to sort meeting list in order of room
+
+    // Comparator to sort meeting list in order of date
     public static Comparator<MeetingJava> DateComparator = new Comparator<MeetingJava>() {
         @Override
         public int compare(MeetingJava e1, MeetingJava e2) {
             return (e1.getDate().compareTo(e2.getDate()));
         }
     };
-    RecyclerView recyclerView;
-    int checkedItems = 0;
-    private MainViewModel mViewModel;
-    private ArrayList<MeetingJava> listOfMeeting;
-    private boolean ascendingRoom = true;
-    private boolean ascendingDate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +60,20 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
         floatingButton();
-        launcher();
+        testListOfMeetingInSingleton();
     }
 
-    public void launcher() {
+    // Test list of meeting in singleton
+    public void testListOfMeetingInSingleton() {
         MeetingManager.getInstance();
         listOfMeeting = MeetingManager.getMeeting();
-        if (listOfMeeting != null) {
+        if (!listOfMeeting.isEmpty()) {
             // recyclerView.setHasFixedSize(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listOfMeeting);
             recyclerView.setAdapter(simpleAdapter);
         } else {
-            Log.d(TAG, "meeting listOfMeeting is null ");
+            Toast.makeText(MainActivity.this.getApplicationContext(), "La liste de réunion est vide", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Create menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Alert Dialog Choice Sort
     public void alertDialogChoiceSort() {
 
         // Setup Alert builder
@@ -170,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         myPopup.show();
     }
 
-    // Sort room
+    // Sort room Method
     private void sortRoom(boolean asc) {
         //SORT ARRAY ASCENDING AND DESCENDING
         if (asc) {
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    // Sort date
+    // Sort date Method
     private void sortDate(boolean asc) {
         // SORT ARRAY ASCENDING AND DESCENDING
         if (asc) {
