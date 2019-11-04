@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<MeetingJava> listOfMeeting;
     private boolean ascendingRoom = true;
     private boolean ascendingDate = true;
+    int checkedItems = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void alertDialogChoiceSort(){
 
-        int checkedItems = 0;
+        // int checkedItems = 0;
 
         /*SharedPreferences settings = getSharedPreferences("MySortChoice", Context.MODE_PRIVATE);
         String sortChoiceSharedPreferences = settings.getString("MySortChoice",null);
@@ -149,21 +150,25 @@ public class MainActivity extends AppCompatActivity {
                     Toast toastCrescentRoom = Toast.makeText(MainActivity.this, "Trie croissant salle", Toast.LENGTH_SHORT);
                     toastCrescentRoom.show();
                     ascendingRoom =!ascendingRoom;
+                    checkedItems = 0;
                 } else if (checkedItemObject.toString().equals("Decroissant salle")) {
                     sortRoom(ascendingRoom);
                     Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
                     toastDecreaseRoom.show();
                     ascendingRoom =!ascendingRoom;
+                    checkedItems = 1;
                 } else if (checkedItemObject.toString().equals("Croissant date")) {
                     sortDate(ascendingDate);
                     Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
                     toastCrescentDate.show();
                     ascendingDate =!ascendingDate;
+                    checkedItems = 2;
                 } else if (checkedItemObject.toString().equals("Decroissant date")) {
                     sortDate(ascendingDate);
                     Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie decroissant date", Toast.LENGTH_SHORT);
                     toastDecreaseDate.show();
                     ascendingDate =!ascendingDate;
+                    checkedItems = 3;
                 }
             }
         }));
