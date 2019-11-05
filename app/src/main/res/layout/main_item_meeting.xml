@@ -41,12 +41,13 @@
 
                 <!-- RECYCLER VIEW FOR PARTICIPANT -->
                 <TextView
-                    android:id="@+id/create_meeting_rc_participant_meeting"
+                    android:id="@+id/meeting_tv_participant_meeting"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
                     app:layout_constraintEnd_toStartOf="@id/meeting_bt_delete_meeting"
-                    app:layout_constraintTop_toBottomOf="@id/meeting_tv_information" />
+                    app:layout_constraintTop_toBottomOf="@id/meeting_tv_information"
+                    android:text="Participants"/>
 
                 <!-- BUTTON DELETE -->
                 <androidx.appcompat.widget.AppCompatImageView

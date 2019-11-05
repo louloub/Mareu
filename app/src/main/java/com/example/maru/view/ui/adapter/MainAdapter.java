@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
+import org.threeten.bp.LocalDate;
+
+import java.util.ArrayList;
+
 public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
 
     public MainAdapter() {
@@ -22,7 +26,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
     @NonNull
     @Override
     public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false));
+        return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item_meeting, parent, false));
     }
 
     @Override
@@ -32,19 +36,20 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
     static class MainViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView textViewType;
-        private final TextView textViewAddress;
+        private final TextView textViewInformation;
+        private final TextView textViewParticipant;
 
         MainViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewType = itemView.findViewById(R.id.item_main_tv_meeting_information);
-            textViewAddress = itemView.findViewById(R.id.item_main_tv_participant_address);
+            textViewInformation = itemView.findViewById(R.id.item_main_tv_meeting_information);
+            textViewParticipant = itemView.findViewById(R.id.meeting_tv_participant_meeting);
         }
 
         void bind(PropertyUiModel model) {
-            textViewType.setText(model.getType());
-            textViewAddress.setText(model.getMainAddress());
+            
+            textViewInformation.setText(model.getSubject() + " à " + model.getHour() + " le " + model.getDate() + " salle n° " + model.getRoom());
+            textViewParticipant.setText((CharSequence) model.getListOfEmailOfParticipant());
         }
     }
 

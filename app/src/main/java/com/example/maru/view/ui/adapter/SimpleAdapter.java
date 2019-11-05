@@ -79,7 +79,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
 
             btDeleteMeeting = itemView.findViewById(R.id.meeting_bt_delete_meeting);
             tvMeetingInformation = itemView.findViewById(R.id.meeting_tv_information);
-            tvParticipantMeeting = itemView.findViewById(R.id.create_meeting_rc_participant_meeting);
+            tvParticipantMeeting = itemView.findViewById(R.id.meeting_tv_participant_meeting);
             // tvParticipantMeeting = itemView.findViewById(R.id.create_meeting_rc_participant_meeting);
             // Affichage horizontal des artistes dans la liste des événements
             // tvParticipantMeeting.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));

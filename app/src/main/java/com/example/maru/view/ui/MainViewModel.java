@@ -32,6 +32,7 @@ class MainViewModel extends ViewModel {
     private void wireUpMediator() {
         MeetingManager.getInstance();
 
+        // TODO : how create meetingLiveDate from Singleton ?
         // final LiveData<List<MeetingJava>> meetingLiveData = new LiveData<List<MeetingJava.getMeeting>>;
 
         final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getMeeting();
