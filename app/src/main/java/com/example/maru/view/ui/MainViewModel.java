@@ -17,7 +17,7 @@ import com.example.maru.view.ui.model.PropertyUiModel;
 import java.util.ArrayList;
 import java.util.List;
 
-class MainViewModel extends ViewModel {
+public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
 
@@ -28,6 +28,8 @@ class MainViewModel extends ViewModel {
         mMeeting = meeting;
         wireUpMediator();
     }
+
+    // TODO : is it necessary to use mediator with 1 data ?
 
     private void wireUpMediator() {
         MeetingManager.getInstance();
@@ -58,25 +60,11 @@ class MainViewModel extends ViewModel {
         for (MeetingJava meetingJava : meeting) {
             String subjectMeeting = null;
 
-            PropertyUiModel propertyUiModel = new PropertyUiModel(meetingJava.getDate(),meetingJava.getHour(),
+            PropertyUiModel propertyUiModel = new PropertyUiModel(meetingJava.getId(),meetingJava.getDate(),meetingJava.getHour(),
                     meetingJava.getRoom(),subjectMeeting, meetingJava.getListOfEmailOfParticipant());
 
             result.add(propertyUiModel);
         }
-
-        /*for (Property property : properties) {
-            String propertyAdress = null;
-
-            for (Address address : addresses) {
-                if (address.getId() == property.getId()) {
-                    propertyAdress = address.getPath();
-                }
-            }
-
-            PropertyUiModel propertyUiModel = new PropertyUiModel(property.getId(), property.getType(), propertyAdress);
-
-            result.add(propertyUiModel);
-        }*/
 
         return result;
     }

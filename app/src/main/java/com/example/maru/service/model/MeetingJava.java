@@ -8,13 +8,15 @@ import java.util.Date;
 
 public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
+    private int id;
     private LocalDate date;
     private String hour;
     private int room;
     private String subject;
     private ArrayList<String> listOfEmailOfParticipant;
 
-    public MeetingJava(LocalDate date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
+    public MeetingJava(int id, LocalDate date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
+        this.id = id;
         this.date = date;
         this.hour = hour;
         this.room = room;
@@ -23,6 +25,10 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
     }
 
     public MeetingJava(){}
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public LocalDate getDate() {
         return date;

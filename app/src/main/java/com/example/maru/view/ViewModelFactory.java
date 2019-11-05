@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maru.service.model.Meeting;
+import com.example.maru.service.model.MeetingJava;
 import com.example.maru.view.ui.MainViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -17,9 +18,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private final PropertyDao propertyDao;*/
 
     @NonNull
-    private final Meeting meeting;
+    private final MeetingJava meeting;
 
-    private ViewModelFactory(@NonNull Meeting meeting) {
+    private ViewModelFactory(@NonNull MeetingJava meeting) {
         this.meeting = meeting;
     }
 
@@ -28,7 +29,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             synchronized (ViewModelFactory.class) {
                 if (sFactory == null) {
                     sFactory = new ViewModelFactory(
-                            new Meeting()
+                            new MeetingJava()
                     );
                 }
             }
