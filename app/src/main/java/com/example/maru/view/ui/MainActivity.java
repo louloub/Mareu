@@ -12,24 +12,31 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.view.ViewModelFactory;
+import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.adapter.SimpleAdapter;
+import com.example.maru.view.ui.model.PropertyUiModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    int checkedItems = 0;
     private MainViewModel mViewModel;
+
+    /*// RecyclerView recyclerView;
+    int checkedItems = 0;
     private ArrayList<MeetingJava> listOfMeeting;
     private boolean ascendingRoom = true;
     private boolean ascendingDate = true;
@@ -50,21 +57,39 @@ public class MainActivity extends AppCompatActivity {
         public int compare(MeetingJava e1, MeetingJava e2) {
             return (e1.getDate().compareTo(e2.getDate()));
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.main_rv);
+
+        // TODO : start MVVM test
+
+        final MainAdapter adapter = new MainAdapter();
+        RecyclerView recyclerView = findViewById(R.id.main_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+
+        mViewModel.getUiModelsLiveData().observe(this, new Observer<List<PropertyUiModel>>() {
+            @Override
+            public void onChanged(List<PropertyUiModel> propertyUiModels) {
+                adapter.submitList(propertyUiModels);
+            }
+        });
+
+        // TODO : end MVVM test
+
+        /*recyclerView = findViewById(R.id.main_rv);
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
         floatingButton();
-        testListOfMeetingInSingleton();
+        testListOfMeetingInSingleton();*/
     }
 
-
-    // Test list of meeting in singleton
+    /*// Test list of meeting in singleton
     public void testListOfMeetingInSingleton() {
         MeetingManager.getInstance();
         listOfMeeting = MeetingManager.getMeeting();
@@ -200,5 +225,5 @@ public class MainActivity extends AppCompatActivity {
         //ADAPTER
         SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
         recyclerView.setAdapter(adapter);
-    }
+    }*/
 }

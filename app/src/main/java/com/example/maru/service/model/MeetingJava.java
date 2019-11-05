@@ -63,10 +63,12 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
     public void setListOfEmailOfParticipant(ArrayList<String> listOfEmailOfParticipant) {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
+
     @Override
     public int compareTo(MeetingJava meetingJava) {
         return (this.room - meetingJava.room);
     }
+
     @Override
     //this is required to print the user-friendly information about the Employee
     public String toString() {

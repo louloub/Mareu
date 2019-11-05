@@ -3,55 +3,67 @@ package com.example.maru.view.ui;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.Meeting;
+import com.example.maru.service.model.MeetingJava;
+import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainViewModel extends ViewModel {
+class MainViewModel extends ViewModel {
 
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
 
     @NonNull
-    private Meeting mMeeting;
+    private MeetingJava mMeeting;
 
-    public MainViewModel(@NonNull Meeting meeting) {
+    public MainViewModel(@NonNull MeetingJava meeting) {
         mMeeting = meeting;
-        // wireUpMediator();
+        wireUpMediator();
     }
 
-    /*private void wireUpMediator() {
-        final LiveData<List<Meeting>> meetingLiveData = new LiveData<List<Meeting>>;
-        final LiveData<List<Address>> addressesLiveData = mAddressDao.getAddressesLiveData();
+    private void wireUpMediator() {
+        MeetingManager.getInstance();
 
-        mUiModelsLiveData.addSource(propertiesLiveData, new Observer<List<Property>>() {
+        // final LiveData<List<MeetingJava>> meetingLiveData = new LiveData<List<MeetingJava.getMeeting>>;
+
+        final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getMeeting();
+        // final LiveData<List<MeetingJava>> meetingLiveData = new LiveData<List<MeetingJava>>;
+        // final LiveData<List<Address>> addressesLiveData = mAddressDao.getAddressesLiveData();
+
+        mUiModelsLiveData.addSource(meetingLiveData, new Observer<List<MeetingJava>>() {
             @Override
-            public void onChanged(List<Property> properties) {
-                mUiModelsLiveData.setValue(combineMeeting(properties, addressesLiveData.getValue()));
+            public void onChanged(List<MeetingJava> meetingJavas) {
+                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue()));
             }
         });
+    }
 
-        mUiModelsLiveData.addSource(addressesLiveData, new Observer<List<Address>>() {
-            @Override
-            public void onChanged(List<Address> addresses) {
-                mUiModelsLiveData.setValue(combineMeeting(propertiesLiveData.getValue(), addresses));
-            }
-        });
-    }*/
-
-    /*@Nullable
-    private List<PropertyUiModel> combineMeeting(@Nullable List<Meeting> meeting) {
-        if (mMeeting == null) {
+    @Nullable
+    private List<PropertyUiModel> combineMeeting(@Nullable List<MeetingJava> meeting) {
+        if (meeting == null) {
             return null;
         }
 
         List<PropertyUiModel> result = new ArrayList<>();
 
-        for (Property property : properties) {
+        for (MeetingJava meetingJava : meeting) {
+            String subjectMeeting = null;
+
+            PropertyUiModel propertyUiModel = new PropertyUiModel(meetingJava.getDate(),meetingJava.getHour(),
+                    meetingJava.getRoom(),subjectMeeting, meetingJava.getListOfEmailOfParticipant());
+
+            result.add(propertyUiModel);
+        }
+
+        /*for (Property property : properties) {
             String propertyAdress = null;
 
             for (Address address : addresses) {
@@ -63,18 +75,18 @@ public class MainViewModel extends ViewModel {
             PropertyUiModel propertyUiModel = new PropertyUiModel(property.getId(), property.getType(), propertyAdress);
 
             result.add(propertyUiModel);
-        }
+        }*/
 
         return result;
-    }*/
+    }
 
     LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
 
-    void addNewProperty() {
+    /*void addNewProperty() {
         new InsertDataAsyncTask(mMeeting).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
+    }*/
 
     private static class InsertDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
