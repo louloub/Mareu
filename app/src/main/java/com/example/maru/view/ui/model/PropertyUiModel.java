@@ -3,8 +3,6 @@ package com.example.maru.view.ui.model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.maru.service.model.MeetingJava;
-
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
@@ -119,7 +117,6 @@ public class PropertyUiModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         PropertyUiModel that = (PropertyUiModel) o;
         return id == that.id;
 
