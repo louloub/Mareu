@@ -1,11 +1,13 @@
 package com.example.maru.view.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
@@ -16,6 +18,8 @@ import com.example.maru.view.ui.model.PropertyUiModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class MainViewModel extends ViewModel {
 
@@ -32,7 +36,8 @@ public class MainViewModel extends ViewModel {
     // TODO : is it necessary to use mediator with 1 data ?
 
     private void wireUpMediator() {
-        MeetingManager.getInstance();
+        // MeetingManager.getInstance();
+
 
         // TODO : how create meetingLiveDate from Singleton ?
         // final LiveData<List<MeetingJava>> meetingLiveData = new LiveData<List<MeetingJava.getMeeting>>;
@@ -71,6 +76,14 @@ public class MainViewModel extends ViewModel {
 
     LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
+    }
+
+    // TODO : impossible to use intent here, but i don't know why
+    public void launchCreateMeeting(Intent intent) {
+        // startActivity(this,intent);
+        /*
+        Intent intent = new Intent(context, CreateMeetingActivityJava.class);
+        startActivity(intent);*/
     }
 
     /*void addNewProperty() {

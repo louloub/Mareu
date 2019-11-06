@@ -283,8 +283,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-    }
+    public void onPointerCaptureChanged(boolean hasCapture) {}
 
     // Listener on button for validate meeting
     public void onValidMeetingClick(Button validMeeting) {
@@ -293,7 +292,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onClick(View v) {
                 MeetingManager.getInstance();
                 MeetingManager.addMeeting(meeting);
-                Log.d(TAG, " meeting = " + meeting);
+                Log.d(TAG, " meeting in onValidMeetingClick / onClick = " + meeting);
 
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Réunion enregistrée",

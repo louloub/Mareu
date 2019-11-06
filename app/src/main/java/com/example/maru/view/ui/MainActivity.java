@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
+import com.example.maru.utility.Builder;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
@@ -80,6 +81,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
+
+        // Button for add meeting
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchCreateMeeting();
+                // mViewModel.launchCreateMeeting(intent);
+            }
+        });
+
         // TODO : end MVVM test
 
         /*recyclerView = findViewById(R.id.main_rv);
@@ -87,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         floatingButton();
         testListOfMeetingInSingleton();*/
+    }
+
+
+    // Launch intent for create new meeting
+    public void launchCreateMeeting() {
+        // Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
+        Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivityJava.class);
+        startActivity(intent);
     }
 
     /*// Test list of meeting in singleton
