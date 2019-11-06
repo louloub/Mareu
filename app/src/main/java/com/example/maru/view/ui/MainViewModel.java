@@ -17,48 +17,60 @@ import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static com.example.maru.view.ui.SortingType.DATE;
+import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL;
 
 public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
+    private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
 
-    @NonNull
-    private MeetingJava mMeeting;
-
-    public MainViewModel(@NonNull MeetingJava meeting) {
-        mMeeting = meeting;
+    public MainViewModel() {
         wireUpMediator();
     }
 
     private void wireUpMediator() {
         // MeetingManager.getInstance();
 
+        final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData();
 
-        // TODO : how create meetingLiveDate from Singleton ?
-        // final LiveData<List<MeetingJava>> meetingLiveData = new LiveData<List<MeetingJava.getMeeting>>;
-
-        final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getMeeting();
-        // final LiveData<List<MeetingJava>> meetingLiveData = new LiveData<List<MeetingJava>>;
-        // final LiveData<List<Address>> addressesLiveData = mAddressDao.getAddressesLiveData();
+        mUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingType>() {
+            @Override
+            public void onChanged(SortingType sortingType) {
+                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue(),sortingType));
+            }
+        });
 
         mUiModelsLiveData.addSource(meetingLiveData, new Observer<List<MeetingJava>>() {
             @Override
             public void onChanged(List<MeetingJava> meetingJavas) {
-                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue()));
+                mUiModelsLiveData.setValue(combineMeeting(meetingJavas,mSortingTypeLiveData.getValue()));
             }
         });
     }
 
     @Nullable
-    private List<PropertyUiModel> combineMeeting(@Nullable List<MeetingJava> meeting) {
-        if (meeting == null) {
+    private List<PropertyUiModel> combineMeeting(
+            @Nullable List<MeetingJava> meetings,
+            @Nullable SortingType sortingType
+    ) {
+        if (meetings == null) {
             return null;
         }
 
-        List<PropertyUiModel> result = new ArrayList<>();
+        if (sortingType == null || sortingType == ROOM_ALPHABETICAL) {
+            Collections.sort(meetings,ROOM_COMPARATOR);
+        } else if (sortingType == DATE ) {
+            Collections.sort(meetings,DATECOMPARATOR);
+        }
 
-        for (MeetingJava meetingJava : meeting) {
+            List<PropertyUiModel> result = new ArrayList<>();
+
+        for (MeetingJava meetingJava : meetings) {
             String subjectMeeting = null;
 
             PropertyUiModel propertyUiModel = new PropertyUiModel(meetingJava.getId(),meetingJava.getDate(),meetingJava.getHour(),
@@ -67,26 +79,32 @@ public class MainViewModel extends ViewModel {
             result.add(propertyUiModel);
         }
 
-        /*for (Property property : properties) {
-            String propertyAdress = null;
-
-            for (Address address : addresses) {
-                if (address.getId() == property.getId()) {
-                    propertyAdress = address.getPath();
-                }
-            }
-
-            PropertyUiModel propertyUiModel = new PropertyUiModel(property.getId(), property.getType(), propertyAdress);
-
-            result.add(propertyUiModel);
-        }*/
-
         return result;
+    }
+
+    public void setSortingType(){
+        mSortingTypeLiveData.setValue(DATE);
     }
 
     LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
+
+    // Comparator to sort meeting list in order of room
+    private static final Comparator<MeetingJava> ROOM_COMPARATOR = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getRoom() - e2.getRoom());
+        }
+    };
+
+    // Comparator to sort meeting list in order of date
+    private static final Comparator<MeetingJava> DATECOMPARATOR = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getDate().compareTo(e2.getDate()));
+        }
+    };
 
     // TODO : impossible to use intent here, but i don't know why
     public void launchCreateMeeting(Intent intent) {
