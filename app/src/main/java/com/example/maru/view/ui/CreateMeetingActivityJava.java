@@ -283,7 +283,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {}
+    public void onPointerCaptureChanged(boolean hasCapture) {
+    }
 
     // Listener on button for validate meeting
     public void onValidMeetingClick(Button validMeeting) {

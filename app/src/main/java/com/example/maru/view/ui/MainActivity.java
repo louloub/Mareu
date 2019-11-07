@@ -3,7 +3,6 @@ package com.example.maru.view.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,20 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.service.model.MeetingJava;
-import com.example.maru.utility.Builder;
-import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
-import com.example.maru.view.ui.adapter.SimpleAdapter;
 import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Create floating button
     private void floatingButton() {
-        // Button for add meeting
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
         myPopup.setSingleChoiceItems(sortingTypeUiModel.getNames().toArray(
                 new String[sortingTypeUiModel.getNames().size()]),
                 sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        }));
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }));
 
         // Setup "Valider" button
         myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
@@ -144,52 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 mViewModel.setSortingType((String) checkedItemObject);
             }
         }));
-
-/*
-
-        // Setup list of choice
-        myPopup.setSingleChoiceItems(sortChoice, checkedItems, (new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        }));
-
-        // Setup button VALIDER
-        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ListView lw = ((AlertDialog) dialog).getListView();
-                Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
-                Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
-
-                if (checkedItemObject.toString().equals("Croissant salle")) {
-                    sortRoom(ascendingRoom);
-                    Toast toastCrescentRoom = Toast.makeText(MainActivity.this, "Trie croissant salle", Toast.LENGTH_SHORT);
-                    toastCrescentRoom.show();
-                    ascendingRoom = !ascendingRoom;
-                    checkedItems = 0;
-                } else if (checkedItemObject.toString().equals("Decroissant salle")) {
-                    sortRoom(ascendingRoom);
-                    Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
-                    toastDecreaseRoom.show();
-                    ascendingRoom = !ascendingRoom;
-                    checkedItems = 1;
-                } else if (checkedItemObject.toString().equals("Croissant date")) {
-                    sortDate(ascendingDate);
-                    Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
-                    toastCrescentDate.show();
-                    ascendingDate = !ascendingDate;
-                    checkedItems = 2;
-                } else if (checkedItemObject.toString().equals("Decroissant date")) {
-                    sortDate(ascendingDate);
-                    Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie decroissant date", Toast.LENGTH_SHORT);
-                    toastDecreaseDate.show();
-                    ascendingDate = !ascendingDate;
-                    checkedItems = 3;
-                }
-            }
-        }));
-*/
 
         myPopup.setCancelable(false);
 

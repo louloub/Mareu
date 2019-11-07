@@ -4,7 +4,6 @@ import org.threeten.bp.LocalDate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
@@ -24,11 +23,16 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
 
-    public MeetingJava(){}
+    public MeetingJava() {
+    }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public LocalDate getDate() {
         return date;

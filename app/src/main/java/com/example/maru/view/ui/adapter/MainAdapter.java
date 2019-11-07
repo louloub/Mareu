@@ -13,10 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
-import org.threeten.bp.LocalDate;
-
-import java.util.ArrayList;
-
 public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
 
     public MainAdapter() {
@@ -47,7 +43,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
         }
 
         void bind(PropertyUiModel model) {
-            
+
             textViewInformation.setText(model.getSubject() + " à " + model.getHour() + " le " + model.getDate() + " salle n° " + model.getRoom());
             textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
         }

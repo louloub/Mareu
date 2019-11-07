@@ -1,6 +1,5 @@
 package com.example.maru.view.ui;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
@@ -11,14 +10,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,12 +30,24 @@ import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_DSC;
 
 public class MainViewModel extends ViewModel {
 
+    // Comparator to sort meeting list in order of room
+    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getRoom() - e2.getRoom());
+        }
+    };
+    // Comparator to sort meeting list in order of date
+    private static final Comparator<MeetingJava> DATECOMPARATOR = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getDate().compareTo(e2.getDate()));
+        }
+    };
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private int selectedSortingTypeIndex = 0;
-
-    // private int checkedItems = 0;
 
     public MainViewModel() {
         wireUpMediator();
@@ -51,14 +60,14 @@ public class MainViewModel extends ViewModel {
         mUiModelsLiveData.addSource(meetingLiveData, new Observer<List<MeetingJava>>() {
             @Override
             public void onChanged(List<MeetingJava> meetingJavas) {
-                mUiModelsLiveData.setValue(combineMeeting(meetingJavas,mSortingTypeLiveData.getValue()));
+                mUiModelsLiveData.setValue(combineMeeting(meetingJavas, mSortingTypeLiveData.getValue()));
             }
         });
 
         mUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingType>() {
             @Override
             public void onChanged(SortingType sortingType) {
-                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue(),sortingType));
+                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue(), sortingType));
             }
         });
     }
@@ -73,14 +82,21 @@ public class MainViewModel extends ViewModel {
         }
 
         if (sortingType == null || sortingType == ROOM_ALPHABETICAL_ASC) {
+
             Collections.sort(meetings, ROOM_COMPARATOR_MEETING_JAVA);
+
         } else if (sortingType == ROOM_ALPHABETICAL_DSC) {
-            Collections.sort(meetings,ROOM_COMPARATOR_MEETING_JAVA);
+
+            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_JAVA);
             Collections.reverse(meetings);
+
         } else if (sortingType == DATE_ASC) {
-            Collections.sort(meetings,DATECOMPARATOR);
+
+            Collections.sort(meetings, DATECOMPARATOR);
+
         } else if (sortingType == DATE_DSC) {
-            Collections.sort(meetings,DATECOMPARATOR);
+
+            Collections.sort(meetings, DATECOMPARATOR);
             Collections.reverse(meetings);
         }
 
@@ -90,8 +106,8 @@ public class MainViewModel extends ViewModel {
             String subjectMeeting = null;
 
             PropertyUiModel propertyUiModel = new PropertyUiModel(
-                    meetingJava.getId(),meetingJava.getDate(),meetingJava.getHour(),
-                    meetingJava.getRoom(),subjectMeeting, meetingJava.getListOfEmailOfParticipant());
+                    meetingJava.getId(), meetingJava.getDate(), meetingJava.getHour(),
+                    meetingJava.getRoom(), subjectMeeting, meetingJava.getListOfEmailOfParticipant());
 
             result.add(propertyUiModel);
         }
@@ -99,9 +115,7 @@ public class MainViewModel extends ViewModel {
         return result;
     }
 
-
-    // TODO : test with Harold
-    public void setSortingType(String sortChoice){
+    public void setSortingType(String sortChoice) {
         if (sortChoice.equals("Croissant salle")) {
             mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
         } else if (sortChoice.equals("Decroissant salle")) {
@@ -150,23 +164,6 @@ public class MainViewModel extends ViewModel {
         return mUiModelsLiveData;
     }
 
-    // TODO : comparator for MeetingJava
-    // Comparator to sort meeting list in order of room
-    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getRoom() - e2.getRoom());
-        }
-    };
-
-    // Comparator to sort meeting list in order of date
-    private static final Comparator<MeetingJava> DATECOMPARATOR = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getDate().compareTo(e2.getDate()));
-        }
-    };
-
     public void displaySortingTypePopup() {
         List<String> list = new ArrayList<>();
         list.add("Croissant salle ");
@@ -174,7 +171,7 @@ public class MainViewModel extends ViewModel {
         list.add("Croissant date ");
         list.add("Decroissant date ");
 
-        mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list,selectedSortingTypeIndex));
+        mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, selectedSortingTypeIndex));
     }
 
     public LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() {
@@ -186,7 +183,7 @@ public class MainViewModel extends ViewModel {
 
         int room = new Random().nextInt(10);
 
-        new InsertDataAsyncTask(new MeetingJava(0, LocalDate.now(),""+hour, room, "S",new ArrayList<String>())).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new InsertDataAsyncTask(new MeetingJava(0, LocalDate.now(), "" + hour, room, "S", new ArrayList<String>())).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private static class InsertDataAsyncTask extends AsyncTask<Void, Void, Void> {

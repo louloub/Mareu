@@ -1,12 +1,8 @@
 package com.example.maru.view.ui.model;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PropertyUiModel {
 
@@ -26,11 +22,16 @@ public class PropertyUiModel {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
 
-    public PropertyUiModel(){}
+    public PropertyUiModel() {
+    }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public LocalDate getDate() {
         return date;
@@ -72,28 +73,12 @@ public class PropertyUiModel {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
 
-    /*@Override
-    public int compareTo(MeetingJava meetingJava) {
-        return (this.room - meetingJava.room);
-    }
-    */
-
     @Override
     //this is required to print the user-friendly information about the Meeting
     public String toString() {
         return "[sujet=" + this.subject + ", heure=" + this.hour + ", date=" + this.date + ", salle=" +
                 this.room + "]";
     }
-
-    /*@NonNull
-    public String getType() {
-        return type;
-    }
-
-    @Nullable
-    public String getMainAddress() {
-        return mainAddress;
-    }*/
 
     @Override
     public boolean equals(Object o) {
