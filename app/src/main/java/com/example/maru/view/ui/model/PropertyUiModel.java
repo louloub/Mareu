@@ -97,7 +97,7 @@ public class PropertyUiModel {
     */
 
     @Override
-    //this is required to print the user-friendly information about the Employee
+    //this is required to print the user-friendly information about the Meeting
     public String toString() {
         return "[sujet=" + this.subject + ", heure=" + this.hour + ", date=" + this.date + ", salle=" +
                 this.room + "]";

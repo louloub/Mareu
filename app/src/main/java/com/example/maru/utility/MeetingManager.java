@@ -11,7 +11,6 @@ import java.util.List;
 /** MeetingManager is a Singleton */
 public class MeetingManager {
 
-    private static final String TAG = "TAG" ;
     private List<MeetingJava> listMeeting = new ArrayList<>();
     private MutableLiveData<List<MeetingJava>> listMeetingLiveData = new MutableLiveData<>();
 

@@ -2,6 +2,7 @@ package com.example.maru.view.ui;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
 import java.util.ArrayList;
@@ -28,27 +30,33 @@ public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
+    private List<PropertyUiModel> result = new ArrayList<>();
+    private boolean ascendingRoom = true;
+    private boolean ascendingDate = true;
+    private int checkedItems = 0;
 
     public MainViewModel() {
         wireUpMediator();
     }
 
+    public MainViewModel(MeetingJava meeting) {
+    }
+
     private void wireUpMediator() {
-        // MeetingManager.getInstance();
 
         final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData();
-
-        mUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingType>() {
-            @Override
-            public void onChanged(SortingType sortingType) {
-                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue(),sortingType));
-            }
-        });
 
         mUiModelsLiveData.addSource(meetingLiveData, new Observer<List<MeetingJava>>() {
             @Override
             public void onChanged(List<MeetingJava> meetingJavas) {
                 mUiModelsLiveData.setValue(combineMeeting(meetingJavas,mSortingTypeLiveData.getValue()));
+            }
+        });
+
+        mUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingType>() {
+            @Override
+            public void onChanged(SortingType sortingType) {
+                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue(),sortingType));
             }
         });
     }
@@ -67,13 +75,13 @@ public class MainViewModel extends ViewModel {
         } else if (sortingType == DATE ) {
             Collections.sort(meetings,DATECOMPARATOR);
         }
-
-            List<PropertyUiModel> result = new ArrayList<>();
+            // List<PropertyUiModel> result = new ArrayList<>();
 
         for (MeetingJava meetingJava : meetings) {
             String subjectMeeting = null;
 
-            PropertyUiModel propertyUiModel = new PropertyUiModel(meetingJava.getId(),meetingJava.getDate(),meetingJava.getHour(),
+            PropertyUiModel propertyUiModel = new PropertyUiModel(
+                    meetingJava.getId(),meetingJava.getDate(),meetingJava.getHour(),
                     meetingJava.getRoom(),subjectMeeting, meetingJava.getListOfEmailOfParticipant());
 
             result.add(propertyUiModel);
@@ -82,13 +90,93 @@ public class MainViewModel extends ViewModel {
         return result;
     }
 
-    public void setSortingType(){
+    // TODO : with NINO
+    /*public void setSortingType(String[] sortChoice){
         mSortingTypeLiveData.setValue(DATE);
+    }*/
+
+    // TODO : test with Harold
+    public void setSortingType(String[] sortChoice){
+        if (sortChoice.equals("Croissant salle")) {
+            sortRoom(ascendingRoom);
+            /*Toast toastCrescentRoom = Toast.makeText(MainViewModel.this, "Trie croissant salle", Toast.LENGTH_SHORT);
+            toastCrescentRoom.show();*/
+            ascendingRoom = !ascendingRoom;
+            checkedItems = 0;
+            // TODO : Create 2 enum ROOM_ALPHABETICAL ?
+            mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL);
+        } else if (sortChoice.equals("Decroissant salle")) {
+            sortRoom(ascendingRoom);
+            /*Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
+            toastDecreaseRoom.show();*/
+            ascendingRoom = !ascendingRoom;
+            checkedItems = 1;
+            // TODO : Create 2 enum ROOM_ALPHABETICAL ?
+            mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL);
+        } else if (sortChoice.equals("Croissant date")) {
+            sortDate(ascendingDate);
+            /*Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
+            toastCrescentDate.show();*/
+            ascendingDate = !ascendingDate;
+            checkedItems = 2;
+            // TODO : Create 2 enum DATE ?
+            mSortingTypeLiveData.setValue(DATE);
+        } else if (sortChoice.equals("Decroissant date")) {
+            sortDate(ascendingDate);
+            /*Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie decroissant date", Toast.LENGTH_SHORT);
+            toastDecreaseDate.show();*/
+            ascendingDate = !ascendingDate;
+            checkedItems = 3;
+            // TODO : Create 2 enum DATE ?
+            mSortingTypeLiveData.setValue(DATE);
+        }
+    }
+
+    // Sort room Method
+    private void sortRoom(boolean ascendingRoom) {
+        //SORT ARRAY ASCENDING AND DESCENDING
+        if (ascendingRoom) {
+            
+            // TODO : with new comparator for PropertyUiModel
+            Collections.sort(result, ROOM_COMPARATOR_PUM);
+            // TODO : with getInstance.getMeetingLiveData casted in list
+            // Collections.sort((List<MeetingJava>) MeetingManager.getInstance().getMeetingLiveData(), ROOM_COMPARATOR);
+            // TODO : with mSortingTypeLiveData
+            // Collections.sort(mSortingTypeLiveData, ROOM_COMPARATOR);
+            // TODO : with mSortingTypeLiveData casted in List
+            // Collections.sort((List<MeetingJava>) mSortingTypeLiveData, ROOM_COMPARATOR);
+        } else {
+            Collections.reverse(result);
+        }
+        //ADAPTER
+        /*MainAdapter adapter = new MainAdapter(this, result);
+        recyclerView.setAdapter(adapter);*/
+    }
+
+    // Sort date Method
+    private void sortDate(boolean ascendingDate) {
+        // SORT ARRAY ASCENDING AND DESCENDING
+        /*if (ascendingDate) {
+            Collections.sort(listOfMeeting, DateComparator);
+        } else {
+            Collections.reverse(listOfMeeting);
+        }
+        //ADAPTER
+        SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
+        recyclerView.setAdapter(adapter);*/
     }
 
     LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
+    
+    // TODO : new comparator for PropertyUiModel by HAROLD
+    private static final Comparator<PropertyUiModel> ROOM_COMPARATOR_PUM = new Comparator<PropertyUiModel>() {
+        @Override
+        public int compare(PropertyUiModel o1, PropertyUiModel o2) {
+            return (o1.getRoom() - o2.getRoom());
+        }
+    };
 
     // Comparator to sort meeting list in order of room
     private static final Comparator<MeetingJava> ROOM_COMPARATOR = new Comparator<MeetingJava>() {

@@ -126,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
             alertDialogChoiceSort();
-        } else {
-            // ELSE
         }
         return super.onOptionsItemSelected(item);
     }
@@ -140,12 +138,20 @@ public class MainActivity extends AppCompatActivity {
         myPopup.setTitle("Choisis le trie que tu souhaites");
 
         // Ddd a radio button list
-        String[] sortChoice = {"Croissant salle", "Decroissant salle", "Croissant date", "Decroissant date"};
+        final String[] sortChoice = {"Croissant salle", "Decroissant salle", "Croissant date", "Decroissant date"};
 
-        mViewModel.setSortingType();
+        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mViewModel.setSortingType(sortChoice);
+                ListView lw = ((AlertDialog) dialog).getListView();
+                Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
+            }
+        }));
 
-        // TODO ou mettre le popup ?
-
+        // mViewModel.setSortingType(sortChoice);
+        // TODO : button valider ?
 /*
 
         // Setup list of choice

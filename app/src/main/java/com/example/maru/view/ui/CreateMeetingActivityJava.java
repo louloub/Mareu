@@ -290,8 +290,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MeetingManager.getInstance();
-                MeetingManager.addMeeting(meeting);
+                MeetingManager.getInstance().addMeeting(meeting);
                 Log.d(TAG, " meeting in onValidMeetingClick / onClick = " + meeting);
 
                 Toast toast = Toast.makeText(getApplicationContext(),
