@@ -3,6 +3,7 @@ package com.example.maru.view.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "tag";
     private MainViewModel mViewModel;
+    private static int checkedItems = 0;
 
     /*// RecyclerView recyclerView;
     int checkedItems = 0;
@@ -64,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        floatingButton();
+        Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
+        setSupportActionBar(toolbar);
+
 
         // TODO : start MVVM test
 
@@ -81,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
 
+        // TODO : end MVVM test
+
+        /*recyclerView = findViewById(R.id.main_rv);
+        Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
+        setSupportActionBar(toolbar);
+        floatingButton();
+        testListOfMeetingInSingleton();*/
+    }
+
+    public static void setCheckedItemsInMenu(int newCheckedItems){
+        checkedItems = newCheckedItems;
+    }
+
+    private void floatingButton() {
         // Button for add meeting
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,14 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 // mViewModel.launchCreateMeeting(intent);
             }
         });
-
-        // TODO : end MVVM test
-
-        /*recyclerView = findViewById(R.id.main_rv);
-        Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
-        setSupportActionBar(toolbar);
-        floatingButton();
-        testListOfMeetingInSingleton();*/
     }
 
     private void configureRecyclerView(MainAdapter adapter) {
@@ -140,13 +153,22 @@ public class MainActivity extends AppCompatActivity {
         // Ddd a radio button list
         final String[] sortChoice = {"Croissant salle", "Decroissant salle", "Croissant date", "Decroissant date"};
 
+        // Setup list of choice
+        myPopup.setSingleChoiceItems(sortChoice, checkedItems, (new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }));
+
+        // Setup "Valider" button
         myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mViewModel.setSortingType(sortChoice);
+                // Log.d(TAG, "CHECKED_ITEMS_IN_MENU = " +CHECKED_ITEMS_IN_MENU );
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
+                mViewModel.setSortingType((String) checkedItemObject);
             }
         }));
 
@@ -204,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = myPopup.create();
         myPopup.show();
     }
+
 
 
     /*// Test list of meeting in singleton

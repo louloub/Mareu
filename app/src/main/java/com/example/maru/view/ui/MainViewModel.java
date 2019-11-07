@@ -33,7 +33,7 @@ public class MainViewModel extends ViewModel {
     private List<PropertyUiModel> result = new ArrayList<>();
     private boolean ascendingRoom = true;
     private boolean ascendingDate = true;
-    private int checkedItems = 0;
+    // private int checkedItems = 0;
 
     public MainViewModel() {
         wireUpMediator();
@@ -96,13 +96,13 @@ public class MainViewModel extends ViewModel {
     }*/
 
     // TODO : test with Harold
-    public void setSortingType(String[] sortChoice){
+    public void setSortingType(String sortChoice){
         if (sortChoice.equals("Croissant salle")) {
             sortRoom(ascendingRoom);
             /*Toast toastCrescentRoom = Toast.makeText(MainViewModel.this, "Trie croissant salle", Toast.LENGTH_SHORT);
             toastCrescentRoom.show();*/
             ascendingRoom = !ascendingRoom;
-            checkedItems = 0;
+            MainActivity.setCheckedItemsInMenu(0);
             // TODO : Create 2 enum ROOM_ALPHABETICAL ?
             mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL);
         } else if (sortChoice.equals("Decroissant salle")) {
@@ -110,7 +110,7 @@ public class MainViewModel extends ViewModel {
             /*Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
             toastDecreaseRoom.show();*/
             ascendingRoom = !ascendingRoom;
-            checkedItems = 1;
+            MainActivity.setCheckedItemsInMenu(1);
             // TODO : Create 2 enum ROOM_ALPHABETICAL ?
             mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL);
         } else if (sortChoice.equals("Croissant date")) {
@@ -118,7 +118,7 @@ public class MainViewModel extends ViewModel {
             /*Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
             toastCrescentDate.show();*/
             ascendingDate = !ascendingDate;
-            checkedItems = 2;
+            MainActivity.setCheckedItemsInMenu(2);
             // TODO : Create 2 enum DATE ?
             mSortingTypeLiveData.setValue(DATE);
         } else if (sortChoice.equals("Decroissant date")) {
@@ -126,7 +126,7 @@ public class MainViewModel extends ViewModel {
             /*Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie decroissant date", Toast.LENGTH_SHORT);
             toastDecreaseDate.show();*/
             ascendingDate = !ascendingDate;
-            checkedItems = 3;
+            MainActivity.setCheckedItemsInMenu(3);
             // TODO : Create 2 enum DATE ?
             mSortingTypeLiveData.setValue(DATE);
         }
