@@ -26,7 +26,9 @@ import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.adapter.SimpleAdapter;
 import com.example.maru.view.ui.model.PropertyUiModel;
+import com.example.maru.view.ui.model.SortingTypeUiModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,42 +39,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "tag";
     private MainViewModel mViewModel;
-    private static int checkedItems = 0;
-
-    /*// RecyclerView recyclerView;
-    int checkedItems = 0;
-    private ArrayList<MeetingJava> listOfMeeting;
-    private boolean ascendingRoom = true;
-    private boolean ascendingDate = true;
-
-    private static final String TAG = "TAG";
-
-    // Comparator to sort meeting list in order of room
-    public static Comparator<MeetingJava> RoomComparator = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getRoom() - e2.getRoom());
-        }
-    };
-
-    // Comparator to sort meeting list in order of date
-    public static Comparator<MeetingJava> DateComparator = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getDate().compareTo(e2.getDate()));
-        }
-    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AndroidThreeTen.init(this);
         setContentView(R.layout.activity_main);
         floatingButton();
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
-
-
-        // TODO : start MVVM test
 
         final MainAdapter adapter = new MainAdapter();
         configureRecyclerView(adapter);
@@ -86,33 +61,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
-
-        // TODO : end MVVM test
-
-        /*recyclerView = findViewById(R.id.main_rv);
-        Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
-        setSupportActionBar(toolbar);
-        floatingButton();
-        testListOfMeetingInSingleton();*/
+        mViewModel.getmSortingTypeUiModelLiveData().observe(this, new Observer<SortingTypeUiModel>() {
+            @Override
+            public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
+                alertDialogChoiceSort(sortingTypeUiModel);
+            }
+        });
     }
 
-    public static void setCheckedItemsInMenu(int newCheckedItems){
-        checkedItems = newCheckedItems;
-    }
-
+    // Create floating button
     private void floatingButton() {
         // Button for add meeting
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchCreateMeeting();
+                // TODO : create new meeting from activity
+                // launchCreateMeeting();
+                // TODO : create random meeting
+                mViewModel.addNewMeeting();
                 // mViewModel.launchCreateMeeting(intent);
             }
         });
     }
 
+    // RecyclerView
     private void configureRecyclerView(MainAdapter adapter) {
         RecyclerView recyclerView = findViewById(R.id.main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -126,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Create option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -138,23 +112,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
-            alertDialogChoiceSort();
+            mViewModel.displaySortingTypePopup();
         }
         return super.onOptionsItemSelected(item);
     }
 
     // Alert Dialog Choice Sort
-    public void alertDialogChoiceSort() {
+    public void alertDialogChoiceSort(SortingTypeUiModel sortingTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Choisis le trie que tu souhaites");
 
-        // Ddd a radio button list
-        final String[] sortChoice = {"Croissant salle", "Decroissant salle", "Croissant date", "Decroissant date"};
-
         // Setup list of choice
-        myPopup.setSingleChoiceItems(sortChoice, checkedItems, (new DialogInterface.OnClickListener() {
+        myPopup.setSingleChoiceItems(sortingTypeUiModel.getNames().toArray(
+                new String[sortingTypeUiModel.getNames().size()]),
+                sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
@@ -172,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-        // mViewModel.setSortingType(sortChoice);
-        // TODO : button valider ?
 /*
 
         // Setup list of choice
@@ -226,144 +197,4 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = myPopup.create();
         myPopup.show();
     }
-
-
-
-    /*// Test list of meeting in singleton
-    public void testListOfMeetingInSingleton() {
-        MeetingManager.getInstance();
-        listOfMeeting = MeetingManager.getMeeting();
-        if (!listOfMeeting.isEmpty()) {
-            // recyclerView.setHasFixedSize(false);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            SimpleAdapter simpleAdapter = new SimpleAdapter(getApplicationContext(), listOfMeeting);
-            recyclerView.setAdapter(simpleAdapter);
-        } else {
-            Toast.makeText(MainActivity.this.getApplicationContext(), "La liste de réunion est vide", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    // Launch intent for create new meeting
-    public void launchCreateMeeting() {
-        // Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
-        Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivityJava.class);
-        startActivity(intent);
-    }
-
-    // Button for add meeting
-    public void floatingButton() {
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchCreateMeeting();
-            }
-        });
-    }
-
-    // Create menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    // Item selected in toolbar
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
-            alertDialogChoiceSort();
-        } else {
-            // ELSE
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    // Alert Dialog Choice Sort
-    public void alertDialogChoiceSort() {
-
-        // Setup Alert builder
-        final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle("Choisis le trie que tu souhaites");
-
-        // Ddd a radio button list
-        String[] sortChoice = {"Croissant salle", "Decroissant salle", "Croissant date", "Decroissant date"};
-
-        // Setup list of choice
-        myPopup.setSingleChoiceItems(sortChoice, checkedItems, (new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        }));
-
-        // Setup button VALIDER
-        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ListView lw = ((AlertDialog) dialog).getListView();
-                Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
-                Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
-
-                if (checkedItemObject.toString().equals("Croissant salle")) {
-                    sortRoom(ascendingRoom);
-                    Toast toastCrescentRoom = Toast.makeText(MainActivity.this, "Trie croissant salle", Toast.LENGTH_SHORT);
-                    toastCrescentRoom.show();
-                    ascendingRoom = !ascendingRoom;
-                    checkedItems = 0;
-                } else if (checkedItemObject.toString().equals("Decroissant salle")) {
-                    sortRoom(ascendingRoom);
-                    Toast toastDecreaseRoom = Toast.makeText(MainActivity.this, "Trie décroissant salle", Toast.LENGTH_SHORT);
-                    toastDecreaseRoom.show();
-                    ascendingRoom = !ascendingRoom;
-                    checkedItems = 1;
-                } else if (checkedItemObject.toString().equals("Croissant date")) {
-                    sortDate(ascendingDate);
-                    Toast toastCrescentDate = Toast.makeText(MainActivity.this, "Trie croissant date", Toast.LENGTH_SHORT);
-                    toastCrescentDate.show();
-                    ascendingDate = !ascendingDate;
-                    checkedItems = 2;
-                } else if (checkedItemObject.toString().equals("Decroissant date")) {
-                    sortDate(ascendingDate);
-                    Toast toastDecreaseDate = Toast.makeText(MainActivity.this, "Trie decroissant date", Toast.LENGTH_SHORT);
-                    toastDecreaseDate.show();
-                    ascendingDate = !ascendingDate;
-                    checkedItems = 3;
-                }
-            }
-        }));
-
-        myPopup.setCancelable(false);
-
-        // create and show the alert dialog
-        AlertDialog dialog = myPopup.create();
-        myPopup.show();
-    }
-
-    // Sort room Method
-    private void sortRoom(boolean asc) {
-        //SORT ARRAY ASCENDING AND DESCENDING
-        if (asc) {
-            Collections.sort(listOfMeeting, RoomComparator);
-        } else {
-            Collections.reverse(listOfMeeting);
-        }
-        //ADAPTER
-        SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
-        recyclerView.setAdapter(adapter);
-    }
-
-    // Sort date Method
-    private void sortDate(boolean asc) {
-        // SORT ARRAY ASCENDING AND DESCENDING
-        if (asc) {
-            Collections.sort(listOfMeeting, DateComparator);
-        } else {
-            Collections.reverse(listOfMeeting);
-        }
-        //ADAPTER
-        SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
-        recyclerView.setAdapter(adapter);
-    }*/
 }

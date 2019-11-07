@@ -42,14 +42,14 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
         MainViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewInformation = itemView.findViewById(R.id.item_main_tv_meeting_information);
+            textViewInformation = itemView.findViewById(R.id.meeting_tv_information);
             textViewParticipant = itemView.findViewById(R.id.meeting_tv_participant_meeting);
         }
 
         void bind(PropertyUiModel model) {
             
             textViewInformation.setText(model.getSubject() + " à " + model.getHour() + " le " + model.getDate() + " salle n° " + model.getRoom());
-            textViewParticipant.setText((CharSequence) model.getListOfEmailOfParticipant());
+            textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
         }
     }
 

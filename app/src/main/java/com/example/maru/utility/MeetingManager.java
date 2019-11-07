@@ -36,7 +36,7 @@ public class MeetingManager {
 
     public void addMeeting(MeetingJava meeting) {
         listMeeting.add(meeting);
-        listMeetingLiveData.setValue(listMeeting);
+        listMeetingLiveData.postValue(listMeeting);
     }
 
     public LiveData<List<MeetingJava>> getMeetingLiveData() {

@@ -17,19 +17,13 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     private final PropertyDao propertyDao;*/
 
-    @NonNull
-    private final MeetingJava meeting;
-
-    private ViewModelFactory(@NonNull MeetingJava meeting) {
-        this.meeting = meeting;
-    }
+    private ViewModelFactory() { }
 
     public static ViewModelFactory getInstance() {
         if (sFactory == null) {
             synchronized (ViewModelFactory.class) {
                 if (sFactory == null) {
                     sFactory = new ViewModelFactory(
-                            new MeetingJava()
                     );
                 }
             }
@@ -42,7 +36,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
-            return (T) new MainViewModel(meeting);
+            return (T) new MainViewModel();
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

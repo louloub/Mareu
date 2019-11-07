@@ -16,14 +16,6 @@ public class PropertyUiModel {
     private int room;
     private String subject;
     private ArrayList<String> listOfEmailOfParticipant;
-/*
-
-    private final int id;
-    @NonNull
-    private final String type;
-    @Nullable
-    private final String mainAddress;
-*/
 
     public PropertyUiModel(int id, LocalDate date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
         this.id = id;
@@ -36,19 +28,9 @@ public class PropertyUiModel {
 
     public PropertyUiModel(){}
 
-    /*public PropertyUiModel(int id, @NonNull String type, @Nullable String mainAddress) {
-        this.id = id;
-        this.type = type;
-        this.mainAddress = mainAddress;
-    }*/
+    public int getId() { return id; }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
     public LocalDate getDate() {
         return date;
