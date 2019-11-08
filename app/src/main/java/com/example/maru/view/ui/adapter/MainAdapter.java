@@ -23,6 +23,10 @@ import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.MainViewModel;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
+import org.threeten.bp.LocalDate;
+
+import java.util.Calendar;
+
 import static android.content.ContentValues.TAG;
 
 public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
@@ -61,8 +65,14 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
         void bind(PropertyUiModel model) {
 
+            /*String str = model.getHour();
+            int i = Integer.parseInt(str);*/
+
+            // TODO : retrive selected hour & minutes, not minute rightNow
+            // String localMinutesString = String.format("%02d", i);
+
             textViewInformation.setText(
-                    model.getSubject() + " à " + model.getHour() + "h le " + model.getDate() + " salle n° " + model.getRoom());
+                    model.getSubject() + " à " + model.getHour() + " le " + model.getDate() + " salle n° " + model.getRoom());
             textViewInformation.setTypeface(null, Typeface.BOLD);
             textViewInformation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
 
@@ -90,4 +100,3 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
         }
     }
 }
-

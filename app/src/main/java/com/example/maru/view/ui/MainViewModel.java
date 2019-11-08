@@ -32,22 +32,6 @@ import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_DSC;
 
 public class MainViewModel extends ViewModel {
 
-    // Comparator to sort meeting list in order of room
-    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getRoom() - e2.getRoom());
-        }
-    };
-
-    // Comparator to sort meeting list in order of date
-    private static final Comparator<MeetingJava> DATECOMPARATOR = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getDate().compareTo(e2.getDate()));
-        }
-    };
-
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
@@ -120,50 +104,26 @@ public class MainViewModel extends ViewModel {
     }
 
     public void setSortingType(String sortChoice) {
-        if (sortChoice.equals("Croissant salle")) {
-            mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
-        } else if (sortChoice.equals("Decroissant salle")) {
-            mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
-        } else if (sortChoice.equals("Croissant date")) {
-            mSortingTypeLiveData.setValue(DATE_ASC);
-        } else if (sortChoice.equals("Decroissant date")) {
-            mSortingTypeLiveData.setValue(DATE_DSC);
+        switch (sortChoice) {
+            case "Croissant salle":
+                mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
+                selectedSortingTypeIndex = 0;
+                break;
+            case "Decroissant salle":
+                mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
+                selectedSortingTypeIndex = 1;
+                break;
+            case "Croissant date":
+                mSortingTypeLiveData.setValue(DATE_ASC);
+                selectedSortingTypeIndex = 2;
+                break;
+            case "Decroissant date":
+                mSortingTypeLiveData.setValue(DATE_DSC);
+                selectedSortingTypeIndex = 3;
+                break;
         }
     }
 
-    /*// Sort room Method
-    private void sortRoom(boolean ascendingRoom) {
-        //SORT ARRAY ASCENDING AND DESCENDING
-        if (ascendingRoom) {
-            // TODO : with new comparator for PropertyUiModel
-            Collections.sort(result, ROOM_COMPARATOR_PROPERTY_UI_MODEL);
-            // TODO : with getInstance.getMeetingLiveData casted in list
-            // Collections.sort((List<MeetingJava>) MeetingManager.getInstance().getMeetingLiveData(), ROOM_COMPARATOR);
-            // TODO : with mSortingTypeLiveData
-            // Collections.sort(mSortingTypeLiveData, ROOM_COMPARATOR);
-            // TODO : with mSortingTypeLiveData casted in List
-            // Collections.sort((List<MeetingJava>) mSortingTypeLiveData, ROOM_COMPARATOR);
-        } else {
-            Collections.reverse(result);
-        }
-        //ADAPTER
-        *//*MainAdapter adapter = new MainAdapter(this, result);
-        recyclerView.setAdapter(adapter);*//*
-    }
-
-    // Sort date Method
-    private void sortDate(boolean ascendingDate) {
-        // SORT ARRAY ASCENDING AND DESCENDING
-        *//*if (ascendingDate) {
-            Collections.sort(listOfMeeting, DateComparator);
-        } else {
-            Collections.reverse(listOfMeeting);
-        }
-        //ADAPTER
-        SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
-        recyclerView.setAdapter(adapter);*//*
-    }
-*/
     LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
@@ -171,10 +131,10 @@ public class MainViewModel extends ViewModel {
     public void displaySortingTypePopup() {
         List<String> list = new ArrayList<>();
 
-        list.add("Croissant salle ");
-        list.add("Decroissant salle ");
-        list.add("Croissant date ");
-        list.add("Decroissant date ");
+        list.add("Croissant salle");
+        list.add("Decroissant salle");
+        list.add("Croissant date");
+        list.add("Decroissant date");
 
         mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, selectedSortingTypeIndex));
     }
@@ -210,4 +170,52 @@ public class MainViewModel extends ViewModel {
             return null;
         }
     }
+
+    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getRoom() - e2.getRoom());
+        }
+    };
+
+    private static final Comparator<MeetingJava> DATECOMPARATOR = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getDate().compareTo(e2.getDate()));
+        }
+    };
 }
+
+/*// Sort room Method
+    private void sortRoom(boolean ascendingRoom) {
+        //SORT ARRAY ASCENDING AND DESCENDING
+        if (ascendingRoom) {
+            // TODO : with new comparator for PropertyUiModel
+            Collections.sort(result, ROOM_COMPARATOR_PROPERTY_UI_MODEL);
+            // TODO : with getInstance.getMeetingLiveData casted in list
+            // Collections.sort((List<MeetingJava>) MeetingManager.getInstance().getMeetingLiveData(), ROOM_COMPARATOR);
+            // TODO : with mSortingTypeLiveData
+            // Collections.sort(mSortingTypeLiveData, ROOM_COMPARATOR);
+            // TODO : with mSortingTypeLiveData casted in List
+            // Collections.sort((List<MeetingJava>) mSortingTypeLiveData, ROOM_COMPARATOR);
+        } else {
+            Collections.reverse(result);
+        }
+        //ADAPTER
+        *//*MainAdapter adapter = new MainAdapter(this, result);
+        recyclerView.setAdapter(adapter);*//*
+    }
+
+    // Sort date Method
+    private void sortDate(boolean ascendingDate) {
+        // SORT ARRAY ASCENDING AND DESCENDING
+        *//*if (ascendingDate) {
+            Collections.sort(listOfMeeting, DateComparator);
+        } else {
+            Collections.reverse(listOfMeeting);
+        }
+        //ADAPTER
+        SimpleAdapter adapter = new SimpleAdapter(this, listOfMeeting);
+        recyclerView.setAdapter(adapter);*//*
+    }
+*/

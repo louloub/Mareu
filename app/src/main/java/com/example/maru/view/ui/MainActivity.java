@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AndroidThreeTen.init(this);
         setContentView(R.layout.activity_main);
+
         floatingButton();
-        Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar();
 
         final MainAdapter adapter = new MainAdapter();
         configureRecyclerView(adapter);
@@ -61,15 +61,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
+        setSupportActionBar(toolbar);
+    }
+
     // Create floating button
     private void floatingButton() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO : create new meeting from activity
                 launchCreateMeeting();
-                // TODO : create random meeting
                 // mViewModel.addNewRandomMeeting();
                 // mViewModel.launchCreateMeeting(intent);
             }

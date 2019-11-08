@@ -42,6 +42,7 @@
                 <!-- PARTICIPANT -->
                 <TextView
                     android:id="@+id/meeting_tv_participant_meeting"
+                    android:padding="16dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
