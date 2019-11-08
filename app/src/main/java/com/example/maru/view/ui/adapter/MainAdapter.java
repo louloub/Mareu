@@ -71,11 +71,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
             ivDeleteMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getLayoutPosition();
-                    // int position = (Integer)v.getTag();
-                    MeetingManager.getInstance().deleteMeeting(position);
-                    // notifyItemRemoved(position);
-                    Log.d(TAG, "onClick on deleteButton ");
+                    MeetingManager.getInstance().deleteMeeting(getLayoutPosition());
                 }
             });
         }

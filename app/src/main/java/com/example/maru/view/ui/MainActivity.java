@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO : create new meeting from activity
-                // launchCreateMeeting();
+                launchCreateMeeting();
                 // TODO : create random meeting
-                mViewModel.addNewRandomMeeting();
+                // mViewModel.addNewRandomMeeting();
                 // mViewModel.launchCreateMeeting(intent);
             }
         });
