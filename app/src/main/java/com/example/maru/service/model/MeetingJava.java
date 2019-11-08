@@ -23,8 +23,7 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
 
-    public MeetingJava() {
-    }
+    public MeetingJava() {}
 
     public int getId() {
         return id;

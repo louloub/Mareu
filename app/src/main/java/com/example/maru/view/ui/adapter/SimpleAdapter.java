@@ -77,7 +77,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         public MeetingViewHolder(View itemView) {
             super(itemView);
 
-            btDeleteMeeting = itemView.findViewById(R.id.meeting_bt_delete_meeting);
+            btDeleteMeeting = itemView.findViewById(R.id.meeting_iv_delete_meeting);
             tvMeetingInformation = itemView.findViewById(R.id.meeting_tv_information);
             tvParticipantMeeting = itemView.findViewById(R.id.meeting_tv_participant_meeting);
         }

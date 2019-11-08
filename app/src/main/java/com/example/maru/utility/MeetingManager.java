@@ -48,4 +48,9 @@ public class MeetingManager {
     public LiveData<List<MeetingJava>> getMeetingLiveData() {
         return listMeetingLiveData;
     }
+
+    public void deleteMeeting(int position) {
+        listMeeting.remove(position);
+        listMeetingLiveData.postValue(listMeeting);
+    }
 }

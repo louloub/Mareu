@@ -151,9 +151,14 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         chooseDate.setText(dayInString + "/" + month + "/" + year);
                         String yearInString = String.valueOf(year);
                         String monthInString = String.valueOf(month);
-                        String dateString = yearInString + "-" + monthInString + "-" + dayInString;
 
-                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        String dateString = dayInString + "-" + monthInString + "-" + yearInString;
+
+                        // String dateString = yearInString + "-" + monthInString + "-" + dayInString;
+
+                        // DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
                         LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
 

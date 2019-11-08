@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 // TODO : create new meeting from activity
                 // launchCreateMeeting();
                 // TODO : create random meeting
-                mViewModel.addNewMeeting();
+                mViewModel.addNewRandomMeeting();
                 // mViewModel.launchCreateMeeting(intent);
             }
         });

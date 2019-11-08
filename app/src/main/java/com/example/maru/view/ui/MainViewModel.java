@@ -16,8 +16,10 @@ import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,6 +39,7 @@ public class MainViewModel extends ViewModel {
             return (e1.getRoom() - e2.getRoom());
         }
     };
+
     // Comparator to sort meeting list in order of date
     private static final Comparator<MeetingJava> DATECOMPARATOR = new Comparator<MeetingJava>() {
         @Override
@@ -44,6 +47,7 @@ public class MainViewModel extends ViewModel {
             return (e1.getDate().compareTo(e2.getDate()));
         }
     };
+
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
@@ -166,6 +170,7 @@ public class MainViewModel extends ViewModel {
 
     public void displaySortingTypePopup() {
         List<String> list = new ArrayList<>();
+
         list.add("Croissant salle ");
         list.add("Decroissant salle ");
         list.add("Croissant date ");
@@ -178,12 +183,14 @@ public class MainViewModel extends ViewModel {
         return mSortingTypeUiModelLiveData;
     }
 
-    void addNewMeeting() {
+    void addNewRandomMeeting() {
         int hour = new Random().nextInt(24);
 
         int room = new Random().nextInt(10);
 
-        new InsertDataAsyncTask(new MeetingJava(0, LocalDate.now(), "" + hour, room, "S", new ArrayList<String>())).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new InsertDataAsyncTask(
+                new MeetingJava(0, LocalDate.now(), "" + hour, room, "S",
+                new ArrayList<String>())).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private static class InsertDataAsyncTask extends AsyncTask<Void, Void, Void> {
