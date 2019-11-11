@@ -85,7 +85,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
         // Button for valid meeting & method
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
-        onValidMeetingClick(validMeeting,listOfParticipant);
+        onValidMeetingClick(validMeeting,listOfParticipant,subjectOfMeeting);
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
@@ -284,12 +284,44 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     public void onPointerCaptureChanged(boolean hasCapture) {}
 
     // Listener on button for validate meeting
-    public void onValidMeetingClick(Button validMeeting, final TextInputEditText listOfParticipant) {
+    public void onValidMeetingClick(Button validMeeting, final TextInputEditText listOfParticipant, final TextInputEditText subjectOfMeeting) {
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (listOfParticipantChip.size()==0) {
+                if (listOfParticipantChip.size()==0 && meeting.getSubject()==null) {
+                    subjectOfMeeting.setHint("           : Merci d'entrer le sujet de la réunion");
+                    listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Merci d'entrer le sujet ainsi que le(s) participant(s) en les séparant d'une virgule",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                } else if (meeting.getSubject()==null) {
+                    subjectOfMeeting.setHint("           : Merci d'entrer le sujet de la réunion");
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Merci d'entrer le sujet de la réunion",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                } else if (listOfParticipantChip.size()==0) {
+                    listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Merci d'entrer le(s) participant(s) en les séparant d'une virgule",
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else {
+                    MeetingManager.getInstance().addMeeting(meeting);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Réunion enregistrée",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+
+
+                /*if (listOfParticipantChip.size()==0) {
                     listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Merci d'entrer le(s) participant(s) et les séparant d'une virgule",
@@ -305,7 +337,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
-                }
+                }*/
             }
         });
     }
