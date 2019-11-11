@@ -76,7 +76,42 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
             textViewInformation.setTypeface(null, Typeface.BOLD);
             textViewInformation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
 
-            textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
+
+            // TODO : testing :
+
+            // String listParticipantString = "";
+
+            if (model.getListOfEmailOfParticipant().equals("Participants")) {
+                textViewParticipant.setText("pas de participants");
+            } else {
+                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
+            }
+
+            /*
+
+            String listParticipantString = model.getListOfEmailOfParticipant().toString();
+
+            if (model.getListOfEmailOfParticipant().toString().isEmpty()){
+                textViewParticipant.setText("pas de participants");
+            } else {
+                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
+            }*/
+
+            /*if (textViewParticipant.getText().toString().equals("Participants")) {
+                textViewParticipant.setText("pas de participants");
+            } else {
+                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
+            }*/
+
+            /*
+
+            if (textViewParticipant.getText().toString().isEmpty()) {
+                textViewParticipant.setText("pas de participants");
+            } else {
+                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
+            }
+            */
+            // TODO : end testing
 
             ivDeleteMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override

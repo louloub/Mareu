@@ -49,6 +49,9 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     MeetingJava meeting = new MeetingJava();
     private int SpannedLength = 0, chipLength = 4;
     private MainViewModel mViewModel;
+    // Text Input XML and Method for list of participant
+    // TextInputEditText listOfParticipant;
+    final ArrayList<String> listOfParticipantChip = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
         // Button for valid meeting & method
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
-        onValidMeetingClick(validMeeting);
+        onValidMeetingClick(validMeeting,listOfParticipant);
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
@@ -176,7 +179,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     // Chip For Participant
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
 
-        final ArrayList<String> listOfParticipantChip = new ArrayList<>();
+        // final ArrayList<String> listOfParticipantChip = new ArrayList<>();
 
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
@@ -292,20 +295,24 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     // Listener on button for validate meeting
-    public void onValidMeetingClick(Button validMeeting) {
+    public void onValidMeetingClick(Button validMeeting, final TextInputEditText listOfParticipant) {
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MeetingManager.getInstance().addMeeting(meeting);
 
-                Log.d(TAG, " meeting in onValidMeetingClick / onClick = " + meeting);
+                if (listOfParticipantChip.size()==0) {
+                    listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
+                } else {
+                    MeetingManager.getInstance().addMeeting(meeting);
 
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Réunion enregistrée",
-                        Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Réunion enregistrée",
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
