@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
+import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.MainViewModel;
@@ -26,12 +27,11 @@ import com.example.maru.view.ui.model.PropertyUiModel;
 import org.threeten.bp.LocalDate;
 
 import java.util.Calendar;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
-
-    // private MainViewModel mViewModel;
 
     public MainAdapter() {
         super(new DiffCallback());
@@ -65,53 +65,19 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
         void bind(PropertyUiModel model) {
 
+            // TODO : retrive selected hour & minutes, not minute rightNow
             /*String str = model.getHour();
             int i = Integer.parseInt(str);*/
-
-            // TODO : retrive selected hour & minutes, not minute rightNow
             // String localMinutesString = String.format("%02d", i);
+
+            List<MeetingJava> list = MeetingManager.getInstance().getMeeting();
 
             textViewInformation.setText(
                     model.getSubject() + " à " + model.getHour() + " le " + model.getDate() + " salle n° " + model.getRoom());
             textViewInformation.setTypeface(null, Typeface.BOLD);
             textViewInformation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
 
-
-            // TODO : testing :
-
-            // String listParticipantString = "";
-
-            if (model.getListOfEmailOfParticipant().equals("Participants")) {
-                textViewParticipant.setText("pas de participants");
-            } else {
-                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
-            }
-
-            /*
-
-            String listParticipantString = model.getListOfEmailOfParticipant().toString();
-
-            if (model.getListOfEmailOfParticipant().toString().isEmpty()){
-                textViewParticipant.setText("pas de participants");
-            } else {
-                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
-            }*/
-
-            /*if (textViewParticipant.getText().toString().equals("Participants")) {
-                textViewParticipant.setText("pas de participants");
-            } else {
-                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
-            }*/
-
-            /*
-
-            if (textViewParticipant.getText().toString().isEmpty()) {
-                textViewParticipant.setText("pas de participants");
-            } else {
-                textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
-            }
-            */
-            // TODO : end testing
+            textViewParticipant.setText(model.getListOfEmailOfParticipant().toString());
 
             ivDeleteMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override

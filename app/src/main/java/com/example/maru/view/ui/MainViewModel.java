@@ -95,7 +95,7 @@ public class MainViewModel extends ViewModel {
 
             PropertyUiModel propertyUiModel = new PropertyUiModel(
                     meetingJava.getId(), meetingJava.getDate(), meetingJava.getHour(),
-                    meetingJava.getRoom(), subjectMeeting, meetingJava.getListOfEmailOfParticipant());
+                    meetingJava.getRoom(), meetingJava.getSubject(), meetingJava.getListOfEmailOfParticipant());
 
             result.add(propertyUiModel);
         }

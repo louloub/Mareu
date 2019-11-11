@@ -23,8 +23,7 @@ public class MeetingManager {
     /**
      * Constructeur privé
      */
-    private MeetingManager() {
-    }
+    private MeetingManager() {}
 
     /**
      * Point d'accès pour l'instance unique du singleton
@@ -52,5 +51,9 @@ public class MeetingManager {
     public void deleteMeeting(int position) {
         listMeeting.remove(position);
         listMeetingLiveData.postValue(listMeeting);
+    }
+
+    public List<MeetingJava> getMeeting(){
+        return listMeeting;
     }
 }

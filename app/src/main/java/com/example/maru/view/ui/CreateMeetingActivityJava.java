@@ -49,8 +49,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     MeetingJava meeting = new MeetingJava();
     private int SpannedLength = 0, chipLength = 4;
     private MainViewModel mViewModel;
-    // Text Input XML and Method for list of participant
-    // TextInputEditText listOfParticipant;
     final ArrayList<String> listOfParticipantChip = new ArrayList<>();
 
     @Override
@@ -179,8 +177,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     // Chip For Participant
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
 
-        // final ArrayList<String> listOfParticipantChip = new ArrayList<>();
-
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -205,8 +201,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(SpannedLength, editable.length() - 1);
                     chip.setText(charSequenceParticipantMailFromChip);
 
-                    // String str = String.valueOf(editable.subSequence(SpannedLength, editable.length() - 1));
-
                     listOfParticipantChip.add(listOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
@@ -224,14 +218,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                             listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(str));*/
 
                             // listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip));
-                            Log.d(TAG, "listOfParticipant in afterTextChanged = " + listOfParticipantChip);
                         }
                     });
                     chipGroup.addView(chip);
                     editable.clear();
                     meeting.setListOfEmailOfParticipant(listOfParticipantChip);
-                    Log.d(TAG, "listOfParticipant in afterTextChanged = " + listOfParticipantChip + " & meeting =" + meeting);
-
                 } // END OF IF
             } // END OF afterTextChanged
         });
@@ -247,7 +238,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
                     meeting.setRoom(Integer.parseInt(item.toString()));
-                    Log.d(TAG, "place = " + item.toString());
                 }
             }
 
@@ -291,8 +281,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-    }
+    public void onPointerCaptureChanged(boolean hasCapture) {}
 
     // Listener on button for validate meeting
     public void onValidMeetingClick(Button validMeeting, final TextInputEditText listOfParticipant) {
@@ -302,6 +291,10 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                 if (listOfParticipantChip.size()==0) {
                     listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Merci d'entrer le(s) participant(s) et les séparant d'une virgule",
+                            Toast.LENGTH_LONG);
+                    toast.show();
                 } else {
                     MeetingManager.getInstance().addMeeting(meeting);
 
