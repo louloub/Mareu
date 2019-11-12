@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
+import com.example.maru.service.model.MeetingJava;
+import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.model.PropertyUiModel;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "tag";
     private MainViewModel mViewModel;
+    final MainAdapter adapter = new MainAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         floatingButton();
         setToolbar();
 
-        final MainAdapter adapter = new MainAdapter();
+        // final MainAdapter adapter = new MainAdapter();
         configureRecyclerView(adapter);
 
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
                 alertDialogChoiceSort(sortingTypeUiModel);
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -136,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
                 mViewModel.setSortingType((String) checkedItemObject);
+                adapter.notifyDataSetChanged();
+                // mViewModel.get
+                // adapter.notifyDataSetChanged();
             }
         }));
 

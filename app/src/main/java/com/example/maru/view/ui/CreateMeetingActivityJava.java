@@ -57,9 +57,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         setContentView(R.layout.activity_create_meeting);
         retrieveXMLandLaunchMethod();
         AndroidThreeTen.init(this);
-        // launchTimerPickerDialog();
-        // launchDatePickerDialog();
-        // launchRecyclerView();
     }
 
     public void retrieveXMLandLaunchMethod() {

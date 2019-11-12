@@ -1,6 +1,7 @@
 package com.example.maru.view.ui;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,15 +17,14 @@ import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import static android.content.ContentValues.TAG;
 import static com.example.maru.view.ui.SortingType.DATE_ASC;
 import static com.example.maru.view.ui.SortingType.DATE_DSC;
 import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_ASC;
@@ -71,12 +71,12 @@ public class MainViewModel extends ViewModel {
 
         if (sortingType == null || sortingType == ROOM_ALPHABETICAL_ASC) {
 
-            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_JAVA);
+            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_JAVA_ASC);
 
         } else if (sortingType == ROOM_ALPHABETICAL_DSC) {
 
-            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_JAVA);
-            Collections.reverse(meetings);
+            Collections.sort(meetings, Collections.reverseOrder());
+            // Collections.reverse(meetings);
 
         } else if (sortingType == DATE_ASC) {
 
@@ -91,7 +91,6 @@ public class MainViewModel extends ViewModel {
         List<PropertyUiModel> result = new ArrayList<>();
 
         for (MeetingJava meetingJava : meetings) {
-            String subjectMeeting = null;
 
             PropertyUiModel propertyUiModel = new PropertyUiModel(
                     meetingJava.getId(), meetingJava.getDate(), meetingJava.getHour(),
@@ -137,9 +136,10 @@ public class MainViewModel extends ViewModel {
         list.add("Decroissant date");
 
         mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, selectedSortingTypeIndex));
+        Log.d(TAG, "mSortingTypeUiModelLiveData = " +mSortingTypeUiModelLiveData );
     }
 
-    public LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() {
+    LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() {
         return mSortingTypeUiModelLiveData;
     }
 
@@ -171,10 +171,17 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA = new Comparator<MeetingJava>() {
+    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_ASC = new Comparator<MeetingJava>() {
         @Override
         public int compare(MeetingJava e1, MeetingJava e2) {
             return (e1.getRoom() - e2.getRoom());
+        }
+    };
+
+    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_DSC = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e2.getRoom() - e1.getRoom());
         }
     };
 
