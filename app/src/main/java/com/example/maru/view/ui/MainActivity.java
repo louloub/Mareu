@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         floatingButton();
         setToolbar();
 
-        // final MainAdapter adapter = new MainAdapter();
         configureRecyclerView(adapter);
 
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
                 alertDialogChoiceSort(sortingTypeUiModel);
-                adapter.notifyDataSetChanged();
+                // adapter.notifyDataSetChanged();
             }
         });
     }
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     // Item selected in toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
             mViewModel.displaySortingTypePopup();
         }
@@ -135,20 +134,17 @@ public class MainActivity extends AppCompatActivity {
         myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Log.d(TAG, "CHECKED_ITEMS_IN_MENU = " +CHECKED_ITEMS_IN_MENU );
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
                 mViewModel.setSortingType((String) checkedItemObject);
-                adapter.notifyDataSetChanged();
-                // mViewModel.get
+                // recreate();
                 // adapter.notifyDataSetChanged();
             }
         }));
 
         myPopup.setCancelable(false);
 
-        // create and show the alert dialog
         AlertDialog dialog = myPopup.create();
         myPopup.show();
     }

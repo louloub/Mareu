@@ -46,11 +46,6 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
 
         holder.tvMeetingInformation.setText(subject + " à " + hour + " le " + date + " salle n° " + room);
 
-        // TODO : show list of participant
-        // Adapter for list of participant
-        /*ParticipantOnMeetingAdapter participantMeetingAdapter = new ParticipantOnMeetingAdapter(mCtx,listOfEmailOfParticipant);
-        holder.tvParticipantMeeting.setAdapter(participantMeetingAdapter);*/
-
         // Delete button
         holder.btDeleteMeeting.setOnClickListener(new View.OnClickListener() {
             @Override

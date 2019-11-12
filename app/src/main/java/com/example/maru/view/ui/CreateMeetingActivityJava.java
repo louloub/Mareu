@@ -248,7 +248,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                // TODO Auto-generated method stub
 
             }
         });
