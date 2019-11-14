@@ -52,6 +52,7 @@ public class MeetingManager {
     public void addMeeting(MeetingJava meeting) {
         listMeeting.add(meeting);
         meetingCount++;
+        meeting.setId(meetingCount);
 
         // String uuid = UUID.randomUUID().toString();
 
