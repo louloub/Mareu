@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.ImageViewCompat;
@@ -33,8 +34,12 @@ import static android.content.ContentValues.TAG;
 
 public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
 
-    public MainAdapter() {
+    private CallbackListener callback;
+
+    public MainAdapter(CallbackListener callback) {
         super(new DiffCallback());
+
+        this.callback  = callback;
     }
 
     @NonNull
@@ -45,7 +50,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        holder.bind(getItem(position), callback);
         // mViewModel = new ViewModelProvider((ViewModelStoreOwner) this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
@@ -63,7 +68,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
             ivDeleteMeeting = itemView.findViewById(R.id.meeting_iv_delete_meeting);
         }
 
-        void bind(PropertyUiModel model) {
+        void bind(final PropertyUiModel model, final CallbackListener callbackListener) {
 
             // TODO : retrive selected hour & minutes, not minute rightNow
             /*String str = model.getHour();
@@ -82,16 +87,25 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
             ivDeleteMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    callbackListener.onMeetingClicked(model.getId());
+
                     MeetingManager.getInstance().deleteMeeting(getLayoutPosition());
+
+                    // MeetingManager.getInstance().deleteMeeting(getAdapterPosition());
+                    // MeetingManager.getInstance().deleteMeeting(1);
+                    // MeetingManager.getInstance().deleteMeeting(getLayoutPosition());
                 }
             });
         }
     }
 
+    // TODO : Appeler quand on fait un submilist (dans observe)
     private static class DiffCallback extends DiffUtil.ItemCallback<PropertyUiModel> {
 
         @Override
         public boolean areItemsTheSame(@NonNull PropertyUiModel oldItem, @NonNull PropertyUiModel newItem) {
+            // TODO : bug ICIIIIIIII !!!!!!
             return oldItem.getId() == newItem.getId();
         }
 
@@ -99,5 +113,9 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
         public boolean areContentsTheSame(@NonNull PropertyUiModel oldItem, @NonNull PropertyUiModel newItem) {
             return oldItem.equals(newItem);
         }
+    }
+
+    public interface CallbackListener {
+        void onMeetingClicked(int meetingId);
     }
 }

@@ -29,11 +29,11 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
     private static final String TAG = "tag";
     private MainViewModel mViewModel;
-    final MainAdapter adapter = new MainAdapter();
+    final MainAdapter adapter = new MainAdapter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,5 +147,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = myPopup.create();
         myPopup.show();
+    }
+
+    @Override
+    public void onMeetingClicked(int meetingId) {
+        mViewModel.deleteMeeting(meetingId);
     }
 }

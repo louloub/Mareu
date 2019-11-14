@@ -294,6 +294,9 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO : mettre dans le viewmodel les 3 méthodes onValidMeetingClick
+                //  checkIfFieldsAreCompleted toastForExceptionWhenValidateMeeting toastForExceptionWhenValidateMeeting
+                //  le viewmodel exposera au moins une livedata pour signifier une erreur ou une intention de quitter la page (hint : voir ViewAction)
                 checkIfFieldsAreCompleted(subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
             }
         });

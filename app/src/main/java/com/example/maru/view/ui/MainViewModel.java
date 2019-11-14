@@ -36,7 +36,7 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private int selectedSortingTypeIndex = 0;
-    private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData();
+    private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData(); // TODO INJECT THIS INSTEAD
 
     public MainViewModel() { wireUpMediator(); }
 
@@ -85,9 +85,9 @@ public class MainViewModel extends ViewModel {
 
         } else if (sortingType == DATE_DSC) {
 
-            // Collections.sort(meetings, DATECOMPARATOR);
-            // Collections.reverse(meetings);
-            Collections.sort(meetings, Collections.reverseOrder());
+            Collections.sort(meetings, DATECOMPARATOR);
+            Collections.reverse(meetings);
+            //Collections.sort(meetings, Collections.reverseOrder());
         }
 
         List<PropertyUiModel> result = new ArrayList<>();
@@ -171,16 +171,11 @@ public class MainViewModel extends ViewModel {
 
     LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
 
-    void addNewRandomMeeting() {
-        int hour = new Random().nextInt(24);
-
-        int room = new Random().nextInt(10);
-
-        new InsertDataAsyncTask(
-                new MeetingJava(0, LocalDate.now(), "" + hour, room, "S",
-                new ArrayList<String>())).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    public void deleteMeeting(int meetingId) {
+        MeetingManager.getInstance().deleteMeeting(meetingId);
     }
 
+    // TODO A bouger dans le CreateMeetingActivity
     private static class InsertDataAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @NonNull

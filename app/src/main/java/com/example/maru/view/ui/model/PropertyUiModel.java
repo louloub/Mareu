@@ -70,10 +70,15 @@ public class PropertyUiModel {
     }
 
     @Override
-    //this is required to print the user-friendly information about the Meeting
     public String toString() {
-        return "[sujet=" + this.subject + ", heure=" + this.hour + ", date=" + this.date + ", salle=" +
-                this.room + "]";
+        return "PropertyUiModel{" +
+                "id=" + id +
+                ", date=" + date +
+                ", hour='" + hour + '\'' +
+                ", room=" + room +
+                ", subject='" + subject + '\'' +
+                ", listOfEmailOfParticipant=" + listOfEmailOfParticipant +
+                '}';
     }
 
     @Override
