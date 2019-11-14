@@ -72,11 +72,13 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         mViewModel.getmLaunchIntentFromCreateMeetingToMainActivity().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                MeetingManager.getInstance().addMeeting(meeting);
-                Toast toast = Toast.makeText(getApplicationContext(), "Réunion enregistrée", Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                if (aBoolean) {
+                    MeetingManager.getInstance().addMeeting(meeting);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Réunion enregistrée", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -316,91 +318,10 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : mettre dans le viewmodel les 3 méthodes onValidMeetingClick
-                //  checkIfFieldsAreCompleted toastForExceptionWhenValidateMeeting toastForExceptionWhenValidateMeeting
-                //  le viewmodel exposera au moins une livedata pour signifier une erreur ou une intention de quitter la page (hint : voir ViewAction)
-                // checkIfFieldsAreCompleted(subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
                 mViewModel.onValidMeetingClick(validMeeting,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate,listOfParticipantChip,meeting);
             }
         });
     }
-
-    /*private void checkIfFieldsAreCompleted(
-            TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant,
-            TextView chooseHour, TextView chooseDate) {
-        if (listOfParticipantChip.size()==0 && meeting.getSubject()==null) {
-            toastForExceptionWhenValidateMeeting(0,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (meeting.getSubject()==null) {
-            toastForExceptionWhenValidateMeeting(1,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (listOfParticipantChip.size()==0) {
-            toastForExceptionWhenValidateMeeting(2,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (meeting.getHour()==null) {
-            toastForExceptionWhenValidateMeeting(3,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (meeting.getDate()==null) {
-            toastForExceptionWhenValidateMeeting(4,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else { launchIntentFromCreateMeetingToMainActivity();
-        }
-    }
-
-    public void launchIntentFromCreateMeetingToMainActivity () {
-        MeetingManager.getInstance().addMeeting(meeting);
-
-        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
-        String sortingTypeString = mViewModel.getSortingType();
-
-        Toast toast = Toast.makeText(getApplicationContext(), "Réunion enregistrée", Toast.LENGTH_SHORT);
-        toast.show();
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        // intent.putExtra("sortingType", sortingTypeString);
-
-        startActivity(intent);
-    }
-
-    public void toastForExceptionWhenValidateMeeting(
-            int caseNumber, TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant,
-            TextView chooseHour, TextView chooseDate) {
-        switch(caseNumber){
-            case 0:
-                subjectOfMeeting.setHint("           : Merci d'entrer le sujet de la réunion");
-                listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
-                Toast toastCase0 = Toast.makeText(getApplicationContext(),
-                        "Merci d'entrer le sujet ainsi que le(s) participant(s) en les séparant d'une virgule",
-                        Toast.LENGTH_LONG);
-                toastCase0.show();
-                break;
-            case 1:
-                subjectOfMeeting.setHint("           : Merci d'entrer le sujet de la réunion");
-                Toast toastCase1 = Toast.makeText(getApplicationContext(),
-                        "Merci d'entrer le sujet de la réunion",
-                        Toast.LENGTH_LONG);
-                toastCase1.show();
-                break;
-            case 2:
-                listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
-                Toast toastCase2 = Toast.makeText(getApplicationContext(),
-                        "Merci d'entrer le(s) participant(s) en les séparant d'une virgule",
-                        Toast.LENGTH_LONG);
-                toastCase2.show();
-                break;
-            case 3:
-                chooseHour.setHint("Merci de sélectionner une heure");
-                Toast toastCase3 = Toast.makeText(getApplicationContext(),
-                        "Merci de sélectionner une heure",
-                        Toast.LENGTH_LONG);
-                toastCase3.show();
-                break;
-            case 4:
-                chooseDate.setHint("Merci de sélectionner une date");
-                Toast toastCase4 = Toast.makeText(getApplicationContext(),
-                        "Merci de sélectionner une date",
-                        Toast.LENGTH_LONG);
-                toastCase4.show();
-                break;
-            default:
-                break;
-        }
-    }*/
 
     // check if activity is launch for the first time for TOAST in "roomOfMeeting" method
     public static class MyPreferencesFirstLaunch {

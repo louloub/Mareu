@@ -172,7 +172,6 @@ public class MainViewModel extends ViewModel {
 
     void deleteMeeting(int meetingId) { MeetingManager.getInstance().deleteMeeting(meetingId); }
 
-    // TODO : working on onValidMeetingClick
     void onValidMeetingClick(
             Button validMeeting,
             TextInputEditText subjectOfMeeting,
@@ -200,7 +199,6 @@ public class MainViewModel extends ViewModel {
         } else if (meeting.getDate()==null) {
             toastForExceptionWhenValidateMeeting(4,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
         } else {
-            // launchIntentFromCreateMeetingToMainActivity(meeting);
             mLaunchIntentFromCreateMeetingToMainActivity.setValue(true);
         }
     }
@@ -234,21 +232,6 @@ public class MainViewModel extends ViewModel {
                 break;
         }
     }
-
-    /*public void launchIntentFromCreateMeetingToMainActivity (MeetingJava meeting) {
-        MeetingManager.getInstance().addMeeting(meeting);
-
-        Toast toast = Toast.makeText(getApplicationContext(), "Réunion enregistrée", Toast.LENGTH_SHORT);
-        toast.show();
-
-        Intent intent = new Intent(getApplicationContext, MainActivity.class);
-        // intent.putExtra("sortingType", sortingTypeString);
-
-        startActivity(intent);
-    }*/
-
-    // TODO : END of working on onValidMeetingClick
-
 
     // TODO A bouger dans le CreateMeetingActivity
     private static class InsertDataAsyncTask extends AsyncTask<Void, Void, Void> {
