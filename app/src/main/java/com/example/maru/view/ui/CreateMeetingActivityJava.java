@@ -195,7 +195,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 }
             }
 
-            // TODO : delete button delete chip
             @Override
             public void afterTextChanged(Editable editable) {
 
