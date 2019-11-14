@@ -55,7 +55,9 @@ public class MainViewModel extends ViewModel {
     }
 
     @Nullable
-    private List<PropertyUiModel> combineMeeting(@Nullable List<MeetingJava> meetings, @Nullable SortingType sortingType) {
+    private List<PropertyUiModel> combineMeeting(
+            @Nullable List<MeetingJava> meetings,
+            @Nullable SortingType sortingType) {
         if (meetings == null) {
             return null;
         }
@@ -97,11 +99,13 @@ public class MainViewModel extends ViewModel {
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
                 selectedSortingTypeIndex = 0;
                 sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
+                // mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
                 break;
             case "Decroissant salle":
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
                 selectedSortingTypeIndex = 1;
                 sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
+                // mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
                 break;
             case "Croissant date":
                 mSortingTypeLiveData.setValue(DATE_ASC);
@@ -152,8 +156,6 @@ public class MainViewModel extends ViewModel {
         return str;
     }
 
-
-
     LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
@@ -166,7 +168,9 @@ public class MainViewModel extends ViewModel {
         list.add("Croissant date");
         list.add("Decroissant date");
 
-        mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, selectedSortingTypeIndex));
+        mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list,selectedSortingTypeIndex));
+
+        // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, selectedSortingTypeIndex));
         Log.d(TAG, "mSortingTypeUiModelLiveData = " +mSortingTypeUiModelLiveData );
     }
 
