@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maru.R;
@@ -57,6 +58,28 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         setContentView(R.layout.activity_create_meeting);
         retrieveXMLandLaunchMethod();
         AndroidThreeTen.init(this);
+
+        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+
+        mViewModel.getStringForToastExeptionOnCreatMeeting().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String stringForToastFromViewModel) {
+                Toast toast = Toast.makeText(getApplicationContext(), stringForToastFromViewModel, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        mViewModel.getmLaunchIntentFromCreateMeetingToMainActivity().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                MeetingManager.getInstance().addMeeting(meeting);
+                Toast toast = Toast.makeText(getApplicationContext(), "Réunion enregistrée", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void retrieveXMLandLaunchMethod() {
@@ -288,7 +311,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     // Listener on button for validate meeting
     public void onValidMeetingClick(
-            Button validMeeting, final TextInputEditText listOfParticipant,
+            final Button validMeeting, final TextInputEditText listOfParticipant,
             final TextInputEditText subjectOfMeeting, final TextView chooseHour, final TextView chooseDate) {
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,12 +319,13 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 // TODO : mettre dans le viewmodel les 3 méthodes onValidMeetingClick
                 //  checkIfFieldsAreCompleted toastForExceptionWhenValidateMeeting toastForExceptionWhenValidateMeeting
                 //  le viewmodel exposera au moins une livedata pour signifier une erreur ou une intention de quitter la page (hint : voir ViewAction)
-                checkIfFieldsAreCompleted(subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
+                // checkIfFieldsAreCompleted(subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
+                mViewModel.onValidMeetingClick(validMeeting,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate,listOfParticipantChip,meeting);
             }
         });
     }
 
-    private void checkIfFieldsAreCompleted(
+    /*private void checkIfFieldsAreCompleted(
             TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant,
             TextView chooseHour, TextView chooseDate) {
         if (listOfParticipantChip.size()==0 && meeting.getSubject()==null) {
@@ -321,8 +345,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     public void launchIntentFromCreateMeetingToMainActivity () {
         MeetingManager.getInstance().addMeeting(meeting);
 
-        /*mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
-        String sortingTypeString = mViewModel.getSortingType();*/
+        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+        String sortingTypeString = mViewModel.getSortingType();
 
         Toast toast = Toast.makeText(getApplicationContext(), "Réunion enregistrée", Toast.LENGTH_SHORT);
         toast.show();
@@ -376,7 +400,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             default:
                 break;
         }
-    }
+    }*/
 
     // check if activity is launch for the first time for TOAST in "roomOfMeeting" method
     public static class MyPreferencesFirstLaunch {
