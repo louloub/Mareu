@@ -322,10 +322,15 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     public void launchIntentFromCreateMeetingToMainActivity () {
         MeetingManager.getInstance().addMeeting(meeting);
 
+        /*mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+        String sortingTypeString = mViewModel.getSortingType();*/
+
         Toast toast = Toast.makeText(getApplicationContext(), "Réunion enregistrée", Toast.LENGTH_SHORT);
         toast.show();
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        // intent.putExtra("sortingType", sortingTypeString);
+
         startActivity(intent);
     }
 

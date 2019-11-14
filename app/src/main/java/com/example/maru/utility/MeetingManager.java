@@ -51,8 +51,7 @@ public class MeetingManager {
     //  meetingCount peut servir d'ID unique
     public void addMeeting(MeetingJava meeting) {
         listMeeting.add(meeting);
-        meetingCount++;
-        meeting.setId(meetingCount);
+        meeting.setId(meetingCount++);
 
         // String uuid = UUID.randomUUID().toString();
 
@@ -75,15 +74,6 @@ public class MeetingManager {
         }
 
         listMeetingLiveData.postValue(listMeeting);
-
-
-        // listMeeting.remove(1);
-    /*    listMeeting.remove(position);
-        listMeetingLiveData.postValue(listMeeting);
-        // listMeetingLiveData.setValue(listMeeting);
-        String listMeetingStr = listMeeting.toString();
-        String listMeetingLiveDataStr = listMeetingLiveData.toString();
-        Log.d(TAG, "list meeting et liste meeting live data = " +listMeetingStr+ "" +listMeetingLiveDataStr);*/
     }
 
     public List<MeetingJava> getMeeting(){

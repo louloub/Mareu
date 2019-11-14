@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     }
 
     // Alert Dialog Choice Sort
-    public void alertDialogChoiceSort(SortingTypeUiModel sortingTypeUiModel) {
+    public void alertDialogChoiceSort(final SortingTypeUiModel sortingTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // mViewModel.setSortingTypeFromInt(which);
                     }
                 }));
 
@@ -137,9 +138,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
-                mViewModel.setSortingType((String) checkedItemObject);
-                // recreate();
-                // adapter.notifyDataSetChanged();
+                mViewModel.setSortingType((String) checkedItemObject, sortingTypeUiModel);
             }
         }));
 

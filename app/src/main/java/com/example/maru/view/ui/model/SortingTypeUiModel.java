@@ -19,4 +19,8 @@ public class SortingTypeUiModel {
     public int getSelectedIndex() {
         return selectedIndex;
     }
+
+    public void setSelectedIndex(int selectedIndex) {
+        this.selectedIndex = selectedIndex;
+    }
 }

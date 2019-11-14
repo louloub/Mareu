@@ -91,10 +91,6 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
                     callbackListener.onMeetingClicked(model.getId());
 
                     MeetingManager.getInstance().deleteMeeting(getLayoutPosition());
-
-                    // MeetingManager.getInstance().deleteMeeting(getAdapterPosition());
-                    // MeetingManager.getInstance().deleteMeeting(1);
-                    // MeetingManager.getInstance().deleteMeeting(getLayoutPosition());
                 }
             });
         }
