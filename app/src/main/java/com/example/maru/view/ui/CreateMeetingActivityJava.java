@@ -69,7 +69,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             }
         });
 
-        mViewModel.getmLaunchIntentFromCreateMeetingToMainActivity().observe(this, new Observer<Boolean>() {
+        mViewModel.getmLaunchIntentFromCreateMeetingToMainActivityLiveData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
@@ -81,7 +81,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 }
             }
         });
-
     }
 
     public void retrieveXMLandLaunchMethod() {

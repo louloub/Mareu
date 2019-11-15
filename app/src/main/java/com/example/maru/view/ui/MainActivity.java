@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.service.model.MeetingJava;
-import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.model.PropertyUiModel;
@@ -29,11 +27,14 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.List;
 
+import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_ASC;
+
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
     private static final String TAG = "tag";
     private MainViewModel mViewModel;
     final MainAdapter adapter = new MainAdapter(this);
+    int sortingTypeIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +60,19 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             @Override
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
                 alertDialogChoiceSort(sortingTypeUiModel);
-                // adapter.notifyDataSetChanged();
             }
         });
+
+        mViewModel.getSelectedSortingTypeIndexLiveDate().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer newIndex) {
+                setSortingTypeIndex(newIndex);
+            }
+        });
+    }
+
+    public void setSortingTypeIndex(int newIndex){
+        sortingTypeIndex = newIndex;
     }
 
     private void setToolbar() {
@@ -124,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         // Setup list of choice
         myPopup.setSingleChoiceItems(sortingTypeUiModel.getNames().toArray(
                 new String[sortingTypeUiModel.getNames().size()]),
-                sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+                sortingTypeIndex, (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // mViewModel.setSortingTypeFromInt(which);
