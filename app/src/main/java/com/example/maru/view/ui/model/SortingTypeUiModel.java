@@ -20,6 +20,8 @@ public class SortingTypeUiModel {
         return selectedIndex;
     }
 
+    public List<String> getListOfSortingType() {return names;}
+
     public void setSelectedIndex(int selectedIndex) {
         this.selectedIndex = selectedIndex;
     }

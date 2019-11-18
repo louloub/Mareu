@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.utility.SortingTypeUiModelManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -41,7 +42,10 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
     private int selectedSortingTypeIndex = 0;
     private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData(); // TODO INJECT THIS INSTEAD
-    List<String> list = new ArrayList<>();
+
+    // TODO : testing
+    // private List<String> list = SortingTypeUiModel.getListOfSortingType();
+    // private SortingTypeUiModel mSortingTypeUiModel = new SortingTypeUiModel(list, selectedSortingTypeIndex);
 
     public MainViewModel() { wireUpMediator(); }
 
@@ -50,7 +54,11 @@ public class MainViewModel extends ViewModel {
         mUiModelsLiveData.addSource(meetingLiveData, new Observer<List<MeetingJava>>() {
             @Override
             public void onChanged(List<MeetingJava> meetingJavas) {
-                setSortingType("Decroissant salle", new SortingTypeUiModel(list,integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
+                // TODO : do not creat new SortingTypeUiModel : it's create list of menu in double, triple ..
+                // setSortingType("Decroissant salle", new SortingTypeUiModel(list,integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
+                // setSortingType(sortingTypeIndexToSortingType(integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
+
+                // setSortingType(Objects.requireNonNull(sortingTypeIndexToSortingType(selectedSortingTypeIndex)),mSortingTypeUiModel);
                 mUiModelsLiveData.setValue(combineMeeting(meetingJavas, mSortingTypeLiveData.getValue()));
             }
         });
@@ -109,13 +117,19 @@ public class MainViewModel extends ViewModel {
         return result;
     }
 
+    // TODO : testing
+    /*private void setSortingTypeUiModel(SortingTypeUiModel sortingTypeUiModel){
+        mSortingTypeUiModel = sortingTypeUiModel;
+    }*/
+
     void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
         switch (sortChoice) {
             case "Croissant salle":
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
                 selectedSortingTypeIndex = 0;
-                mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
                 sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
+                mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                // setSortingTypeUiModel(sortingTypeUiModel);
                 // setSortingType(ROOM_ALPHABETICAL_ASC);
                 // mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
                 break;
@@ -124,6 +138,8 @@ public class MainViewModel extends ViewModel {
                 selectedSortingTypeIndex = 1;
                 sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
                 mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                // setSortingTypeUiModel(sortingTypeUiModel);
+
                 // mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
                 break;
             case "Croissant date":
@@ -131,12 +147,16 @@ public class MainViewModel extends ViewModel {
                 selectedSortingTypeIndex = 2;
                 sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
                 mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                // setSortingTypeUiModel(sortingTypeUiModel);
+
                 break;
             case "Decroissant date":
                 mSortingTypeLiveData.setValue(DATE_DSC);
                 selectedSortingTypeIndex = 3;
                 sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
                 mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                // setSortingTypeUiModel(sortingTypeUiModel);
+
                 break;
         }
     }
@@ -155,7 +175,9 @@ public class MainViewModel extends ViewModel {
 
     void displaySortingTypePopup() {
 
-        // List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
+
+        // List<String> list = SortingTypeUiModelManager.getInstance().getSortingType();
 
         list.add("Croissant salle");
         list.add("Decroissant salle");
@@ -189,21 +211,22 @@ public class MainViewModel extends ViewModel {
         return indexInt;
     }
 
-    private void sortingTypeIndexToSortingType(int index){
+    private String sortingTypeIndexToSortingType(int index){
         switch (index) {
             case 0 :
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
-                break;
+                return "ROOM_ALPHABETICAL_ASC";
             case 1 :
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
-                break;
+                return "ROOM_ALPHABETICAL_DSC";
             case 2 :
                 mSortingTypeLiveData.setValue(DATE_ASC);
-                break;
+                return "DATE_ASC";
             case 3 :
                 mSortingTypeLiveData.setValue(DATE_DSC);
-                break;
+                return "DATE_DSC";
         }
+        return null;
     }
 
     private void sortingTypeToIndex(){
