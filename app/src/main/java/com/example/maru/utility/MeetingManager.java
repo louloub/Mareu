@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.maru.service.model.MeetingJava;
 
+import org.threeten.bp.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,15 +48,9 @@ public class MeetingManager {
         return INSTANCE;
     }
 
-    // TODO : Le listadapter a besoin d'ID uniques !
-    //  cette methjode doit prendre en parametre des primitifs uniquement (date / reasin / participants / etc)
-    //  meetingCount peut servir d'ID unique
-    public void addMeeting(MeetingJava meeting) {
-        listMeeting.add(meeting);
-        meeting.setId(meetingCount++);
-
-        // String uuid = UUID.randomUUID().toString();
-
+    public void addMeeting(LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
+        listMeeting.add(new MeetingJava(meetingCount,date,hour,room,subject,listOfEmailOfParticipant));
+        meetingCount++;
         listMeetingLiveData.postValue(listMeeting);
     }
 

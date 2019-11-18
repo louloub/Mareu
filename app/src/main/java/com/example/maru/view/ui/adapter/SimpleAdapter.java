@@ -16,6 +16,7 @@ import com.example.maru.service.model.MeetingJava;
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingViewHolder> {
 
@@ -39,7 +40,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
         MeetingJava meeting = listMeeting.get(position);
 
         String subject = meeting.getSubject();
-        ArrayList<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
+        List<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
         int room = meeting.getRoom();
         String hour = meeting.getHour();
         LocalDate date = meeting.getDate();

@@ -47,10 +47,13 @@ import java.util.List;
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "TAG";
-    MeetingJava meeting = new MeetingJava();
+    // MeetingJava meeting = new MeetingJava();
     private int SpannedLength = 0, chipLength = 4;
-    private MainViewModel mViewModel;
+    private CreateMeetingViewModel mViewModel;
     final ArrayList<String> listOfParticipantChip = new ArrayList<>();
+    private LocalDate mLocalDate;
+    private String mHour;
+    private int mRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +61,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         setContentView(R.layout.activity_create_meeting);
         retrieveXMLandLaunchMethod();
         AndroidThreeTen.init(this);
+        final TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
 
-        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(CreateMeetingViewModel.class);
 
-        mViewModel.getStringForToastExeptionOnCreatMeeting().observe(this, new Observer<String>() {
+        /*mViewModel.getStringForToastExeptionOnCreatMeeting().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String stringForToastFromViewModel) {
                 Toast toast = Toast.makeText(getApplicationContext(), stringForToastFromViewModel, Toast.LENGTH_SHORT);
@@ -80,13 +84,31 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     startActivity(intent);
                 }
             }
+        });*/
+
+        mViewModel.getAddMeetingUiModelLiveData().observe(this, new Observer<AddMeetingUiModel>() {
+            @Override
+            public void onChanged(AddMeetingUiModel addMeetingUiModel) {
+                subjectOfMeeting.setHint(addMeetingUiModel.getSubjectHint());
+            }
+        });
+
+        mViewModel.getViewActionLiveData().observe(this, new Observer<CreateMeetingViewModel.ViewAction>() {
+            @Override
+            public void onChanged(CreateMeetingViewModel.ViewAction viewAction) {
+                switch (viewAction) {
+                    case OK :
+                        finish();
+                        break;
+                }
+            }
         });
     }
 
     public void retrieveXMLandLaunchMethod() {
         // Text Input XML and Method for subject
         TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
-        subjectOfMeeting(subjectOfMeeting);
+        // subjectOfMeeting(subjectOfMeeting);
 
         // Text Input XML and Method for list of participant
         TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
@@ -115,34 +137,10 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         // Button for valid meeting & method
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
         onValidMeetingClick(validMeeting,listOfParticipant,subjectOfMeeting,chooseHour,chooseDate);
-        mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+        // mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
-
-    // Subject of meeting
-    private void subjectOfMeeting(TextInputEditText subjectOfMeeting) {
-
-        subjectOfMeeting.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                meeting.setSubject(editable.toString());
-            }
-        });
-    }
-
     // TimerPickerDialog
     public void launchTimerPickerDialog(final TextView chooseHour) {
-        // final TextView chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
-        // TODO : change visibilité of "chooseHour" if is empty
         Button button = findViewById(R.id.create_meeting_bt_hour);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,12 +149,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        // TODO : save selected hour for when want to change hour it's showing previous choice
                         chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
                         String hourInString = String.valueOf(hourOfDay);
                         String minutesInString = String.valueOf(minutes);
                         String hour = hourInString + "h" + minutesInString;
-                        meeting.setHour(hour);
+                        mHour=hour;
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
                 timePickerDialog.show();
@@ -194,7 +191,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                         Log.d(TAG, "datetest = " + localDate);
 
-                        meeting.setDate(localDate);
+                        mLocalDate=localDate;
 
                     }
                 }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
@@ -250,7 +247,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     });
                     chipGroup.addView(chip);
                     editable.clear();
-                    meeting.setListOfEmailOfParticipant(listOfParticipantChip);
+                    // meeting.setListOfEmailOfParticipant(listOfParticipantChip);
                 } // END OF IF
             } // END OF afterTextChanged
         });
@@ -265,7 +262,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
-                    meeting.setRoom(Integer.parseInt(item.toString()));
+                    // meeting.setRoom(Integer.parseInt(item.toString()));
+                    mRoom = (Integer.parseInt(item.toString()));
                 }
             }
 
@@ -313,11 +311,14 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     // Listener on button for validate meeting
     public void onValidMeetingClick(
             final Button validMeeting, final TextInputEditText listOfParticipant,
-            final TextInputEditText subjectOfMeeting, final TextView chooseHour, final TextView chooseDate) {
+            final TextInputEditText subjectOfMeeting, final TextView chooseHour,
+            final TextView chooseDate) {
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.onValidMeetingClick(validMeeting,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate,listOfParticipantChip,meeting);
+                mViewModel.createMeeting(
+                        mLocalDate,mHour,mRoom,subjectOfMeeting.getText().toString(),
+                        listOfParticipantChip);
             }
         });
     }

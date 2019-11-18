@@ -4,17 +4,18 @@ import org.threeten.bp.LocalDate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
-    private int id;
-    private LocalDate date;
-    private String hour;
-    private int room;
-    private String subject;
-    private ArrayList<String> listOfEmailOfParticipant;
+    private final int id;
+    private final LocalDate date;
+    private final String hour;
+    private final int room;
+    private final String subject;
+    private final List<String> listOfEmailOfParticipant;
 
-    public MeetingJava(int id, LocalDate date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
+    public MeetingJava(int id, LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
         this.id = id;
         this.date = date;
         this.hour = hour;
@@ -23,54 +24,28 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
 
-    public MeetingJava() {}
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public String getHour() {
         return hour;
-    }
-
-    public void setHour(String hour) {
-        this.hour = hour;
     }
 
     public int getRoom() {
         return room;
     }
 
-    public void setRoom(int room) {
-        this.room = room;
-    }
-
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public ArrayList<String> getListOfEmailOfParticipant() {
+    public List<String> getListOfEmailOfParticipant() {
         return listOfEmailOfParticipant;
-    }
-
-    public void setListOfEmailOfParticipant(ArrayList<String> listOfEmailOfParticipant) {
-        this.listOfEmailOfParticipant = listOfEmailOfParticipant;
     }
 
     @Override
@@ -84,9 +59,4 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
         return "[sujet=" + this.subject + ", heure=" + this.hour + ", date=" + this.date + ", salle=" +
                 this.room + "]";
     }
-
-    /*@Override
-    public int compareTo(MeetingJava meetingJava) {
-        return getDate().compareTo(o.getDate());
-    }*/
 }

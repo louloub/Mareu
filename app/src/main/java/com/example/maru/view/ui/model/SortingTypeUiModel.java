@@ -12,6 +12,13 @@ public class SortingTypeUiModel {
         this.selectedIndex = selectedIndex;
     }
 
+    public SortingTypeUiModel() {
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
+    }
+
     public List<String> getNames() {
         return names;
     }
@@ -26,3 +33,5 @@ public class SortingTypeUiModel {
         this.selectedIndex = selectedIndex;
     }
 }
+
+

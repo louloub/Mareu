@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
+import com.example.maru.utility.SortingTypeUiModelManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.model.PropertyUiModel;
@@ -27,14 +29,13 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.List;
 
-import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_ASC;
-
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
     private static final String TAG = "tag";
     private MainViewModel mViewModel;
     final MainAdapter adapter = new MainAdapter(this);
-    int sortingTypeIndex = 0;
+    int mSelectedSortingTypeIndex;
+    SortingTypeUiModel mSortingTypeUiModel = SortingTypeUiModelManager.getInstance().getSortingTypeUiModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +67,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         mViewModel.getSelectedSortingTypeIndexLiveDate().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer newIndex) {
-                setSortingTypeIndex(newIndex);
+                mSelectedSortingTypeIndex=newIndex;
             }
         });
-    }
-
-    public void setSortingTypeIndex(int newIndex){
-        sortingTypeIndex = newIndex;
     }
 
     private void setToolbar() {
@@ -126,21 +123,31 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     }
 
     // Alert Dialog Choice Sort
-    public void alertDialogChoiceSort(final SortingTypeUiModel sortingTypeUiModel) {
+    public void alertDialogChoiceSort(SortingTypeUiModel sortingTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Choisis le trie que tu souhaites");
 
         // Setup list of choice
-        myPopup.setSingleChoiceItems(sortingTypeUiModel.getNames().toArray(
+        /*myPopup.setSingleChoiceItems(sortingTypeUiModel.getNames().toArray(
                 new String[sortingTypeUiModel.getNames().size()]),
                 sortingTypeIndex, (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // mViewModel.setSortingTypeFromInt(which);
                     }
-                }));
+                }));*/
+
+        // TODO : not use singleton, use ViewModel for trie 18/11/2019
+        myPopup.setSingleChoiceItems(sortingTypeUiModel.getListOfSortingType().toArray(
+                new CharSequence[sortingTypeUiModel.getListOfSortingType().size()]),
+                sortingTypeUiModel.getSelectedIndex(),(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }));
 
         // Setup "Valider" button
         myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {

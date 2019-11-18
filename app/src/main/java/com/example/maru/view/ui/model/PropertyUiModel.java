@@ -3,6 +3,7 @@ package com.example.maru.view.ui.model;
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PropertyUiModel {
 
@@ -11,9 +12,9 @@ public class PropertyUiModel {
     private String hour;
     private int room;
     private String subject;
-    private ArrayList<String> listOfEmailOfParticipant;
+    private List<String> listOfEmailOfParticipant;
 
-    public PropertyUiModel(int id, LocalDate date, String hour, int room, String subject, ArrayList<String> listOfEmailOfParticipant) {
+    public PropertyUiModel(int id, LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
         this.id = id;
         this.date = date;
         this.hour = hour;
@@ -63,7 +64,7 @@ public class PropertyUiModel {
         this.subject = subject;
     }
 
-    public ArrayList<String> getListOfEmailOfParticipant() { return listOfEmailOfParticipant; }
+    public List<String> getListOfEmailOfParticipant() { return listOfEmailOfParticipant; }
 
     public void setListOfEmailOfParticipant(ArrayList<String> listOfEmailOfParticipant) {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;

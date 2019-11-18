@@ -3,7 +3,6 @@ package com.example.maru.utility;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.maru.service.model.MeetingJava;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
 import java.util.ArrayList;
@@ -18,18 +17,13 @@ public class SortingTypeUiModelManager {
      * Instance unique non préinitialisée
      */
     private static SortingTypeUiModelManager INSTANCE = new SortingTypeUiModelManager();
-    private List<String> listSortingType = new ArrayList<>();
+    SortingTypeUiModel mSortingTypeUiModel = new SortingTypeUiModel();
+    private List<String> mSortingTypeList = new ArrayList<>();
     private int selectedIndex = 0;
-    private MutableLiveData<List<String>> listSortingTypeLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<String>> mListSortingTypeLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> mIndexChoice = new MutableLiveData<>();
 
-    /*public static SortingTypeUiModelManager getInstance() {
-        return INSTANCE;
-    }*/
-
-    /*public SortingTypeUiModelManager(List<SortingTypeUiModel> listSortingType, int selectedIndex) {
-        this.listSortingType = listSortingType;
-        this.selectedIndex = selectedIndex;
-    }*/
+    // TODO : réorganiser la class !!!!!
 
     public static SortingTypeUiModelManager getINSTANCE() {
         return INSTANCE;
@@ -59,15 +53,49 @@ public class SortingTypeUiModelManager {
     }
 
     public void addSortingChoice(String sortingTypeUiModel) {
-        listSortingType.add(sortingTypeUiModel);
-        listSortingTypeLiveData.postValue(listSortingType);
+        mSortingTypeList.add(sortingTypeUiModel);
+        mSortingTypeUiModel.setNames(mSortingTypeList);
+        mListSortingTypeLiveData.postValue(mSortingTypeList);
     }
 
     public LiveData<List<String>> getSortingTypeLiveData(){
-        return listSortingTypeLiveData;
+        return mListSortingTypeLiveData;
     }
 
-    public List<String> getSortingType(){
-        return listSortingType;
+    public List<String> getSortingTypeList(){
+        return mSortingTypeList;
+    }
+
+    public void addSortingTypeList(List<String> list){
+        mSortingTypeList = list;
+        mSortingTypeUiModel.setNames(list);
+        mListSortingTypeLiveData.postValue(mSortingTypeList);
+    }
+
+    public void setChoiceIndex(String checkedItemObject) {
+        switch (checkedItemObject) {
+            case "Croissant salle" :
+                selectedIndex = 0;
+                break;
+            case "Decroissant salle" :
+                selectedIndex = 1;
+                break;
+            case "Croissant date" :
+                selectedIndex = 2;
+                break;
+            case "Decroissant date" :
+                selectedIndex = 3;
+                break;
+        }
+        mSortingTypeUiModel.setSelectedIndex(selectedIndex);
+        mIndexChoice.postValue((selectedIndex));
+    }
+
+    public int getChoiceIndex(){
+        return selectedIndex;
+    }
+
+    public SortingTypeUiModel getSortingTypeUiModel() {
+        return mSortingTypeUiModel;
     }
 }
