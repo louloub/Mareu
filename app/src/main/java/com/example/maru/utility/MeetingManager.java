@@ -54,7 +54,7 @@ public class MeetingManager {
         listMeetingLiveData.postValue(listMeeting);
     }
 
-    public LiveData<List<MeetingJava>> getMeetingLiveData() {
+    public MutableLiveData<List<MeetingJava>> getMeetingLiveData() {
         return listMeetingLiveData;
     }
 

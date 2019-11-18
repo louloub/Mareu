@@ -233,67 +233,6 @@ public class MainViewModel extends ViewModel {
 
     void deleteMeeting(int meetingId) { MeetingManager.getInstance().deleteMeeting(meetingId); }
 
-    /*void onValidMeetingClick(
-            Button validMeeting,
-            TextInputEditText subjectOfMeeting,
-            TextInputEditText listOfParticipant,
-            TextView chooseHour,
-            TextView chooseDate,
-            ArrayList<String> listOfParticipantChip, MeetingJava meeting) {
-
-        checkIfFieldsAreCompleted(
-                validMeeting,subjectOfMeeting,listOfParticipant,
-                chooseHour,chooseDate, listOfParticipantChip,meeting);
-    }
-
-    private void checkIfFieldsAreCompleted(
-            Button validMeeting, TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant,
-            TextView chooseHour, TextView chooseDate, ArrayList<String> listOfParticipantChip, MeetingJava meeting) {
-        if (listOfParticipantChip.size()==0 && meeting.getSubject()==null) {
-            toastForExceptionWhenValidateMeeting(0,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (meeting.getSubject()==null) {
-            toastForExceptionWhenValidateMeeting(1,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (listOfParticipantChip.size()==0) {
-            toastForExceptionWhenValidateMeeting(2,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (meeting.getHour()==null) {
-            toastForExceptionWhenValidateMeeting(3,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else if (meeting.getDate()==null) {
-            toastForExceptionWhenValidateMeeting(4,subjectOfMeeting,listOfParticipant,chooseHour,chooseDate);
-        } else {
-            mLaunchIntentFromCreateMeetingToMainActivityLiveData.setValue(true);
-        }
-    }
-
-    private void toastForExceptionWhenValidateMeeting(
-            int caseNumber, TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant,
-            TextView chooseHour, TextView chooseDate) {
-        switch(caseNumber){
-            case 0:
-                subjectOfMeeting.setHint("           : Merci d'entrer le sujet de la réunion");
-                listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
-                mStringForToastExeptionOnCreatMeetingLiveData.setValue("Merci d'entrer le sujet ainsi que le(s) participant(s) en les séparant d'une virgule");
-                break;
-            case 1:
-                subjectOfMeeting.setHint("           : Merci d'entrer le sujet de la réunion");
-                mStringForToastExeptionOnCreatMeetingLiveData.setValue("Merci d'entrer le sujet de la réunion");
-                break;
-            case 2:
-                listOfParticipant.setHint("Merci d'entrer le(s) participant(s)");
-                mStringForToastExeptionOnCreatMeetingLiveData.setValue("Merci d'entrer le(s) participant(s) en les séparant d'une virgule");
-                break;
-            case 3:
-                chooseHour.setHint("Merci de sélectionner une heure");
-                mStringForToastExeptionOnCreatMeetingLiveData.setValue("Merci de sélectionner une heure");
-                break;
-            case 4:
-                chooseDate.setHint("Merci de sélectionner une date");
-                mStringForToastExeptionOnCreatMeetingLiveData.setValue("Merci de sélectionner une date");
-                break;
-            default:
-                break;
-        }
-    }*/
-
     private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_ASC = new Comparator<MeetingJava>() {
         @Override
         public int compare(MeetingJava e1, MeetingJava e2) {

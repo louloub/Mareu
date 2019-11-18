@@ -20,7 +20,7 @@ public class CreateMeetingViewModel extends ViewModel {
 
     private MutableLiveData<AddMeetingUiModel> mAddMeetingUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
-
+    private MutableLiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData();
 
     public MutableLiveData<AddMeetingUiModel> getAddMeetingUiModelLiveData() {
         return mAddMeetingUiModelLiveData;
@@ -45,6 +45,7 @@ public class CreateMeetingViewModel extends ViewModel {
         } else {
             MeetingManager.getInstance().addMeeting(date,hour,room,subject,listOfEmailOfParticipant);
             mViewActionLiveData.setValue(ViewAction.OK);
+            meetingLiveData.setValue(MeetingManager.getInstance().getMeeting());
         }
 
         // TODO : faire la suite des hint 18/11/19
