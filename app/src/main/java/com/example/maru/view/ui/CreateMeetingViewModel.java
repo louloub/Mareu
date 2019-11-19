@@ -63,8 +63,8 @@ public class CreateMeetingViewModel extends ViewModel {
             participantHint = "Merci d'entrer le(s) participant(s)";
             mStringForParticipantHint.setValue(participantHint);
         } else {
-            participantHint = "";
-            mStringForParticipantHint.setValue(participantHint);
+            /*participantHint = "";
+            mStringForParticipantHint.setValue(participantHint);*/
         }
 
         /*if (participantHint != null) {

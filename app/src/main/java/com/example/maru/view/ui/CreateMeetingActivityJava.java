@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -232,6 +234,10 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                     listOfParticipantChip.add(listOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
+                    // mStringForParticipantHint.setValue("Participants");
+                    // listOfParticipant.setHint("Participants");
+                    // mStringForParticipantHint.setValue("Participants");
+
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -251,9 +257,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     });
                     chipGroup.addView(chip);
                     editable.clear();
-                    // meeting.setListOfEmailOfParticipant(listOfParticipantChip);
-                } // END OF IF
-            } // END OF afterTextChanged
+                }
+            }
         });
     }
 
@@ -318,9 +323,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCreateMeetingViewModel.createMeeting(
-                        mLocalDate, mHour, mRoom, subjectOfMeeting.getText().toString(),
-                        listOfParticipantChip);
+                mCreateMeetingViewModel.createMeeting(mLocalDate, mHour, mRoom, subjectOfMeeting.getText().toString(), listOfParticipantChip);
             }
         });
     }
