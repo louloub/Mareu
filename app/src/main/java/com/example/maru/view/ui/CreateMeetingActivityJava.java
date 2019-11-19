@@ -3,7 +3,6 @@ package com.example.maru.view.ui;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,8 +26,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maru.R;
-import com.example.maru.service.model.MeetingJava;
-import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
@@ -47,10 +44,10 @@ import java.util.List;
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "TAG";
+    final ArrayList<String> listOfParticipantChip = new ArrayList<>();
     // MeetingJava meeting = new MeetingJava();
     private int SpannedLength = 0, chipLength = 4;
     private CreateMeetingViewModel mViewModel;
-    final ArrayList<String> listOfParticipantChip = new ArrayList<>();
     private LocalDate mLocalDate;
     private String mHour;
     private int mRoom;
@@ -97,7 +94,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onChanged(CreateMeetingViewModel.ViewAction viewAction) {
                 switch (viewAction) {
-                    case OK :
+                    case OK:
                         finish();
                         break;
                 }
@@ -136,9 +133,10 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
         // Button for valid meeting & method
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
-        onValidMeetingClick(validMeeting,listOfParticipant,subjectOfMeeting,chooseHour,chooseDate);
+        onValidMeetingClick(validMeeting, listOfParticipant, subjectOfMeeting, chooseHour, chooseDate);
         // mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
+
     // TimerPickerDialog
     public void launchTimerPickerDialog(final TextView chooseHour) {
         Button button = findViewById(R.id.create_meeting_bt_hour);
@@ -153,7 +151,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         String hourInString = String.valueOf(hourOfDay);
                         String minutesInString = String.valueOf(minutes);
                         String hour = hourInString + "h" + minutesInString;
-                        mHour=hour;
+                        mHour = hour;
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
                 timePickerDialog.show();
@@ -191,7 +189,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                         Log.d(TAG, "datetest = " + localDate);
 
-                        mLocalDate=localDate;
+                        mLocalDate = localDate;
 
                     }
                 }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
@@ -306,7 +304,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {}
+    public void onPointerCaptureChanged(boolean hasCapture) {
+    }
 
     // Listener on button for validate meeting
     public void onValidMeetingClick(
@@ -317,7 +316,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
                 mViewModel.createMeeting(
-                        mLocalDate,mHour,mRoom,subjectOfMeeting.getText().toString(),
+                        mLocalDate, mHour, mRoom, subjectOfMeeting.getText().toString(),
                         listOfParticipantChip);
             }
         });

@@ -1,8 +1,5 @@
 package com.example.maru.utility;
 
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.maru.service.model.MeetingJava;
@@ -12,9 +9,6 @@ import org.threeten.bp.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * MeetingManager is a Singleton
@@ -29,10 +23,12 @@ public class MeetingManager {
     private MutableLiveData<List<MeetingJava>> listMeetingLiveData = new MutableLiveData<>();
 
     private int meetingCount = 0;
+
     /**
      * Constructeur privé
      */
-    private MeetingManager() {}
+    private MeetingManager() {
+    }
 
     /**
      * Point d'accès pour l'instance unique du singleton
@@ -49,7 +45,7 @@ public class MeetingManager {
     }
 
     public void addMeeting(LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
-        listMeeting.add(new MeetingJava(meetingCount,date,hour,room,subject,listOfEmailOfParticipant));
+        listMeeting.add(new MeetingJava(meetingCount, date, hour, room, subject, listOfEmailOfParticipant));
         meetingCount++;
         listMeetingLiveData.postValue(listMeeting);
     }
@@ -63,7 +59,7 @@ public class MeetingManager {
         for (Iterator<MeetingJava> iterator = listMeeting.iterator(); iterator.hasNext(); ) {
             MeetingJava meetingJava = iterator.next();
 
-            if (meetingJava.getId() == meetingId)  {
+            if (meetingJava.getId() == meetingId) {
                 iterator.remove();
                 break;
             }
@@ -72,7 +68,7 @@ public class MeetingManager {
         listMeetingLiveData.postValue(listMeeting);
     }
 
-    public List<MeetingJava> getMeeting(){
+    public List<MeetingJava> getMeeting() {
         return listMeeting;
     }
 }

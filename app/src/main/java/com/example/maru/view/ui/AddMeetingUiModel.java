@@ -2,7 +2,7 @@ package com.example.maru.view.ui;
 
 class AddMeetingUiModel {
 
-    private final String subjectHint ;
+    private final String subjectHint;
 
     public AddMeetingUiModel(String subjectHint) {
         this.subjectHint = subjectHint;

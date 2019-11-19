@@ -58,13 +58,17 @@ public class PropertyUiModel {
         this.room = room;
     }
 
-    public String getSubject() { return subject; }
+    public String getSubject() {
+        return subject;
+    }
 
     public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    public List<String> getListOfEmailOfParticipant() { return listOfEmailOfParticipant; }
+    public List<String> getListOfEmailOfParticipant() {
+        return listOfEmailOfParticipant;
+    }
 
     public void setListOfEmailOfParticipant(ArrayList<String> listOfEmailOfParticipant) {
         this.listOfEmailOfParticipant = listOfEmailOfParticipant;

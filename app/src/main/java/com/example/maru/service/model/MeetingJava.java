@@ -3,7 +3,6 @@ package com.example.maru.service.model;
 import org.threeten.bp.LocalDate;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MeetingJava implements Serializable, Comparable<MeetingJava> {

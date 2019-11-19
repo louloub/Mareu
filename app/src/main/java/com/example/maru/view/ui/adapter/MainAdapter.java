@@ -1,19 +1,14 @@
 package com.example.maru.view.ui.adapter;
 
 import android.graphics.Typeface;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.widget.ImageViewCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,16 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.view.ViewModelFactory;
-import com.example.maru.view.ui.MainViewModel;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
-import org.threeten.bp.LocalDate;
-
-import java.util.Calendar;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
 
@@ -39,7 +27,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
     public MainAdapter(CallbackListener callback) {
         super(new DiffCallback());
 
-        this.callback  = callback;
+        this.callback = callback;
     }
 
     @NonNull
@@ -52,6 +40,10 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         holder.bind(getItem(position), callback);
         // mViewModel = new ViewModelProvider((ViewModelStoreOwner) this, ViewModelFactory.getInstance()).get(MainViewModel.class);
+    }
+
+    public interface CallbackListener {
+        void onMeetingClicked(int meetingId);
     }
 
     static class MainViewHolder extends RecyclerView.ViewHolder {
@@ -109,9 +101,5 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
         public boolean areContentsTheSame(@NonNull PropertyUiModel oldItem, @NonNull PropertyUiModel newItem) {
             return oldItem.equals(newItem);
         }
-    }
-
-    public interface CallbackListener {
-        void onMeetingClicked(int meetingId);
     }
 }

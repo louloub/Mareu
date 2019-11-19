@@ -1,10 +1,5 @@
 package com.example.maru.view.ui;
 
-import android.os.AsyncTask;
-import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -17,7 +12,6 @@ import com.example.maru.utility.MeetingManager;
 import com.example.maru.utility.SortingTypeUiModelManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +26,32 @@ import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_DSC;
 
 public class MainViewModel extends ViewModel {
 
+    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_ASC = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getRoom() - e2.getRoom());
+        }
+    };
+    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_DSC = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e2.getRoom() - e1.getRoom());
+        }
+    };
+    private static final Comparator<MeetingJava> DATE_COMPARATOR_ASC = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e1.getDate().compareTo(e2.getDate()));
+        }
+    };
+    private static final Comparator<MeetingJava> DATE_COMPARATOR_DSC = new Comparator<MeetingJava>() {
+        @Override
+        public int compare(MeetingJava e1, MeetingJava e2) {
+            return (e2.getDate().compareTo(e1.getDate()));
+        }
+    };
+
+    private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData(); // TODO INJECT THIS INSTEAD
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
@@ -39,10 +59,12 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Boolean> mLaunchIntentFromCreateMeetingToMainActivityLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
     private int selectedSortingTypeIndex = 0;
-    private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData(); // TODO INJECT THIS INSTEAD
     private List<String> list = SortingTypeUiModelManager.getInstance().getSortingTypeList();
+    private SortingTypeUiModel sortingTypeUiModel;
 
-    public MainViewModel() { wireUpMediator(); }
+    public MainViewModel() {
+        wireUpMediator();
+    }
 
     private void wireUpMediator() {
 
@@ -136,17 +158,17 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    LiveData<List<PropertyUiModel>> getUiModelsLiveData() { return mUiModelsLiveData; }
+    LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
+        return mUiModelsLiveData;
+    }
 
-    LiveData<String> getStringForToastExeptionOnCreatMeeting() {return mStringForToastExeptionOnCreatMeetingLiveData;}
+    LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() {
+        return mSortingTypeUiModelLiveData;
+    }
 
-    LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
-
-    // LiveData<String> getSortingChoiceString(){return }
-
-    LiveData<Boolean> getmLaunchIntentFromCreateMeetingToMainActivityLiveData() { return mLaunchIntentFromCreateMeetingToMainActivityLiveData;}
-
-    LiveData<Integer> getSelectedSortingTypeIndexLiveDate() { return mSelectedSortingTypeIndexLiveData;}
+    LiveData<Integer> getSelectedSortingTypeIndexLiveDate() {
+        return mSelectedSortingTypeIndexLiveData;
+    }
 
     void displaySortingTypePopup() {
 
@@ -154,8 +176,7 @@ public class MainViewModel extends ViewModel {
         // List<String> list = new ArrayList<>();
         // List<String> list = SortingTypeUiModelManager.getInstance().getmSortingTypeList();
 
-        if (list.size()==4)
-        {
+        if (list.size() == 4) {
             mSortingTypeUiModelLiveData.setValue(SortingTypeUiModelManager.getInstance().getSortingTypeUiModel());
         } else {
             list.add("Croissant salle");
@@ -163,17 +184,21 @@ public class MainViewModel extends ViewModel {
             list.add("Croissant date");
             list.add("Decroissant date");
             SortingTypeUiModelManager.getInstance().addSortingTypeList(list);
-            mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list,integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
+            mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
         }
 
         // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list,integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
         // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, selectedSortingTypeIndex));
     }
 
-    private int integerToIntIndex(MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData){
+    private SortingTypeUiModel getSortingTypeUiModel(){
+        return sortingTypeUiModel;
+    }
+
+    private int integerToIntIndex(MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData) {
         int indexInt = 0;
 
-        if (mSelectedSortingTypeIndexLiveData.getValue()!=null) {
+        if (mSelectedSortingTypeIndexLiveData.getValue() != null) {
 
             switch (Objects.requireNonNull(mSelectedSortingTypeIndexLiveData.getValue())) {
                 case 0:
@@ -193,71 +218,45 @@ public class MainViewModel extends ViewModel {
         return indexInt;
     }
 
-    private String sortingTypeIndexToSortingType(int index){
+    private String sortingTypeIndexToSortingType(int index) {
         switch (index) {
-            case 0 :
+            case 0:
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
                 return "ROOM_ALPHABETICAL_ASC";
-            case 1 :
+            case 1:
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
                 return "ROOM_ALPHABETICAL_DSC";
-            case 2 :
+            case 2:
                 mSortingTypeLiveData.setValue(DATE_ASC);
                 return "DATE_ASC";
-            case 3 :
+            case 3:
                 mSortingTypeLiveData.setValue(DATE_DSC);
                 return "DATE_DSC";
         }
         return null;
     }
 
-    private void sortingTypeToIndex(){
+    private void sortingTypeToIndex() {
 
-        if (mSortingTypeLiveData.getValue()!=null) {
+        if (mSortingTypeLiveData.getValue() != null) {
             switch (Objects.requireNonNull(mSortingTypeLiveData.getValue())) {
-                case ROOM_ALPHABETICAL_ASC :
+                case ROOM_ALPHABETICAL_ASC:
                     selectedSortingTypeIndex = 0;
                     break;
-                case ROOM_ALPHABETICAL_DSC :
+                case ROOM_ALPHABETICAL_DSC:
                     selectedSortingTypeIndex = 1;
                     break;
-                case DATE_ASC :
+                case DATE_ASC:
                     selectedSortingTypeIndex = 2;
                     break;
-                case DATE_DSC :
+                case DATE_DSC:
                     selectedSortingTypeIndex = 3;
                     break;
             }
         }
     }
 
-    void deleteMeeting(int meetingId) { MeetingManager.getInstance().deleteMeeting(meetingId); }
-
-    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_ASC = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getRoom() - e2.getRoom());
-        }
-    };
-
-    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_DSC = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e2.getRoom() - e1.getRoom());
-        }
-    };
-
-    private static final Comparator<MeetingJava> DATE_COMPARATOR_ASC = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e1.getDate().compareTo(e2.getDate()));
-        }
-    };
-
-    private static final Comparator<MeetingJava> DATE_COMPARATOR_DSC = new Comparator<MeetingJava>() {
-        @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
-            return (e2.getDate().compareTo(e1.getDate()));
-        }
-    };
+    void deleteMeeting(int meetingId) {
+        MeetingManager.getInstance().deleteMeeting(meetingId);
+    }
 }

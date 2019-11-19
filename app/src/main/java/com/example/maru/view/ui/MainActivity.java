@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,10 +31,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
     private static final String TAG = "tag";
-    private MainViewModel mViewModel;
     final MainAdapter adapter = new MainAdapter(this);
     int mSelectedSortingTypeIndex;
     SortingTypeUiModel mSortingTypeUiModel = SortingTypeUiModelManager.getInstance().getSortingTypeUiModel();
+    private MainViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         mViewModel.getSelectedSortingTypeIndexLiveDate().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer newIndex) {
-                mSelectedSortingTypeIndex=newIndex;
+                mSelectedSortingTypeIndex = newIndex;
             }
         });
     }
@@ -142,12 +141,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         // TODO : not use singleton, use ViewModel for trie 18/11/2019
         myPopup.setSingleChoiceItems(sortingTypeUiModel.getListOfSortingType().toArray(
                 new CharSequence[sortingTypeUiModel.getListOfSortingType().size()]),
-                sortingTypeUiModel.getSelectedIndex(),(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-            }
-        }));
+                    }
+                }));
 
         // Setup "Valider" button
         myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {

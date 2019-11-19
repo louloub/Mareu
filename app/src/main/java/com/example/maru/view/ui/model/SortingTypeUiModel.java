@@ -15,22 +15,24 @@ public class SortingTypeUiModel {
     public SortingTypeUiModel() {
     }
 
-    public void setNames(List<String> names) {
-        this.names = names;
-    }
-
     public List<String> getNames() {
         return names;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
     }
 
     public int getSelectedIndex() {
         return selectedIndex;
     }
 
-    public List<String> getListOfSortingType() {return names;}
-
     public void setSelectedIndex(int selectedIndex) {
         this.selectedIndex = selectedIndex;
+    }
+
+    public List<String> getListOfSortingType() {
+        return names;
     }
 }
 

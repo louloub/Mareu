@@ -23,7 +23,11 @@ public class SortingTypeUiModelManager {
     private MutableLiveData<List<String>> mListSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mIndexChoice = new MutableLiveData<>();
 
-    // TODO : réorganiser la class !!!!!
+    /**
+     * Constructeur privé
+     */
+    private SortingTypeUiModelManager() {
+    }
 
     public static SortingTypeUiModelManager getINSTANCE() {
         return INSTANCE;
@@ -32,11 +36,6 @@ public class SortingTypeUiModelManager {
     public static void setINSTANCE(SortingTypeUiModelManager INSTANCE) {
         SortingTypeUiModelManager.INSTANCE = INSTANCE;
     }
-
-    /**
-     * Constructeur privé
-     */
-    private SortingTypeUiModelManager() {}
 
     /**
      * Point d'accès pour l'instance unique du singleton
@@ -58,41 +57,41 @@ public class SortingTypeUiModelManager {
         mListSortingTypeLiveData.postValue(mSortingTypeList);
     }
 
-    public LiveData<List<String>> getSortingTypeLiveData(){
+    public LiveData<List<String>> getSortingTypeLiveData() {
         return mListSortingTypeLiveData;
     }
 
-    public List<String> getSortingTypeList(){
+    public List<String> getSortingTypeList() {
         return mSortingTypeList;
     }
 
-    public void addSortingTypeList(List<String> list){
+    public void addSortingTypeList(List<String> list) {
         mSortingTypeList = list;
         mSortingTypeUiModel.setNames(list);
         mListSortingTypeLiveData.postValue(mSortingTypeList);
     }
 
+    public int getChoiceIndex() {
+        return selectedIndex;
+    }
+
     public void setChoiceIndex(String checkedItemObject) {
         switch (checkedItemObject) {
-            case "Croissant salle" :
+            case "Croissant salle":
                 selectedIndex = 0;
                 break;
-            case "Decroissant salle" :
+            case "Decroissant salle":
                 selectedIndex = 1;
                 break;
-            case "Croissant date" :
+            case "Croissant date":
                 selectedIndex = 2;
                 break;
-            case "Decroissant date" :
+            case "Decroissant date":
                 selectedIndex = 3;
                 break;
         }
         mSortingTypeUiModel.setSelectedIndex(selectedIndex);
         mIndexChoice.postValue((selectedIndex));
-    }
-
-    public int getChoiceIndex(){
-        return selectedIndex;
     }
 
     public SortingTypeUiModel getSortingTypeUiModel() {
