@@ -55,8 +55,6 @@ public class MainViewModel extends ViewModel {
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> mStringForToastExeptionOnCreatMeetingLiveData = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mLaunchIntentFromCreateMeetingToMainActivityLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
     private int selectedSortingTypeIndex = 0;
     private List<String> list = SortingTypeUiModelManager.getInstance().getSortingTypeList();
@@ -172,26 +170,28 @@ public class MainViewModel extends ViewModel {
 
     void displaySortingTypePopup() {
 
-        // TODO : enlever le manager 18/11/19
-        // List<String> list = new ArrayList<>();
-        // List<String> list = SortingTypeUiModelManager.getInstance().getmSortingTypeList();
-
         if (list.size() == 4) {
-            mSortingTypeUiModelLiveData.setValue(SortingTypeUiModelManager.getInstance().getSortingTypeUiModel());
+            mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModel());
         } else {
             list.add("Croissant salle");
             list.add("Decroissant salle");
             list.add("Croissant date");
             list.add("Decroissant date");
-            SortingTypeUiModelManager.getInstance().addSortingTypeList(list);
-            mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
+            setSortingTypeUiModel();
+            // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list,selectedSortingTypeIndex));
+            // SortingTypeUiModelManager.getInstance().addSortingTypeList(list);
+            // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
         }
-
-        // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list,integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
-        // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, selectedSortingTypeIndex));
     }
 
     private SortingTypeUiModel getSortingTypeUiModel(){
+        return sortingTypeUiModel;
+    }
+
+    private SortingTypeUiModel setSortingTypeUiModel(){
+        sortingTypeUiModel.setNames(list);
+        sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
+        mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
         return sortingTypeUiModel;
     }
 

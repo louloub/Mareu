@@ -33,8 +33,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     private static final String TAG = "tag";
     final MainAdapter adapter = new MainAdapter(this);
     int mSelectedSortingTypeIndex;
-    SortingTypeUiModel mSortingTypeUiModel = SortingTypeUiModelManager.getInstance().getSortingTypeUiModel();
+    SortingTypeUiModel mSortingTypeUiModel;
     private MainViewModel mViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         mViewModel.getmSortingTypeUiModelLiveData().observe(this, new Observer<SortingTypeUiModel>() {
             @Override
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
+                mSortingTypeUiModel = sortingTypeUiModel;
                 alertDialogChoiceSort(sortingTypeUiModel);
             }
         });
