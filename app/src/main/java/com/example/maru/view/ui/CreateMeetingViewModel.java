@@ -24,6 +24,7 @@ public class CreateMeetingViewModel extends ViewModel {
     public MutableLiveData<AddMeetingUiModel> getAddMeetingUiModelLiveData() {
         return mAddMeetingUiModelLiveData;
     }
+
     public MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
@@ -31,13 +32,21 @@ public class CreateMeetingViewModel extends ViewModel {
     LiveData<String> getStringForSubjectHint() {
         return mStringForSubjectHint;
     }
-    LiveData<String> getStringForParticipantHint() { return mStringForParticipantHint; }
-    LiveData<String> getStringForDateHint() { return mStringForDateHint; }
-    LiveData<String> getStringForHourHint() { return mStringForHourHint; }
+
+    LiveData<String> getStringForParticipantHint() {
+        return mStringForParticipantHint;
+    }
+
+    LiveData<String> getStringForDateHint() {
+        return mStringForDateHint;
+    }
+
+    LiveData<String> getStringForHourHint() {
+        return mStringForHourHint;
+    }
 
     public void createMeeting(
-            LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant)
-    {
+            LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
         String subjectHint;
         String participantHint;
         String dateHint;
@@ -51,29 +60,13 @@ public class CreateMeetingViewModel extends ViewModel {
             subjectHint = null;
         }
 
-        /*if (subjectHint != null) {
-            mAddMeetingUiModelLiveData.setValue(new AddMeetingUiModel(subjectHint));
-        } else {
-            MeetingManager.getInstance().addMeeting(date, hour, room, subject, listOfEmailOfParticipant);
-            mViewActionLiveData.setValue(ViewAction.OK);
-            meetingLiveData.setValue(MeetingManager.getInstance().getMeeting());
-        }*/
-
-        if (listOfEmailOfParticipant.size()==0) {
+        if (listOfEmailOfParticipant.size() == 0) {
             participantHint = "Merci d'entrer le(s) participant(s)";
             mStringForParticipantHint.setValue(participantHint);
         } else {
             /*participantHint = "";
             mStringForParticipantHint.setValue(participantHint);*/
         }
-
-        /*if (participantHint != null) {
-            mAddMeetingUiModelLiveData.setValue(new AddMeetingUiModel(participantHint));
-        } else {
-            MeetingManager.getInstance().addMeeting(date, hour, room, subject, listOfEmailOfParticipant);
-            mViewActionLiveData.setValue(ViewAction.OK);
-            meetingLiveData.setValue(MeetingManager.getInstance().getMeeting());
-        }*/
 
         if (date == null) {
             dateHint = "Merci de sélectionner une date";
@@ -89,6 +82,16 @@ public class CreateMeetingViewModel extends ViewModel {
             hourHint = null;
         }
 
+        if ((subject != null || subject.isEmpty())
+                && listOfEmailOfParticipant.size() >= 1 && date != null && hour != null && room >= 0) {
+            MeetingManager.getInstance().addMeeting(date, hour, room, subject, listOfEmailOfParticipant);
+            mViewActionLiveData.setValue(ViewAction.OK);
+            // mAddMeetingUiModelLiveData.setValue(new AddMeetingUiModel(subjectHint));
+        } else {
+            // MeetingManager.getInstance().addMeeting(date, hour, room, subject, listOfEmailOfParticipant);
+            mViewActionLiveData.setValue(ViewAction.KO);
+            // meetingLiveData.setValue(MeetingManager.getInstance().getMeeting());
+        }
 
         // TODO : faire la suite des hint 18/11/19
     }

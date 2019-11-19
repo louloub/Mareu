@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="empty_meeting">Pas de réunion pour le moment</string>
     <string name="subject">Sujet</string>
-    <string name="participant">Participant</string>
+    <string name="participant">Participant(s)</string>
     <string name="heure">Choisir lheure</string>
     <string name="date">Choisir la date</string>
     <string name="room">Numéro de salle</string>

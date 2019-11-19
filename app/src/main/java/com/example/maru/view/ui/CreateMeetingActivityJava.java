@@ -22,8 +22,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -234,10 +232,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
                     listOfParticipantChip.add(listOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
-                    // mStringForParticipantHint.setValue("Participants");
-                    // listOfParticipant.setHint("Participants");
-                    // mStringForParticipantHint.setValue("Participants");
-
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -314,7 +308,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {}
+    public void onPointerCaptureChanged(boolean hasCapture) {
+    }
 
     public void onValidMeetingClick(
             final Button validMeeting, final TextInputEditText listOfParticipant,

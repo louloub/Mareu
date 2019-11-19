@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.utility.SortingTypeUiModelManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 import static com.example.maru.view.ui.SortingType.DATE_ASC;
 import static com.example.maru.view.ui.SortingType.DATE_DSC;
@@ -52,13 +50,13 @@ public class MainViewModel extends ViewModel {
     };
 
     private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData(); // TODO INJECT THIS INSTEAD
+    private final List<String> list = new ArrayList<>();
     private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
     private int selectedSortingTypeIndex = 0;
-    private List<String> list = SortingTypeUiModelManager.getInstance().getSortingTypeList();
-    private SortingTypeUiModel sortingTypeUiModel;
+    private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
 
     public MainViewModel() {
         wireUpMediator();
@@ -178,82 +176,18 @@ public class MainViewModel extends ViewModel {
             list.add("Croissant date");
             list.add("Decroissant date");
             setSortingTypeUiModel();
-            // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list,selectedSortingTypeIndex));
-            // SortingTypeUiModelManager.getInstance().addSortingTypeList(list);
-            // mSortingTypeUiModelLiveData.setValue(new SortingTypeUiModel(list, integerToIntIndex(mSelectedSortingTypeIndexLiveData)));
         }
     }
 
-    private SortingTypeUiModel getSortingTypeUiModel(){
+    private SortingTypeUiModel getSortingTypeUiModel() {
         return sortingTypeUiModel;
     }
 
-    private SortingTypeUiModel setSortingTypeUiModel(){
+    private SortingTypeUiModel setSortingTypeUiModel() {
         sortingTypeUiModel.setNames(list);
         sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
         mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
         return sortingTypeUiModel;
-    }
-
-    private int integerToIntIndex(MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData) {
-        int indexInt = 0;
-
-        if (mSelectedSortingTypeIndexLiveData.getValue() != null) {
-
-            switch (Objects.requireNonNull(mSelectedSortingTypeIndexLiveData.getValue())) {
-                case 0:
-                    indexInt = 0;
-                    break;
-                case 1:
-                    indexInt = 1;
-                    break;
-                case 2:
-                    indexInt = 2;
-                    break;
-                case 3:
-                    indexInt = 3;
-                    break;
-            }
-        }
-        return indexInt;
-    }
-
-    private String sortingTypeIndexToSortingType(int index) {
-        switch (index) {
-            case 0:
-                mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
-                return "ROOM_ALPHABETICAL_ASC";
-            case 1:
-                mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
-                return "ROOM_ALPHABETICAL_DSC";
-            case 2:
-                mSortingTypeLiveData.setValue(DATE_ASC);
-                return "DATE_ASC";
-            case 3:
-                mSortingTypeLiveData.setValue(DATE_DSC);
-                return "DATE_DSC";
-        }
-        return null;
-    }
-
-    private void sortingTypeToIndex() {
-
-        if (mSortingTypeLiveData.getValue() != null) {
-            switch (Objects.requireNonNull(mSortingTypeLiveData.getValue())) {
-                case ROOM_ALPHABETICAL_ASC:
-                    selectedSortingTypeIndex = 0;
-                    break;
-                case ROOM_ALPHABETICAL_DSC:
-                    selectedSortingTypeIndex = 1;
-                    break;
-                case DATE_ASC:
-                    selectedSortingTypeIndex = 2;
-                    break;
-                case DATE_DSC:
-                    selectedSortingTypeIndex = 3;
-                    break;
-            }
-        }
     }
 
     void deleteMeeting(int meetingId) {

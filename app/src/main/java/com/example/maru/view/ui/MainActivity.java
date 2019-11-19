@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.utility.SortingTypeUiModelManager;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
 import com.example.maru.view.ui.model.PropertyUiModel;
