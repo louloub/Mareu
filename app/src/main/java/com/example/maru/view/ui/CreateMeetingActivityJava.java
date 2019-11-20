@@ -34,11 +34,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -146,6 +150,40 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         // mCreateMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
+    public void launchDatePickerDialog(final TextView chooseDate) {
+        Button button = findViewById(R.id.create_meeting_bt_date);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, 0);
+
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        CreateMeetingActivityJava.this,
+                    new DatePickerDialog.OnDateSetListener()
+                    {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+                        {
+                            String dayInString = String.format("%02d", dayOfMonth);
+                            chooseDate.setText(dayInString + "/" + month + "/" + year);
+                            String yearInString = String.valueOf(year);
+                            String monthInString = String.valueOf(month);
+                            String dateString = dayInString + "-" + monthInString + "-" + yearInString;
+
+                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                            LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
+                            mLocalDate = localDate;
+                        }
+                    }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                datePickerDialog.show();
+            }
+        });
+    }
+
     public void launchTimerPickerDialog(final TextView chooseHour) {
         Button button = findViewById(R.id.create_meeting_bt_hour);
         button.setOnClickListener(new View.OnClickListener() {
@@ -156,75 +194,14 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        /*chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
-                        String hourInString = String.valueOf(hourOfDay);
-                        String minutesInString = String.valueOf(minutes);
-                        String hour = hourInString + "h" + minutesInString;
-                        mHour = hour;*/
-
                         chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
                         String hourInString = String.valueOf(hourOfDay);
                         String minutesInString = String.valueOf(minutes);
                         String hour = hourInString + "h" + minutesInString;
                         mHour = hour;
-
-                        Calendar datetime = Calendar.getInstance();
-                        Calendar calendar = Calendar.getInstance();
-                        datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        datetime.set(Calendar.MINUTE, minutes);
-
-                        while (Calendar.HOUR_OF_DAY > hourOfDay)
-                        {
-                            Toast.makeText(CreateMeetingActivityJava.this,"Tu dois choisir une heure ", Toast.LENGTH_LONG).show();
-                        }
-
-                        if(datetime.getTimeInMillis()>=calendar.getTimeInMillis()){
-                            mHour = String.valueOf(hourOfDay % 12);
-                        }else{
-                            Toast.makeText(CreateMeetingActivityJava.this,"Invalid Time", Toast.LENGTH_LONG).show();
-                        }
-
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
                 timePickerDialog.show();
-            }
-        });
-    }
-
-    public void launchDatePickerDialog(final TextView chooseDate) {
-        // final TextView chooseDate = findViewById(R.id.create_meeting_et_edit_date);
-        Button button = findViewById(R.id.create_meeting_bt_date);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final DatePickerDialog datePickerDialog = new DatePickerDialog(CreateMeetingActivityJava.this, new DatePickerDialog.OnDateSetListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // TODO : save selected day month year for when want to change hour it's showing previous choice
-
-                        String dayInString = String.format("%02d", dayOfMonth);
-                        chooseDate.setText(dayInString + "/" + month + "/" + year);
-                        String yearInString = String.valueOf(year);
-                        String monthInString = String.valueOf(month);
-
-                        String dateString = dayInString + "-" + monthInString + "-" + yearInString;
-
-                        // String dateString = yearInString + "-" + monthInString + "-" + dayInString;
-
-                        // DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-                        LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
-
-                        Log.d(TAG, "datetest = " + localDate);
-
-                        mLocalDate = localDate;
-
-                    }
-                }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
-                datePickerDialog.show();
             }
         });
     }
