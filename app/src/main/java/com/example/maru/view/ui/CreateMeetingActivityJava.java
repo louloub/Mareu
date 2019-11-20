@@ -151,15 +151,39 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener() {
-
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener()
+                {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        /*chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
+                        String hourInString = String.valueOf(hourOfDay);
+                        String minutesInString = String.valueOf(minutes);
+                        String hour = hourInString + "h" + minutesInString;
+                        mHour = hour;*/
+
                         chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
                         String hourInString = String.valueOf(hourOfDay);
                         String minutesInString = String.valueOf(minutes);
                         String hour = hourInString + "h" + minutesInString;
                         mHour = hour;
+
+                        Calendar datetime = Calendar.getInstance();
+                        Calendar calendar = Calendar.getInstance();
+                        datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        datetime.set(Calendar.MINUTE, minutes);
+
+                        while (Calendar.HOUR_OF_DAY > hourOfDay)
+                        {
+                            Toast.makeText(CreateMeetingActivityJava.this,"Tu dois choisir une heure ", Toast.LENGTH_LONG).show();
+                        }
+
+                        if(datetime.getTimeInMillis()>=calendar.getTimeInMillis()){
+                            mHour = String.valueOf(hourOfDay % 12);
+                        }else{
+                            Toast.makeText(CreateMeetingActivityJava.this,"Invalid Time", Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
                 timePickerDialog.show();
