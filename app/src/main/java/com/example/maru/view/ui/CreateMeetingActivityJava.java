@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -58,9 +60,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     private int SpannedLength = 0, chipLength = 4, mRoom, yearsSelectedInInt, monthSelectedInInt, daysSelectedInInt;
     private CreateMeetingViewModel mCreateMeetingViewModel;
     private LocalDate mLocalDate;
-    private String mHour;
+    private String mHour, participantHint;
     Calendar calendar = Calendar.getInstance();
-    Calendar selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,9 +164,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v)
             {
-                /* Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 0);*/
-
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(
                         CreateMeetingActivityJava.this,
                     new DatePickerDialog.OnDateSetListener()
@@ -187,7 +185,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                             LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
                             mLocalDate = localDate;
-                            // selectedDate = localDate;
                         }
                     }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -202,8 +199,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v) {
 
-                // Calendar calendar = Calendar.getInstance();
-
                 final RangeTimePickerDialog timePickerDialog = new RangeTimePickerDialog(
                         CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener()
                 {
@@ -217,13 +212,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
 
-                // timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
-
-                /*if (selectedDate == calendar) {
-                    timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
-                } else {
-                }*/
-
                 if (yearsSelectedInInt == calendar.get(Calendar.YEAR)
                         && monthSelectedInInt == calendar.get(Calendar.MONTH)
                         && daysSelectedInInt == calendar.get(Calendar.DAY_OF_MONTH))
@@ -234,31 +222,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 timePickerDialog.show();
             }
         });
-
-        // TODO : it's work without setMin hour & minutes 21/11/19
-        /*button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.HOUR_OF_DAY, 0);
-
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener()
-                {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
-                        String hourInString = String.valueOf(hourOfDay);
-                        String minutesInString = String.valueOf(minutes);
-                        String hour = hourInString + "h" + minutesInString;
-                        mHour = hour;
-                    }
-                }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
-                // timePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-                timePickerDialog.show();
-            }
-        });*/
     }
 
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
@@ -280,7 +243,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void afterTextChanged(Editable editable) {
 
                 // CLOSE ICON WORKS AND "," FOR WRITE NEW CHIP
-                if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n"))) {
+                if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n")))
+                {
                     final Chip chip = new Chip(CreateMeetingActivityJava.this);
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip));
                     final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(SpannedLength, editable.length() - 1);
@@ -307,6 +271,12 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     });
                     chipGroup.addView(chip);
                     editable.clear();
+
+                    if (listOfParticipantChip.size()>0) {
+                        participantHint = "Participant(s)";
+                        mCreateMeetingViewModel.setHintForParticipants(participantHint);
+                        // mCreateMeetingViewModel.getStringForParticipantHint();
+                    }
                 }
             }
         });

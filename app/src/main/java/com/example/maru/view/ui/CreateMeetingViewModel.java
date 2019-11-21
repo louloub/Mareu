@@ -60,6 +60,8 @@ public class CreateMeetingViewModel extends ViewModel {
             participantHint = "Merci d'entrer le(s) participant(s)";
             mStringForParticipantHint.setValue(participantHint);
         } else {
+            /* participantHint = "Participant(s)";
+            mStringForParticipantHint.setValue(participantHint);*/
             /*participantHint = "";
             mStringForParticipantHint.setValue(participantHint);*/
         }
@@ -90,6 +92,10 @@ public class CreateMeetingViewModel extends ViewModel {
         }
 
         // TODO : faire la suite des hint 18/11/19
+    }
+
+    public void setHintForParticipants(String participantHint) {
+        mStringForParticipantHint.setValue(participantHint);
     }
 
     public enum ViewAction {
