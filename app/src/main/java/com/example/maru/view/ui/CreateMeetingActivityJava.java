@@ -28,6 +28,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.maru.R;
+import com.example.maru.utility.RangeTimePickerDialog;
 import com.example.maru.view.ViewModelFactory;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
@@ -263,6 +264,34 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onClick(View v) {
 
                 Calendar calendar = Calendar.getInstance();
+                /*calendar.add(Calendar.HOUR_OF_DAY, 0);
+                calendar.add(Calendar.MINUTE, 0);*/
+
+
+                final RangeTimePickerDialog timePickerDialog = new RangeTimePickerDialog(
+                        CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener()
+                {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
+                        String hourInString = String.valueOf(hourOfDay);
+                        String minutesInString = String.valueOf(minutes);
+                        String hour = hourInString + "h" + minutesInString;
+                        mHour = hour;
+                    }
+                }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
+                timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
+                // timePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                timePickerDialog.show();
+            }
+        });
+
+        // TODO : it's work
+        /*button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.HOUR_OF_DAY, 0);
 
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(
@@ -280,7 +309,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 // timePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 timePickerDialog.show();
             }
-        });
+        });*/
     }
 
     public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
