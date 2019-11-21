@@ -24,7 +24,6 @@ public class CreateMeetingViewModel extends ViewModel {
     public MutableLiveData<AddMeetingUiModel> getAddMeetingUiModelLiveData() {
         return mAddMeetingUiModelLiveData;
     }
-
     public MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
@@ -32,15 +31,12 @@ public class CreateMeetingViewModel extends ViewModel {
     LiveData<String> getStringForSubjectHint() {
         return mStringForSubjectHint;
     }
-
     LiveData<String> getStringForParticipantHint() {
         return mStringForParticipantHint;
     }
-
     LiveData<String> getStringForDateHint() {
         return mStringForDateHint;
     }
-
     LiveData<String> getStringForHourHint() {
         return mStringForHourHint;
     }

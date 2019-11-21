@@ -55,13 +55,12 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     private static final String TAG = "TAG";
     final ArrayList<String> listOfParticipantChip = new ArrayList<>();
-    private int SpannedLength = 0, chipLength = 4;
+    private int SpannedLength = 0, chipLength = 4, mRoom, yearsSelectedInInt, monthSelectedInInt, daysSelectedInInt;
     private CreateMeetingViewModel mCreateMeetingViewModel;
     private LocalDate mLocalDate;
     private String mHour;
-    private int mRoom;
-    private int minHour = -1, minMinute = -1, maxHour = 100, maxMinute = 100;
-    private int currentHour, currentMinute;
+    Calendar calendar = Calendar.getInstance();
+    Calendar selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,8 +163,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v)
             {
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE, 0);
+                /* Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, 0);*/
 
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(
                         CreateMeetingActivityJava.this,
@@ -175,6 +174,10 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
                         {
+                            yearsSelectedInInt = year;
+                            monthSelectedInInt = month;
+                            daysSelectedInInt = dayOfMonth;
+
                             String dayInString = String.format("%02d", dayOfMonth);
                             chooseDate.setText(dayInString + "/" + month + "/" + year);
                             String yearInString = String.valueOf(year);
@@ -184,6 +187,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                             LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
                             mLocalDate = localDate;
+                            // selectedDate = localDate;
                         }
                     }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -194,79 +198,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     public void launchTimerPickerDialog(final TextView chooseHour) {
         Button button = findViewById(R.id.create_meeting_bt_hour);
-
-        /*button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.HOUR_OF_DAY, 0);
-
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        CreateMeetingActivityJava.this,
-                        new TimePickerDialog.OnTimeSetListener()
-                        {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            }
-                        },Calendar.HOUR_OF_DAY, Calendar.MINUTE,true);
-                timePickerDialog.show();
-
-                *//*TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hour, int minute) {
-
-                    }
-                };
-                Calendar c = Calendar.getInstance();
-
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this,timePickerListener,
-                        c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE)+5,true);
-                timePickerDialog.show();*//*
-
-            }
-        });*/
-
-        /*button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.HOUR_OF_DAY, 0);
-
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        CreateMeetingActivityJava.this,
-                        new TimePickerDialog.OnTimeSetListener()
-                {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hour, int minute) {
-                        chooseHour.setText(hour + "h" + String.format("%02d", minute));
-                        String hourInString = String.valueOf(hour);
-                        String minutesInString = String.valueOf(minute);
-                        String hourString = hourInString + "h" + minutesInString;
-                        mHour = hourString;
-                    }
-                }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
-                timePickerDialog.getTimePicker().setMinHour(calendar.getTimeInMillis());
-                // timePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-
-                // Calendar c = Calendar.getInstance();
-                // c.add(Calendar.HOUR_OF_DAY, 0);
-
-                *//*final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this,timePickerListener,
-                        c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE)+5,true);*//*
-                timePickerDialog.show();
-            }
-        });*/
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Calendar calendar = Calendar.getInstance();
-                /*calendar.add(Calendar.HOUR_OF_DAY, 0);
-                calendar.add(Calendar.MINUTE, 0);*/
-
+                // Calendar calendar = Calendar.getInstance();
 
                 final RangeTimePickerDialog timePickerDialog = new RangeTimePickerDialog(
                         CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener()
@@ -280,13 +216,26 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         mHour = hour;
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
-                timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
-                // timePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
+                // timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
+
+                /*if (selectedDate == calendar) {
+                    timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
+                } else {
+                }*/
+
+                if (yearsSelectedInInt == calendar.get(Calendar.YEAR)
+                        && monthSelectedInInt == calendar.get(Calendar.MONTH)
+                        && daysSelectedInInt == calendar.get(Calendar.DAY_OF_MONTH))
+                {
+                    timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
+                } else {
+                }
                 timePickerDialog.show();
             }
         });
 
-        // TODO : it's work
+        // TODO : it's work without setMin hour & minutes 21/11/19
         /*button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
