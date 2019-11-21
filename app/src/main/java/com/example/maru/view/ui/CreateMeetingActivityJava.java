@@ -4,10 +4,12 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,6 +42,9 @@ import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,6 +59,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     private LocalDate mLocalDate;
     private String mHour;
     private int mRoom;
+    private int minHour = -1, minMinute = -1, maxHour = 100, maxMinute = 100;
+    private int currentHour, currentMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,9 +193,78 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
 
     public void launchTimerPickerDialog(final TextView chooseHour) {
         Button button = findViewById(R.id.create_meeting_bt_hour);
+
+        /*button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.HOUR_OF_DAY, 0);
+
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        CreateMeetingActivityJava.this,
+                        new TimePickerDialog.OnTimeSetListener()
+                        {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            }
+                        },Calendar.HOUR_OF_DAY, Calendar.MINUTE,true);
+                timePickerDialog.show();
+
+                *//*TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hour, int minute) {
+
+                    }
+                };
+                Calendar c = Calendar.getInstance();
+
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this,timePickerListener,
+                        c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE)+5,true);
+                timePickerDialog.show();*//*
+
+            }
+        });*/
+
+        /*button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.HOUR_OF_DAY, 0);
+
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        CreateMeetingActivityJava.this,
+                        new TimePickerDialog.OnTimeSetListener()
+                {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hour, int minute) {
+                        chooseHour.setText(hour + "h" + String.format("%02d", minute));
+                        String hourInString = String.valueOf(hour);
+                        String minutesInString = String.valueOf(minute);
+                        String hourString = hourInString + "h" + minutesInString;
+                        mHour = hourString;
+                    }
+                }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
+                timePickerDialog.getTimePicker().setMinHour(calendar.getTimeInMillis());
+                // timePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
+                // Calendar c = Calendar.getInstance();
+                // c.add(Calendar.HOUR_OF_DAY, 0);
+
+                *//*final TimePickerDialog timePickerDialog = new TimePickerDialog(CreateMeetingActivityJava.this,timePickerListener,
+                        c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE)+5,true);*//*
+                timePickerDialog.show();
+            }
+        });*/
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.HOUR_OF_DAY, 0);
+
                 final TimePickerDialog timePickerDialog = new TimePickerDialog(
                         CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener()
                 {
@@ -201,6 +277,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         mHour = hour;
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
+                // timePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
                 timePickerDialog.show();
             }
         });
