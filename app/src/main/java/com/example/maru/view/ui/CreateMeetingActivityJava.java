@@ -49,6 +49,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -257,14 +258,25 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         public void onClick(View v) {
                             chipGroup.removeView(chip);
 
+                            // TODO : work on : (22/11/19)
                             // TODO : remove participant from listOfParticipantChip when it's delete from ChipGroup
 
-                            /*// int i = indexOf(chip);
-                            int i = Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip);
-                            String str = charSequenceParticipantMailFromChip.toString();
-                            // int j = Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip);
+                            int i = listOfParticipantChip.indexOf(charSequenceParticipantMailFromChip.toString()) ;
 
-                            listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(str));*/
+                            // int chipPosition = chip.getBottom();
+                            listOfParticipantChip.remove(i);
+
+                            Log.d(TAG, "listOfParticipantChip = " +listOfParticipantChip );
+
+                            // listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(str));
+
+                            // int a = indexOf(chip);
+                            /*int i = Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip);
+                            String str = charSequenceParticipantMailFromChip.toString();
+
+                            listOfParticipantChip.remove(Arrays.asList(str);*/
+
+                            // listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(str));
 
                             // listOfParticipantChip.remove(Arrays.asList(listOfParticipantChip).indexOf(charSequenceParticipantMailFromChip));
                         }
@@ -275,7 +287,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     if (listOfParticipantChip.size()>0) {
                         participantHint = "Participant(s)";
                         mCreateMeetingViewModel.setHintForParticipants(participantHint);
-                        // mCreateMeetingViewModel.getStringForParticipantHint();
                     }
                 }
             }
