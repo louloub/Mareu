@@ -324,8 +324,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-    }
+    public void onPointerCaptureChanged(boolean hasCapture) {}
 
     public void onValidMeetingClick(
             final Button validMeeting, final TextInputEditText listOfParticipant,

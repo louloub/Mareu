@@ -18,6 +18,8 @@ import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 
+import org.threeten.bp.LocalTime;
+
 import java.util.List;
 
 public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
@@ -69,8 +71,36 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
             List<MeetingJava> list = MeetingManager.getInstance().getMeeting();
 
+            // TODO : work 22/11/19
+            /*textViewInformation.setText(
+                    model.getSubject() + " à " + model.getHour() + " le "
+                            + model.getDate() + " salle n° " + model.getRoom());*/
+
+            // TODO : retrive minutes in hour like line 208 in CreateMeetingActivityJava
+
+            String hourAndMinutesString = model.getHour();
+            int iend = hourAndMinutesString.indexOf("h"); //this finds the first occurrence of "."
+
+            // String hourString = hourAndMinutesString.substring(hourAndMinutesString.indexOf("h")-2) ;
+            String minutesString = hourAndMinutesString.substring(iend+1);
+            String hourString = hourAndMinutesString.substring(0 , iend);
+
+            int minutesInt = Integer.parseInt(minutesString);
+            String minutesStringFormatted = String.format("%02d", minutesInt);
+
+            /*if (iend != -1)
+            {
+                subString = hourAndMinutesString.substring(0 , iend);
+            }*/
+
+            // String curTime = String.format("%02d:%02d", hrs, mnts);
+            // int i = Integer.parseInt(model.getHour());
+            // String formatted = String.format("%02d", i);
+
             textViewInformation.setText(
-                    model.getSubject() + " à " + model.getHour() + " le " + model.getDate() + " salle n° " + model.getRoom());
+                    model.getSubject() + " à " + hourString + "h" + minutesStringFormatted + " le "
+                            + model.getDate() + " salle n° " + model.getRoom());
+
             textViewInformation.setTypeface(null, Typeface.BOLD);
             textViewInformation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
 
@@ -93,7 +123,6 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
         @Override
         public boolean areItemsTheSame(@NonNull PropertyUiModel oldItem, @NonNull PropertyUiModel newItem) {
-            // TODO : bug ICIIIIIIII !!!!!!
             return oldItem.getId() == newItem.getId();
         }
 
