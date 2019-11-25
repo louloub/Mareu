@@ -44,7 +44,8 @@ public class MeetingManager {
         return INSTANCE;
     }
 
-    public void addMeeting(LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
+    public void addMeeting(LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant)
+    {
         listMeeting.add(new MeetingJava(meetingCount, date, hour, room, subject, listOfEmailOfParticipant));
         meetingCount++;
         listMeetingLiveData.postValue(listMeeting);

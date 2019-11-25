@@ -5,11 +5,6 @@ class AddMeetingUiModel {
     private final String subjectHint;
     private final String participantHint;
 
-    /*private final String subjectHint;
-    private final String subjectHint;
-    private final String subjectHint;*/
-
-
     public AddMeetingUiModel(String subjectHint, String participantHint) {
         this.subjectHint = subjectHint;
         this.participantHint = participantHint;

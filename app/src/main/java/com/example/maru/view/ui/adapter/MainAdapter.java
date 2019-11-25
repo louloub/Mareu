@@ -41,7 +41,6 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         holder.bind(getItem(position), callback);
-        // mViewModel = new ViewModelProvider((ViewModelStoreOwner) this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
     public interface CallbackListener {
@@ -64,38 +63,16 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
         void bind(final PropertyUiModel model, final CallbackListener callbackListener) {
 
-            // TODO : retrive selected hour & minutes, not minute rightNow
-            /*String str = model.getHour();
-            int i = Integer.parseInt(str);*/
-            // String localMinutesString = String.format("%02d", i);
-
             List<MeetingJava> list = MeetingManager.getInstance().getMeeting();
 
-            // TODO : work 22/11/19
-            /*textViewInformation.setText(
-                    model.getSubject() + " à " + model.getHour() + " le "
-                            + model.getDate() + " salle n° " + model.getRoom());*/
-
-            // TODO : retrive minutes in hour like line 208 in CreateMeetingActivityJava
-
             String hourAndMinutesString = model.getHour();
-            int iend = hourAndMinutesString.indexOf("h"); //this finds the first occurrence of "."
+            int iend = hourAndMinutesString.indexOf("h");
 
-            // String hourString = hourAndMinutesString.substring(hourAndMinutesString.indexOf("h")-2) ;
             String minutesString = hourAndMinutesString.substring(iend+1);
             String hourString = hourAndMinutesString.substring(0 , iend);
 
             int minutesInt = Integer.parseInt(minutesString);
             String minutesStringFormatted = String.format("%02d", minutesInt);
-
-            /*if (iend != -1)
-            {
-                subString = hourAndMinutesString.substring(0 , iend);
-            }*/
-
-            // String curTime = String.format("%02d:%02d", hrs, mnts);
-            // int i = Integer.parseInt(model.getHour());
-            // String formatted = String.format("%02d", i);
 
             textViewInformation.setText(
                     model.getSubject() + " à " + hourString + "h" + minutesStringFormatted + " le "
@@ -118,7 +95,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
         }
     }
 
-    // TODO : Appeler quand on fait un submilist (dans observe)
+    // TODO : Appeler quand on fait un submilist (dans observe) ???? nino ????
     private static class DiffCallback extends DiffUtil.ItemCallback<PropertyUiModel> {
 
         @Override

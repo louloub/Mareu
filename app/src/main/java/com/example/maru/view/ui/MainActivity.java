@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     SortingTypeUiModel mSortingTypeUiModel;
     private MainViewModel mViewModel;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
