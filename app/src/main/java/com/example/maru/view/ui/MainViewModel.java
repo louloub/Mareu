@@ -12,10 +12,18 @@ import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.PropertyUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.maru.view.ui.SortingType.DATE_ASC;
 import static com.example.maru.view.ui.SortingType.DATE_DSC;
@@ -127,10 +135,17 @@ public class MainViewModel extends ViewModel {
 
             if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()){
 
-                // TODO : 25/11/19 java 8 formatter date / hour etc
+                LocalDate localDate = meetingJava.getDate();
+
+                String localeDateString = localDate.toString();
+
                 PropertyUiModel propertyUiModel = new PropertyUiModel(
-                        meetingJava.getId(), meetingJava.getDate(), meetingJava.getHour(),
-                        meetingJava.getRoom(), meetingJava.getSubject(), meetingJava.getListOfEmailOfParticipant());
+                        meetingJava.getId(),
+                        localeDateString,
+                        meetingJava.getHour(),
+                        Integer.toString(meetingJava.getRoom()),
+                        meetingJava.getSubject(),
+                        meetingJava.getListOfEmailOfParticipant().toString());
 
                 result.add(propertyUiModel);
             }
