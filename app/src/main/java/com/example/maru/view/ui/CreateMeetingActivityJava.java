@@ -96,42 +96,12 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             }
         });
 
-        // TODO : 25/11/19 : rassembler les HINT dans un UiModel pour n'avoir qu'un liveData exposé par le vueModel
-
         mCreateMeetingViewModel.getHintUiModel().observe(this, new Observer<HintUiModel>() {
             @Override
             public void onChanged(HintUiModel hintUiModel) {
                 setHint(hintUiModel, subjectOfMeeting, listOfParticipant, date, hour);
             }
         });
-
-        /*mCreateMeetingViewModel.getStringForSubjectHint().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String string) {
-                subjectOfMeeting.setHint(string);
-            }
-        });
-
-        mCreateMeetingViewModel.getStringForParticipantHint().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String string) {
-                listOfParticipant.setHint(string);
-            }
-        });
-
-        mCreateMeetingViewModel.getStringForHourHint().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String string) {
-                hour.setHint(string);
-            }
-        });
-
-        mCreateMeetingViewModel.getStringForDateHint().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String string) {
-                date.setHint(string);
-            }
-        });*/
     }
 
     private void setHint(HintUiModel hintUiModel, TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant, TextView date, TextView hour) {

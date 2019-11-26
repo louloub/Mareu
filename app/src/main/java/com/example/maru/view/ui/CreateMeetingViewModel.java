@@ -101,7 +101,7 @@ public class CreateMeetingViewModel extends ViewModel {
     }
 
     public void setHintForParticipants(String participantHint) {
-        mStringForParticipantHint.setValue(participantHint);
+        mStringForHint.setValue(new HintUiModel(participantHint,"Participant"));
     }
 
     public enum ViewAction {
