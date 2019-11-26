@@ -135,13 +135,9 @@ public class MainViewModel extends ViewModel {
 
             if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()){
 
-                LocalDate localDate = meetingJava.getDate();
-
-                String localeDateString = localDate.toString();
-
                 PropertyUiModel propertyUiModel = new PropertyUiModel(
                         meetingJava.getId(),
-                        localeDateString,
+                        meetingJava.getDate().toString(),
                         meetingJava.getHour(),
                         Integer.toString(meetingJava.getRoom()),
                         meetingJava.getSubject(),
