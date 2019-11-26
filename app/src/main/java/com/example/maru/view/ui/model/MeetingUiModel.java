@@ -1,15 +1,10 @@
 package com.example.maru.view.ui.model;
 
-import org.threeten.bp.LocalDate;
-
-import java.util.ArrayList;
-import java.util.List;
-
 // Destiné à la vue, ce sont des données primitives
 // Il ne doit y avoir que des String à afficher
-// DOnné que la vue doit afficher
+// Donné que la vue doit afficher
 
-public class PropertyUiModel {
+public class MeetingUiModel {
 
     private int id;
     private String date;
@@ -18,7 +13,8 @@ public class PropertyUiModel {
     private String subject;
     private String listOfEmailOfParticipant;
 
-    public PropertyUiModel(int id, String date, String hour, String room, String subject, String listOfEmailOfParticipant) {
+    public MeetingUiModel(
+            int id, String date, String hour, String room, String subject, String listOfEmailOfParticipant) {
         this.id = id;
         this.date = date;
         this.hour = hour;
@@ -53,7 +49,7 @@ public class PropertyUiModel {
 
     @Override
     public String toString() {
-        return "PropertyUiModel{" +
+        return "MeetingUiModel{" +
                 "id=" + id +
                 ", date=" + date +
                 ", hour='" + hour + '\'' +
@@ -67,7 +63,7 @@ public class PropertyUiModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PropertyUiModel that = (PropertyUiModel) o;
+        MeetingUiModel that = (MeetingUiModel) o;
         return id == that.id;
 
         /*

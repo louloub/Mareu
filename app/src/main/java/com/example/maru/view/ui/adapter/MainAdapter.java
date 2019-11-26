@@ -16,13 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.view.ui.model.PropertyUiModel;
-
-import org.threeten.bp.LocalTime;
+import com.example.maru.view.ui.model.MeetingUiModel;
 
 import java.util.List;
 
-public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainViewHolder> {
+public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainViewHolder> {
 
     private CallbackListener callback;
 
@@ -60,7 +58,7 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
             ivDeleteMeeting = itemView.findViewById(R.id.meeting_iv_delete_meeting);
         }
 
-        void bind(final PropertyUiModel model, final CallbackListener callbackListener) {
+        void bind(final MeetingUiModel model, final CallbackListener callbackListener) {
 
             List<MeetingJava> list = MeetingManager.getInstance().getMeeting();
 
@@ -95,15 +93,15 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
     }
 
     // TODO : Appeler quand on fait un submilist (dans observe) ???? nino ????
-    private static class DiffCallback extends DiffUtil.ItemCallback<PropertyUiModel> {
+    private static class DiffCallback extends DiffUtil.ItemCallback<MeetingUiModel> {
 
         @Override
-        public boolean areItemsTheSame(@NonNull PropertyUiModel oldItem, @NonNull PropertyUiModel newItem) {
+        public boolean areItemsTheSame(@NonNull MeetingUiModel oldItem, @NonNull MeetingUiModel newItem) {
             return oldItem.getId() == newItem.getId();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull PropertyUiModel oldItem, @NonNull PropertyUiModel newItem) {
+        public boolean areContentsTheSame(@NonNull MeetingUiModel oldItem, @NonNull MeetingUiModel newItem) {
             return oldItem.equals(newItem);
         }
     }

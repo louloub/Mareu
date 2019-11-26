@@ -17,7 +17,7 @@ public class SortingTypeUiModelManager {
      * Instance unique non préinitialisée
      */
     private static SortingTypeUiModelManager INSTANCE = new SortingTypeUiModelManager();
-    SortingTypeUiModel mSortingTypeUiModel = new SortingTypeUiModel();
+    private SortingTypeUiModel mSortingTypeUiModel = new SortingTypeUiModel();
     private List<String> mSortingTypeList = new ArrayList<>();
     private int selectedIndex = 0;
     private MutableLiveData<List<String>> mListSortingTypeLiveData = new MutableLiveData<>();

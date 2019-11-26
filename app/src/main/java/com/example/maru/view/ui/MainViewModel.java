@@ -9,21 +9,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.view.ui.model.PropertyUiModel;
+import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static com.example.maru.view.ui.SortingType.DATE_ASC;
 import static com.example.maru.view.ui.SortingType.DATE_DSC;
@@ -59,7 +51,7 @@ public class MainViewModel extends ViewModel {
 
     private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData(); // TODO INJECT THIS INSTEAD
     private final List<String> list = new ArrayList<>();
-    private MediatorLiveData<List<PropertyUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
@@ -103,7 +95,7 @@ public class MainViewModel extends ViewModel {
     }
 
     @Nullable
-    private List<PropertyUiModel> combineMeeting(
+    private List<MeetingUiModel> combineMeeting(
             @Nullable List<MeetingJava> meetings,
             @Nullable SortingType sortingType,
             @Nullable Integer selectedMeetingRoomNumber) {
@@ -129,13 +121,13 @@ public class MainViewModel extends ViewModel {
             Collections.sort(meetings, DATE_COMPARATOR_DSC);
         }
 
-        List<PropertyUiModel> result = new ArrayList<>();
+        List<MeetingUiModel> result = new ArrayList<>();
 
         for (MeetingJava meetingJava : meetings) {
 
             if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()){
 
-                PropertyUiModel propertyUiModel = new PropertyUiModel(
+                MeetingUiModel meetingUiModel = new MeetingUiModel(
                         meetingJava.getId(),
                         meetingJava.getDate().toString(),
                         meetingJava.getHour(),
@@ -143,7 +135,7 @@ public class MainViewModel extends ViewModel {
                         meetingJava.getSubject(),
                         meetingJava.getListOfEmailOfParticipant().toString());
 
-                result.add(propertyUiModel);
+                result.add(meetingUiModel);
             }
         }
 
@@ -179,7 +171,7 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    LiveData<List<PropertyUiModel>> getUiModelsLiveData() {
+    LiveData<List<MeetingUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
 

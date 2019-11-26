@@ -28,9 +28,7 @@ public class CreateMeetingViewModel extends ViewModel {
         return mViewActionLiveData;
     }
 
-    LiveData<String> getStringForSubjectHint() {
-        return mStringForSubjectHint;
-    }
+    LiveData<String> getStringForSubjectHint() { return mStringForSubjectHint; }
     LiveData<String> getStringForParticipantHint() {
         return mStringForParticipantHint;
     }
@@ -80,14 +78,9 @@ public class CreateMeetingViewModel extends ViewModel {
                 && listOfEmailOfParticipant.size() >= 1 && date != null && hour != null && room >= 0) {
             MeetingManager.getInstance().addMeeting(date, hour, room, subject, listOfEmailOfParticipant);
             mViewActionLiveData.setValue(ViewAction.OK);
-            // mAddMeetingUiModelLiveData.setValue(new AddMeetingUiModel(subjectHint));
         } else {
-            // MeetingManager.getInstance().addMeeting(date, hour, room, subject, listOfEmailOfParticipant);
             mViewActionLiveData.setValue(ViewAction.KO);
-            // meetingLiveData.setValue(MeetingManager.getInstance().getMeeting());
         }
-
-        // TODO : faire la suite des hint 18/11/19
     }
 
     public void setHintForParticipants(String participantHint) {

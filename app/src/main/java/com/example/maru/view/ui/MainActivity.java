@@ -2,7 +2,6 @@ package com.example.maru.view.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
-import com.example.maru.view.ui.model.PropertyUiModel;
+import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -50,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
 
-        mViewModel.getUiModelsLiveData().observe(this, new Observer<List<PropertyUiModel>>() {
+        mViewModel.getUiModelsLiveData().observe(this, new Observer<List<MeetingUiModel>>() {
             @Override
-            public void onChanged(List<PropertyUiModel> propertyUiModels) {
-                adapter.submitList(propertyUiModels);
+            public void onChanged(List<MeetingUiModel> meetingUiModels) {
+                adapter.submitList(meetingUiModels);
             }
         });
 
