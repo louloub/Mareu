@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.view.ui.model.HintUiModel;
 
 import org.threeten.bp.LocalDate;
 
@@ -16,6 +17,9 @@ public class CreateMeetingViewModel extends ViewModel {
     private MutableLiveData<AddMeetingUiModel> mAddMeetingUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
     private MutableLiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData();
+
+    private MutableLiveData<HintUiModel> mStringForHint = new MutableLiveData<>();
+
     private MutableLiveData<String> mStringForSubjectHint = new MutableLiveData<>();
     private MutableLiveData<String> mStringForParticipantHint = new MutableLiveData<>();
     private MutableLiveData<String> mStringForDateHint = new MutableLiveData<>();
@@ -27,6 +31,8 @@ public class CreateMeetingViewModel extends ViewModel {
     public MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
+
+    LiveData<HintUiModel> getHintUiModel() { return mStringForHint; }
 
     LiveData<String> getStringForSubjectHint() { return mStringForSubjectHint; }
     LiveData<String> getStringForParticipantHint() {
@@ -46,36 +52,47 @@ public class CreateMeetingViewModel extends ViewModel {
         String dateHint;
         String hourHint;
         String roomHint;
+        String hintText;
 
         if (subject == null || subject.isEmpty()) {
-            subjectHint = "           : Merci d'entrer le sujet de la réunion";
-            mStringForSubjectHint.setValue(subjectHint);
+            hintText = "           : Merci d'entrer le sujet de la réunion" ;
+            HintUiModel hintUiModel = new HintUiModel(hintText,"Subject");
+            mStringForHint.setValue(hintUiModel);
+
+            // mStringForSubjectHint.setValue("           : Merci d'entrer le sujet de la réunion");
         } else {
             subjectHint = null;
         }
 
         if (listOfEmailOfParticipant.size() == 0) {
-            participantHint = "Merci d'entrer le(s) participant(s)";
-            mStringForParticipantHint.setValue(participantHint);
+            hintText = "Merci d'entrer le(s) participant(s)";
+            HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
+            mStringForHint.setValue(hintUiModel);
+            // mStringForParticipantHint.setValue(participantHint);
         } else {
         }
 
         if (date == null) {
-            dateHint = "Merci de sélectionner une date";
-            mStringForDateHint.setValue(dateHint);
+            hintText = "Merci de sélectionner une date";
+            HintUiModel hintUiModel = new HintUiModel(hintText,"Date");
+            mStringForHint.setValue(hintUiModel);
+            // mStringForDateHint.setValue(dateHint);
         } else {
             dateHint = null;
         }
 
         if (hour == null) {
-            hourHint = "Merci de sélectionner une heure";
-            mStringForHourHint.setValue(hourHint);
+            hintText = "Merci de sélectionner une heure";
+            HintUiModel hintUiModel = new HintUiModel(hintText,"Hour");
+            mStringForHint.setValue(hintUiModel);
+            // mStringForHourHint.setValue(hourHint);
         } else {
             hourHint = null;
         }
 
-        if ((subject != null || subject.isEmpty())
-                && listOfEmailOfParticipant.size() >= 1 && date != null && hour != null && room >= 0) {
+        if ((subject != null && !subject.isEmpty())
+                && listOfEmailOfParticipant.size() >= 1 && date != null && hour != null && room > 0)
+        {
             MeetingManager.getInstance().addMeeting(date, hour, room, subject, listOfEmailOfParticipant);
             mViewActionLiveData.setValue(ViewAction.OK);
         } else {

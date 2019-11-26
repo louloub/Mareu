@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.maru.R;
 import com.example.maru.utility.RangeTimePickerDialog;
 import com.example.maru.view.ViewModelFactory;
+import com.example.maru.view.ui.model.HintUiModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -95,9 +96,16 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             }
         });
 
-        // TODO : 25/11/19 : rassembler les HINT dans un UiModel pour n'avoir qu'un live data exposer par le vueModel
+        // TODO : 25/11/19 : rassembler les HINT dans un UiModel pour n'avoir qu'un liveData exposé par le vueModel
 
-        mCreateMeetingViewModel.getStringForSubjectHint().observe(this, new Observer<String>() {
+        mCreateMeetingViewModel.getHintUiModel().observe(this, new Observer<HintUiModel>() {
+            @Override
+            public void onChanged(HintUiModel hintUiModel) {
+                setHint(hintUiModel, subjectOfMeeting, listOfParticipant, date, hour);
+            }
+        });
+
+        /*mCreateMeetingViewModel.getStringForSubjectHint().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String string) {
                 subjectOfMeeting.setHint(string);
@@ -123,7 +131,23 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onChanged(String string) {
                 date.setHint(string);
             }
-        });
+        });*/
+    }
+
+    private void setHint(HintUiModel hintUiModel, TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant, TextView date, TextView hour) {
+        String hintSource = hintUiModel.getSourceHint();
+        String hintText = hintUiModel.getTextHint();
+
+        switch (hintSource) {
+            case "Subject" :
+                subjectOfMeeting.setHint(hintText);
+            case "Participant" :
+                listOfParticipant.setHint(hintText);
+            case "Date" :
+                date.setHint(hintText);
+            case "Hour" :
+                hour.setHint(hintText);
+        }
     }
 
     public void retrieveXMLandLaunchMethod() {
