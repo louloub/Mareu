@@ -7,4 +7,8 @@
         android:title="action_settings"
         android:icon="@drawable/ic_filter_list_white_24dp"
         app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/toolbar_bt_filter_meeting"
+        android:title="action_settings"
+        app:showAsAction="ifRoom"></item>
 </menu>

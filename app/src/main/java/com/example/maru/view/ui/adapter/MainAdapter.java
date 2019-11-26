@@ -28,7 +28,6 @@ public class MainAdapter extends ListAdapter<PropertyUiModel, MainAdapter.MainVi
 
     public MainAdapter(CallbackListener callback) {
         super(new DiffCallback());
-
         this.callback = callback;
     }
 

@@ -95,6 +95,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             }
         });
 
+        // TODO : 25/11/19 : rassembler les HINT dans un UiModel pour n'avoir qu'un live data exposer par le vueModel
+
         mCreateMeetingViewModel.getStringForSubjectHint().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String string) {
@@ -333,7 +335,9 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCreateMeetingViewModel.createMeeting(mLocalDate, mHour, mRoom, subjectOfMeeting.getText().toString(), listOfParticipantChip);
+                mCreateMeetingViewModel.createMeeting(
+                        mLocalDate, mHour, mRoom, subjectOfMeeting.getText().toString(),
+                        listOfParticipantChip);
             }
         });
     }

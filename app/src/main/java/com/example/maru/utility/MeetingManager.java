@@ -19,7 +19,7 @@ public class MeetingManager {
      * Instance unique non préinitialisée
      */
     private static MeetingManager INSTANCE = null;
-    private List<MeetingJava> listMeeting = new ArrayList<>();
+    private final List<MeetingJava> listMeeting = new ArrayList<>();
     private MutableLiveData<List<MeetingJava>> listMeetingLiveData = new MutableLiveData<>();
 
     private int meetingCount = 0;

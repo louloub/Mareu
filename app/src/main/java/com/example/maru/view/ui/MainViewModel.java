@@ -57,6 +57,7 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
     private int selectedSortingTypeIndex = 0;
     private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
+    private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
 
     public MainViewModel() {
         wireUpMediator();
@@ -67,7 +68,7 @@ public class MainViewModel extends ViewModel {
         mUiModelsLiveData.addSource(meetingLiveData, new Observer<List<MeetingJava>>() {
             @Override
             public void onChanged(List<MeetingJava> meetingJavas) {
-                mUiModelsLiveData.setValue(combineMeeting(meetingJavas, mSortingTypeLiveData.getValue()));
+                mUiModelsLiveData.setValue(combineMeeting(meetingJavas, mSortingTypeLiveData.getValue(), mSelectedFilterTypeLiveData.getValue()));
             }
         });
 
@@ -84,12 +85,21 @@ public class MainViewModel extends ViewModel {
                 selectedSortingTypeIndex = integer;
             }
         });
+
+        mUiModelsLiveData.addSource(mSelectedFilterTypeLiveData, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer selectedMeetingRoomNumber) {
+                mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue(), mSortingTypeLiveData.getValue(),selectedMeetingRoomNumber));
+            }
+        });
     }
 
     @Nullable
     private List<PropertyUiModel> combineMeeting(
             @Nullable List<MeetingJava> meetings,
-            @Nullable SortingType sortingType) {
+            @Nullable SortingType sortingType,
+            @Nullable Integer selectedMeetingRoomNumber) {
+
         if (meetings == null) {
             return null;
         }
@@ -115,11 +125,15 @@ public class MainViewModel extends ViewModel {
 
         for (MeetingJava meetingJava : meetings) {
 
-            PropertyUiModel propertyUiModel = new PropertyUiModel(
-                    meetingJava.getId(), meetingJava.getDate(), meetingJava.getHour(),
-                    meetingJava.getRoom(), meetingJava.getSubject(), meetingJava.getListOfEmailOfParticipant());
+            if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()){
 
-            result.add(propertyUiModel);
+                // TODO : 25/11/19 java 8 formatter date / hour etc
+                PropertyUiModel propertyUiModel = new PropertyUiModel(
+                        meetingJava.getId(), meetingJava.getDate(), meetingJava.getHour(),
+                        meetingJava.getRoom(), meetingJava.getSubject(), meetingJava.getListOfEmailOfParticipant());
+
+                result.add(propertyUiModel);
+            }
         }
 
         return result;
@@ -192,5 +206,10 @@ public class MainViewModel extends ViewModel {
 
     void deleteMeeting(int meetingId) {
         MeetingManager.getInstance().deleteMeeting(meetingId);
+    }
+
+    public void setFilterType() {
+        // TODO : rempalcer 0 par du dynamique
+        mSelectedFilterTypeLiveData.setValue(1);
     }
 }

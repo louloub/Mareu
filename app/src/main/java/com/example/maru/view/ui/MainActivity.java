@@ -2,6 +2,7 @@ package com.example.maru.view.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -117,6 +119,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
             mViewModel.displaySortingTypePopup();
+        } else if (item.getItemId() == R.id.toolbar_bt_filter_meeting) {
+            // TODO : 25/11/19 popup choice filtre
+            mViewModel.setFilterType();
         }
         return super.onOptionsItemSelected(item);
     }
