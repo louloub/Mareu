@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.view.ui.model.FilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
@@ -49,15 +50,26 @@ public class MainViewModel extends ViewModel {
         }
     };
 
+
+    private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
+    private FilterTypeUiModel filterTypeUiModel = new FilterTypeUiModel();
+
+    private int selectedSortingTypeIndex = 0;
+    private int selectedFilterTypeIndex = 0;
+
+    private final List<String> listOfItemSortMenu = new ArrayList<>();
+    private final List<String> listOfItemFilterMenu = new ArrayList<>();
+
     private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData(); // TODO INJECT THIS INSTEAD
-    private final List<String> list = new ArrayList<>();
+
     private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
-    private int selectedSortingTypeIndex = 0;
-    private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<FilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
 
     public MainViewModel() {
         wireUpMediator();
@@ -171,27 +183,31 @@ public class MainViewModel extends ViewModel {
         }
     }
 
+    void setFilterType() {
+
+    }
+
     LiveData<List<MeetingUiModel>> getUiModelsLiveData() {
         return mUiModelsLiveData;
     }
 
-    LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() {
-        return mSortingTypeUiModelLiveData;
-    }
+    LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
 
-    LiveData<Integer> getSelectedSortingTypeIndexLiveDate() {
-        return mSelectedSortingTypeIndexLiveData;
-    }
+    LiveData<FilterTypeUiModel> getmFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
+
+    LiveData<Integer> getSelectedSortingTypeIndexLiveDate() { return mSelectedSortingTypeIndexLiveData; }
+
+    LiveData<Integer> getSelectedFilterTypeIndexLiveDate() {return mSelectedFilterTypeIndexLiveData; }
 
     void displaySortingTypePopup() {
 
-        if (list.size() == 4) {
+        if (listOfItemSortMenu.size() == 4) {
             mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModel());
         } else {
-            list.add("Croissant salle");
-            list.add("Decroissant salle");
-            list.add("Croissant date");
-            list.add("Decroissant date");
+            listOfItemSortMenu.add("Croissant salle");
+            listOfItemSortMenu.add("Decroissant salle");
+            listOfItemSortMenu.add("Croissant date");
+            listOfItemSortMenu.add("Decroissant date");
             setSortingTypeUiModel();
         }
     }
@@ -201,18 +217,49 @@ public class MainViewModel extends ViewModel {
     }
 
     private SortingTypeUiModel setSortingTypeUiModel() {
-        sortingTypeUiModel.setNames(list);
+        sortingTypeUiModel.setNames(listOfItemSortMenu);
         sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
         mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
         return sortingTypeUiModel;
     }
 
-    void deleteMeeting(int meetingId) {
-        MeetingManager.getInstance().deleteMeeting(meetingId);
+    // TODO : Filtre des réunions par date ou par lieu
+    // TODO : soi deux bouttons dans le menu, un pour afficher un popup avec un choix de la salle en liste
+    // TODO : et un autre boutton dans le menu (total de 3 buttons) qui ouvre un popup avec un edit text ou on tape la date choisi
+
+    public void displayFilterTypePopup() {
+        // TODO 25/11/19 : rempalcer 0 par du dynamique
+        // mSelectedFilterTypeLiveData.setValue(1);
+
+        if (listOfItemFilterMenu.size() == 10) {
+            mFilterTypeUiModelLiveData.setValue(getFilterTypeUiModel());
+        } else {
+            listOfItemFilterMenu.add("salle 1");
+            listOfItemFilterMenu.add("salle 2");
+            listOfItemFilterMenu.add("salle 3");
+            listOfItemFilterMenu.add("salle 4");
+            listOfItemFilterMenu.add("salle 5");
+            listOfItemFilterMenu.add("salle 6");
+            listOfItemFilterMenu.add("salle 7");
+            listOfItemFilterMenu.add("salle 8");
+            listOfItemFilterMenu.add("salle 9");
+            listOfItemFilterMenu.add("salle 10");
+            setFilterTypeUiModel();
+        }
     }
 
-    public void setFilterType() {
-        // TODO : rempalcer 0 par du dynamique
-        mSelectedFilterTypeLiveData.setValue(1);
+    private FilterTypeUiModel getFilterTypeUiModel() {
+        return filterTypeUiModel;
+    }
+
+    private FilterTypeUiModel setFilterTypeUiModel() {
+        filterTypeUiModel.setNames(listOfItemFilterMenu);
+        filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+        mFilterTypeUiModelLiveData.setValue(filterTypeUiModel);
+        return filterTypeUiModel;
+    }
+
+    void deleteMeeting(int meetingId) {
+        MeetingManager.getInstance().deleteMeeting(meetingId);
     }
 }

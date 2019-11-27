@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
+import com.example.maru.view.ui.model.FilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
     private static final String TAG = "tag";
     final MainAdapter adapter = new MainAdapter(this);
-    int mSelectedSortingTypeIndex;
+    int mSelectedSortingTypeIndex, mSelectedFilterTypeIndex;
     SortingTypeUiModel mSortingTypeUiModel;
+    FilterTypeUiModel mFilterTypeUiModel;
     private MainViewModel mViewModel;
 
     @Override
@@ -65,8 +67,23 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
         mViewModel.getSelectedSortingTypeIndexLiveDate().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(Integer newIndex) {
-                mSelectedSortingTypeIndex = newIndex;
+            public void onChanged(Integer newSortingTypeIndex) {
+                mSelectedSortingTypeIndex = newSortingTypeIndex;
+            }
+        });
+
+        mViewModel.getSelectedFilterTypeIndexLiveDate().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer newFilterTypeIndex) {
+                mSelectedFilterTypeIndex = newFilterTypeIndex;
+            }
+        });
+
+        mViewModel.getmFilterTypeUiModelLiveData().observe(this, new Observer<FilterTypeUiModel>() {
+            @Override
+            public void onChanged(FilterTypeUiModel filterTypeUiModel) {
+                mFilterTypeUiModel = filterTypeUiModel;
+                alertDialogChoiceFiltre(filterTypeUiModel);
             }
         });
     }
@@ -119,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             mViewModel.displaySortingTypePopup();
         } else if (item.getItemId() == R.id.toolbar_bt_filter_meeting) {
             // TODO : 25/11/19 popup choice filtre
-            mViewModel.setFilterType();
+            mViewModel.displayFilterTypePopup();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -159,6 +176,43 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(MainActivity.this.getApplicationContext(), "Tu as choisi " + checkedItemObject, Toast.LENGTH_LONG).show();
                 mViewModel.setSortingType((String) checkedItemObject, sortingTypeUiModel);
+            }
+        }));
+
+        myPopup.setCancelable(false);
+
+        AlertDialog dialog = myPopup.create();
+        myPopup.show();
+    }
+
+    // Alert Dialog Choice Sort
+    public void alertDialogChoiceFiltre(FilterTypeUiModel filtrerTypeUiModel) {
+
+        // Setup Alert builder
+        final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
+        myPopup.setTitle("Choisis la salle à filtrer");
+
+        myPopup.setSingleChoiceItems(filtrerTypeUiModel.getListOFilterType().toArray(
+                new CharSequence[filtrerTypeUiModel.getListOFilterType().size()]),
+                filtrerTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }));
+
+        // Setup "Valider" button
+        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ListView lw = ((AlertDialog) dialog).getListView();
+                Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                Toast.makeText(
+                        MainActivity.this.getApplicationContext(),
+                        "Tu as choisi d'afficher les réunions de la " + checkedItemObject,
+                        Toast.LENGTH_LONG).show();
+
+                // mViewModel.setSortingType((String) checkedItemObject, mSortingTypeUiModel);
             }
         }));
 
