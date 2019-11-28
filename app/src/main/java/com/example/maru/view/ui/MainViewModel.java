@@ -18,6 +18,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.example.maru.view.ui.FilterType.NO_ROOM;
+import static com.example.maru.view.ui.FilterType.ROOM_1;
+import static com.example.maru.view.ui.FilterType.ROOM_10;
+import static com.example.maru.view.ui.FilterType.ROOM_2;
+import static com.example.maru.view.ui.FilterType.ROOM_3;
+import static com.example.maru.view.ui.FilterType.ROOM_4;
+import static com.example.maru.view.ui.FilterType.ROOM_5;
+import static com.example.maru.view.ui.FilterType.ROOM_6;
+import static com.example.maru.view.ui.FilterType.ROOM_7;
+import static com.example.maru.view.ui.FilterType.ROOM_8;
+import static com.example.maru.view.ui.FilterType.ROOM_9;
 import static com.example.maru.view.ui.SortingType.DATE_ASC;
 import static com.example.maru.view.ui.SortingType.DATE_DSC;
 import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_ASC;
@@ -64,6 +75,9 @@ public class MainViewModel extends ViewModel {
 
     private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
+
+    private MutableLiveData<FilterType> mFilterTypeLiveData = new MutableLiveData<>();
+
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
@@ -108,6 +122,16 @@ public class MainViewModel extends ViewModel {
                         meetingLiveData.getValue(),
                         mSortingTypeLiveData.getValue(),
                         selectedMeetingRoomNumber));
+            }
+        });
+
+        mUiModelsLiveData.addSource(mFilterTypeLiveData, new Observer<FilterType>() {
+            @Override
+            public void onChanged(FilterType filterType) {
+                mUiModelsLiveData.setValue(combineMeeting(
+                        meetingLiveData.getValue(),
+                        mSortingTypeLiveData.getValue(),
+                        mSelectedFilterTypeLiveData.getValue()));
             }
         });
     }
@@ -192,12 +216,68 @@ public class MainViewModel extends ViewModel {
     void setFilterType(String filterChoice, FilterTypeUiModel filterTypeUiModel) {
         switch (filterChoice) {
             case "aucune salle":
+                mFilterTypeLiveData.setValue(NO_ROOM);
                 selectedFilterTypeIndex = 0;
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 1":
+                mFilterTypeLiveData.setValue(ROOM_1);
                 selectedFilterTypeIndex = 1;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 2":
+                mFilterTypeLiveData.setValue(ROOM_2);
+                selectedFilterTypeIndex = 2;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 3":
+                mFilterTypeLiveData.setValue(ROOM_3);
+                selectedFilterTypeIndex = 3;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 4":
+                mFilterTypeLiveData.setValue(ROOM_4);
+                selectedFilterTypeIndex = 4;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 5":
+                mFilterTypeLiveData.setValue(ROOM_5);
+                selectedFilterTypeIndex = 5;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 6":
+                mFilterTypeLiveData.setValue(ROOM_6);
+                selectedFilterTypeIndex = 6;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 7":
+                mFilterTypeLiveData.setValue(ROOM_7);
+                selectedFilterTypeIndex = 7;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 8":
+                mFilterTypeLiveData.setValue(ROOM_8);
+                selectedFilterTypeIndex = 8;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 9":
+                mFilterTypeLiveData.setValue(ROOM_9);
+                selectedFilterTypeIndex = 9;
+                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                break;
+            case "salle 10":
+                mFilterTypeLiveData.setValue(ROOM_10);
+                selectedFilterTypeIndex = 10;
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
