@@ -1,5 +1,7 @@
 package com.example.maru.view.ui;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -14,11 +16,16 @@ import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
+import static android.content.ContentValues.TAG;
 import static com.example.maru.view.ui.FilterType.ALL_ROOM;
 import static com.example.maru.view.ui.FilterType.ROOM_1;
 import static com.example.maru.view.ui.FilterType.ROOM_10;
@@ -273,6 +280,30 @@ public class MainViewModel extends ViewModel {
         }
     }
 
+    void setDateFilterType(String dateForFilter, DateFilterTypeUiModel dateFilterTypeUiModel) {
+
+        List<MeetingJava> meetingJavalist = MeetingManager.getInstance().getMeeting();
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(dateForFilter, dateTimeFormatter);
+
+        switch (dateForFilter) {
+            case  :
+
+
+        }
+
+        int index = 0;
+
+        for (MeetingJava meetingJava : meetingLiveData.getValue())
+        {
+            index++;
+            if (meetingJavalist.get(index).getDate().isEqual(localDate)){
+                Log.d(TAG, "test test test ");
+            }
+        }
+    }
+
     private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
         mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
         roomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
@@ -312,10 +343,6 @@ public class MainViewModel extends ViewModel {
         mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
         return sortingTypeUiModel;
     }
-
-    // TODO : Filtre des réunions par date ou par lieu
-    // TODO : soi deux bouttons dans le menu, un pour afficher un popup avec un choix de la salle en liste
-    // TODO : et un autre boutton dans le menu (total de 3 buttons) qui ouvre un popup avec un edit text ou on tape la date choisi
 
     void displayFilterRoomPopup() {
 

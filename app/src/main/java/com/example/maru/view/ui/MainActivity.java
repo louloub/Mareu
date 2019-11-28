@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
+import com.example.maru.view.ui.model.DateFilterTypeUiModel;
 import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     int mSelectedSortingTypeIndex, mSelectedFilterTypeIndex;
     SortingTypeUiModel mSortingTypeUiModel;
     RoomFilterTypeUiModel mRoomFilterTypeUiModel;
+    DateFilterTypeUiModel mDateFilterTypeUiModel;
     private MainViewModel mViewModel;
 
     @Override
@@ -233,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Choisis la date à filtrer");
-        myPopup.setMessage("Exemple : 2019/12/01");
+        myPopup.setMessage("Exemple : 2019-12-01");
 
         final EditText input = new EditText(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -241,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 LinearLayout.LayoutParams.MATCH_PARENT);
         input.setLayoutParams(lp);
         myPopup.setView(input);
-        // myPopup.setIcon(R.drawable.key);
 
         // Setup "Valider" button
         myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
@@ -254,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                         MainActivity.this.getApplicationContext(),
                         "Tu as choisi d'afficher les réunions de cette date : " + dateForFilter,
                         Toast.LENGTH_LONG).show();
-                // mViewModel.setDateFilterType((String) checkedItemObject, mDateFilterTypeUiModel);
+                mViewModel.setDateFilterType(dateForFilter, mDateFilterTypeUiModel);
             }
         }));
 
