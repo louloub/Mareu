@@ -218,66 +218,77 @@ public class MainViewModel extends ViewModel {
             case "aucune salle":
                 mFilterTypeLiveData.setValue(NO_ROOM);
                 selectedFilterTypeIndex = 0;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 1":
                 mFilterTypeLiveData.setValue(ROOM_1);
                 selectedFilterTypeIndex = 1;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 2":
                 mFilterTypeLiveData.setValue(ROOM_2);
                 selectedFilterTypeIndex = 2;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 3":
                 mFilterTypeLiveData.setValue(ROOM_3);
                 selectedFilterTypeIndex = 3;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 4":
                 mFilterTypeLiveData.setValue(ROOM_4);
                 selectedFilterTypeIndex = 4;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 5":
                 mFilterTypeLiveData.setValue(ROOM_5);
                 selectedFilterTypeIndex = 5;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 6":
                 mFilterTypeLiveData.setValue(ROOM_6);
                 selectedFilterTypeIndex = 6;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 7":
                 mFilterTypeLiveData.setValue(ROOM_7);
                 selectedFilterTypeIndex = 7;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 8":
                 mFilterTypeLiveData.setValue(ROOM_8);
                 selectedFilterTypeIndex = 8;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 9":
                 mFilterTypeLiveData.setValue(ROOM_9);
                 selectedFilterTypeIndex = 9;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
             case "salle 10":
                 mFilterTypeLiveData.setValue(ROOM_10);
                 selectedFilterTypeIndex = 10;
+                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
                 mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
                 break;
