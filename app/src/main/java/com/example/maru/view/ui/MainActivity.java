@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
             mViewModel.displaySortingTypePopup();
         } else if (item.getItemId() == R.id.toolbar_bt_filter_meeting) {
-            // TODO : 25/11/19 popup choice filtre
             mViewModel.displayFilterTypePopup();
         }
         return super.onOptionsItemSelected(item);
@@ -186,15 +185,15 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     }
 
     // Alert Dialog Choice Sort
-    public void alertDialogChoiceFiltre(FilterTypeUiModel filtrerTypeUiModel) {
+    public void alertDialogChoiceFiltre(FilterTypeUiModel filterTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Choisis la salle à filtrer");
 
-        myPopup.setSingleChoiceItems(filtrerTypeUiModel.getListOFilterType().toArray(
-                new CharSequence[filtrerTypeUiModel.getListOFilterType().size()]),
-                filtrerTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+        myPopup.setSingleChoiceItems(filterTypeUiModel.getListOFilterType().toArray(
+                new CharSequence[filterTypeUiModel.getListOFilterType().size()]),
+                filterTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -209,8 +208,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(
                         MainActivity.this.getApplicationContext(),
-                        "Tu as choisi d'afficher les réunions de la " + checkedItemObject,
+                        "Tu as choisi d'afficher les réunions : " + checkedItemObject,
                         Toast.LENGTH_LONG).show();
+                mViewModel.setFilterType((String) checkedItemObject, mFilterTypeUiModel);
 
                 // mViewModel.setSortingType((String) checkedItemObject, mSortingTypeUiModel);
             }
