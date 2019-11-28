@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.view.ui.model.FilterTypeUiModel;
+import com.example.maru.view.ui.model.DateFilterTypeUiModel;
+import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
@@ -62,13 +63,13 @@ public class MainViewModel extends ViewModel {
     };
 
     private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
-    private FilterTypeUiModel filterTypeUiModel = new FilterTypeUiModel();
+    private RoomFilterTypeUiModel roomFilterTypeUiModel = new RoomFilterTypeUiModel();
 
     private int selectedSortingTypeIndex = 0;
     private int selectedFilterTypeIndex = 0;
 
     private final List<String> listOfItemSortMenu = new ArrayList<>();
-    private final List<String> listOfItemFilterMenu = new ArrayList<>();
+    private final List<String> listOfItemFilterRoomMenu = new ArrayList<>();
 
     private final LiveData<List<MeetingJava>> meetingLiveData = MeetingManager.getInstance().getMeetingLiveData();
 
@@ -81,7 +82,7 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<FilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
+    private MutableLiveData<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
 
     public MainViewModel() {
@@ -187,117 +188,102 @@ public class MainViewModel extends ViewModel {
             case "Croissant salle":
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
                 selectedSortingTypeIndex = 0;
-                sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
-                mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                setValueSortingTypeUiModel(sortingTypeUiModel);
                 break;
             case "Decroissant salle":
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
                 selectedSortingTypeIndex = 1;
-                sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
-                mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                setValueSortingTypeUiModel(sortingTypeUiModel);
                 break;
             case "Croissant date":
                 mSortingTypeLiveData.setValue(DATE_ASC);
                 selectedSortingTypeIndex = 2;
-                sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
-                mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                setValueSortingTypeUiModel(sortingTypeUiModel);
                 break;
             case "Decroissant date":
                 mSortingTypeLiveData.setValue(DATE_DSC);
                 selectedSortingTypeIndex = 3;
-                sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
-                mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+                setValueSortingTypeUiModel(sortingTypeUiModel);
                 break;
         }
     }
 
-    void setFilterType(String filterChoice, FilterTypeUiModel filterTypeUiModel) {
+    private void setValueSortingTypeUiModel(SortingTypeUiModel sortingTypeUiModel) {
+        sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
+        mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
+    }
+
+    void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
         switch (filterChoice) {
             case "toutes les salles":
                 mFilterTypeLiveData.setValue(ALL_ROOM);
                 selectedFilterTypeIndex = 0;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 1":
                 mFilterTypeLiveData.setValue(ROOM_1);
                 selectedFilterTypeIndex = 1;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 2":
                 mFilterTypeLiveData.setValue(ROOM_2);
                 selectedFilterTypeIndex = 2;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 3":
                 mFilterTypeLiveData.setValue(ROOM_3);
                 selectedFilterTypeIndex = 3;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 4":
                 mFilterTypeLiveData.setValue(ROOM_4);
                 selectedFilterTypeIndex = 4;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 5":
                 mFilterTypeLiveData.setValue(ROOM_5);
                 selectedFilterTypeIndex = 5;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 6":
                 mFilterTypeLiveData.setValue(ROOM_6);
                 selectedFilterTypeIndex = 6;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 7":
                 mFilterTypeLiveData.setValue(ROOM_7);
                 selectedFilterTypeIndex = 7;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 8":
                 mFilterTypeLiveData.setValue(ROOM_8);
                 selectedFilterTypeIndex = 8;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 9":
                 mFilterTypeLiveData.setValue(ROOM_9);
                 selectedFilterTypeIndex = 9;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
             case "salle 10":
                 mFilterTypeLiveData.setValue(ROOM_10);
                 selectedFilterTypeIndex = 10;
-                mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
-                filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-                mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
+                setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
         }
+    }
+
+    private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
+        mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
+        roomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+        mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
     }
 
     LiveData<List<MeetingUiModel>> getUiModelsLiveData() { return mUiModelsLiveData; }
 
     LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
 
-    LiveData<FilterTypeUiModel> getmFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
+    LiveData<RoomFilterTypeUiModel> getmFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
 
     LiveData<Integer> getSelectedSortingTypeIndexLiveDate() { return mSelectedSortingTypeIndexLiveData; }
 
@@ -331,35 +317,45 @@ public class MainViewModel extends ViewModel {
     // TODO : soi deux bouttons dans le menu, un pour afficher un popup avec un choix de la salle en liste
     // TODO : et un autre boutton dans le menu (total de 3 buttons) qui ouvre un popup avec un edit text ou on tape la date choisi
 
-    void displayFilterTypePopup() {
+    void displayFilterRoomPopup() {
 
-        if (listOfItemFilterMenu.size() == 11) {
-            mFilterTypeUiModelLiveData.setValue(getFilterTypeUiModel());
+        if (listOfItemFilterRoomMenu.size() == 11) {
+            mFilterTypeUiModelLiveData.setValue(getRoomFilterTypeUiModel());
         } else {
-            listOfItemFilterMenu.add("toutes les salles");
-            listOfItemFilterMenu.add("salle 1");
-            listOfItemFilterMenu.add("salle 2");
-            listOfItemFilterMenu.add("salle 3");
-            listOfItemFilterMenu.add("salle 4");
-            listOfItemFilterMenu.add("salle 5");
-            listOfItemFilterMenu.add("salle 6");
-            listOfItemFilterMenu.add("salle 7");
-            listOfItemFilterMenu.add("salle 8");
-            listOfItemFilterMenu.add("salle 9");
-            listOfItemFilterMenu.add("salle 10");
-            setFilterTypeUiModel();
+            listOfItemFilterRoomMenu.add("toutes les salles");
+            listOfItemFilterRoomMenu.add("salle 1");
+            listOfItemFilterRoomMenu.add("salle 2");
+            listOfItemFilterRoomMenu.add("salle 3");
+            listOfItemFilterRoomMenu.add("salle 4");
+            listOfItemFilterRoomMenu.add("salle 5");
+            listOfItemFilterRoomMenu.add("salle 6");
+            listOfItemFilterRoomMenu.add("salle 7");
+            listOfItemFilterRoomMenu.add("salle 8");
+            listOfItemFilterRoomMenu.add("salle 9");
+            listOfItemFilterRoomMenu.add("salle 10");
+            setRoomFilterTypeUiModel();
         }
     }
 
-    private FilterTypeUiModel getFilterTypeUiModel() {
-        return filterTypeUiModel;
+    private RoomFilterTypeUiModel getRoomFilterTypeUiModel() {
+        return roomFilterTypeUiModel;
     }
 
-    private FilterTypeUiModel setFilterTypeUiModel() {
-        filterTypeUiModel.setNames(listOfItemFilterMenu);
-        filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-        mFilterTypeUiModelLiveData.setValue(filterTypeUiModel);
-        return filterTypeUiModel;
+    private RoomFilterTypeUiModel setRoomFilterTypeUiModel() {
+        roomFilterTypeUiModel.setNames(listOfItemFilterRoomMenu);
+        roomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+        mFilterTypeUiModelLiveData.setValue(roomFilterTypeUiModel);
+        return roomFilterTypeUiModel;
+    }
+
+    void displayFilterDatePopup(){
+        setDateFilterTypeUiModel();
+    }
+
+    private DateFilterTypeUiModel setDateFilterTypeUiModel(){
+
+        return null;
+        // return dateFilterTypeUiModel();
     }
 
     void deleteMeeting(int meetingId) {

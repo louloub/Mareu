@@ -3,10 +3,14 @@ package com.example.maru.view.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -20,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
-import com.example.maru.view.ui.model.FilterTypeUiModel;
+import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     final MainAdapter adapter = new MainAdapter(this);
     int mSelectedSortingTypeIndex, mSelectedFilterTypeIndex;
     SortingTypeUiModel mSortingTypeUiModel;
-    FilterTypeUiModel mFilterTypeUiModel;
+    RoomFilterTypeUiModel mRoomFilterTypeUiModel;
     private MainViewModel mViewModel;
 
     @Override
@@ -79,11 +83,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getmFilterTypeUiModelLiveData().observe(this, new Observer<FilterTypeUiModel>() {
+        mViewModel.getmFilterTypeUiModelLiveData().observe(this, new Observer<RoomFilterTypeUiModel>() {
             @Override
-            public void onChanged(FilterTypeUiModel filterTypeUiModel) {
-                mFilterTypeUiModel = filterTypeUiModel;
-                alertDialogChoiceFiltre(filterTypeUiModel);
+            public void onChanged(RoomFilterTypeUiModel roomFilterTypeUiModel) {
+                mRoomFilterTypeUiModel = roomFilterTypeUiModel;
+                alertDialogChoiceRoomFiltre(roomFilterTypeUiModel);
             }
         });
     }
@@ -134,8 +138,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
         if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
             mViewModel.displaySortingTypePopup();
-        } else if (item.getItemId() == R.id.toolbar_bt_filter_meeting) {
-            mViewModel.displayFilterTypePopup();
+        } else if (item.getItemId() == R.id.toolbar_bt_filter_room_meeting) {
+            mViewModel.displayFilterRoomPopup();
+        } else if (item.getItemId() == R.id.toolbar_bt_filter_date_meeting) {
+            mViewModel.displayFilterDatePopup();
+            alertDialogChoiceDateFiltre();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -184,16 +191,16 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    // Alert Dialog Choice Sort
-    public void alertDialogChoiceFiltre(FilterTypeUiModel filterTypeUiModel) {
+    // Alert Dialog Room Filtre
+    public void alertDialogChoiceRoomFiltre(RoomFilterTypeUiModel roomFilterTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle("Choisis la salle à filtrer");
 
-        myPopup.setSingleChoiceItems(filterTypeUiModel.getListOFilterType().toArray(
-                new CharSequence[filterTypeUiModel.getListOFilterType().size()]),
-                filterTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+        myPopup.setSingleChoiceItems(roomFilterTypeUiModel.getListOFilterType().toArray(
+                new CharSequence[roomFilterTypeUiModel.getListOFilterType().size()]),
+                roomFilterTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -210,9 +217,44 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                         MainActivity.this.getApplicationContext(),
                         "Tu as choisi d'afficher les réunions : " + checkedItemObject,
                         Toast.LENGTH_LONG).show();
-                mViewModel.setFilterType((String) checkedItemObject, mFilterTypeUiModel);
+                mViewModel.setRoomFilterType((String) checkedItemObject, mRoomFilterTypeUiModel);
+            }
+        }));
 
-                // mViewModel.setSortingType((String) checkedItemObject, mSortingTypeUiModel);
+        myPopup.setCancelable(false);
+
+        AlertDialog dialog = myPopup.create();
+        myPopup.show();
+    }
+
+    // Alert Dialog Date Filtre
+    public void alertDialogChoiceDateFiltre () {
+
+        // Setup Alert builder
+        final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
+        myPopup.setTitle("Choisis la date à filtrer");
+        myPopup.setMessage("Exemple : 2019/12/01");
+
+        final EditText input = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        myPopup.setView(input);
+        // myPopup.setIcon(R.drawable.key);
+
+        // Setup "Valider" button
+        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SpannableString contentText = new SpannableString(input.getText());
+                String dateForFilter = contentText.toString();
+
+                Toast.makeText(
+                        MainActivity.this.getApplicationContext(),
+                        "Tu as choisi d'afficher les réunions de cette date : " + dateForFilter,
+                        Toast.LENGTH_LONG).show();
+                // mViewModel.setDateFilterType((String) checkedItemObject, mDateFilterTypeUiModel);
             }
         }));
 

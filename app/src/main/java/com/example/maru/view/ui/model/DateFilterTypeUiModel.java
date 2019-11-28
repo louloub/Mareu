@@ -2,17 +2,17 @@ package com.example.maru.view.ui.model;
 
 import java.util.List;
 
-public class FilterTypeUiModel {
+public class DateFilterTypeUiModel {
 
     private List<String> names;
     private int selectedIndex;
 
-    public FilterTypeUiModel(List<String> names, int selectedIndex) {
+    public DateFilterTypeUiModel(List<String> names, int selectedIndex) {
         this.names = names;
         this.selectedIndex = selectedIndex;
     }
 
-    public FilterTypeUiModel() {
+    public DateFilterTypeUiModel() {
     }
 
     public List<String> getNames() {
@@ -34,5 +34,4 @@ public class FilterTypeUiModel {
     public List<String> getListOFilterType() {
         return names;
     }
-
 }
