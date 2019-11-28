@@ -1,7 +1,7 @@
 package com.example.maru.view.ui;
 
 public enum FilterType {
-    NO_ROOM,
+    ALL_ROOM,
     ROOM_1,
     ROOM_2,
     ROOM_3,

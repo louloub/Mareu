@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.example.maru.view.ui.FilterType.NO_ROOM;
+import static com.example.maru.view.ui.FilterType.ALL_ROOM;
 import static com.example.maru.view.ui.FilterType.ROOM_1;
 import static com.example.maru.view.ui.FilterType.ROOM_10;
 import static com.example.maru.view.ui.FilterType.ROOM_2;
@@ -60,7 +60,6 @@ public class MainViewModel extends ViewModel {
             return (e2.getDate().compareTo(e1.getDate()));
         }
     };
-
 
     private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
     private FilterTypeUiModel filterTypeUiModel = new FilterTypeUiModel();
@@ -167,8 +166,7 @@ public class MainViewModel extends ViewModel {
 
         for (MeetingJava meetingJava : meetings) {
 
-            if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()){
-
+            if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()) {
                 MeetingUiModel meetingUiModel = new MeetingUiModel(
                         meetingJava.getId(),
                         meetingJava.getDate().toString(),
@@ -215,8 +213,8 @@ public class MainViewModel extends ViewModel {
 
     void setFilterType(String filterChoice, FilterTypeUiModel filterTypeUiModel) {
         switch (filterChoice) {
-            case "aucune salle":
-                mFilterTypeLiveData.setValue(NO_ROOM);
+            case "toutes les salles":
+                mFilterTypeLiveData.setValue(ALL_ROOM);
                 selectedFilterTypeIndex = 0;
                 mSelectedFilterTypeLiveData.setValue(selectedFilterTypeIndex);
                 filterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
@@ -338,7 +336,7 @@ public class MainViewModel extends ViewModel {
         if (listOfItemFilterMenu.size() == 11) {
             mFilterTypeUiModelLiveData.setValue(getFilterTypeUiModel());
         } else {
-            listOfItemFilterMenu.add("aucune salle");
+            listOfItemFilterMenu.add("toutes les salles");
             listOfItemFilterMenu.add("salle 1");
             listOfItemFilterMenu.add("salle 2");
             listOfItemFilterMenu.add("salle 3");
