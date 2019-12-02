@@ -26,17 +26,17 @@ import java.util.List;
 import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
-import static com.example.maru.view.ui.FilterType.ALL_ROOM;
-import static com.example.maru.view.ui.FilterType.ROOM_1;
-import static com.example.maru.view.ui.FilterType.ROOM_10;
-import static com.example.maru.view.ui.FilterType.ROOM_2;
-import static com.example.maru.view.ui.FilterType.ROOM_3;
-import static com.example.maru.view.ui.FilterType.ROOM_4;
-import static com.example.maru.view.ui.FilterType.ROOM_5;
-import static com.example.maru.view.ui.FilterType.ROOM_6;
-import static com.example.maru.view.ui.FilterType.ROOM_7;
-import static com.example.maru.view.ui.FilterType.ROOM_8;
-import static com.example.maru.view.ui.FilterType.ROOM_9;
+import static com.example.maru.view.ui.RoomFilterType.ALL_ROOM;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_1;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_10;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_2;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_3;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_4;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_5;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_6;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_7;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_8;
+import static com.example.maru.view.ui.RoomFilterType.ROOM_9;
 import static com.example.maru.view.ui.SortingType.DATE_ASC;
 import static com.example.maru.view.ui.SortingType.DATE_DSC;
 import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_ASC;
@@ -83,7 +83,7 @@ public class MainViewModel extends ViewModel {
     private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<FilterType> mFilterTypeLiveData = new MutableLiveData<>();
+    private MutableLiveData<RoomFilterType> mFilterTypeLiveData = new MutableLiveData<>();
 
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
@@ -132,9 +132,9 @@ public class MainViewModel extends ViewModel {
             }
         });
 
-        mUiModelsLiveData.addSource(mFilterTypeLiveData, new Observer<FilterType>() {
+        mUiModelsLiveData.addSource(mFilterTypeLiveData, new Observer<RoomFilterType>() {
             @Override
-            public void onChanged(FilterType filterType) {
+            public void onChanged(RoomFilterType roomFilterType) {
                 mUiModelsLiveData.setValue(combineMeeting(
                         meetingLiveData.getValue(),
                         mSortingTypeLiveData.getValue(),
@@ -280,27 +280,31 @@ public class MainViewModel extends ViewModel {
         }
     }
 
+
     void setDateFilterType(String dateForFilter, DateFilterTypeUiModel dateFilterTypeUiModel) {
 
-        List<MeetingJava> meetingJavalist = MeetingManager.getInstance().getMeeting();
-
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(dateForFilter, dateTimeFormatter);
-
-        switch (dateForFilter) {
-            case  :
-
-
-        }
-
+        int size = Objects.requireNonNull(meetingLiveData.getValue()).size();
         int index = 0;
+        List<MeetingUiModel> meetingUiModelListWithDateFilter = new ArrayList<>();
 
-        for (MeetingJava meetingJava : meetingLiveData.getValue())
+        while (meetingLiveData.getValue() != null && size > index)
         {
-            index++;
-            if (meetingJavalist.get(index).getDate().isEqual(localDate)){
-                Log.d(TAG, "test test test ");
+            if (meetingLiveData.getValue().get(index).getDate().toString().equals(dateForFilter)) {
+
+                MeetingUiModel meetingUiModel = new MeetingUiModel(
+                        meetingLiveData.getValue().get(index).getId(),
+                        meetingLiveData.getValue().get(index).getDate().toString(),
+                        meetingLiveData.getValue().get(index).getHour(),
+                        Integer.toString(meetingLiveData.getValue().get(index).getRoom()),
+                        meetingLiveData.getValue().get(index).getSubject(),
+                        meetingLiveData.getValue().get(index).getListOfEmailOfParticipant().toString());
+
+                meetingUiModelListWithDateFilter.add(meetingUiModel);
+                mUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
+            } else {
+                mUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
             }
+            index++;
         }
     }
 
