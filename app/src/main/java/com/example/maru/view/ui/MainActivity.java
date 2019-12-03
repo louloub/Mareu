@@ -262,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                             MainActivity.this.getApplicationContext(),
                             "La date est invalide",
                             Toast.LENGTH_LONG).show();
-                    // input.setText("Merci d'entrer une date valide");
                 } else if (dateForFilter.length() == 10) {
                     Toast.makeText(
                             MainActivity.this.getApplicationContext(),
@@ -270,7 +269,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                             Toast.LENGTH_LONG).show();
                     mViewModel.setDateFilterType(dateForFilter);
                 }
-                // mViewModel.setDateFilterType(dateForFilter);
             }
         }));
 
