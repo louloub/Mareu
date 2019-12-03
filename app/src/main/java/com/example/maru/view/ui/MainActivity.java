@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     int mSelectedSortingTypeIndex, mSelectedFilterTypeIndex;
     SortingTypeUiModel mSortingTypeUiModel;
     RoomFilterTypeUiModel mRoomFilterTypeUiModel;
-    DateFilterTypeUiModel mDateFilterTypeUiModel;
     private MainViewModel mViewModel;
 
     @Override
@@ -251,11 +250,27 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 SpannableString contentText = new SpannableString(input.getText());
                 String dateForFilter = contentText.toString();
 
-                Toast.makeText(
-                        MainActivity.this.getApplicationContext(),
-                        "Tu as choisi d'afficher les réunions de cette date : " + dateForFilter,
-                        Toast.LENGTH_LONG).show();
-                mViewModel.setDateFilterType(dateForFilter, mDateFilterTypeUiModel);
+                if (dateForFilter.isEmpty()) {
+                    Toast.makeText(
+                            MainActivity.this.getApplicationContext(),
+                            "Tu as choisi d'afficher toutes les réunions " + dateForFilter,
+                            Toast.LENGTH_LONG).show();
+                    mViewModel.setDateFilterType(dateForFilter);
+
+                } else if (dateForFilter.length() !=10 && !dateForFilter.isEmpty() ) {
+                    Toast.makeText(
+                            MainActivity.this.getApplicationContext(),
+                            "La date est invalide",
+                            Toast.LENGTH_LONG).show();
+                    // input.setText("Merci d'entrer une date valide");
+                } else if (dateForFilter.length() == 10) {
+                    Toast.makeText(
+                            MainActivity.this.getApplicationContext(),
+                            "Tu as choisi d'afficher les réunions de cette date : " + dateForFilter,
+                            Toast.LENGTH_LONG).show();
+                    mViewModel.setDateFilterType(dateForFilter);
+                }
+                // mViewModel.setDateFilterType(dateForFilter);
             }
         }));
 

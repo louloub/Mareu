@@ -16,6 +16,7 @@ import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
+import org.jetbrains.annotations.NotNull;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
@@ -280,32 +281,49 @@ public class MainViewModel extends ViewModel {
         }
     }
 
+    void setDateFilterType(String dateForFilter) {
 
-    void setDateFilterType(String dateForFilter, DateFilterTypeUiModel dateFilterTypeUiModel) {
-
-        int size = Objects.requireNonNull(meetingLiveData.getValue()).size();
+        int size = 0;
         int index = 0;
-        List<MeetingUiModel> meetingUiModelListWithDateFilter = new ArrayList<>();
 
-        while (meetingLiveData.getValue() != null && size > index)
-        {
+        if (meetingLiveData.getValue() != null) {
+            size = Objects.requireNonNull(meetingLiveData.getValue()).size();
+        }
+
+        List<MeetingUiModel> meetingUiModelListWithDateFilter = new ArrayList<>();
+        List<MeetingUiModel> meetingUiModelListWithoutDateFilter = new ArrayList<>();
+
+        while (meetingLiveData.getValue() != null && size > index) {
+
+            MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(index);
+
+            meetingUiModelListWithoutDateFilter.add(meetingUiModelWithoutValidDateFilter);
+
             if (meetingLiveData.getValue().get(index).getDate().toString().equals(dateForFilter)) {
 
-                MeetingUiModel meetingUiModel = new MeetingUiModel(
-                        meetingLiveData.getValue().get(index).getId(),
-                        meetingLiveData.getValue().get(index).getDate().toString(),
-                        meetingLiveData.getValue().get(index).getHour(),
-                        Integer.toString(meetingLiveData.getValue().get(index).getRoom()),
-                        meetingLiveData.getValue().get(index).getSubject(),
-                        meetingLiveData.getValue().get(index).getListOfEmailOfParticipant().toString());
+                MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(index);
 
-                meetingUiModelListWithDateFilter.add(meetingUiModel);
+                meetingUiModelListWithDateFilter.add(meetingUiModelWithValidDateFilter);
                 mUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
-            } else {
-                mUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
+
+            } else if (dateForFilter.isEmpty()) {
+                mUiModelsLiveData.setValue(meetingUiModelListWithoutDateFilter);
+            } else if (dateForFilter.length()!=10 && !dateForFilter.isEmpty()  ) {
+
             }
             index++;
-        }
+        } // END WHILE
+    }
+
+    @NotNull
+    private MeetingUiModel createMeetingUiModel(int index) {
+        return new MeetingUiModel(
+                meetingLiveData.getValue().get(index).getId(),
+                meetingLiveData.getValue().get(index).getDate().toString(),
+                meetingLiveData.getValue().get(index).getHour(),
+                Integer.toString(meetingLiveData.getValue().get(index).getRoom()),
+                meetingLiveData.getValue().get(index).getSubject(),
+                meetingLiveData.getValue().get(index).getListOfEmailOfParticipant().toString());
     }
 
     private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
