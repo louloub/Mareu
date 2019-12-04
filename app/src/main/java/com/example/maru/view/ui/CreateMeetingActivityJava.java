@@ -104,7 +104,11 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
         });
     }
 
-    private void setHint(HintUiModel hintUiModel, TextInputEditText subjectOfMeeting, TextInputEditText listOfParticipant, TextView date, TextView hour) {
+    private void setHint(HintUiModel hintUiModel,
+                         TextInputEditText subjectOfMeeting,
+                         TextInputEditText listOfParticipant,
+                         TextView date,
+                         TextView hour) {
         String hintSource = hintUiModel.getSourceHint();
         String hintText = hintUiModel.getTextHint();
 
@@ -260,7 +264,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     editable.clear();
 
                     if (listOfParticipantChip.size()>0) {
-                        participantHint = "Participant(s)";
+                        participantHint = "";
                         mCreateMeetingViewModel.setHintForParticipants(participantHint);
                     }
                 }

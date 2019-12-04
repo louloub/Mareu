@@ -171,29 +171,25 @@ public class MainViewModel extends ViewModel {
         for (MeetingJava meetingJava : meetings) {
 
             if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()) {
-                MeetingUiModel meetingUiModel = new MeetingUiModel(
-                        meetingJava.getId(),
-                        meetingJava.getDate().toString(),
-                        meetingJava.getHour(),
-                        Integer.toString(meetingJava.getRoom()),
-                        meetingJava.getSubject(),
-                        meetingJava.getListOfEmailOfParticipant().toString());
-
-                result.add(meetingUiModel);
+                createMeetingUiModelInCombienMeeting(result, meetingJava);
             } else if (selectedMeetingRoomNumber == 0) {
-                MeetingUiModel meetingUiModel = new MeetingUiModel(
-                        meetingJava.getId(),
-                        meetingJava.getDate().toString(),
-                        meetingJava.getHour(),
-                        Integer.toString(meetingJava.getRoom()),
-                        meetingJava.getSubject(),
-                        meetingJava.getListOfEmailOfParticipant().toString());
-
-                result.add(meetingUiModel);
+                createMeetingUiModelInCombienMeeting(result, meetingJava);
             }
         }
 
         return result;
+    }
+
+    private void createMeetingUiModelInCombienMeeting(List<MeetingUiModel> result, MeetingJava meetingJava) {
+        MeetingUiModel meetingUiModel = new MeetingUiModel(
+                meetingJava.getId(),
+                meetingJava.getDate().toString(),
+                meetingJava.getHour(),
+                Integer.toString(meetingJava.getRoom()),
+                meetingJava.getSubject(),
+                meetingJava.getListOfEmailOfParticipant().toString());
+
+        result.add(meetingUiModel);
     }
 
     void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {

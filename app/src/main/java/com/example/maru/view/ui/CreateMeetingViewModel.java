@@ -46,7 +46,11 @@ public class CreateMeetingViewModel extends ViewModel {
     }
 
     public void createMeeting(
-            LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
+            LocalDate date,
+            String hour,
+            int room,
+            String subject,
+            List<String> listOfEmailOfParticipant) {
         String subjectHint;
         String participantHint;
         String dateHint;
