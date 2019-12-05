@@ -60,8 +60,6 @@ public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainVie
 
         void bind(final MeetingUiModel model, final CallbackListener callbackListener) {
 
-            List<MeetingJava> list = MeetingManager.getInstance().getMeeting();
-
             String hourAndMinutesString = model.getHour();
             int iend = hourAndMinutesString.indexOf("h");
 

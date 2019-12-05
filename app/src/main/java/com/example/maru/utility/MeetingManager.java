@@ -55,6 +55,8 @@ public class MeetingManager {
         return listMeetingLiveData;
     }
 
+    public List<MeetingJava> getMeetingList(){ return listMeeting;}
+
     public void deleteMeeting(int meetingId) {
 
         for (Iterator<MeetingJava> iterator = listMeeting.iterator(); iterator.hasNext(); ) {
@@ -67,9 +69,5 @@ public class MeetingManager {
         }
 
         listMeetingLiveData.postValue(listMeeting);
-    }
-
-    public List<MeetingJava> getMeeting() {
-        return listMeeting;
     }
 }

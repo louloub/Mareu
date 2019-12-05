@@ -64,6 +64,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
     private LocalDate mLocalDate;
     private String mHour, participantHint;
     Calendar calendar = Calendar.getInstance();
+    DatePickerDialog picker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +166,36 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v)
             {
+                /*DatePicker datePickerDialog2 = findViewById(R.id.date_picker);
+                Button validDate = findViewById(R.id.valid_date);
+
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                datePickerDialog2 = new DatePicker(CreateMeetingActivityJava.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                yearsSelectedInInt = year;
+                                monthSelectedInInt = monthOfYear;
+                                daysSelectedInInt = dayOfMonth;
+
+                                String dayInString = String.format("%02d", dayOfMonth);
+                                chooseDate.setText(dayInString + "/" + monthOfYear + "/" + year);
+                                String yearInString = String.valueOf(year);
+                                String monthInString = String.valueOf(monthOfYear);
+                                String dateString = dayInString + "-" + monthInString + "-" + yearInString;
+
+                                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
+                                mLocalDate = localDate;
+                            }
+                        }, year, month, day);
+                picker.show();*/
+
+
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(
                         CreateMeetingActivityJava.this,
                     new DatePickerDialog.OnDateSetListener()
@@ -174,7 +205,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
                         {
                             yearsSelectedInInt = year;
-                            monthSelectedInInt = month;
+                            monthSelectedInInt = month +1;
                             daysSelectedInInt = dayOfMonth;
 
                             String dayInString = String.format("%02d", dayOfMonth);
@@ -251,6 +282,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                     final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(SpannedLength, editable.length() - 1);
                     chip.setText(charSequenceParticipantMailFromChip);
 
+                    // TODO : don't use TO STRING but use loop for delete []
                     listOfParticipantChip.add(listOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
@@ -260,6 +292,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                             listOfParticipantChip.remove(listOfParticipantChip.indexOf(charSequenceParticipantMailFromChip.toString()));
                         }
                     });
+
                     chipGroup.addView(chip);
                     editable.clear();
 

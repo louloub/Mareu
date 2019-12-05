@@ -4,6 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+// UNIT TEST : test d'une méthode
+// GIVEN : mise en place du test
+// WHEN : appel de la methode
+// THEN : assertion, on verifie que tout est ok
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *

@@ -1,5 +1,6 @@
 package com.example.maru.view.ui;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -65,6 +66,9 @@ public class MainViewModel extends ViewModel {
         }
     };
 
+    @NonNull
+    MeetingManager mMeetingManager;
+
     private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
     private RoomFilterTypeUiModel roomFilterTypeUiModel = new RoomFilterTypeUiModel();
 
@@ -74,7 +78,7 @@ public class MainViewModel extends ViewModel {
     private final List<String> listOfItemSortMenu = new ArrayList<>();
     private final List<String> listOfItemFilterRoomMenu = new ArrayList<>();
 
-    private final LiveData<List<MeetingJava>> meetingListLiveData = MeetingManager.getInstance().getMeetingLiveData();
+    private final LiveData<List<MeetingJava>> meetingListLiveData;
 
     private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
@@ -88,7 +92,9 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
 
-    public MainViewModel() {
+    public MainViewModel(@NonNull MeetingManager meetingManager) {
+        mMeetingManager = meetingManager;
+        meetingListLiveData = mMeetingManager.getMeetingLiveData();
         wireUpMediator();
     }
 
