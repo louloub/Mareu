@@ -79,8 +79,11 @@ public class MainViewModelTest {
         listOfMeeting.add(meetingJava);
 
         // Then
+        equals(meetingManager.getMeetingList().contains(meetingJava));
         // assertTrue(meetingManager.getMeetingList().contains(meetingJava));
-        assertEquals(meetingManager.getMeetingList().get(0),meetingJava);
+        // assertEquals(meetingManager.getMeetingList().get(0),meetingJava);
+        // isEquals(meetingManager.getMeetingList().get(0),meetingJava);
+
     }
 
     @Test
