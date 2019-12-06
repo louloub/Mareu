@@ -78,13 +78,57 @@ public class MainViewModelTest {
         MeetingManager.getInstance().addMeetingFromObject(meetingJava);
         listOfMeeting.add(meetingJava);
 
+        meetingJava2 = new MeetingJava(
+                0,
+                LocalDate.of(2018,12,22),
+                "15h15",
+                2,
+                "Sujet 1",
+                listOfParticipant
+        );
+
         // Then
-        meetingManager.getMeetingList().get(0).equals(meetingJava);
+        MeetingJava meetingJavaToTest = meetingManager.getMeetingList().get(0);
+        // final boolean equals = meetingJavaToTest.equals(meetingJava);
+        // assertEquals(true, equals);
+        // assertEqualsHomeMade(meetingJavaToTest,meetingJava2);
+        boolean equals = assertEqualsHomeMade(meetingJavaToTest,meetingJava);
+        assertTrue(equals);
+        // assertTrue();
         // equals(meetingManager.getMeetingList().contains(meetingJava));
         // assertTrue(meetingManager.getMeetingList().contains(meetingJava));
         // assertEquals(meetingManager.getMeetingList().get(0),meetingJava);
         // isEquals(meetingManager.getMeetingList().get(0),meetingJava);
+    }
 
+    static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
+
+        if (meetingJava1!=null) {
+            if (meetingJava1.getSubject()!=null) {
+                if (meetingJava1.getListOfEmailOfParticipant()!=null) {
+                    if (meetingJava1.getRoom()!=0) {
+                        if (meetingJava1.getDate()!=null) {
+                            if (meetingJava1.getHour()!=null) {
+                                if (meetingJava2!=null) {
+                                    if (meetingJava2.getSubject()!=null && meetingJava2.getSubject().equals(meetingJava1.getSubject())) {
+                                        if (meetingJava2.getListOfEmailOfParticipant()!=null && meetingJava2.getListOfEmailOfParticipant().equals(meetingJava1.getListOfEmailOfParticipant()) ) {
+                                            if (meetingJava2.getRoom()!=0 && meetingJava2.getRoom()==meetingJava1.getRoom() ) {
+                                                if (meetingJava2.getDate()!=null && meetingJava2.getDate().isEqual(meetingJava1.getDate())) {
+                                                    if (meetingJava2.getHour()!=null && meetingJava2.getHour().equals(meetingJava1.getHour())) {
+                                                        return true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Test
