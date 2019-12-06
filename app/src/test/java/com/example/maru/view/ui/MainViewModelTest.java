@@ -80,9 +80,7 @@ public class MainViewModelTest {
 
         // Then
         // assertTrue(meetingManager.getMeetingList().contains(meetingJava));
-        assertTrue(meetingManager.getMeetingList().contains(meetingJava));
-        // assertTrue(service.getMeetings().contains(meetingToAdd));
-
+        assertEquals(meetingManager.getMeetingList().get(0),meetingJava);
     }
 
     @Test
