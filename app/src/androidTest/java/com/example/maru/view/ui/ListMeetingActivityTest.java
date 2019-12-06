@@ -67,6 +67,7 @@ public class ListMeetingActivityTest {
         // Create Random
         Random random = new Random();
         int monthRandom, dayRandom, roomRandom;
+
         // Create loop for add 5 meeting to list
         for (int i = 0; i < 3; i++) {
             int yearRandom = random.nextInt(2020 - 2019) + 2019;

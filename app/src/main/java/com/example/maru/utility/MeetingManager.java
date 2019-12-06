@@ -3,6 +3,7 @@ package com.example.maru.utility;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.maru.service.model.MeetingJava;
+import com.example.maru.view.ui.model.SortingTypeUiModel;
 
 import org.threeten.bp.LocalDate;
 
@@ -44,9 +45,26 @@ public class MeetingManager {
         return INSTANCE;
     }
 
-    public void addMeeting(LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant)
+    public void addMeeting(LocalDate date,
+                           String hour,
+                           int room,
+                           String subject,
+                           List<String> listOfEmailOfParticipant)
     {
-        listMeeting.add(new MeetingJava(meetingCount, date, hour, room, subject, listOfEmailOfParticipant));
+        listMeeting.add(new MeetingJava(meetingCount,
+                date, hour, room, subject, listOfEmailOfParticipant));
+        meetingCount++;
+        listMeetingLiveData.postValue(listMeeting);
+    }
+
+    public void addMeetingFromObject(MeetingJava meetingJava) {
+        listMeeting.add(new MeetingJava(
+                meetingJava.getId(),
+                meetingJava.getDate(),
+                meetingJava.getHour(),
+                meetingJava.getRoom(),
+                meetingJava.getSubject(),
+                meetingJava.getListOfEmailOfParticipant()));
         meetingCount++;
         listMeetingLiveData.postValue(listMeeting);
     }

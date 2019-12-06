@@ -78,7 +78,7 @@ public class MainViewModel extends ViewModel {
     private final List<String> listOfItemSortMenu = new ArrayList<>();
     private final List<String> listOfItemFilterRoomMenu = new ArrayList<>();
 
-    private final LiveData<List<MeetingJava>> meetingListLiveData;
+    private final LiveData<List<MeetingJava>> mMeetingListLiveData;
 
     private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
@@ -94,13 +94,13 @@ public class MainViewModel extends ViewModel {
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingManager = meetingManager;
-        meetingListLiveData = mMeetingManager.getMeetingLiveData();
+        mMeetingListLiveData = mMeetingManager.getMeetingLiveData();
         wireUpMediator();
     }
 
     private void wireUpMediator() {
 
-        mUiModelsLiveData.addSource(meetingListLiveData, new Observer<List<MeetingJava>>() {
+        mUiModelsLiveData.addSource(mMeetingListLiveData, new Observer<List<MeetingJava>>() {
             @Override
             public void onChanged(List<MeetingJava> meetingJavas) {
                 mUiModelsLiveData.setValue(combineMeeting(
@@ -128,7 +128,7 @@ public class MainViewModel extends ViewModel {
             @Override
             public void onChanged(Integer selectedMeetingRoomNumber) {
                 mUiModelsLiveData.setValue(combineMeeting(
-                        meetingListLiveData.getValue(),
+                        mMeetingListLiveData.getValue(),
                         mSortingTypeLiveData.getValue(),
                         selectedMeetingRoomNumber));
             }
@@ -138,7 +138,7 @@ public class MainViewModel extends ViewModel {
             @Override
             public void onChanged(RoomFilterType roomFilterType) {
                 mUiModelsLiveData.setValue(combineMeeting(
-                        meetingListLiveData.getValue(),
+                        mMeetingListLiveData.getValue(),
                         mSortingTypeLiveData.getValue(),
                         mSelectedFilterTypeLiveData.getValue()));
             }
@@ -293,20 +293,20 @@ public class MainViewModel extends ViewModel {
         int size = 0;
         int index = 0;
 
-        if (meetingListLiveData.getValue() != null) {
-            size = Objects.requireNonNull(meetingListLiveData.getValue()).size();
+        if (mMeetingListLiveData.getValue() != null) {
+            size = Objects.requireNonNull(mMeetingListLiveData.getValue()).size();
         }
 
         List<MeetingUiModel> meetingUiModelListWithDateFilter = new ArrayList<>();
         List<MeetingUiModel> meetingUiModelListWithoutDateFilter = new ArrayList<>();
 
-        while (meetingListLiveData.getValue() != null && size > index) {
+        while (mMeetingListLiveData.getValue() != null && size > index) {
 
             MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(index);
 
             meetingUiModelListWithoutDateFilter.add(meetingUiModelWithoutValidDateFilter);
 
-            if (meetingListLiveData.getValue().get(index).getDate().toString().equals(dateForFilter)) {
+            if (mMeetingListLiveData.getValue().get(index).getDate().toString().equals(dateForFilter)) {
 
                 MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(index);
 
@@ -325,12 +325,12 @@ public class MainViewModel extends ViewModel {
     @NotNull
     private MeetingUiModel createMeetingUiModel(int index) {
         return new MeetingUiModel(
-                meetingListLiveData.getValue().get(index).getId(),
-                meetingListLiveData.getValue().get(index).getDate().toString(),
-                meetingListLiveData.getValue().get(index).getHour(),
-                Integer.toString(meetingListLiveData.getValue().get(index).getRoom()),
-                meetingListLiveData.getValue().get(index).getSubject(),
-                meetingListLiveData.getValue().get(index).getListOfEmailOfParticipant().toString());
+                mMeetingListLiveData.getValue().get(index).getId(),
+                mMeetingListLiveData.getValue().get(index).getDate().toString(),
+                mMeetingListLiveData.getValue().get(index).getHour(),
+                Integer.toString(mMeetingListLiveData.getValue().get(index).getRoom()),
+                mMeetingListLiveData.getValue().get(index).getSubject(),
+                mMeetingListLiveData.getValue().get(index).getListOfEmailOfParticipant().toString());
     }
 
     private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
@@ -338,6 +338,8 @@ public class MainViewModel extends ViewModel {
         roomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
         mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
     }
+
+    LiveData<List<MeetingJava>> getmMeetingListLiveData() { return mMeetingListLiveData; }
 
     LiveData<List<MeetingUiModel>> getUiModelsLiveData() { return mUiModelsLiveData; }
 
