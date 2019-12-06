@@ -86,19 +86,74 @@ public class MainViewModelTest {
                 "Sujet 1",
                 listOfParticipant
         );
+        MeetingJava meetingJavaToTest = meetingManager.getMeetingList().get(0);
 
         // Then
-        MeetingJava meetingJavaToTest = meetingManager.getMeetingList().get(0);
-        // final boolean equals = meetingJavaToTest.equals(meetingJava);
-        // assertEquals(true, equals);
-        // assertEqualsHomeMade(meetingJavaToTest,meetingJava2);
         boolean equals = assertEqualsHomeMade(meetingJavaToTest,meetingJava);
         assertTrue(equals);
-        // assertTrue();
-        // equals(meetingManager.getMeetingList().contains(meetingJava));
-        // assertTrue(meetingManager.getMeetingList().contains(meetingJava));
-        // assertEquals(meetingManager.getMeetingList().get(0),meetingJava);
-        // isEquals(meetingManager.getMeetingList().get(0),meetingJava);
+    }
+
+    @Test
+    public void getMeetings() {
+
+        // Given
+
+        // When
+
+        // Then
+
+        // List<MeetingJava> meetings = MeetingManager.getInstance().getMeetingList();
+
+        // List<MeetingJava> expectedMeetings = DummyMeetingGenerator.DUMMY_MEETINGS;
+
+        // assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeetings.toArray()));
+    }
+
+    @Test
+    public void deleteMeeting() {
+
+        meetingJava = new MeetingJava(
+                0,
+                LocalDate.of(2019,12,22),
+                "15h15",
+                2,
+                "Sujet 1",
+                listOfParticipant
+        );
+
+        MeetingManager.getInstance().addMeetingFromObject(meetingJava);
+        listOfMeeting.add(meetingJava);
+
+        listOfMeeting = MeetingManager.getInstance().getMeetingList();
+        // MeetingJava meetingJava = listOfMeeting.get(0);
+        listOfMeeting.remove(0);
+        boolean bool;
+
+        if (listOfMeeting.size()==0) {
+            bool = true;
+        } else {
+            bool = false;
+        }
+    }
+
+    @Test
+    public void should_desplay_two_meeting_when_meeting_manager_has_two () {
+        // Given
+        // List<MeetingJava> meetingJava = new ArrayList<MeetingJava>();
+        // LOcalDate.off
+
+        /*MeetingJava meetingJava1 = new MeetingJava();
+        meetingJava.add(meetingJava1);
+        MutableLiveData<List<MeetingJava>> mutableLiveData = new MutableLiveData<>();
+        mutableLiveData.setValue(meetingJava);
+        Mockito.when(meetingManager.getMeetingLiveData()).thenReturn(mutableLiveData);
+        */
+
+        // When
+        // LiveData<List<MeetingUiModel>> result = mainViewModel.getUiModelsLiveData();
+
+        // Then
+        // assertEquals(1,result.getValue().size());
     }
 
     static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
@@ -131,32 +186,4 @@ public class MainViewModelTest {
         return false;
     }
 
-    @Test
-    public void getMeetings() {
-        // List<MeetingJava> meetings = MeetingManager.getInstance().getMeetingList();
-
-        // List<MeetingJava> expectedMeetings = DummyMeetingGenerator.DUMMY_MEETINGS;
-
-        // assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeetings.toArray()));
-    }
-
-    @Test
-    public void should_desplay_two_meeting_when_meeting_manager_has_two () {
-        // Given
-        // List<MeetingJava> meetingJava = new ArrayList<MeetingJava>();
-        // LOcalDate.off
-
-        /*MeetingJava meetingJava1 = new MeetingJava();
-        meetingJava.add(meetingJava1);
-        MutableLiveData<List<MeetingJava>> mutableLiveData = new MutableLiveData<>();
-        mutableLiveData.setValue(meetingJava);
-        Mockito.when(meetingManager.getMeetingLiveData()).thenReturn(mutableLiveData);
-        */
-
-        // When
-        // LiveData<List<MeetingUiModel>> result = mainViewModel.getUiModelsLiveData();
-
-        // Then
-        // assertEquals(1,result.getValue().size());
-    }
 }
