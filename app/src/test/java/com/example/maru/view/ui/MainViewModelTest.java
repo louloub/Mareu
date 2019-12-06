@@ -43,27 +43,15 @@ public class MainViewModelTest {
 
     @Before
     public void setUp() throws Exception {
-        meetingManager = Mockito.mock(MeetingManager.class);
-        // MeetingJava meetingJava = Mockito.mock(MeetingJava.class);
-        // List<MeetingJava> listOfMeeting = Collections.singletonList(Mockito.mock(MeetingJava.class));
+        // meetingManager = Mockito.mock(MeetingManager.class);
+        meetingManager = MeetingManager.getInstance();
 
         meetingLiveData = new MutableLiveData<>();
         meetingListLiveData = new MutableLiveData<>();
         mSortingTypeLiveData = new MutableLiveData<>();
         mSelectedFilterTypeLiveData = new MutableLiveData<>();
 
-        Mockito.doReturn(meetingListLiveData).when(meetingManager).getMeetingLiveData();
-
-        /*Mockito.doReturn(meetingListLiveData).when(listOfMeeting).getMeetingListLiveData();
-        Mockito.doReturn(meetingLiveData).when(meetingJava).getSubject();
-
-        AddressDao addressDao = Mockito.mock(AddressDao.class);
-        PropertyDao propertyDao = Mockito.mock(PropertyDao.class);
-        addressesLiveData = new MutableLiveData<>();
-        propertiesLiveData = new MutableLiveData<>();
-        Mockito.doReturn(addressesLiveData).when(addressDao).getAddressesLiveData();
-        Mockito.doReturn(propertiesLiveData).when(propertyDao).getPropertiesLiveData();
-        viewModel = new MainViewModel(addressDao, propertyDao);*/
+        // Mockito.doReturn(meetingListLiveData).when(meetingManager).getMeetingLiveData();
 
         mainViewModel = new MainViewModel(meetingManager);
     }
@@ -90,14 +78,11 @@ public class MainViewModelTest {
         MeetingManager.getInstance().addMeetingFromObject(meetingJava);
         listOfMeeting.add(meetingJava);
 
-        // meetingListLiveData.postValue(listOfMeeting);
-        // meetingManager.addMeetingFromObject(meetingJava);
-
-        // TODO : 06/12/19 : mMeetingListLiveData is empty in ManViewModel
-        // mainViewModel = new MainViewModel(meetingManager);
-
         // Then
+        // assertTrue(meetingManager.getMeetingList().contains(meetingJava));
         assertTrue(meetingManager.getMeetingList().contains(meetingJava));
+        // assertTrue(service.getMeetings().contains(meetingToAdd));
+
     }
 
     @Test

@@ -73,7 +73,9 @@ public class MeetingManager {
         return listMeetingLiveData;
     }
 
-    public List<MeetingJava> getMeetingList(){ return listMeeting;}
+    public List<MeetingJava> getMeetingList(){
+        return listMeeting;
+    }
 
     public void deleteMeeting(int meetingId) {
 
