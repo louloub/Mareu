@@ -39,7 +39,7 @@ public class MainViewModelTest {
 
     List<MeetingJava> listOfMeeting = new ArrayList<>();
     List<String> listOfParticipant = new ArrayList<>();
-    MeetingJava meetingJava;
+    MeetingJava meetingJava, meetingJava2;
 
     @Before
     public void setUp() throws Exception {
@@ -79,7 +79,8 @@ public class MainViewModelTest {
         listOfMeeting.add(meetingJava);
 
         // Then
-        equals(meetingManager.getMeetingList().contains(meetingJava));
+        meetingManager.getMeetingList().get(0).equals(meetingJava);
+        // equals(meetingManager.getMeetingList().contains(meetingJava));
         // assertTrue(meetingManager.getMeetingList().contains(meetingJava));
         // assertEquals(meetingManager.getMeetingList().get(0),meetingJava);
         // isEquals(meetingManager.getMeetingList().get(0),meetingJava);
