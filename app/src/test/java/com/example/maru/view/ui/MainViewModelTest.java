@@ -136,10 +136,6 @@ public class MainViewModelTest {
         LiveData<Integer> i = mainViewModel.getSelectedSortingTypeIndexLiveDate();
         bool = i.getValue().equals(0);
         assertTrue(bool);
-
-        // boolean bool = mSortingTypeUiModelLiveData.getValue().equals(sortingTypeUiModel);
-        // boolean bool = mSortingTypeLiveData.getValue().toString().equals();
-        // assertTrue(bool);
     }
 
     @Test
