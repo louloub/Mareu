@@ -61,31 +61,18 @@ public class MainViewModelTest {
     @Test
     public void addMeeting() {
         // GIVEN : Conditions préalables au test
-
         meetingManager = Mockito.mock(MeetingManager.class);
         initMocks(meetingManager);
-
         meetingJava = Mockito.mock(MeetingJava.class);
-
         listOfMeeting.add(meetingJava);
-        // MeetingJava meetingJavaToTest = meetingManager.getMeetingList().get(0);
+        mMeetingListLiveData.setValue(listOfMeeting);
 
         // WHEN : Une seule ligne : invoquation de la méthode qu'on souhaite tester
-        // MeetingManager.getInstance().addMeetingFromObject(meetingJava);
         meetingManager.addMeetingFromObject(meetingJava);
 
         // THEN : Changements qu'on attend en raison du comportement spécifié
-        // assertTrue(meetingManager.getMeetingList().contains(meetingJava));
-        boolean isMeetingManagerEmpty = meetingManager.getMeetingList().isEmpty();
-        assertTrue(isMeetingManagerEmpty);
-
-        /*boolean equals1 = assertEqualsHomeMade(meetingJava, meetingManager.getMeetingList().get(0));
-        assertTrue(equals1);*/
-
-        /*
-        boolean equals = assertEqualsHomeMade(meetingManager.getMeetingList().get(0),meetingJava);
-        assertTrue(equals);
-        */
+        boolean isMeetingManagerEmpty = mMeetingListLiveData.getValue().isEmpty();
+        assertTrue(!isMeetingManagerEmpty);
     }
 
     @Test
