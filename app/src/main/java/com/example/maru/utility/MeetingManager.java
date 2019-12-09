@@ -57,7 +57,7 @@ public class MeetingManager {
         listMeetingLiveData.postValue(listMeeting);
     }
 
-    public void addMeetingFromObject(MeetingJava meetingJava) {
+    /*public void addMeetingFromObject(MeetingJava meetingJava) {
         listMeeting.add(new MeetingJava(
                 meetingJava.getId(),
                 meetingJava.getDate(),
@@ -67,7 +67,7 @@ public class MeetingManager {
                 meetingJava.getListOfEmailOfParticipant()));
         meetingCount++;
         listMeetingLiveData.postValue(listMeeting);
-    }
+    }*/
 
     public MutableLiveData<List<MeetingJava>> getMeetingLiveData() {
         return listMeetingLiveData;

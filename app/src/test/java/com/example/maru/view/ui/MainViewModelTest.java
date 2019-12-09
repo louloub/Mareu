@@ -1,27 +1,21 @@
 package com.example.maru.view.ui;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.maru.service.model.Meeting;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.view.ui.model.MeetingUiModel;
+import com.example.maru.view.ui.model.SortingTypeUiModel;
 
-import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_ASC;
 import static org.junit.Assert.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -30,7 +24,7 @@ public class MainViewModelTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private MeetingManager meetingManager;
+    private MeetingManager mMeetingManager;
     MainViewModel mainViewModel;
 
     private MutableLiveData<MeetingJava> mMeetingLiveData;
@@ -44,31 +38,33 @@ public class MainViewModelTest {
 
     @Before
     public void setUp() throws Exception {
-        meetingManager = Mockito.mock(MeetingManager.class);
-        // meetingManager = MeetingManager.getInstance();
+        mMeetingManager = Mockito.mock(MeetingManager.class);
+        // mMeetingManager = MeetingManager.getInstance();
 
         mMeetingLiveData = new MutableLiveData<>();
         mMeetingListLiveData = new MutableLiveData<>();
         mSortingTypeLiveData = new MutableLiveData<>();
         mSelectedFilterTypeLiveData = new MutableLiveData<>();
 
-        Mockito.doReturn(mMeetingListLiveData).when(meetingManager).getMeetingLiveData();
-        Mockito.doReturn(listOfMeeting).when(meetingManager).getMeetingList();
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingLiveData();
+        Mockito.doReturn(listOfMeeting).when(mMeetingManager).getMeetingList();
 
-        mainViewModel = new MainViewModel(meetingManager);
+        mainViewModel = new MainViewModel(mMeetingManager);
     }
 
     @Test
     public void addMeeting() {
         // GIVEN : Conditions préalables au test
-        meetingManager = Mockito.mock(MeetingManager.class);
-        initMocks(meetingManager);
+        mMeetingManager = Mockito.mock(MeetingManager.class);
+        initMocks(mMeetingManager);
         meetingJava = Mockito.mock(MeetingJava.class);
+        meetingJava2 = Mockito.mock(MeetingJava.class);
         listOfMeeting.add(meetingJava);
-        mMeetingListLiveData.setValue(listOfMeeting);
+        listOfMeeting.add(meetingJava2);
 
         // WHEN : Une seule ligne : invoquation de la méthode qu'on souhaite tester
-        meetingManager.addMeetingFromObject(meetingJava);
+        mMeetingListLiveData.setValue(listOfMeeting);
+        mainViewModel.setSortingType("Croissant salle", Mockito.mock(SortingTypeUiModel.class));
 
         // THEN : Changements qu'on attend en raison du comportement spécifié
         boolean isMeetingManagerEmpty = mMeetingListLiveData.getValue().isEmpty();
@@ -78,11 +74,27 @@ public class MainViewModelTest {
     @Test
     public void getMeetings() {
 
-        // Given
+        // GIVEN
+        mMeetingManager = Mockito.mock(MeetingManager.class);
+        initMocks(mMeetingManager);
+        meetingJava = Mockito.mock(MeetingJava.class);
+        meetingJava2 = Mockito.mock(MeetingJava.class);
+        listOfMeeting.add(meetingJava);
+        listOfMeeting.add(meetingJava2);
+        mMeetingListLiveData.setValue(listOfMeeting);
+        boolean listIsFull;
 
-        // When
+        // WHEN
+        int sizeOfMeetingListLiveDate = mMeetingListLiveData.getValue().size();
 
-        // Then
+        // THEN
+        if (sizeOfMeetingListLiveDate == 0) {
+            listIsFull = false;
+        } else {
+            listIsFull = true;
+        }
+        assertTrue(listIsFull);
+
 
         // List<MeetingJava> meetings = MeetingManager.getInstance().getMeetingList();
 
@@ -103,7 +115,7 @@ public class MainViewModelTest {
                 listOfParticipant
         );
 
-        MeetingManager.getInstance().addMeetingFromObject(meetingJava);
+        // MeetingManager.getInstance().addMeetingFromObject(meetingJava);
         listOfMeeting.add(meetingJava);
 
         listOfMeeting = MeetingManager.getInstance().getMeetingList();
@@ -128,7 +140,7 @@ public class MainViewModelTest {
         meetingJava.add(meetingJava1);
         MutableLiveData<List<MeetingJava>> mutableLiveData = new MutableLiveData<>();
         mutableLiveData.setValue(meetingJava);
-        Mockito.when(meetingManager.getMeetingLiveData()).thenReturn(mutableLiveData);
+        Mockito.when(mMeetingManager.getMeetingLiveData()).thenReturn(mutableLiveData);
         */
 
         // When
