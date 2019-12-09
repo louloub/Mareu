@@ -1,6 +1,7 @@
 package com.example.maru.view.ui;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.maru.service.model.MeetingJava;
@@ -19,6 +20,13 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ UNIT TEST
+ // GIVEN : Conditions préalables au test
+ // WHEN : Une seule ligne : invoquation de la méthode qu'on souhaite tester
+ // THEN : Changements qu'on attend en raison du comportement spécifié
+ **/
+
 public class MainViewModelTest {
 
     @Rule
@@ -31,6 +39,8 @@ public class MainViewModelTest {
     private MutableLiveData<List<MeetingJava>> mMeetingListLiveData;
     private MutableLiveData<SortingType> mSortingTypeLiveData;
     private MutableLiveData<Integer> mSelectedFilterTypeLiveData;
+    private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData;
+
 
     List<MeetingJava> listOfMeeting = new ArrayList<>();
     List<String> listOfParticipant = new ArrayList<>();
@@ -39,22 +49,28 @@ public class MainViewModelTest {
     @Before
     public void setUp() throws Exception {
         mMeetingManager = Mockito.mock(MeetingManager.class);
-        // mMeetingManager = MeetingManager.getInstance();
 
         mMeetingLiveData = new MutableLiveData<>();
         mMeetingListLiveData = new MutableLiveData<>();
         mSortingTypeLiveData = new MutableLiveData<>();
         mSelectedFilterTypeLiveData = new MutableLiveData<>();
+        mSortingTypeUiModelLiveData = new MutableLiveData<>();
 
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingLiveData();
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
         Mockito.doReturn(listOfMeeting).when(mMeetingManager).getMeetingList();
 
         mainViewModel = new MainViewModel(mMeetingManager);
+
+        listOfParticipant.add("test1@test.fr");
+        listOfParticipant.add("test2@test.fr");
+        listOfParticipant.add("test3@test.fr");
+        meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", listOfParticipant);
+        meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,22), "16h16", 2, "Sujet 2", listOfParticipant);
     }
 
     @Test
     public void addMeeting() {
-        // GIVEN : Conditions préalables au test
+        // GIVEN
         mMeetingManager = Mockito.mock(MeetingManager.class);
         initMocks(mMeetingManager);
         meetingJava1 = Mockito.mock(MeetingJava.class);
@@ -62,11 +78,10 @@ public class MainViewModelTest {
         listOfMeeting.add(meetingJava1);
         listOfMeeting.add(meetingJava2);
 
-        // WHEN : Une seule ligne : invoquation de la méthode qu'on souhaite tester
+        // WHEN
         mMeetingListLiveData.setValue(listOfMeeting);
-        mainViewModel.setSortingType("Croissant salle", Mockito.mock(SortingTypeUiModel.class));
 
-        // THEN : Changements qu'on attend en raison du comportement spécifié
+        // THEN
         boolean isMeetingManagerEmpty = mMeetingListLiveData.getValue().isEmpty();
         assertTrue(!isMeetingManagerEmpty);
     }
@@ -76,25 +91,6 @@ public class MainViewModelTest {
         // GIVEN
         mMeetingManager = Mockito.mock(MeetingManager.class);
         initMocks(mMeetingManager);
-        listOfParticipant.add("test1@test.fr");
-        listOfParticipant.add("test2@test.fr");
-        listOfParticipant.add("test3@test.fr");
-        meetingJava1 = new MeetingJava(
-                0,
-                LocalDate.of(2019,12,22),
-                "15h15",
-                1,
-                "Sujet 1",
-                listOfParticipant
-        );
-        meetingJava2 = new MeetingJava(
-                1,
-                LocalDate.of(2018,12,22),
-                "16h16",
-                2,
-                "Sujet 2",
-                listOfParticipant
-        );
         listOfMeeting.add(meetingJava1);
         listOfMeeting.add(meetingJava2);
         mMeetingListLiveData.setValue(listOfMeeting);
@@ -109,49 +105,91 @@ public class MainViewModelTest {
 
     @Test
     public void deleteMeeting() {
-
-        meetingJava1 = new MeetingJava(
-                0,
-                LocalDate.of(2019,12,22),
-                "15h15",
-                2,
-                "Sujet 1",
-                listOfParticipant
-        );
-
-        // MeetingManager.getInstance().addMeetingFromObject(meetingJava);
+        // GIVEN
+        mMeetingManager = Mockito.mock(MeetingManager.class);
+        initMocks(mMeetingManager);
         listOfMeeting.add(meetingJava1);
-
-        listOfMeeting = MeetingManager.getInstance().getMeetingList();
-        // MeetingJava meetingJava = listOfMeeting.get(0);
-        listOfMeeting.remove(0);
+        listOfMeeting.add(meetingJava2);
+        mMeetingListLiveData.setValue(listOfMeeting);
         boolean bool;
 
-        if (listOfMeeting.size()==0) {
-            bool = true;
-        } else {
-            bool = false;
-        }
+        // WHEN
+        mainViewModel.deleteMeeting(0);
+
+        // THEN
+        bool = mMeetingListLiveData.getValue().size() == 1;
+        assertTrue(bool);
     }
 
     @Test
-    public void should_desplay_two_meeting_when_meeting_manager_has_two () {
-        // Given
-        // List<MeetingJava> meetingJava = new ArrayList<MeetingJava>();
-        // LOcalDate.off
+    public void setSortingType(){
+        // GIVEN
+        mMeetingManager = Mockito.mock(MeetingManager.class);
+        initMocks(mMeetingManager);
+        SortingTypeUiModel sortingTypeUiModel = Mockito.mock(SortingTypeUiModel.class);
+        boolean bool;
 
-        /*MeetingJava meetingJava1 = new MeetingJava();
-        meetingJava.add(meetingJava1);
-        MutableLiveData<List<MeetingJava>> mutableLiveData = new MutableLiveData<>();
-        mutableLiveData.setValue(meetingJava);
-        Mockito.when(mMeetingManager.getMeetingLiveData()).thenReturn(mutableLiveData);
-        */
+        // WHEN
+        mainViewModel.setSortingType("Croissant salle", sortingTypeUiModel);
 
-        // When
-        // LiveData<List<MeetingUiModel>> result = mainViewModel.getUiModelsLiveData();
+        // THEN
+        LiveData<Integer> i = mainViewModel.getSelectedSortingTypeIndexLiveDate();
+        bool = i.getValue().equals(0);
+        assertTrue(bool);
 
-        // Then
-        // assertEquals(1,result.getValue().size());
+        // boolean bool = mSortingTypeUiModelLiveData.getValue().equals(sortingTypeUiModel);
+        // boolean bool = mSortingTypeLiveData.getValue().toString().equals();
+        // assertTrue(bool);
+    }
+
+    @Test
+    public void setRoomFilterType(){
+        // GIVEN
+
+        // WHEN
+        // mainViewModel.setRoomFilterType();
+
+        // THEN
+    }
+
+    @Test
+    public void setDateFilterType(){
+        // GIVEN
+
+        // WHEN
+        // mainViewModel.setDateFilterType();
+
+        // THEN
+    }
+
+    @Test
+    public void displayFilterRoomPopup(){
+        // GIVEN
+
+        // WHEN
+        // mainViewModel.displayFilterRoomPopup();
+
+        // THEN
+    }
+
+    @Test
+    public void displayFilterDatePopup(){
+        // GIVEN
+
+        // WHEN
+        // mainViewModel.displayFilterDatePopup();
+
+        // THEN
+    }
+
+    @Test
+    public void displaySortingTypePopup(){
+        // GIVEN
+
+        // WHEN
+        // mainViewModel.displaySortingTypePopup();
+
+        // THEN
     }
 
     static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
@@ -184,26 +222,3 @@ public class MainViewModelTest {
         return false;
     }
 }
-
-/*
-listOfParticipant.add("guillaume@yahoo.fr");
-        listOfParticipant.add("email@email.fr");
-        listOfParticipant.add("test@test.fr");*/
-
-/*meetingJava = new MeetingJava(
-                0,
-                LocalDate.of(2019,12,22),
-                "15h15",
-                2,
-                "Sujet 1",
-                listOfParticipant
-        );
-
-        meetingJava2 = new MeetingJava(
-                0,
-                LocalDate.of(2019,12,22),
-                "15h15",
-                2,
-                "Sujet 1",
-                listOfParticipant
-        );*/

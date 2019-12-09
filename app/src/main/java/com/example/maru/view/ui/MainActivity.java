@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -24,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maru.R;
 import com.example.maru.view.ViewModelFactory;
 import com.example.maru.view.ui.adapter.MainAdapter;
-import com.example.maru.view.ui.model.DateFilterTypeUiModel;
 import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getmFilterTypeUiModelLiveData().observe(this, new Observer<RoomFilterTypeUiModel>() {
+        mViewModel.getFilterTypeUiModelLiveData().observe(this, new Observer<RoomFilterTypeUiModel>() {
             @Override
             public void onChanged(RoomFilterTypeUiModel roomFilterTypeUiModel) {
                 mRoomFilterTypeUiModel = roomFilterTypeUiModel;

@@ -94,7 +94,7 @@ public class MainViewModel extends ViewModel {
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingManager = meetingManager;
-        mMeetingListLiveData = mMeetingManager.getMeetingLiveData();
+        mMeetingListLiveData = mMeetingManager.getMeetingListLiveData();
         wireUpMediator();
     }
 
@@ -345,7 +345,7 @@ public class MainViewModel extends ViewModel {
 
     LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
 
-    LiveData<RoomFilterTypeUiModel> getmFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
+    LiveData<RoomFilterTypeUiModel> getFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
 
     LiveData<Integer> getSelectedSortingTypeIndexLiveDate() { return mSelectedSortingTypeIndexLiveData; }
 
@@ -416,7 +416,7 @@ public class MainViewModel extends ViewModel {
         // return dateFilterTypeUiModel();
     }
 
-    void deleteMeeting(int meetingId) {
+    public void deleteMeeting(int meetingId) {
         MeetingManager.getInstance().deleteMeeting(meetingId);
     }
 }
