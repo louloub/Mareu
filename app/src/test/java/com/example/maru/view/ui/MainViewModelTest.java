@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
 import org.junit.Before;
@@ -122,7 +123,7 @@ public class MainViewModelTest {
     }
 
     @Test
-    public void setSortingType(){
+    public void setSortingTypeUiModel(){
         // GIVEN
         mMeetingManager = Mockito.mock(MeetingManager.class);
         initMocks(mMeetingManager);
@@ -139,13 +140,20 @@ public class MainViewModelTest {
     }
 
     @Test
-    public void setRoomFilterType(){
+    public void setRoomFilterTypeUiMdel(){
         // GIVEN
+        mMeetingManager = Mockito.mock(MeetingManager.class);
+        initMocks(mMeetingManager);
+        RoomFilterTypeUiModel roomFilterTypeUiModel = Mockito.mock(RoomFilterTypeUiModel.class);
+        boolean bool;
 
         // WHEN
-        // mainViewModel.setRoomFilterType();
+        mainViewModel.setRoomFilterType("toutes les salles",roomFilterTypeUiModel);
 
         // THEN
+        LiveData<Integer> i = mainViewModel.getSelectedFilterTypeIndexLiveDate();
+        bool = i.getValue().equals(0);
+        assertTrue(bool);
     }
 
     @Test
