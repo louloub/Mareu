@@ -34,7 +34,7 @@ public class MainViewModelTest {
 
     List<MeetingJava> listOfMeeting = new ArrayList<>();
     List<String> listOfParticipant = new ArrayList<>();
-    MeetingJava meetingJava, meetingJava2;
+    MeetingJava meetingJava1, meetingJava2;
 
     @Before
     public void setUp() throws Exception {
@@ -57,9 +57,9 @@ public class MainViewModelTest {
         // GIVEN : Conditions préalables au test
         mMeetingManager = Mockito.mock(MeetingManager.class);
         initMocks(mMeetingManager);
-        meetingJava = Mockito.mock(MeetingJava.class);
+        meetingJava1 = Mockito.mock(MeetingJava.class);
         meetingJava2 = Mockito.mock(MeetingJava.class);
-        listOfMeeting.add(meetingJava);
+        listOfMeeting.add(meetingJava1);
         listOfMeeting.add(meetingJava2);
 
         // WHEN : Une seule ligne : invoquation de la méthode qu'on souhaite tester
@@ -73,40 +73,45 @@ public class MainViewModelTest {
 
     @Test
     public void getMeetings() {
-
         // GIVEN
         mMeetingManager = Mockito.mock(MeetingManager.class);
         initMocks(mMeetingManager);
-        meetingJava = Mockito.mock(MeetingJava.class);
-        meetingJava2 = Mockito.mock(MeetingJava.class);
-        listOfMeeting.add(meetingJava);
+        // meetingJava = Mockito.mock(MeetingJava.class);
+        listOfParticipant.add("test1@test.fr");
+        listOfParticipant.add("test2@test.fr");
+        listOfParticipant.add("test3@test.fr");
+        meetingJava1 = new MeetingJava(
+                0,
+                LocalDate.of(2019,12,22),
+                "15h15",
+                2,
+                "Sujet 1",
+                listOfParticipant
+        );
+        meetingJava2 = new MeetingJava(
+                0,
+                LocalDate.of(2018,12,22),
+                "15h15",
+                2,
+                "Sujet 1",
+                listOfParticipant
+        );
+        listOfMeeting.add(meetingJava1);
         listOfMeeting.add(meetingJava2);
         mMeetingListLiveData.setValue(listOfMeeting);
-        boolean listIsFull;
 
         // WHEN
-        int sizeOfMeetingListLiveDate = mMeetingListLiveData.getValue().size();
+        MeetingJava meetingJava3 = mMeetingListLiveData.getValue().get(0);
 
         // THEN
-        if (sizeOfMeetingListLiveDate == 0) {
-            listIsFull = false;
-        } else {
-            listIsFull = true;
-        }
-        assertTrue(listIsFull);
-
-
-        // List<MeetingJava> meetings = MeetingManager.getInstance().getMeetingList();
-
-        // List<MeetingJava> expectedMeetings = DummyMeetingGenerator.DUMMY_MEETINGS;
-
-        // assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeetings.toArray()));
+        boolean bool = assertEqualsHomeMade(meetingJava3,meetingJava1);
+        assertTrue(bool);
     }
 
     @Test
     public void deleteMeeting() {
 
-        meetingJava = new MeetingJava(
+        meetingJava1 = new MeetingJava(
                 0,
                 LocalDate.of(2019,12,22),
                 "15h15",
@@ -116,7 +121,7 @@ public class MainViewModelTest {
         );
 
         // MeetingManager.getInstance().addMeetingFromObject(meetingJava);
-        listOfMeeting.add(meetingJava);
+        listOfMeeting.add(meetingJava1);
 
         listOfMeeting = MeetingManager.getInstance().getMeetingList();
         // MeetingJava meetingJava = listOfMeeting.get(0);
