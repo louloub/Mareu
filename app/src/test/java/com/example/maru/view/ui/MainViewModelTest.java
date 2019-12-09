@@ -76,7 +76,6 @@ public class MainViewModelTest {
         // GIVEN
         mMeetingManager = Mockito.mock(MeetingManager.class);
         initMocks(mMeetingManager);
-        // meetingJava = Mockito.mock(MeetingJava.class);
         listOfParticipant.add("test1@test.fr");
         listOfParticipant.add("test2@test.fr");
         listOfParticipant.add("test3@test.fr");
@@ -84,16 +83,16 @@ public class MainViewModelTest {
                 0,
                 LocalDate.of(2019,12,22),
                 "15h15",
-                2,
+                1,
                 "Sujet 1",
                 listOfParticipant
         );
         meetingJava2 = new MeetingJava(
-                0,
+                1,
                 LocalDate.of(2018,12,22),
-                "15h15",
+                "16h16",
                 2,
-                "Sujet 1",
+                "Sujet 2",
                 listOfParticipant
         );
         listOfMeeting.add(meetingJava1);
