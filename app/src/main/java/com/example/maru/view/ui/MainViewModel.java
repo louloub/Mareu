@@ -198,7 +198,7 @@ public class MainViewModel extends ViewModel {
         result.add(meetingUiModel);
     }
 
-    void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
+    public void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
         switch (sortChoice) {
             case "Croissant salle":
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
@@ -228,7 +228,7 @@ public class MainViewModel extends ViewModel {
         mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
     }
 
-    void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
+    public void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
         switch (filterChoice) {
             case "toutes les salles":
                 mRoomFilterTypeLiveData.setValue(ALL_ROOM);
@@ -288,7 +288,7 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    void setDateFilterType(String dateForFilter) {
+    public void setDateFilterType(String dateForFilter) {
 
         int size = 0;
         int index = 0;
@@ -375,7 +375,7 @@ public class MainViewModel extends ViewModel {
         return sortingTypeUiModel;
     }
 
-    void displayFilterRoomPopup() {
+    public void displayFilterRoomPopup() {
 
         if (listOfItemFilterRoomMenu.size() == 11) {
             mFilterTypeUiModelLiveData.setValue(getRoomFilterTypeUiModel());

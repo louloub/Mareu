@@ -32,8 +32,8 @@ public class MainViewModelTest {
     private MeetingManager meetingManager;
     MainViewModel mainViewModel;
 
-    private MutableLiveData<MeetingJava> meetingLiveData;
-    private MutableLiveData<List<MeetingJava>> meetingListLiveData;
+    private MutableLiveData<MeetingJava> mMeetingLiveData;
+    private MutableLiveData<List<MeetingJava>> mMeetingListLiveData;
     private MutableLiveData<SortingType> mSortingTypeLiveData;
     private MutableLiveData<Integer> mSelectedFilterTypeLiveData;
 
@@ -43,11 +43,12 @@ public class MainViewModelTest {
 
     @Before
     public void setUp() throws Exception {
-        // meetingManager = Mockito.mock(MeetingManager.class);
-        meetingManager = MeetingManager.getInstance();
+        meetingManager = Mockito.mock(MeetingManager.class);
 
-        meetingLiveData = new MutableLiveData<>();
-        meetingListLiveData = new MutableLiveData<>();
+        // meetingManager = MeetingManager.getInstance();
+
+        mMeetingLiveData = new MutableLiveData<>();
+        mMeetingListLiveData = new MutableLiveData<>();
         mSortingTypeLiveData = new MutableLiveData<>();
         mSelectedFilterTypeLiveData = new MutableLiveData<>();
 
@@ -58,11 +59,11 @@ public class MainViewModelTest {
 
     @Test
     public void addMeeting() {
-        // Given
-        mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
-        mSelectedFilterTypeLiveData.setValue(0);
+        // GIVENT : Conditions préalables au test
 
-        // When
+        /*mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
+        mSelectedFilterTypeLiveData.setValue(0);*/
+
         listOfParticipant.add("guillaume@yahoo.fr");
         listOfParticipant.add("email@email.fr");
         listOfParticipant.add("test@test.fr");
@@ -76,9 +77,6 @@ public class MainViewModelTest {
                 listOfParticipant
         );
 
-        MeetingManager.getInstance().addMeetingFromObject(meetingJava);
-        listOfMeeting.add(meetingJava);
-
         meetingJava2 = new MeetingJava(
                 0,
                 LocalDate.of(2018,12,22),
@@ -87,9 +85,20 @@ public class MainViewModelTest {
                 "Sujet 1",
                 listOfParticipant
         );
+
+        listOfMeeting.add(meetingJava);
+
         MeetingJava meetingJavaToTest = meetingManager.getMeetingList().get(0);
 
-        // Then
+        // WHEN : Une seule ligne : invoquation de la méthode qu'on souhaite tester
+        /*mainViewModel.setSortingType();
+        mainViewModel.setRoomFilterType();
+        mainViewModel.setDateFilterType();
+        mainViewModel.displayFilterRoomPopup();*/
+
+        MeetingManager.getInstance().addMeetingFromObject(meetingJava);
+
+        // THEN : Changements qu'on attend en raison du comportement spécifié
         boolean equals = assertEqualsHomeMade(meetingJavaToTest,meetingJava);
         assertTrue(equals);
     }
