@@ -75,6 +75,7 @@ public class MainViewModelTest {
                 "Sujet 1",
                 listOfParticipant
         );
+
         MeetingManager.getInstance().addMeetingFromObject(meetingJava);
         listOfMeeting.add(meetingJava);
 
