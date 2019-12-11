@@ -347,9 +347,9 @@ public class MainViewModel extends ViewModel {
 
     LiveData<RoomFilterTypeUiModel> getFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
 
-    LiveData<Integer> getSelectedSortingTypeIndexLiveDate() { return mSelectedSortingTypeIndexLiveData; }
+    LiveData<Integer> getSelectedSortingTypeIndexLiveData() { return mSelectedSortingTypeIndexLiveData; }
 
-    LiveData<Integer> getSelectedFilterTypeIndexLiveDate() {return mSelectedFilterTypeIndexLiveData; }
+    LiveData<Integer> getSelectedFilterTypeIndexLiveData() {return mSelectedFilterTypeIndexLiveData; }
 
     void displaySortingTypePopup() {
 

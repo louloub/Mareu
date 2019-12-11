@@ -68,14 +68,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getSelectedSortingTypeIndexLiveDate().observe(this, new Observer<Integer>() {
+        mViewModel.getSelectedSortingTypeIndexLiveData().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer newSortingTypeIndex) {
                 mSelectedSortingTypeIndex = newSortingTypeIndex;
             }
         });
 
-        mViewModel.getSelectedFilterTypeIndexLiveDate().observe(this, new Observer<Integer>() {
+        mViewModel.getSelectedFilterTypeIndexLiveData().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer newFilterTypeIndex) {
                 mSelectedFilterTypeIndex = newFilterTypeIndex;

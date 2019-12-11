@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.view.ui.model.DateFilterTypeUiModel;
 import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
@@ -134,7 +135,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Croissant salle", sortingTypeUiModel);
 
         // THEN
-        LiveData<Integer> i = mainViewModel.getSelectedSortingTypeIndexLiveDate();
+        LiveData<Integer> i = mainViewModel.getSelectedSortingTypeIndexLiveData();
         bool = i.getValue().equals(0);
         assertTrue(bool);
     }
@@ -151,19 +152,25 @@ public class MainViewModelTest {
         mainViewModel.setRoomFilterType("toutes les salles",roomFilterTypeUiModel);
 
         // THEN
-        LiveData<Integer> i = mainViewModel.getSelectedFilterTypeIndexLiveDate();
+        LiveData<Integer> i = mainViewModel.getSelectedFilterTypeIndexLiveData();
         bool = i.getValue().equals(0);
         assertTrue(bool);
     }
 
     @Test
-    public void setDateFilterType(){
+    public void setDateFilterTypeUiModel(){
         // GIVEN
+        mMeetingManager = Mockito.mock(MeetingManager.class);
+        initMocks(mMeetingManager);
+        DateFilterTypeUiModel dateFilterTypeUiModel = Mockito.mock(DateFilterTypeUiModel.class);
+        boolean bool;
+        String dateForFilter = "2019-12-30";
 
         // WHEN
-        // mainViewModel.setDateFilterType();
+        mainViewModel.setDateFilterType(dateForFilter);
 
         // THEN
+        // bool = mainViewModel.getDate
     }
 
     @Test
