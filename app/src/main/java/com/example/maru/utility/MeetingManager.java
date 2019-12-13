@@ -60,10 +60,6 @@ public class MeetingManager {
         return mMeetingListLiveData;
     }
 
-    public List<MeetingJava> getMeetingList(){
-        return mMeetingList;
-    }
-
     public void deleteMeeting(int meetingId) {
 
         for (Iterator<MeetingJava> iterator = mMeetingList.iterator(); iterator.hasNext();) {
