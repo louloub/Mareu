@@ -204,6 +204,97 @@ public class MainViewModelTest {
         assertEquals("2017-12-22",result.get(2).getDate().toString());
     }
 
+    // WORKS (à verifier par Nino)
+    @Test
+    public void shouldMeetingAreFilterWithSelectedRoom1() throws InterruptedException {
+        // GIVEN
+        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
+        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
+        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
+        List <MeetingJava> meetingJavaList = new ArrayList<>();
+        meetingJavaList.add(meetingJava1);
+        meetingJavaList.add(meetingJava2);
+        meetingJavaList.add(meetingJava3);
+        mMeetingListLiveData.setValue(meetingJavaList);
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        mainViewModel.setRoomFilterType("salle 1", Mockito.mock(RoomFilterTypeUiModel.class));
+
+        // WHEN
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+
+        // THEN
+        assertEquals("1",result.get(0).getRoom());
+    }
+
+    // WORKS (à verifier par Nino)
+    @Test
+    public void shouldMeetingAreFilterWithSelectedRoom2() throws InterruptedException {
+        // GIVEN
+        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
+        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
+        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
+        List <MeetingJava> meetingJavaList = new ArrayList<>();
+        meetingJavaList.add(meetingJava1);
+        meetingJavaList.add(meetingJava2);
+        meetingJavaList.add(meetingJava3);
+        mMeetingListLiveData.setValue(meetingJavaList);
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        mainViewModel.setRoomFilterType("salle 2", Mockito.mock(RoomFilterTypeUiModel.class));
+
+        // WHEN
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+
+        // THEN
+        assertEquals("2",result.get(0).getRoom());
+    }
+
+    // WORKS (à verifier par Nino)
+    @Test
+    public void shouldMeetingAreFilterWithSelectedRoom3() throws InterruptedException {
+        // GIVEN
+        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
+        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
+        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
+        List <MeetingJava> meetingJavaList = new ArrayList<>();
+        meetingJavaList.add(meetingJava1);
+        meetingJavaList.add(meetingJava2);
+        meetingJavaList.add(meetingJava3);
+        mMeetingListLiveData.setValue(meetingJavaList);
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        mainViewModel.setRoomFilterType("salle 3", Mockito.mock(RoomFilterTypeUiModel.class));
+
+        // WHEN
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+
+        // THEN
+        assertEquals("3",result.get(0).getRoom());
+    }
+
+    // WORKS (à verifier par Nino)
+    @Test
+    public void shouldMeetingAreFilterWithAllRoom() throws InterruptedException {
+        // GIVEN
+        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
+        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
+        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
+        List <MeetingJava> meetingJavaList = new ArrayList<>();
+        meetingJavaList.add(meetingJava1);
+        meetingJavaList.add(meetingJava2);
+        meetingJavaList.add(meetingJava3);
+        mMeetingListLiveData.setValue(meetingJavaList);
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        mainViewModel.setRoomFilterType("toutes les salles", Mockito.mock(RoomFilterTypeUiModel.class));
+
+        // WHEN
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+
+        // THEN
+        assertEquals("1",result.get(0).getRoom());
+        assertEquals("2",result.get(1).getRoom());
+        assertEquals("3",result.get(2).getRoom());
+
+    }
+
     @Test
     public void setSortingTypeUiModel(){
         // GIVEN
