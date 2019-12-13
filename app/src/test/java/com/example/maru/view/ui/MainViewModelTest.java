@@ -89,25 +89,6 @@ public class MainViewModelTest {
         // TODO 11/12/19 : faire la collection d'assertion (id, date, sujet ..) check MainViewModelTest project MMVVM NINO
     }
 
-    // TODO 11/12/19 : check les IF pour voir ce qu'on doit test
-    // TODO 11/12/19 : tester ce qu'affiche le viewModel
-    // TODO 11/12/19 : tester toutes les possibilités du setSortingType et des autres filtres etc
-
-    /*@Test
-    public void deleteMeeting() {
-        // GIVEN
-        listOfMeeting.add(meetingJava1);
-        listOfMeeting.add(meetingJava2);
-        mMeetingListLiveData.setValue(listOfMeeting);
-
-        // WHEN
-        mainViewModel.deleteMeeting(0);
-
-        // THEN
-        boolean bool = mMeetingListLiveData.getValue().size() == 1;
-        assertTrue(bool);
-    }*/
-
     // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreSortingWithRoomAscendantWhenThisSortIsChoice() throws InterruptedException  {
@@ -295,77 +276,28 @@ public class MainViewModelTest {
 
     }
 
+    // WORKS (à verifier par Nino)
     @Test
-    public void setSortingTypeUiModel(){
+    public void shouldMeetingAreFilterWithGoodDate() throws InterruptedException {
         // GIVEN
-        SortingTypeUiModel sortingTypeUiModel = Mockito.mock(SortingTypeUiModel.class);
+        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
+        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
+        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
+        List <MeetingJava> meetingJavaList = new ArrayList<>();
+        meetingJavaList.add(meetingJava1);
+        meetingJavaList.add(meetingJava2);
+        meetingJavaList.add(meetingJava3);
+        mMeetingListLiveData.setValue(meetingJavaList);
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        mainViewModel.setDateFilterType("2019-12-22");
 
         // WHEN
-        mainViewModel.setSortingType("Croissant salle", sortingTypeUiModel);
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        LiveData<Integer> i = mainViewModel.getSelectedSortingTypeIndexLiveData();
-        boolean bool = i.getValue().equals(0);
-        assertTrue(bool);
+        assertEquals("2019-12-22",result.get(0).getDate().toString());
     }
 
-    @Test
-    public void setRoomFilterTypeUiMdel(){
-        // GIVEN
-        RoomFilterTypeUiModel roomFilterTypeUiModel = Mockito.mock(RoomFilterTypeUiModel.class);
-
-        // WHEN
-        mainViewModel.setRoomFilterType("toutes les salles",roomFilterTypeUiModel);
-
-        // THEN
-        LiveData<Integer> i = mainViewModel.getSelectedFilterTypeIndexLiveData();
-        boolean bool = i.getValue().equals(0);
-        assertTrue(bool);
-    }
-
-    @Test
-    public void setDateFilterTypeUiModel(){
-        // GIVEN
-        DateFilterTypeUiModel dateFilterTypeUiModel = Mockito.mock(DateFilterTypeUiModel.class);
-        boolean bool;
-        String dateForFilter = "2019-12-30";
-
-        // WHEN
-        mainViewModel.setDateFilterType(dateForFilter);
-
-        // THEN
-        // bool = mainViewModel.getDate
-    }
-
-    @Test
-    public void displayFilterRoomPopup(){
-        // GIVEN
-
-        // WHEN
-        // mainViewModel.displayFilterRoomPopup();
-
-        // THEN
-    }
-
-    @Test
-    public void displayFilterDatePopup(){
-        // GIVEN
-
-        // WHEN
-        // mainViewModel.displayFilterDatePopup();
-
-        // THEN
-    }
-
-    @Test
-    public void displaySortingTypePopup(){
-        // GIVEN
-
-        // WHEN
-        // mainViewModel.displaySortingTypePopup();
-
-        // THEN
-    }
 
     static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
 
