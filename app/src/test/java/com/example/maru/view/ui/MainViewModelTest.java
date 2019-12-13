@@ -68,6 +68,18 @@ public class MainViewModelTest {
         return listOfParticipant;
     }
 
+    private void giventForSortingTypeAndFilterTest() {
+        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
+        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
+        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017, 12, 22), "13h13", 3, "Sujet 3", getParticipants());
+        List<MeetingJava> meetingJavaList = new ArrayList<>();
+        meetingJavaList.add(meetingJava1);
+        meetingJavaList.add(meetingJava2);
+        meetingJavaList.add(meetingJava3);
+        mMeetingListLiveData.setValue(meetingJavaList);
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+    }
+
     // WORKS
     @Test
     public void shouldDisplayTwoMeetingsUiModelsWhenRepositoryHasTwoMeetings() throws InterruptedException {
@@ -93,15 +105,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreSortingWithRoomAscendantWhenThisSortIsChoice() throws InterruptedException  {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setSortingType("Croissant salle", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
@@ -117,15 +121,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreSortingWithRoomDescendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setSortingType("Decroissant salle", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
@@ -141,15 +137,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreSortingWithDateAscendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setSortingType("Croissant date", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
@@ -165,15 +153,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreSortingWithDateDescendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setSortingType("Decroissant date", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
@@ -189,15 +169,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreFilterWithSelectedRoom1() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setRoomFilterType("salle 1", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
@@ -211,15 +183,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreFilterWithSelectedRoom2() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setRoomFilterType("salle 2", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
@@ -233,15 +197,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreFilterWithSelectedRoom3() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setRoomFilterType("salle 3", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
@@ -255,15 +211,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreFilterWithAllRoom() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setRoomFilterType("toutes les salles", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
@@ -280,15 +228,7 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingAreFilterWithGoodDate() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017,12,22), "13h13", 3, "Sujet 3", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
-        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+        giventForSortingTypeAndFilterTest();
         mainViewModel.setDateFilterType("2019-12-22");
 
         // WHEN
