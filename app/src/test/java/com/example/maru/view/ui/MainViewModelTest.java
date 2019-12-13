@@ -169,18 +169,18 @@ public class MainViewModelTest {
         meetingJavaList.add(meetingJava3);
         mMeetingListLiveData.setValue(meetingJavaList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
-
-        // WHEN
         mainViewModel.setSortingType("Croissant date", Mockito.mock(SortingTypeUiModel.class));
 
+        // WHEN
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+
         // THEN
-        assertEquals("2019-12-22",result.get(0).getDate().toString());
+        assertEquals("2017-12-22",result.get(0).getDate().toString());
         assertEquals("2018-12-23",result.get(1).getDate().toString());
-        assertEquals("2017-12-22",result.get(2).getDate().toString());
+        assertEquals("2019-12-22",result.get(2).getDate().toString());
     }
 
-    // WORKING ON
+    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreSortingWithDateDescendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
@@ -193,15 +193,15 @@ public class MainViewModelTest {
         meetingJavaList.add(meetingJava3);
         mMeetingListLiveData.setValue(meetingJavaList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        mainViewModel.setSortingType("Decroissant date", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        mainViewModel.setSortingType("Croissant date", Mockito.mock(SortingTypeUiModel.class));
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        assertEquals("2017-12-22",result.get(2).getDate().toString());
-        assertEquals("2018-12-23",result.get(1).getDate().toString());
         assertEquals("2019-12-22",result.get(0).getDate().toString());
+        assertEquals("2018-12-23",result.get(1).getDate().toString());
+        assertEquals("2017-12-22",result.get(2).getDate().toString());
     }
 
     @Test
