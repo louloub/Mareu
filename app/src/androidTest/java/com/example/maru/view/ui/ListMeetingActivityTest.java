@@ -3,6 +3,7 @@ package com.example.maru.view.ui;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -75,13 +76,15 @@ public class ListMeetingActivityTest {
 
         // Create Random
         Random random = new Random();
-        int monthRandom, dayRandom, roomRandom;
+        int monthRandom, dayRandom, roomRandom, hourRandom, minutesRandom;
 
         // Create loop for add 5 meeting to list
         for (int i = 0; i < 3; i++) {
             int yearRandom = 2020;
             monthRandom = random.nextInt(12-1) + 1;
             dayRandom = random.nextInt(30-1) + 1;
+            hourRandom = random.nextInt(24-1) + 1;
+            minutesRandom = random.nextInt(60-1) + 1;
 
             String dayRandomString = String.format("%02d", dayRandom);
             String monthRandomString = String.format("%02d", monthRandom);
@@ -108,6 +111,11 @@ public class ListMeetingActivityTest {
 
             // Set Hour of Meeting
             onView(withId(R.id.create_meeting_bt_hour)).perform(click());
+            //onView(isAssignableFrom(TimePicker.class)).perform(set(hourRandom, minutesRandom));
+
+
+
+
             //onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
 
             /*onData(allOf(is(instanceOf(Integer.class)), is(i))).perform(click());
