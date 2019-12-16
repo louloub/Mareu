@@ -80,7 +80,7 @@ public class MainViewModelTest {
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
 
-    // WORKS
+    // WORKS (à verifier par Nino)
     @Test
     public void shouldDisplayTwoMeetingsUiModelsWhenRepositoryHasTwoMeetings() throws InterruptedException {
         // GIVEN
@@ -237,7 +237,6 @@ public class MainViewModelTest {
         // THEN
         assertEquals("2019-12-22",result.get(0).getDate().toString());
     }
-
 
     static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
 

@@ -10,6 +10,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
+import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 
 import org.junit.Before;
@@ -33,10 +34,12 @@ import static androidx.test.espresso.contrib.PickerActions.setDate;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 import static org.hamcrest.object.HasToString.hasToString;
 
@@ -45,14 +48,14 @@ public class ListMeetingActivityTest {
     private CreateMeetingViewModel mCreateMeetingViewModel;
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
+    private MeetingManager service;
 
     @Before
     public void setUp() {
         MainActivity activity = mActivityRule.getActivity();
-        List<MeetingJava> MeetingJavaList = new ArrayList<MeetingJava>();
-
+        List<MeetingJava> MeetingJavaList = new ArrayList<>();
+        // Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
         // mCreateMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(CreateMeetingViewModel.class);
     }
 
@@ -70,14 +73,10 @@ public class ListMeetingActivityTest {
 
         // Create loop for add 5 meeting to list
         for (int i = 0; i < 3; i++) {
-            int yearRandom = random.nextInt(2020 - 2019) + 2019;
-            if (yearRandom == 2020) {
-                monthRandom = random.nextInt(12-1) + 1;
-                dayRandom = random.nextInt(30-1) + 1;
-            } else {
-                monthRandom = 12;
-                dayRandom = random.nextInt(30-5) + 5;
-            }
+            int yearRandom = 2020;
+            monthRandom = random.nextInt(12-1) + 1;
+            dayRandom = random.nextInt(30-1) + 1;
+
             // Set Subject of Meeting
             onView(withId(R.id.create_meeting_tiet_subject))
                     .perform(typeText("Subject " +i++));
@@ -87,22 +86,29 @@ public class ListMeetingActivityTest {
             // Set Room of Meeting
             onView(withId(R.id.create_meeting_spi_room)).perform(click());
             roomRandom = random.nextInt(10-1) +1;
-            onData(hasToString(startsWith(String.valueOf(roomRandom)))).perform(click());
+
+            onData(allOf(is(instanceOf(Integer.class)), is(roomRandom))).perform(click());
+            onView(withId(R.id.create_meeting_spi_room)).check(matches(withSpinnerText(containsString(String.valueOf(roomRandom)))));
+
+            // onData(hasToString(startsWith(String.valueOf(roomRandom)))).perform(click());
 
             // Set Date of Meeting
             onView(withId(R.id.create_meeting_bt_date)).perform(click());
             onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
+            // onView(withText("OK")).perform(click());
+            onView(withId(android.R.id.button2)).perform(click());
 
-            // onView(withId(R.id.create_meeting_bt_date)).perform(setDate(2017, 6, 30));
 
             // Set Hour of Meeting
             onView(withId(R.id.create_meeting_bt_hour)).perform(click());
+            //onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
+
             /*onData(allOf(is(instanceOf(Integer.class)), is(i))).perform(click());
             onData(allOf(is(instanceOf(Integer.class)), is(i))).perform(click());
             onData(allOf(is(instanceOf(Integer.class)), is(i))).perform(click());*/
 
             // Valid Meeting
-            onView(withId(R.id.create_meeting_bt_valid_meeting)).perform(click());
+            // onView(withId(R.id.create_meeting_bt_valid_meeting)).perform(click());
         }
     }
 
