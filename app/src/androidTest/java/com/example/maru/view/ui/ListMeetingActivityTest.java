@@ -1,9 +1,13 @@
 package com.example.maru.view.ui;
 
+import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
@@ -13,6 +17,7 @@ import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ViewModelFactory;
 
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,6 +38,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.PickerActions.setDate;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -77,6 +83,9 @@ public class ListMeetingActivityTest {
             monthRandom = random.nextInt(12-1) + 1;
             dayRandom = random.nextInt(30-1) + 1;
 
+            String dayRandomString = String.format("%02d", dayRandom);
+            String monthRandomString = String.format("%02d", monthRandom);
+
             // Set Subject of Meeting
             onView(withId(R.id.create_meeting_tiet_subject))
                     .perform(typeText("Subject " +i++));
@@ -90,14 +99,12 @@ public class ListMeetingActivityTest {
             onData(allOf(is(instanceOf(Integer.class)), is(roomRandom))).perform(click());
             onView(withId(R.id.create_meeting_spi_room)).check(matches(withSpinnerText(containsString(String.valueOf(roomRandom)))));
 
-            // onData(hasToString(startsWith(String.valueOf(roomRandom)))).perform(click());
-
             // Set Date of Meeting
             onView(withId(R.id.create_meeting_bt_date)).perform(click());
             onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
-            // onView(withText("OK")).perform(click());
             onView(withId(android.R.id.button2)).perform(click());
-
+            onView(withId(R.id.create_meeting_et_edit_date))
+                    .perform(setTextInTextView("" +dayRandomString+ "/" +monthRandomString+ "/" +yearRandom));
 
             // Set Hour of Meeting
             onView(withId(R.id.create_meeting_bt_hour)).perform(click());
@@ -120,5 +127,25 @@ public class ListMeetingActivityTest {
         // First scroll to the position that needs to be matched and click on it.
         onView(withId(R.id.main_rv))
                 .check(matches(hasMinimumChildCount(3)));
+    }
+
+    public static ViewAction setTextInTextView(final String value){
+        return new ViewAction() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public Matcher<View> getConstraints() {
+                return allOf(isDisplayed(), isAssignableFrom(TextView.class));
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                ((TextView) view).setText(value);
+            }
+
+            @Override
+            public String getDescription() {
+                return "replace text";
+            }
+        };
     }
 }
