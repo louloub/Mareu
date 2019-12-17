@@ -37,6 +37,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.PickerActions.setDate;
+import static androidx.test.espresso.contrib.PickerActions.setTime;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -86,8 +87,10 @@ public class ListMeetingActivityTest {
             hourRandom = random.nextInt(24-1) + 1;
             minutesRandom = random.nextInt(60-1) + 1;
 
-            String dayRandomString = String.format("%02d", dayRandom);
-            String monthRandomString = String.format("%02d", monthRandom);
+            String dayRandomFormat = String.format("%02d", dayRandom);
+            String monthRandomFormat = String.format("%02d", monthRandom);
+            String hourRandomFormat = String.format("%02d", hourRandom);
+            String minutesRandomFormat = String.format("%02d", minutesRandom);
 
             // Set Subject of Meeting
             onView(withId(R.id.create_meeting_tiet_subject))
@@ -107,28 +110,22 @@ public class ListMeetingActivityTest {
             onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
             onView(withId(android.R.id.button2)).perform(click());
             onView(withId(R.id.create_meeting_et_edit_date))
-                    .perform(setTextInTextView("" +dayRandomString+ "/" +monthRandomString+ "/" +yearRandom));
+                    .perform(setTextInTextView("" +dayRandomFormat+ "/" +monthRandomFormat+ "/" +yearRandom));
 
             // Set Hour of Meeting
             onView(withId(R.id.create_meeting_bt_hour)).perform(click());
-            //onView(isAssignableFrom(TimePicker.class)).perform(set(hourRandom, minutesRandom));
+            onView(isAssignableFrom(TimePicker.class)).perform(setTime(hourRandom,minutesRandom));
+            onView(withId(android.R.id.button2)).perform(click());
+            onView(withId(R.id.create_meeting_et_edit_hour))
+                    .perform(setTextInTextView("" +hourRandomFormat+ "h" +minutesRandomFormat ));
 
-
-
-
-            //onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
-
-            /*onData(allOf(is(instanceOf(Integer.class)), is(i))).perform(click());
-            onData(allOf(is(instanceOf(Integer.class)), is(i))).perform(click());
-            onData(allOf(is(instanceOf(Integer.class)), is(i))).perform(click());*/
-
-            // Valid Meeting
-            // onView(withId(R.id.create_meeting_bt_valid_meeting)).perform(click());
+            // Valid meeting
+            onView(withId(R.id.create_meeting_bt_valid_meeting)).perform(click());
         }
     }
 
     /**
-     * We ensure that our recyclerview is displaying all the meeting which are in the meeting API
+     * We ensure that our recyclerview is displaying all the meeting
      */
     @Test
     public void myMeetingList_displayTheMeetings() {
