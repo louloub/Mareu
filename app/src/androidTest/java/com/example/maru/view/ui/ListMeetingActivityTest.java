@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,13 +59,14 @@ public class ListMeetingActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
     private MeetingManager service;
+    List<MeetingJava> meetingList = new ArrayList<>();
+    List<String> participantList = new ArrayList<>();
+    private int i;
 
     @Before
     public void setUp() {
         MainActivity activity = mActivityRule.getActivity();
-        List<MeetingJava> MeetingJavaList = new ArrayList<>();
-        // Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
-        // mCreateMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(CreateMeetingViewModel.class);
+        List<MeetingJava> meetingList = new ArrayList<>();
     }
 
     /**
@@ -75,53 +77,79 @@ public class ListMeetingActivityTest {
         // Click on FAB button for create new Meeting
         onView(withId(R.id.fab)).perform(click());
 
-        // Create Random
+        // Create data for method
         Random random = new Random();
         int monthRandom, dayRandom, roomRandom, hourRandom, minutesRandom;
+        int j = i;
+        int yearRandom = 2020;
+        monthRandom = random.nextInt(12-1) + 1;
+        dayRandom = random.nextInt(30-1) + 1;
+        hourRandom = random.nextInt(24-1) + 1;
+        minutesRandom = random.nextInt(60-1) + 1;
 
-        // Create loop for add 5 meeting to list
-        for (int i = 0; i < 3; i++) {
-            int yearRandom = 2020;
-            monthRandom = random.nextInt(12-1) + 1;
-            dayRandom = random.nextInt(30-1) + 1;
-            hourRandom = random.nextInt(24-1) + 1;
-            minutesRandom = random.nextInt(60-1) + 1;
+        String dayRandomFormat = String.format("%02d", dayRandom);
+        String monthRandomFormat = String.format("%02d", monthRandom);
+        String hourRandomFormat = String.format("%02d", hourRandom);
+        String minutesRandomFormat = String.format("%02d", minutesRandom);
+        String dateString = dayRandomFormat + "-" + monthRandomFormat + "-" + yearRandom;
 
-            String dayRandomFormat = String.format("%02d", dayRandom);
-            String monthRandomFormat = String.format("%02d", monthRandom);
-            String hourRandomFormat = String.format("%02d", hourRandom);
-            String minutesRandomFormat = String.format("%02d", minutesRandom);
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date = LocalDate.parse(dateString, dateTimeFormatter);
 
-            // Set Subject of Meeting
-            onView(withId(R.id.create_meeting_tiet_subject))
-                    .perform(typeText("Subject " +i++));
-            // Set Participant of Meeting
-            onView(withId(R.id.create_meeting_teit_listOfParticipant))
-                    .perform(typeText("Participant " +i++ + ", Participant " + i++ + ", Participant " + i++ + ","));
-            // Set Room of Meeting
-            onView(withId(R.id.create_meeting_spi_room)).perform(click());
-            roomRandom = random.nextInt(10-1) +1;
+        // Set Subject of Meeting
+        String subject = "Subject " +j++;
+        onView(withId(R.id.create_meeting_tiet_subject))
+                .perform(typeText(subject));
 
-            onData(allOf(is(instanceOf(Integer.class)), is(roomRandom))).perform(click());
-            onView(withId(R.id.create_meeting_spi_room)).check(matches(withSpinnerText(containsString(String.valueOf(roomRandom)))));
+        // Set Participant of Meeting
+        String participant1 = "participant@yourdj.fr ,";
+        String participant2 = "toi@moi.fr ,";
+        String participant3 = "tonemail@gmail.fr ,";
+        participantList.add(participant1);
+        participantList.add(participant2);
+        participantList.add(participant3);
+        onView(withId(R.id.create_meeting_teit_listOfParticipant))
+                .perform(typeText(participant1+participant2+participant3));
 
-            // Set Date of Meeting
-            onView(withId(R.id.create_meeting_bt_date)).perform(click());
-            onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
-            onView(withId(android.R.id.button2)).perform(click());
-            onView(withId(R.id.create_meeting_et_edit_date))
-                    .perform(setTextInTextView("" +dayRandomFormat+ "/" +monthRandomFormat+ "/" +yearRandom));
+        // Set Room of Meeting
+        onView(withId(R.id.create_meeting_spi_room)).perform(click());
+        roomRandom = random.nextInt(10-1) +1;
+        onData(allOf(is(instanceOf(Integer.class)), is(roomRandom))).perform(click());
+        onView(withId(R.id.create_meeting_spi_room)).check(matches(withSpinnerText(containsString(String.valueOf(roomRandom)))));
 
-            // Set Hour of Meeting
-            onView(withId(R.id.create_meeting_bt_hour)).perform(click());
-            onView(isAssignableFrom(TimePicker.class)).perform(setTime(hourRandom,minutesRandom));
-            onView(withId(android.R.id.button2)).perform(click());
-            onView(withId(R.id.create_meeting_et_edit_hour))
-                    .perform(setTextInTextView("" +hourRandomFormat+ "h" +minutesRandomFormat ));
+        // Set Date of Meeting
+        onView(withId(R.id.create_meeting_bt_date)).perform(click());
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
+        onView(withId(android.R.id.button2)).perform(click());
+        onView(withId(R.id.create_meeting_et_edit_date))
+                .perform(setTextInTextView("" +dayRandomFormat+ "/" +monthRandomFormat+ "/" +yearRandom));
 
-            // Valid meeting
-            onView(withId(R.id.create_meeting_bt_valid_meeting)).perform(click());
-        }
+        // Set Hour of Meeting
+        onView(withId(R.id.create_meeting_bt_hour)).perform(click());
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(hourRandom,minutesRandom));
+        onView(withId(android.R.id.button2)).perform(click());
+        onView(withId(R.id.create_meeting_et_edit_hour))
+                .perform(setTextInTextView("" +hourRandomFormat+ "h" +minutesRandomFormat));
+
+        // Valid meeting
+        onView(withId(R.id.create_meeting_bt_valid_meeting)).perform(click());
+
+        // Create Meeting Object
+        MeetingJava meetingJava = new MeetingJava(i,date,hourRandomFormat,roomRandom,subject,participantList);
+
+        // Add Meeting to list
+        meetingList.add(meetingJava);
+
+        // Increment variable i
+        i++;
+    }
+
+    /**
+     * Retrive and display Meeting On list
+     */
+    @Test
+    public void myListOfMeetingIsDisplay(){
+
     }
 
     /**
