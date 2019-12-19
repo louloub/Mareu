@@ -70,18 +70,18 @@ public class MainActivityTestDeleteMeeting {
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(0));
     }
 
+    // TODO 19/12/2918 : don't work because i can't select good image view for delete
     @Test
     public void deleteOneMeetingInListOfThreeMeeting() {
         // Add three meeting
         createMeeting1();
-        /*createMeeting2();
-        createMeeting3();*/
+        createMeeting2();
+        createMeeting3();
 
         // Delete meeting
         ViewInteraction appCompatImageView = onView(
                 allOf(withId(R.id.meeting_iv_delete_meeting),
-                        childAtPosition(
-                                allOf(withId(R.id.meeting_cl_constraint_layout),
+                        childAtPosition(allOf(withId(R.id.meeting_cl_constraint_layout),
                                         childAtPosition(
                                                 withClassName(is("androidx.cardview.widget.CardView")),
                                                 0)),

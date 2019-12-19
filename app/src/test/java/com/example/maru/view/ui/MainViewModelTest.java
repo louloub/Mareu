@@ -83,7 +83,6 @@ public class MainViewModelTest {
     // TODO 18/12/19 : test des tests plus poussés avec des dates similaires, room, subject etc
     // TODO 18/12/19 : assertThat voir projet MVVM NINO (108 à 127) // (158 à 170)
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldDisplayTwoMeetingsUiModelsWhenRepositoryHasTwoMeetings() throws InterruptedException {
         // GIVEN
@@ -104,7 +103,6 @@ public class MainViewModelTest {
         // TODO 11/12/19 : faire la collection d'assertion (id, date, sujet ..) check MainViewModelTest project MMVVM NINO
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreSortingWithRoomAscendantWhenThisSortIsChoice() throws InterruptedException  {
         // GIVEN
@@ -120,7 +118,6 @@ public class MainViewModelTest {
         assertEquals(2,result.get(2).getId());
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreSortingWithRoomDescendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
@@ -136,7 +133,6 @@ public class MainViewModelTest {
         assertEquals(0,result.get(2).getId());
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreSortingWithDateAscendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
@@ -152,7 +148,6 @@ public class MainViewModelTest {
         assertEquals("2019-12-22",result.get(2).getDate().toString());
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreSortingWithDateDescendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
@@ -168,7 +163,6 @@ public class MainViewModelTest {
         assertEquals("2017-12-22",result.get(2).getDate().toString());
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreFilterWithSelectedRoom1() throws InterruptedException {
         // GIVEN
@@ -182,7 +176,6 @@ public class MainViewModelTest {
         assertEquals("1",result.get(0).getRoom());
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreFilterWithSelectedRoom2() throws InterruptedException {
         // GIVEN
@@ -196,7 +189,6 @@ public class MainViewModelTest {
         assertEquals("2",result.get(0).getRoom());
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreFilterWithSelectedRoom3() throws InterruptedException {
         // GIVEN
@@ -210,7 +202,6 @@ public class MainViewModelTest {
         assertEquals("3",result.get(0).getRoom());
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreFilterWithAllRoom() throws InterruptedException {
         // GIVEN
@@ -227,7 +218,6 @@ public class MainViewModelTest {
 
     }
 
-    // WORKS (à verifier par Nino)
     @Test
     public void shouldMeetingAreFilterWithGoodDate() throws InterruptedException {
         // GIVEN
