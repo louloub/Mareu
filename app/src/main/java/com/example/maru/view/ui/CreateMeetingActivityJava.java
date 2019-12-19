@@ -178,11 +178,12 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                             monthSelectedInInt = month +1;
                             daysSelectedInInt = dayOfMonth;
 
-                            String dayInString = String.format("%02d", dayOfMonth);
-                            chooseDate.setText(dayInString + "/" + month + "/" + year);
+                            String dayInStringFormat = String.format("%02d", dayOfMonth);
+                            String monthInStringFormat = String.format("%02d", month);
+
+                            chooseDate.setText(dayInStringFormat + "/" + month + "/" + year);
                             String yearInString = String.valueOf(year);
-                            String monthInString = String.valueOf(month);
-                            String dateString = dayInString + "-" + monthInString + "-" + yearInString;
+                            String dateString = dayInStringFormat + "-" + monthInStringFormat + "-" + yearInString;
 
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                             LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
