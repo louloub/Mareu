@@ -131,7 +131,7 @@ public class MainActivityTest3 {
         // Increment variable i
         i++;
 
-        // Sleep 1000ms
+        // Sleep 5s
         Thread.sleep(5000);
 
         // Check if recycler view as one meeting
