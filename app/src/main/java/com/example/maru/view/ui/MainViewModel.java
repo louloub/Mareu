@@ -100,6 +100,8 @@ public class MainViewModel extends ViewModel {
 
     private void wireUpMediator() {
 
+        // TODO 18/11/19 : il ne doit avoir que 3 sources : donnée / sorting / filter
+
         mUiModelsLiveData.addSource(mMeetingListLiveData, new Observer<List<MeetingJava>>() {
             @Override
             public void onChanged(List<MeetingJava> meetingJavas) {

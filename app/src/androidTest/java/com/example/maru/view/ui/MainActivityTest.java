@@ -13,6 +13,7 @@ import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.maru.AndroidTestUtil;
 import com.example.maru.R;
 import com.example.maru.service.model.MeetingJava;
 import com.example.maru.utility.MeetingManager;
@@ -45,6 +46,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.AllOf.allOf;
@@ -52,7 +55,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 import static org.hamcrest.object.HasToString.hasToString;
 
-public class ListMeetingActivityTest {
+public class MainActivityTest {
 
     private CreateMeetingViewModel mCreateMeetingViewModel;
 
@@ -62,39 +65,24 @@ public class ListMeetingActivityTest {
     List<MeetingJava> meetingList = new ArrayList<>();
     List<String> participantList = new ArrayList<>();
     private int i;
+    private MeetingManager mMeetingManager;
 
     @Before
     public void setUp() {
         MainActivity activity = mActivityRule.getActivity();
-        List<MeetingJava> meetingList = new ArrayList<>();
     }
 
     /**
      * Add Meeting On list
      */
     @Test
-    public void myMeetingList_addMeetings() {
+    public void myMeetingList_addMeeting() throws InterruptedException {
         // Click on FAB button for create new Meeting
         onView(withId(R.id.fab)).perform(click());
 
+        // TODO 18/11/19 : never use RANDOM dans les tests !
         // Create data for method
-        Random random = new Random();
-        int monthRandom, dayRandom, roomRandom, hourRandom, minutesRandom;
         int j = i;
-        int yearRandom = 2020;
-        monthRandom = random.nextInt(12-1) + 1;
-        dayRandom = random.nextInt(30-1) + 1;
-        hourRandom = random.nextInt(24-1) + 1;
-        minutesRandom = random.nextInt(60-1) + 1;
-
-        String dayRandomFormat = String.format("%02d", dayRandom);
-        String monthRandomFormat = String.format("%02d", monthRandom);
-        String hourRandomFormat = String.format("%02d", hourRandom);
-        String minutesRandomFormat = String.format("%02d", minutesRandom);
-        String dateString = dayRandomFormat + "-" + monthRandomFormat + "-" + yearRandom;
-
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date = LocalDate.parse(dateString, dateTimeFormatter);
 
         // Set Subject of Meeting
         String subject = "Subject " +j++;
@@ -105,44 +93,52 @@ public class ListMeetingActivityTest {
         String participant1 = "participant@yourdj.fr ,";
         String participant2 = "toi@moi.fr ,";
         String participant3 = "tonemail@gmail.fr ,";
-        participantList.add(participant1);
-        participantList.add(participant2);
-        participantList.add(participant3);
         onView(withId(R.id.create_meeting_teit_listOfParticipant))
                 .perform(typeText(participant1+participant2+participant3));
 
         // Set Room of Meeting
         onView(withId(R.id.create_meeting_spi_room)).perform(click());
-        roomRandom = random.nextInt(10-1) +1;
-        onData(allOf(is(instanceOf(Integer.class)), is(roomRandom))).perform(click());
-        onView(withId(R.id.create_meeting_spi_room)).check(matches(withSpinnerText(containsString(String.valueOf(roomRandom)))));
+        onData(allOf(is(instanceOf(Integer.class)), is(3))).perform(click());
+        onView(withId(R.id.create_meeting_spi_room)).check(matches(withSpinnerText(containsString(String.valueOf(3)))));
 
         // Set Date of Meeting
         onView(withId(R.id.create_meeting_bt_date)).perform(click());
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(yearRandom, monthRandom, dayRandom));
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,1,30));
         onView(withId(android.R.id.button2)).perform(click());
         onView(withId(R.id.create_meeting_et_edit_date))
-                .perform(setTextInTextView("" +dayRandomFormat+ "/" +monthRandomFormat+ "/" +yearRandom));
+                .perform(setTextInTextView("30-01-2020"));
 
         // Set Hour of Meeting
         onView(withId(R.id.create_meeting_bt_hour)).perform(click());
-        onView(isAssignableFrom(TimePicker.class)).perform(setTime(hourRandom,minutesRandom));
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(15,30));
         onView(withId(android.R.id.button2)).perform(click());
         onView(withId(R.id.create_meeting_et_edit_hour))
-                .perform(setTextInTextView("" +hourRandomFormat+ "h" +minutesRandomFormat));
+                .perform(setTextInTextView("15h30"));
 
         // Valid meeting
         onView(withId(R.id.create_meeting_bt_valid_meeting)).perform(click());
 
-        // Create Meeting Object
-        MeetingJava meetingJava = new MeetingJava(i,date,hourRandomFormat,roomRandom,subject,participantList);
-
-        // Add Meeting to list
-        meetingList.add(meetingJava);
-
         // Increment variable i
         i++;
+
+        // Sleep 1000ms
+        Thread.sleep(5000);
+
+        // Check if recycler view as one meeting
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(1));
     }
+
+    @Test
+    public void myMeetingList_displayMeetings() {
+
+
+
+        // when(apiClient.fetchNews()).thenReturn(null);
+        // assertNotNull(mainViewModel.getmMeetingListLiveData());
+        // assertTrue(viewModel.getNewsListState().hasObservers());
+    }
+
+    // TODO 18/11/19 : supprimer meeting dans une list de plusieurs meetins et verifier que c'est le bon supprimer
 
     /**
      * Retrive and display Meeting On list

@@ -72,6 +72,7 @@ public class CreateMeetingViewModel extends ViewModel {
             hourHint = null;
         }
 
+        // TODO 18/11/2019 : why date & hour are null !!!
         if ((subject != null && !subject.isEmpty())
                 && listOfEmailOfParticipant.size() >= 1 && date != null && hour != null && room > 0)
         {

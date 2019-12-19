@@ -80,6 +80,9 @@ public class MainViewModelTest {
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
 
+    // TODO 18/12/19 : test des tests plus poussés avec des dates similaires, room, subject etc
+    // TODO 18/12/19 : assertThat voir projet MVVM NINO (108 à 127) // (158 à 170)
+
     // WORKS (à verifier par Nino)
     @Test
     public void shouldDisplayTwoMeetingsUiModelsWhenRepositoryHasTwoMeetings() throws InterruptedException {
