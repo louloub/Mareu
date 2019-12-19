@@ -166,36 +166,6 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onClick(View v)
             {
-                /*DatePicker datePickerDialog2 = findViewById(R.id.date_picker);
-                Button validDate = findViewById(R.id.valid_date);
-
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                datePickerDialog2 = new DatePicker(CreateMeetingActivityJava.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                yearsSelectedInInt = year;
-                                monthSelectedInInt = monthOfYear;
-                                daysSelectedInInt = dayOfMonth;
-
-                                String dayInString = String.format("%02d", dayOfMonth);
-                                chooseDate.setText(dayInString + "/" + monthOfYear + "/" + year);
-                                String yearInString = String.valueOf(year);
-                                String monthInString = String.valueOf(monthOfYear);
-                                String dateString = dayInString + "-" + monthInString + "-" + yearInString;
-
-                                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                                LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
-                                mLocalDate = localDate;
-                            }
-                        }, year, month, day);
-                picker.show();*/
-
-
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(
                         CreateMeetingActivityJava.this,
                     new DatePickerDialog.OnDateSetListener()
