@@ -47,7 +47,7 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class MainActivityTestAddMeeting {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -183,36 +183,6 @@ public class MainActivityTest {
         createMeeting3();
 
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(3));
-    }
-
-    @Test
-    public void deleteOneMeetingInList() throws InterruptedException {
-        // Add three meeting
-        createMeeting1();
-        createMeeting2();
-        createMeeting3();
-
-        // Sleep 5s
-        Thread.sleep(5000);
-
-        // Delete second meeting in list
-        // onView(withId(R.id.meeting_iv_delete_meeting)).perform(click());
-
-        // onView(allOf(withId(R.id.meeting_iv_delete_meeting),childAtPosition(1))).perform(click());
-
-        ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.meeting_iv_delete_meeting),
-                        childAtPosition(
-                                allOf(withId(R.id.meeting_cl_constraint_layout),
-                                        childAtPosition(
-                                                withClassName(is("androidx.appcompat.widget.AppCompatImageView")),
-                                                1)),
-                                3),
-                        isDisplayed()));
-        appCompatImageView.perform(click());
-
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
-
     }
 
     private void createMeeting3() {
