@@ -19,6 +19,9 @@ import org.threeten.bp.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.Assert.*;
 
 /**
@@ -35,25 +38,13 @@ public class MainViewModelTest {
 
     private MeetingManager mMeetingManager;
     MainViewModel mainViewModel;
-
-    private MutableLiveData<MeetingJava> mMeetingLiveData;
     private MutableLiveData<List<MeetingJava>> mMeetingListLiveData;
-    private MutableLiveData<SortingType> mSortingTypeLiveData;
-    private MutableLiveData<Integer> mSelectedFilterTypeLiveData;
-    private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData;
 
     @Before
     public void setUp() throws Exception {
         mMeetingManager = Mockito.mock(MeetingManager.class);
-
-        mMeetingLiveData = new MutableLiveData<>();
         mMeetingListLiveData = new MutableLiveData<>();
-        mSortingTypeLiveData = new MutableLiveData<>();
-        mSelectedFilterTypeLiveData = new MutableLiveData<>();
-        mSortingTypeUiModelLiveData = new MutableLiveData<>();
-
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
-
         mainViewModel = new MainViewModel(mMeetingManager);
     }
 
@@ -102,8 +93,6 @@ public class MainViewModelTest {
         mMeetingListLiveData.setValue(meetingJavaList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
-
-    // TODO 18/12/19 : assertThat voir projet MVVM NINO (108 à 127) // (158 à 170)
 
     @Test
     public void shouldDisplayTwoMeetingsUiModelsWhenRepositoryHasTwoMeetings() throws InterruptedException {
@@ -315,6 +304,74 @@ public class MainViewModelTest {
         assertEquals(1,result.get(0).getId());
         assertEquals(2,result.get(1).getId());
         assertEquals(0,result.get(2).getId());
+    }
+
+    // TODO 18/12/19 : assertThat voir projet MVVM NINO (108 à 127) // (158 à 170)
+
+    @Test
+    public void shouldMeetingCorrectlyHaveOneSubjectThreeParticipantsOneRoomOneDateOneHour(){
+        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
+        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
+        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017, 12, 22), "13h13", 3, "Sujet 3", getParticipants());
+        List<MeetingJava> meetingJavaList = new ArrayList<>();
+        meetingJavaList.add(meetingJava1);
+        meetingJavaList.add(meetingJava2);
+        meetingJavaList.add(meetingJava3);
+        mMeetingListLiveData.setValue(meetingJavaList);
+        Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
+
+        assertThat(
+                meetingJavaList,
+                containsInAnyOrder(
+                        hasProperty("subject", is("Sujet 1")),
+                        hasProperty("subject", is("Sujet 2")),
+                        hasProperty("subject", is("Sujet 3"))
+                        )
+        );
+
+        assertThat(
+                meetingJavaList,
+                containsInAnyOrder(
+                        hasProperty("hour", is("13h13")),
+                        hasProperty("hour", is("15h15")),
+                        hasProperty("hour", is("16h16"))
+                )
+        );
+
+        /*String participant1 = getParticipants().get(0);
+        String participant2 = getParticipants().get(1);
+        String participant3 = getParticipants().get(2);*/
+
+        /*assertThat(
+                meetingJavaList,
+                containsInAnyOrder(
+                        hasProperty("listOfEmailOfParticipant", is(getParticipants()))
+                )
+        );*/
+
+        /*assertThat(
+                meetingJavaList,
+                containsInAnyOrder(
+                        hasProperty("subject", is("Sujet 2")),
+                        hasProperty("listOfEmailOfParticipant", is(getParticipants())),
+                        hasProperty("room", is("2")),
+                        hasProperty("date", is("2018-12-23")),
+                        hasProperty("hour", is("16h16")),
+                        hasProperty("id", is("1"))
+                )
+        );
+
+        assertThat(
+                meetingJavaList,
+                containsInAnyOrder(
+                        hasProperty("subject", is("Sujet 3")),
+                        hasProperty("listOfEmailOfParticipant", is(getParticipants())),
+                        hasProperty("room", is("3")),
+                        hasProperty("date", is("2017-12-22")),
+                        hasProperty("hour", is("13h13")),
+                        hasProperty("id", is("2"))
+                )
+        );*/
     }
 
     static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
