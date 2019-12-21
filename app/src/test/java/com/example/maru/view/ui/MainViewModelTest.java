@@ -10,6 +10,17 @@ import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
 
+import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsEmptyCollection;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.hasItemInArray;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,6 +28,7 @@ import org.mockito.Mockito;
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasProperty;
@@ -48,7 +60,7 @@ public class MainViewModelTest {
         mainViewModel = new MainViewModel(mMeetingManager);
     }
 
-    private List <String> getParticipants() {
+    private List<String> getParticipants() {
         List<String> listOfParticipant = new ArrayList<>();
         listOfParticipant.add("test1@test.fr");
         listOfParticipant.add("test2@test.fr");
@@ -310,6 +322,7 @@ public class MainViewModelTest {
 
     @Test
     public void shouldMeetingCorrectlyHaveOneSubjectThreeParticipantsOneRoomOneDateOneHour(){
+        // GIVEN
         MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
         MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
         MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017, 12, 22), "13h13", 3, "Sujet 3", getParticipants());
@@ -320,6 +333,21 @@ public class MainViewModelTest {
         mMeetingListLiveData.setValue(meetingJavaList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
 
+        // WHEN
+
+        // THEN
+
+        // TODO 21/12/2019 : why id don't work ?
+        /*assertThat(
+                meetingJavaList,
+                containsInAnyOrder(
+                        hasProperty("id", is("2")),
+                        hasProperty("id", is("1")),
+                        hasProperty("id", is("0"))
+                )
+        );*/
+
+        // Subject
         assertThat(
                 meetingJavaList,
                 containsInAnyOrder(
@@ -329,6 +357,15 @@ public class MainViewModelTest {
                         )
         );
 
+        // Participants
+        assertThat(getParticipants(),hasItem("test3@test.fr"));
+        assertThat(getParticipants(),hasItem("test1@test.fr"));
+        assertThat(getParticipants(),hasItem("test2@test.fr"));
+
+        // Room
+
+
+        // Hour
         assertThat(
                 meetingJavaList,
                 containsInAnyOrder(
@@ -338,40 +375,15 @@ public class MainViewModelTest {
                 )
         );
 
-        /*String participant1 = getParticipants().get(0);
-        String participant2 = getParticipants().get(1);
-        String participant3 = getParticipants().get(2);*/
-
-        /*assertThat(
-                meetingJavaList,
-                containsInAnyOrder(
-                        hasProperty("listOfEmailOfParticipant", is(getParticipants()))
-                )
-        );*/
-
-        /*assertThat(
-                meetingJavaList,
-                containsInAnyOrder(
-                        hasProperty("subject", is("Sujet 2")),
-                        hasProperty("listOfEmailOfParticipant", is(getParticipants())),
-                        hasProperty("room", is("2")),
-                        hasProperty("date", is("2018-12-23")),
-                        hasProperty("hour", is("16h16")),
-                        hasProperty("id", is("1"))
-                )
-        );
-
+        // Date
         assertThat(
                 meetingJavaList,
                 containsInAnyOrder(
-                        hasProperty("subject", is("Sujet 3")),
-                        hasProperty("listOfEmailOfParticipant", is(getParticipants())),
-                        hasProperty("room", is("3")),
-                        hasProperty("date", is("2017-12-22")),
-                        hasProperty("hour", is("13h13")),
-                        hasProperty("id", is("2"))
+                        hasProperty("date", is(LocalDate.of(2017,12,22))),
+                        hasProperty("date", is(LocalDate.of(2018,12,23))),
+                        hasProperty("date", is(LocalDate.of(2019,12,22)))
                 )
-        );*/
+        );
     }
 
     static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
