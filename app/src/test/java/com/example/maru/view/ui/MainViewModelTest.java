@@ -321,7 +321,7 @@ public class MainViewModelTest {
     // TODO 18/12/19 : assertThat voir projet MVVM NINO (108 à 127) // (158 à 170)
 
     @Test
-    public void shouldMeetingCorrectlyHaveOneSubjectThreeParticipantsOneRoomOneDateOneHour(){
+    public void shouldMeetingCorrectlyHaveOneSubjectThreeParticipantsOneRoomOneDateOneHour() throws InterruptedException {
         // GIVEN
         MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
         MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
@@ -334,6 +334,7 @@ public class MainViewModelTest {
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
 
         // WHEN
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
 
@@ -349,7 +350,7 @@ public class MainViewModelTest {
 
         // Subject
         assertThat(
-                meetingJavaList,
+                result,
                 containsInAnyOrder(
                         hasProperty("subject", is("Sujet 1")),
                         hasProperty("subject", is("Sujet 2")),
@@ -363,11 +364,11 @@ public class MainViewModelTest {
         assertThat(getParticipants(),hasItem("test2@test.fr"));
 
         // Room
-
+        // assertThat();
 
         // Hour
         assertThat(
-                meetingJavaList,
+                result,
                 containsInAnyOrder(
                         hasProperty("hour", is("13h13")),
                         hasProperty("hour", is("15h15")),
@@ -377,11 +378,11 @@ public class MainViewModelTest {
 
         // Date
         assertThat(
-                meetingJavaList,
+                result,
                 containsInAnyOrder(
-                        hasProperty("date", is(LocalDate.of(2017,12,22))),
-                        hasProperty("date", is(LocalDate.of(2018,12,23))),
-                        hasProperty("date", is(LocalDate.of(2019,12,22)))
+                        hasProperty("date",is("2017-12-22")),
+                        hasProperty("date",is("2019-12-22")),
+                        hasProperty("date",is("2018-12-23"))
                 )
         );
     }
