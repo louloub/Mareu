@@ -339,14 +339,14 @@ public class MainViewModelTest {
         // THEN
 
         // TODO 21/12/2019 : why id don't work ?
-        /*assertThat(
+        assertThat(
                 meetingJavaList,
                 containsInAnyOrder(
-                        hasProperty("id", is("2")),
-                        hasProperty("id", is("1")),
-                        hasProperty("id", is("0"))
+                        hasProperty("id", is(2)),
+                        hasProperty("id", is(1)),
+                        hasProperty("id", is(0))
                 )
-        );*/
+        );
 
         // Subject
         assertThat(
