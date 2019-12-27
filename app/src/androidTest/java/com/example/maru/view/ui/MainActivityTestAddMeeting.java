@@ -1,6 +1,5 @@
 package com.example.maru.view.ui;
 
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -33,7 +32,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.PickerActions.setDate;
 import static androidx.test.espresso.contrib.PickerActions.setTime;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
@@ -45,19 +43,54 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * Instrumental test
+ */
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTestAddMeeting {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
-    String participant1 = "participant1@google.fr";
-    String participant2 = "participant2@google.fr";
-    String participant3 = "participant3@google.fr";
+    private String participant1 = "participant1@google.fr";
+    private String participant2 = "participant2@google.fr";
+    private String participant3 = "participant3@google.fr";
 
+    /**
+     * Add One Meeting test
+     */
+    // A VERIFIER par NINO
     @Test
     public void addOneMeeting() {
-        // Click on FAB button for create new Meeting
+        // Add Meeting 1
+        createMeetingNumberOne();
+
+        // Check if meeting is on Recycler View
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(1));
+    }
+
+    /**
+     * Add Three Different Meeting test
+     */
+    // A VERIFIER par NINO
+    @Test
+    public void addThreeDifferentMeeting() {
+        // Add Meeting 1
+        createMeetingNumberOne();
+
+        // Add Meeting 2
+        createMeetingNumberTwo();
+
+        // Add Meeting 3
+        createMeetingNumberThree();
+
+        // Check if meeting is on Recycler View
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(3));
+    }
+
+    private void createMeetingNumberOne() {
+        // Click on FAB button for create new Meeting 1
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.fab),
                         childAtPosition(
@@ -68,7 +101,7 @@ public class MainActivityTestAddMeeting {
                         isDisplayed()));
         floatingActionButton.perform(click());
 
-        // Set Subject of Meeting
+        // Set Subject of Meeting 1
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.create_meeting_tiet_subject),
                         childAtPosition(
@@ -79,7 +112,7 @@ public class MainActivityTestAddMeeting {
                         isDisplayed()));
         textInputEditText.perform(replaceText("sujet 1"), closeSoftKeyboard());
 
-        // Set Participant of Meeting
+        // Set Participant 1 of Meeting 1
         ViewInteraction textInputEditText2 = onView(
                 allOf(withId(R.id.create_meeting_teit_listOfParticipant),
                         childAtPosition(
@@ -89,7 +122,17 @@ public class MainActivityTestAddMeeting {
                                 1)));
         textInputEditText2.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
 
-        // Set Room of Meeting
+        // Set Participant 2 of Meeting 1
+        ViewInteraction textInputEditText5 = onView(
+                allOf(withId(R.id.create_meeting_teit_listOfParticipant),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.horizontal_scroll_view),
+                                        0),
+                                1)));
+        textInputEditText5.perform(scrollTo(), replaceText(participant2 + "," ), closeSoftKeyboard());
+
+        // Set Room of Meeting 1
         ViewInteraction appCompatSpinner = onView(
                 allOf(withId(R.id.create_meeting_spi_room),
                         childAtPosition(
@@ -107,7 +150,7 @@ public class MainActivityTestAddMeeting {
                 .atPosition(1);
         appCompatCheckedTextView.perform(click());
 
-        // Set Date of Meeting
+        // Set Date of Meeting 1
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.create_meeting_bt_date), withText("Choisir la date"),
                         childAtPosition(
@@ -118,6 +161,8 @@ public class MainActivityTestAddMeeting {
                         isDisplayed()));
         materialButton.perform(click());
 
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,2,30));
+
         ViewInteraction materialButton2 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
@@ -127,7 +172,7 @@ public class MainActivityTestAddMeeting {
                                 3)));
         materialButton2.perform(scrollTo(), click());
 
-        // Set Hour of Meeting
+        // Set Hour of Meeting 1
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.create_meeting_bt_hour), withText("Choisir lheure"),
                         childAtPosition(
@@ -138,6 +183,8 @@ public class MainActivityTestAddMeeting {
                         isDisplayed()));
         materialButton3.perform(click());
 
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(10,10));
+
         ViewInteraction materialButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
@@ -147,7 +194,7 @@ public class MainActivityTestAddMeeting {
                                 3)));
         materialButton4.perform(scrollTo(), click());
 
-        // Valid meeting
+        // Valid meeting 1
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.create_meeting_bt_valid_meeting), withText("Valider ma réunion"),
                         childAtPosition(
@@ -157,143 +204,8 @@ public class MainActivityTestAddMeeting {
                                 9),
                         isDisplayed()));
         materialButton5.perform(click());
-
-        /*ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.main_rv),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        recyclerView.check(matches(isDisplayed()));*/
-
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(1));
     }
-
-    @Test
-    public void addThreeMeeting() {
-        // Add Meeting 1
-        createMeeting1();
-
-        // Add Meeting 2
-        createMeeting2();
-
-        // Add Meeting 3
-        createMeeting3();
-
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(3));
-    }
-
-    private void createMeeting3() {
-        // Click on FAB button for create new Meeting 3
-        ViewInteraction floatingActionButton3 = onView(
-                allOf(withId(R.id.fab),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        floatingActionButton3.perform(click());
-
-        // Set Subject of Meeting 3
-        ViewInteraction textInputEditText6 = onView(
-                allOf(withId(R.id.create_meeting_tiet_subject),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.create_meeting_til_subject),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText6.perform(replaceText("sujet 3"), closeSoftKeyboard());
-
-        // Set Participant of Meeting 3
-        ViewInteraction textInputEditText7 = onView(
-                allOf(withId(R.id.create_meeting_teit_listOfParticipant),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.horizontal_scroll_view),
-                                        0),
-                                1)));
-        textInputEditText7.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
-
-        // TODO 19/12/2918 : change room to all meeting in test
-        // Set Room of Meeting 3
-        ViewInteraction appCompatSpinner3 = onView(
-                allOf(withId(R.id.create_meeting_spi_room),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
-        appCompatSpinner3.perform(click());
-
-        DataInteraction appCompatCheckedTextView3 = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1);
-        appCompatCheckedTextView3.perform(click());
-
-        // Set Date of Meeting 3
-        ViewInteraction materialButton11 = onView(
-                allOf(withId(R.id.create_meeting_bt_date), withText("Choisir la date"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                7),
-                        isDisplayed()));
-        materialButton11.perform(click());
-
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,3,12));
-
-        ViewInteraction materialButton12 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
-        materialButton12.perform(scrollTo(), click());
-
-        // Set Hour of Meeting 3
-        ViewInteraction materialButton13 = onView(
-                allOf(withId(R.id.create_meeting_bt_hour), withText("Choisir lheure"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                5),
-                        isDisplayed()));
-        materialButton13.perform(click());
-
-        onView(isAssignableFrom(TimePicker.class)).perform(setTime(15,30));
-
-        ViewInteraction materialButton14 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
-        materialButton14.perform(scrollTo(), click());
-
-        // Valid meeting 3
-        ViewInteraction materialButton15 = onView(
-                allOf(withId(R.id.create_meeting_bt_valid_meeting), withText("Valider ma réunion"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                9),
-                        isDisplayed()));
-        materialButton15.perform(click());
-    }
-
-    private void createMeeting2() {
+    private void createMeetingNumberTwo() {
         // Click on FAB button for create new Meeting 2
         ViewInteraction floatingActionButton2 = onView(
                 allOf(withId(R.id.fab),
@@ -419,10 +331,9 @@ public class MainActivityTestAddMeeting {
                         isDisplayed()));
         materialButton10.perform(click());
     }
-
-    private void createMeeting1() {
-        // Click on FAB button for create new Meeting 1
-        ViewInteraction floatingActionButton = onView(
+    private void createMeetingNumberThree() {
+        // Click on FAB button for create new Meeting 3
+        ViewInteraction floatingActionButton3 = onView(
                 allOf(withId(R.id.fab),
                         childAtPosition(
                                 childAtPosition(
@@ -430,10 +341,10 @@ public class MainActivityTestAddMeeting {
                                         0),
                                 2),
                         isDisplayed()));
-        floatingActionButton.perform(click());
+        floatingActionButton3.perform(click());
 
-        // Set Subject of Meeting 1
-        ViewInteraction textInputEditText = onView(
+        // Set Subject of Meeting 3
+        ViewInteraction textInputEditText6 = onView(
                 allOf(withId(R.id.create_meeting_tiet_subject),
                         childAtPosition(
                                 childAtPosition(
@@ -441,30 +352,21 @@ public class MainActivityTestAddMeeting {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText.perform(replaceText("sujet 1"), closeSoftKeyboard());
+        textInputEditText6.perform(replaceText("sujet 3"), closeSoftKeyboard());
 
-        // Set Participant 1 of Meeting 1
-        ViewInteraction textInputEditText2 = onView(
+        // Set Participant of Meeting 3
+        ViewInteraction textInputEditText7 = onView(
                 allOf(withId(R.id.create_meeting_teit_listOfParticipant),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText2.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
+        textInputEditText7.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
 
-        // Set Participant 2 of Meeting 1
-        ViewInteraction textInputEditText5 = onView(
-                allOf(withId(R.id.create_meeting_teit_listOfParticipant),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.horizontal_scroll_view),
-                                        0),
-                                1)));
-        textInputEditText5.perform(scrollTo(), replaceText(participant2 + "," ), closeSoftKeyboard());
-
-        // Set Room of Meeting 1
-        ViewInteraction appCompatSpinner = onView(
+        // TODO 27/12/2918 : how change room selected (actualy is always room 2)
+        // Set Room of Meeting 3
+        ViewInteraction appCompatSpinner3 = onView(
                 allOf(withId(R.id.create_meeting_spi_room),
                         childAtPosition(
                                 childAtPosition(
@@ -472,17 +374,17 @@ public class MainActivityTestAddMeeting {
                                         0),
                                 4),
                         isDisplayed()));
-        appCompatSpinner.perform(click());
+        appCompatSpinner3.perform(click());
 
-        DataInteraction appCompatCheckedTextView = onData(anything())
+        DataInteraction appCompatCheckedTextView3 = onData(anything())
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
                 .atPosition(1);
-        appCompatCheckedTextView.perform(click());
+        appCompatCheckedTextView3.perform(click());
 
-        // Set Date of Meeting 1
-        ViewInteraction materialButton = onView(
+        // Set Date of Meeting 3
+        ViewInteraction materialButton11 = onView(
                 allOf(withId(R.id.create_meeting_bt_date), withText("Choisir la date"),
                         childAtPosition(
                                 childAtPosition(
@@ -490,21 +392,21 @@ public class MainActivityTestAddMeeting {
                                         0),
                                 7),
                         isDisplayed()));
-        materialButton.perform(click());
+        materialButton11.perform(click());
 
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,2,30));
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,3,12));
 
-        ViewInteraction materialButton2 = onView(
+        ViewInteraction materialButton12 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 3)));
-        materialButton2.perform(scrollTo(), click());
+        materialButton12.perform(scrollTo(), click());
 
-        // Set Hour of Meeting 1
-        ViewInteraction materialButton3 = onView(
+        // Set Hour of Meeting 3
+        ViewInteraction materialButton13 = onView(
                 allOf(withId(R.id.create_meeting_bt_hour), withText("Choisir lheure"),
                         childAtPosition(
                                 childAtPosition(
@@ -512,21 +414,21 @@ public class MainActivityTestAddMeeting {
                                         0),
                                 5),
                         isDisplayed()));
-        materialButton3.perform(click());
+        materialButton13.perform(click());
 
-        onView(isAssignableFrom(TimePicker.class)).perform(setTime(10,10));
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(15,30));
 
-        ViewInteraction materialButton4 = onView(
+        ViewInteraction materialButton14 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 3)));
-        materialButton4.perform(scrollTo(), click());
+        materialButton14.perform(scrollTo(), click());
 
-        // Valid meeting 1
-        ViewInteraction materialButton5 = onView(
+        // Valid meeting 3
+        ViewInteraction materialButton15 = onView(
                 allOf(withId(R.id.create_meeting_bt_valid_meeting), withText("Valider ma réunion"),
                         childAtPosition(
                                 childAtPosition(
@@ -534,7 +436,7 @@ public class MainActivityTestAddMeeting {
                                         0),
                                 9),
                         isDisplayed()));
-        materialButton5.perform(click());
+        materialButton15.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

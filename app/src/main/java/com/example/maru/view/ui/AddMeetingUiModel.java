@@ -17,6 +17,4 @@ class AddMeetingUiModel {
     public String getParticipantHint() {
         return participantHint;
     }
-
-    // TODO : add new hint (18/11/19)
 }

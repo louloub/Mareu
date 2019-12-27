@@ -318,10 +318,9 @@ public class MainViewModelTest {
         assertEquals(0,result.get(2).getId());
     }
 
-    // TODO 18/12/19 : assertThat voir projet MVVM NINO (108 à 127) // (158 à 170)
-
+    // A VERIFIER par NINO
     @Test
-    public void shouldMeetingCorrectlyHaveOneSubjectThreeParticipantsOneRoomOneDateOneHour() throws InterruptedException {
+    public void shouldMeetingCorrectlyHaveOneIdOneSubjectThreeParticipantsOneRoomOneDateOneHour() throws InterruptedException {
         // GIVEN
         MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
         MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
@@ -333,14 +332,12 @@ public class MainViewModelTest {
         mMeetingListLiveData.setValue(meetingJavaList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
 
-        // WHEN
+        // WHEN (UiModel = all data are String)
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-
-        // TODO 21/12/2019 : why id don't work ?
         assertThat(
-                meetingJavaList,
+                result,
                 containsInAnyOrder(
                         hasProperty("id", is(2)),
                         hasProperty("id", is(1)),
@@ -359,12 +356,22 @@ public class MainViewModelTest {
         );
 
         // Participants
-        assertThat(getParticipants(),hasItem("test3@test.fr"));
-        assertThat(getParticipants(),hasItem("test1@test.fr"));
-        assertThat(getParticipants(),hasItem("test2@test.fr"));
+        assertThat(
+                getParticipants(),hasItem("test3@test.fr"));
+        assertThat(
+                getParticipants(),hasItem("test1@test.fr"));
+        assertThat(
+                getParticipants(),hasItem("test2@test.fr"));
 
         // Room
-        // assertThat();
+        assertThat(
+                result,
+                containsInAnyOrder(
+                        hasProperty("room", is("1")),
+                        hasProperty("room", is("3")),
+                        hasProperty("room", is("2"))
+
+                ));
 
         // Hour
         assertThat(
