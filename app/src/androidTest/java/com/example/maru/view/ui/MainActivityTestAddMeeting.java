@@ -41,6 +41,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 /**
@@ -51,11 +52,12 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTestAddMeeting {
 
+    private static final String PARTICIPANT1 = "participant1@google.fr";
+    private static final String PARTICIPANT2 = "participant2@google.fr";
+    private static final String PARTICIPANT3 = "participant3@google.fr";
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
-    private String participant1 = "participant1@google.fr";
-    private String participant2 = "participant2@google.fr";
-    private String participant3 = "participant3@google.fr";
 
     /**
      * Add One Meeting test
@@ -89,6 +91,7 @@ public class MainActivityTestAddMeeting {
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(3));
     }
 
+    // TODO : 27/12 une suele méthode avec les paramétre modifiable (ID / ROOM .. )
     private void createMeetingNumberOne() {
         // Click on FAB button for create new Meeting 1
         ViewInteraction floatingActionButton = onView(
@@ -120,7 +123,7 @@ public class MainActivityTestAddMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText2.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
+        textInputEditText2.perform(scrollTo(), replaceText(PARTICIPANT1 + "," ), closeSoftKeyboard());
 
         // Set Participant 2 of Meeting 1
         ViewInteraction textInputEditText5 = onView(
@@ -130,10 +133,15 @@ public class MainActivityTestAddMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText5.perform(scrollTo(), replaceText(participant2 + "," ), closeSoftKeyboard());
+        textInputEditText5.perform(scrollTo(), replaceText(PARTICIPANT2 + "," ), closeSoftKeyboard());
+
+        // TODO 27/12 : use this methode
+        onView(withId(R.id.create_meeting_spi_room)).perform(click());
+        onData(allOf(is(instanceOf(Integer.class)))).atPosition(3).perform(click());
 
         // Set Room of Meeting 1
-        ViewInteraction appCompatSpinner = onView(
+
+       /* ViewInteraction appCompatSpinner = onView(
                 allOf(withId(R.id.create_meeting_spi_room),
                         childAtPosition(
                                 childAtPosition(
@@ -149,6 +157,7 @@ public class MainActivityTestAddMeeting {
                         0))
                 .atPosition(1);
         appCompatCheckedTextView.perform(click());
+        */
 
         // Set Date of Meeting 1
         ViewInteraction materialButton = onView(
@@ -236,7 +245,7 @@ public class MainActivityTestAddMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText4.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
+        textInputEditText4.perform(scrollTo(), replaceText(PARTICIPANT1 + "," ), closeSoftKeyboard());
 
         // Set Participant 2 of Meeting 2
         ViewInteraction textInputEditText5 = onView(
@@ -246,7 +255,7 @@ public class MainActivityTestAddMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText5.perform(scrollTo(), replaceText(participant2 + "," ), closeSoftKeyboard());
+        textInputEditText5.perform(scrollTo(), replaceText(PARTICIPANT2 + "," ), closeSoftKeyboard());
 
         // Set Participant 3 of Meeting 2
         ViewInteraction textInputEditText6 = onView(
@@ -256,7 +265,7 @@ public class MainActivityTestAddMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText6.perform(scrollTo(), replaceText(participant3 + "," ), closeSoftKeyboard());
+        textInputEditText6.perform(scrollTo(), replaceText(PARTICIPANT3 + "," ), closeSoftKeyboard());
 
         // Set Room of Meeting 2
         ViewInteraction appCompatSpinner2 = onView(
@@ -362,7 +371,7 @@ public class MainActivityTestAddMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText7.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
+        textInputEditText7.perform(scrollTo(), replaceText(PARTICIPANT1 + "," ), closeSoftKeyboard());
 
         // TODO 27/12/2918 : how change room selected (actualy is always room 2)
         // Set Room of Meeting 3

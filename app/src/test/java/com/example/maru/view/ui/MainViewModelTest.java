@@ -14,6 +14,7 @@ import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyCollection;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
@@ -21,6 +22,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.hamcrest.Matcher;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,7 +51,7 @@ public class MainViewModelTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private MeetingManager mMeetingManager;
-    MainViewModel mainViewModel;
+    private MainViewModel mainViewModel;
     private MutableLiveData<List<MeetingJava>> mMeetingListLiveData;
 
     @Before
@@ -80,7 +82,6 @@ public class MainViewModelTest {
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
 
-    // A VERIFIER par NINO
     private void givenTwoSimilareMeetingDateAndOneOtherForSortingTypeAndFilterTest() {
         MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
         MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
@@ -93,7 +94,6 @@ public class MainViewModelTest {
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
 
-    // A VERIFIER par NINO
     private void givenTwoSimilareMeetingRoomAndOneOtherForSortingTypeAndFilterTest() {
         MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
         MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
@@ -122,8 +122,7 @@ public class MainViewModelTest {
 
         // THEN
         assertEquals(2,result.size());
-
-        // TODO 11/12/19 : faire la collection d'assertion (id, date, sujet ..) check MainViewModelTest project MMVVM NINO
+        assertEquals(2,result.size());
     }
 
     @Test
@@ -136,6 +135,7 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
+        assertEquals(3,result.size());
         assertEquals(0,result.get(0).getId());
         assertEquals(1,result.get(1).getId());
         assertEquals(2,result.get(2).getId());
@@ -151,6 +151,7 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
+        assertEquals(3,result.size());
         assertEquals(2,result.get(0).getId());
         assertEquals(1,result.get(1).getId());
         assertEquals(0,result.get(2).getId());
@@ -166,9 +167,10 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        assertEquals("2017-12-22",result.get(0).getDate().toString());
-        assertEquals("2018-12-23",result.get(1).getDate().toString());
-        assertEquals("2019-12-22",result.get(2).getDate().toString());
+        assertEquals(3,result.size());
+        assertEquals("2017-12-22",result.get(0).getDate());
+        assertEquals("2018-12-23",result.get(1).getDate());
+        assertEquals("2019-12-22",result.get(2).getDate());
     }
 
     @Test
@@ -181,9 +183,10 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        assertEquals("2019-12-22",result.get(0).getDate().toString());
-        assertEquals("2018-12-23",result.get(1).getDate().toString());
-        assertEquals("2017-12-22",result.get(2).getDate().toString());
+        assertEquals(3,result.size());
+        assertEquals("2019-12-22",result.get(0).getDate());
+        assertEquals("2018-12-23",result.get(1).getDate());
+        assertEquals("2017-12-22",result.get(2).getDate());
     }
 
     @Test
@@ -196,6 +199,7 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
+        assertEquals(1,result.size());
         assertEquals("1",result.get(0).getRoom());
     }
 
@@ -209,6 +213,7 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
+        assertEquals(1,result.size());
         assertEquals("2",result.get(0).getRoom());
     }
 
@@ -222,6 +227,7 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
+        assertEquals(1,result.size());
         assertEquals("3",result.get(0).getRoom());
     }
 
@@ -235,6 +241,7 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
+        assertEquals(3,result.size());
         assertEquals("1",result.get(0).getRoom());
         assertEquals("2",result.get(1).getRoom());
         assertEquals("3",result.get(2).getRoom());
@@ -251,10 +258,10 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        assertEquals("2019-12-22",result.get(0).getDate().toString());
+        assertEquals(3,result.size());
+        assertEquals("2019-12-22",result.get(0).getDate());
     }
 
-    // A VERIFIER par NINO
     @Test
     public void shouldMeetingAreCorrectlySortingAscendantWithTwoMeetingWithSameDateAndOneOther() throws InterruptedException {
         // GIVEN
@@ -265,12 +272,12 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        assertEquals("2019-12-22",result.get(0).getDate().toString());
-        assertEquals("2020-12-23",result.get(1).getDate().toString());
-        assertEquals("2020-12-23",result.get(2).getDate().toString());
+        assertEquals(3,result.size());
+        assertEquals("2019-12-22",result.get(0).getDate());
+        assertEquals("2020-12-23",result.get(1).getDate());
+        assertEquals("2020-12-23",result.get(2).getDate());
     }
 
-    // A VERIFIER par NINO
     @Test
     public void shouldMeetingAreCorrectlySortingDescendantWithTwoMeetingWithSameDateAndOneOther() throws InterruptedException {
         // GIVEN
@@ -281,12 +288,12 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        assertEquals("2020-12-23",result.get(0).getDate().toString());
-        assertEquals("2020-12-23",result.get(1).getDate().toString());
-        assertEquals("2019-12-22",result.get(2).getDate().toString());
+        assertEquals(3,result.size());
+        assertEquals("2020-12-23",result.get(0).getDate());
+        assertEquals("2020-12-23",result.get(1).getDate());
+        assertEquals("2019-12-22",result.get(2).getDate());
     }
 
-    // A VERIFIER par NINO
     @Test
     public void shouldMeetingAreCorrectlySortingAscendantWithTwoMeetingWithSameRoomAndOneOther() throws InterruptedException  {
         // GIVEN
@@ -302,7 +309,6 @@ public class MainViewModelTest {
         assertEquals(2,result.get(2).getId());
     }
 
-    // A VERIFIER par NINO
     @Test
     public void shouldMeetingAreCorrectlySortingDescendantWithTwoMeetingWithSameRoomAndOneOther() throws InterruptedException  {
         // GIVEN
@@ -313,12 +319,12 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
+        assertEquals(3,result.size());
         assertEquals(1,result.get(0).getId());
         assertEquals(2,result.get(1).getId());
         assertEquals(0,result.get(2).getId());
     }
 
-    // A VERIFIER par NINO
     @Test
     public void shouldMeetingCorrectlyHaveOneIdOneSubjectThreeParticipantsOneRoomOneDateOneHour() throws InterruptedException {
         // GIVEN
@@ -336,23 +342,31 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
 
         // THEN
-        assertThat(
+        Assert.assertThat(
                 result,
                 containsInAnyOrder(
-                        hasProperty("id", is(2)),
-                        hasProperty("id", is(1)),
-                        hasProperty("id", is(0))
-                )
-        );
-
-        // Subject
-        assertThat(
-                result,
-                containsInAnyOrder(
-                        hasProperty("subject", is("Sujet 1")),
-                        hasProperty("subject", is("Sujet 2")),
-                        hasProperty("subject", is("Sujet 3"))
+                        allOf(
+                                hasProperty("id", is(0)),
+                                hasProperty("subject", is("Sujet 1")),
+                                hasProperty("room", is("1")),
+                                hasProperty("hour", is("15h15")),
+                                hasProperty("date",is("2019-12-22"))
+                        ),
+                        allOf(
+                                hasProperty("id", is(1)),
+                                hasProperty("subject", is("Sujet 2")),
+                                hasProperty("room", is("2")),
+                                hasProperty("hour", is("16h16")),
+                                hasProperty("date",is("2018-12-23"))
+                        ),
+                        allOf(
+                                hasProperty("id", is(2)),
+                                hasProperty("subject", is("Sujet 3")),
+                                hasProperty("room", is("3")),
+                                hasProperty("hour", is("13h13")),
+                                hasProperty("date",is("2017-12-22"))
                         )
+                )
         );
 
         // Participants
@@ -363,35 +377,7 @@ public class MainViewModelTest {
         assertThat(
                 getParticipants(),hasItem("test2@test.fr"));
 
-        // Room
-        assertThat(
-                result,
-                containsInAnyOrder(
-                        hasProperty("room", is("1")),
-                        hasProperty("room", is("3")),
-                        hasProperty("room", is("2"))
 
-                ));
-
-        // Hour
-        assertThat(
-                result,
-                containsInAnyOrder(
-                        hasProperty("hour", is("13h13")),
-                        hasProperty("hour", is("15h15")),
-                        hasProperty("hour", is("16h16"))
-                )
-        );
-
-        // Date
-        assertThat(
-                result,
-                containsInAnyOrder(
-                        hasProperty("date",is("2017-12-22")),
-                        hasProperty("date",is("2019-12-22")),
-                        hasProperty("date",is("2018-12-23"))
-                )
-        );
     }
 
     static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){

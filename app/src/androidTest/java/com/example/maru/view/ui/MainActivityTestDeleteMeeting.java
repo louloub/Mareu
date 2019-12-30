@@ -1,6 +1,5 @@
 package com.example.maru.view.ui;
 
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -9,6 +8,7 @@ import android.widget.TimePicker;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -40,10 +40,15 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * Instrumental test
+ */
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTestDeleteMeeting {
 
+    // TODO : comme l'autre calsse de test
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
     private String participant1 = "participant1@google.fr";
@@ -89,15 +94,11 @@ public class MainActivityTestDeleteMeeting {
         createMeetingNumberThree();
 
         // Delete meeting
-        ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.meeting_iv_delete_meeting),
-                        childAtPosition(allOf(withId(R.id.meeting_cl_constraint_layout),
-                                        childAtPosition(
-                                                withClassName(is("androidx.cardview.widget.CardView")),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        appCompatImageView.perform(click());
+        onView(withId(R.id.main_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2,
+                        AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
+                )
+        );
 
         // Check if meeting list contain two meeting
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
@@ -153,7 +154,7 @@ public class MainActivityTestDeleteMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText2.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
+        textInputEditText2.perform(scrollTo(), replaceText(participant1 + ","), closeSoftKeyboard());
 
         // Set Participant 2 of Meeting 1
         ViewInteraction textInputEditText5 = onView(
@@ -163,7 +164,7 @@ public class MainActivityTestDeleteMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText5.perform(scrollTo(), replaceText(participant2 + "," ), closeSoftKeyboard());
+        textInputEditText5.perform(scrollTo(), replaceText(participant2 + ","), closeSoftKeyboard());
 
         // Set Room of Meeting 1
         ViewInteraction appCompatSpinner = onView(
@@ -194,7 +195,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton.perform(click());
 
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,2,30));
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020, 2, 30));
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -216,7 +217,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton3.perform(click());
 
-        onView(isAssignableFrom(TimePicker.class)).perform(setTime(10,10));
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(10, 10));
 
         ViewInteraction materialButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -238,6 +239,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton5.perform(click());
     }
+
     private void createMeetingNumberTwo() {
         // Click on FAB button for create new Meeting 2
         ViewInteraction floatingActionButton2 = onView(
@@ -269,7 +271,7 @@ public class MainActivityTestDeleteMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText4.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
+        textInputEditText4.perform(scrollTo(), replaceText(participant1 + ","), closeSoftKeyboard());
 
         // Set Participant 2 of Meeting 2
         ViewInteraction textInputEditText5 = onView(
@@ -279,7 +281,7 @@ public class MainActivityTestDeleteMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText5.perform(scrollTo(), replaceText(participant2 + "," ), closeSoftKeyboard());
+        textInputEditText5.perform(scrollTo(), replaceText(participant2 + ","), closeSoftKeyboard());
 
         // Set Participant 3 of Meeting 2
         ViewInteraction textInputEditText6 = onView(
@@ -289,7 +291,7 @@ public class MainActivityTestDeleteMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText6.perform(scrollTo(), replaceText(participant3 + "," ), closeSoftKeyboard());
+        textInputEditText6.perform(scrollTo(), replaceText(participant3 + ","), closeSoftKeyboard());
 
         // Set Room of Meeting 2
         ViewInteraction appCompatSpinner2 = onView(
@@ -320,7 +322,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton6.perform(click());
 
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,5,11));
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020, 5, 11));
 
         ViewInteraction materialButton7 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -342,7 +344,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton8.perform(click());
 
-        onView(isAssignableFrom(TimePicker.class)).perform(setTime(12,20));
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(12, 20));
 
         ViewInteraction materialButton9 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -364,6 +366,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton10.perform(click());
     }
+
     private void createMeetingNumberThree() {
         // Click on FAB button for create new Meeting 3
         ViewInteraction floatingActionButton3 = onView(
@@ -395,7 +398,7 @@ public class MainActivityTestDeleteMeeting {
                                         withId(R.id.horizontal_scroll_view),
                                         0),
                                 1)));
-        textInputEditText7.perform(scrollTo(), replaceText(participant1 + "," ), closeSoftKeyboard());
+        textInputEditText7.perform(scrollTo(), replaceText(participant1 + ","), closeSoftKeyboard());
 
         // TODO 27/12/2918 : how change room selected (actualy is always room 2)
         // Set Room of Meeting 3
@@ -427,7 +430,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton11.perform(click());
 
-        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020,3,12));
+        onView(isAssignableFrom(DatePicker.class)).perform(setDate(2020, 3, 12));
 
         ViewInteraction materialButton12 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -449,7 +452,7 @@ public class MainActivityTestDeleteMeeting {
                         isDisplayed()));
         materialButton13.perform(click());
 
-        onView(isAssignableFrom(TimePicker.class)).perform(setTime(15,30));
+        onView(isAssignableFrom(TimePicker.class)).perform(setTime(15, 30));
 
         ViewInteraction materialButton14 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
