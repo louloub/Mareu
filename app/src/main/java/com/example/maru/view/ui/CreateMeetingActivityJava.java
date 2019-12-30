@@ -174,14 +174,65 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
                         {
+                            switch (month) {
+                                case 0 :
+                                    month = 1;
+                                    monthSelectedInInt = 1;
+                                    break;
+                                case 1 :
+                                    month = 2;
+                                    monthSelectedInInt = 2;
+                                    break;
+                                case 2 :
+                                    month = 3;
+                                    monthSelectedInInt = 3;
+                                    break;
+                                case 3 :
+                                    month = 4;
+                                    monthSelectedInInt = 4;
+                                    break;
+                                case 4 :
+                                    month = 5;
+                                    monthSelectedInInt = 5;
+                                    break;
+                                case 5 :
+                                    month = 6;
+                                    monthSelectedInInt = 6;
+                                    break;
+                                case 6 :
+                                    month = 7;
+                                    monthSelectedInInt = 7;
+                                    break;
+                                case 7 :
+                                    month = 8;
+                                    monthSelectedInInt = 8;
+                                    break;
+                                case 8 :
+                                    month = 9;
+                                    monthSelectedInInt = 9;
+                                    break;
+                                case 9 :
+                                    month = 10;
+                                    monthSelectedInInt = 10;
+                                    break;
+                                case 10 :
+                                    month = 11;
+                                    monthSelectedInInt = 11;
+                                    break;
+                                case 11 :
+                                    month = 12;
+                                    monthSelectedInInt = 12;
+                                    break;
+                            }
+
                             yearsSelectedInInt = year;
-                            monthSelectedInInt = month +1;
+                            // monthSelectedInInt = month+1;
                             daysSelectedInInt = dayOfMonth;
 
                             String dayInStringFormat = String.format("%02d", dayOfMonth);
                             String monthInStringFormat = String.format("%02d", month);
 
-                            chooseDate.setText(dayInStringFormat + "/" + month + "/" + year);
+                            chooseDate.setText(dayInStringFormat + "/" + monthInStringFormat + "/" + year);
                             String yearInString = String.valueOf(year);
                             String dateString = dayInStringFormat + "-" + monthInStringFormat + "-" + yearInString;
 

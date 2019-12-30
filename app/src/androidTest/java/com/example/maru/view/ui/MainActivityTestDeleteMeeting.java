@@ -23,6 +23,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -59,12 +62,12 @@ public class MainActivityTestDeleteMeeting {
      * Delete One Meeting
      */
     @Test
-    public void deleteOneMeetingInListOfOneMeeting() {
+    public void deleteOneMeetingInListOfOneMeeting() throws InterruptedException {
         // Add one meeting
         createMeeting("Sujet 1",1,2020,2,30,10,10);
 
         // Delete meeting
-        ViewInteraction appCompatImageView = onView(
+        /*ViewInteraction appCompatImageView = onView(
                 allOf(withId(R.id.meeting_iv_delete_meeting),
                         childAtPosition(
                                 allOf(withId(R.id.meeting_cl_constraint_layout),
@@ -73,13 +76,16 @@ public class MainActivityTestDeleteMeeting {
                                                 0)),
                                 3),
                         isDisplayed()));
-        appCompatImageView.perform(click());
+        appCompatImageView.perform(click());*/
 
-        /*onView(withId(R.id.main_rv)).perform(
+        onView(withId(R.id.main_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0,
                         AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
                 )
-        );*/
+        );
+
+        // Delay few seconds
+        TimeUnit.SECONDS.sleep(1);
 
         // Check if meeting list is empty
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(0));
@@ -89,7 +95,7 @@ public class MainActivityTestDeleteMeeting {
      * Delete One Meeting in list
      */
     @Test
-    public void deleteOneMeetingInListOfThreeMeeting() {
+    public void deleteOneMeetingInListOfThreeMeeting() throws InterruptedException {
         // Add Meeting 1
         createMeeting("Sujet 1",1,2020,2,30,10,10);
 
@@ -101,10 +107,13 @@ public class MainActivityTestDeleteMeeting {
 
         // Delete meeting
         onView(withId(R.id.main_rv)).perform(
-            RecyclerViewActions.actionOnItemAtPosition(1,
+            RecyclerViewActions.actionOnItemAtPosition(0,
                         AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
                 )
         );
+
+        // Delay few seconds
+        TimeUnit.SECONDS.sleep(1);
 
         // Check if meeting list contain two meeting
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
