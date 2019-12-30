@@ -68,7 +68,7 @@ public class MainActivityTestAddMeeting {
         createMeeting("Subject 1",1,2020,2,30,10,10);
 
         // Check if meeting is on Recycler View
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(1));
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(4));
     }
 
     /**
@@ -77,13 +77,13 @@ public class MainActivityTestAddMeeting {
     @Test
     public void addThreeDifferentMeeting() {
         // Add Meeting 1
-        createMeeting("Sujet 1",1,2020,2,30,10,10);
-
-        // Add Meeting 2
         createMeeting("Sujet 2",2,2020,5,11,12,20);
 
-        // Add Meeting 3
+        // Add Meeting 2
         createMeeting("Sujet 3",3,2020,3,12,15,30);
+
+        // Add Meeting 3
+        createMeeting("Sujet 4",1,2020,2,30,10,10);
 
         // Check if meeting is on Recycler View
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(3));
