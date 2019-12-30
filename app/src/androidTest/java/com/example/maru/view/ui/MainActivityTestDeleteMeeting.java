@@ -102,7 +102,7 @@ public class MainActivityTestDeleteMeeting {
         );
 
         // Delay few seconds
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(5);
 
         // Check if meeting list contain two meeting
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));

@@ -90,7 +90,6 @@ public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainVie
         }
     }
 
-    // TODO : Appeler quand on fait un submilist (dans observe) ???? nino ????
     private static class DiffCallback extends DiffUtil.ItemCallback<MeetingUiModel> {
 
         @Override
