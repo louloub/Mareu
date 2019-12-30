@@ -4,18 +4,10 @@ import org.threeten.bp.LocalDate;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MeetingJava implements Serializable, Comparable<MeetingJava> {
 
-    static final AtomicInteger NEXT_ID = new AtomicInteger(0);
-
     private int id;
-
-    {
-        NEXT_ID.getAndIncrement();
-    }
-
     private final LocalDate date;
     private final String hour;
     private final int room;

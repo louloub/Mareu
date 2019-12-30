@@ -67,17 +67,6 @@ public class MainActivityTestDeleteMeeting {
         createMeeting("Sujet 1",1,2020,2,30,10,10);
 
         // Delete meeting
-        /*ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.meeting_iv_delete_meeting),
-                        childAtPosition(
-                                allOf(withId(R.id.meeting_cl_constraint_layout),
-                                        childAtPosition(
-                                                withClassName(is("androidx.cardview.widget.CardView")),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        appCompatImageView.perform(click());*/
-
         onView(withId(R.id.main_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0,
                         AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
