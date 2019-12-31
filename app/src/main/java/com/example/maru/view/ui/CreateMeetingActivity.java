@@ -115,7 +115,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     public void retrieveXMLandLaunchMethod() {
         // Text Input XML and Method for subject
         TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
-        // subjectOfMeeting(subjectOfMeeting);
 
         // Text Input XML and Method for list of participant
         TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
@@ -144,7 +143,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         // Button for valid meeting & method
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
         onValidMeetingClick(validMeeting, listOfParticipant, subjectOfMeeting, chooseHour, chooseDate);
-        // mCreateMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
     }
 
     public void launchDatePickerDialog(final TextView chooseDate) {
@@ -322,7 +320,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
                 if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivity.this)) {
-                    // meeting.setRoom(Integer.parseInt(item.toString()));
                     mRoom = (Integer.parseInt(item.toString()));
                 }
             }
