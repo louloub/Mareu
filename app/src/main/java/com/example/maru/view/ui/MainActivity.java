@@ -103,8 +103,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             @Override
             public void onClick(View view) {
                 launchCreateMeeting();
-                // mViewModel.addNewRandomMeeting();
-                // mViewModel.launchCreateMeeting(intent);
             }
         });
     }
@@ -118,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
     // Launch intent for create new meeting
     public void launchCreateMeeting() {
-        // Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
         Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
         startActivity(intent);
     }

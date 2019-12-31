@@ -41,13 +41,13 @@ import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_DSC;
 
 public class MainViewModel extends ViewModel {
 
-    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_JAVA_ASC = new Comparator<Meeting>() {
+    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_ASC = new Comparator<Meeting>() {
         @Override
         public int compare(Meeting e1, Meeting e2) {
             return (e1.getRoom() - e2.getRoom());
         }
     };
-    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_JAVA_DSC = new Comparator<Meeting>() {
+    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_DSC = new Comparator<Meeting>() {
         @Override
         public int compare(Meeting e1, Meeting e2) {
             return (e2.getRoom() - e1.getRoom());
@@ -159,11 +159,11 @@ public class MainViewModel extends ViewModel {
 
         if (sortingType == null || sortingType == ROOM_ALPHABETICAL_ASC) {
 
-            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_JAVA_ASC);
+            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_ASC);
 
         } else if (sortingType == ROOM_ALPHABETICAL_DSC) {
 
-            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_JAVA_DSC);
+            Collections.sort(meetings, ROOM_COMPARATOR_MEETING_DSC);
 
         } else if (sortingType == DATE_ASC) {
 
@@ -179,16 +179,16 @@ public class MainViewModel extends ViewModel {
         for (Meeting meeting : meetings) {
 
             if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meeting.getRoom()) {
-                createMeetingUiModelInCombienMeeting(result, meeting);
+                createMeetingUiModelInCombineMeeting(result, meeting);
             } else if (selectedMeetingRoomNumber == 0) {
-                createMeetingUiModelInCombienMeeting(result, meeting);
+                createMeetingUiModelInCombineMeeting(result, meeting);
             }
         }
 
         return result;
     }
 
-    private void createMeetingUiModelInCombienMeeting(List<MeetingUiModel> result, Meeting meeting) {
+    private void createMeetingUiModelInCombineMeeting(List<MeetingUiModel> result, Meeting meeting) {
         MeetingUiModel meetingUiModel = new MeetingUiModel(
                 meeting.getId(),
                 meeting.getDate().toString(),
@@ -341,8 +341,6 @@ public class MainViewModel extends ViewModel {
         mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
     }
 
-    LiveData<List<Meeting>> getmMeetingListLiveData() { return mMeetingListLiveData; }
-
     LiveData<List<MeetingUiModel>> getUiModelsLiveData() { return mUiModelsLiveData; }
 
     LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
@@ -415,7 +413,6 @@ public class MainViewModel extends ViewModel {
     private DateFilterTypeUiModel setDateFilterTypeUiModel(){
 
         return null;
-        // return dateFilterTypeUiModel();
     }
 
     public void deleteMeeting(int meetingId) {
