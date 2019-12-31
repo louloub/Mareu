@@ -4,14 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.maru.LiveDataTestUtil;
-import com.example.maru.service.model.MeetingJava;
+import com.example.maru.service.model.Meeting;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
-
-import org.hamcrest.Matchers;
-import org.hamcrest.collection.IsEmptyCollection;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.allOf;
@@ -21,7 +18,6 @@ import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInA
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,7 +26,6 @@ import org.mockito.Mockito;
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasProperty;
@@ -52,7 +47,7 @@ public class MainViewModelTest {
 
     private MeetingManager mMeetingManager;
     private MainViewModel mainViewModel;
-    private MutableLiveData<List<MeetingJava>> mMeetingListLiveData;
+    private MutableLiveData<List<Meeting>> mMeetingListLiveData;
 
     @Before
     public void setUp() throws Exception {
@@ -71,50 +66,50 @@ public class MainViewModelTest {
     }
 
     private void givenThreeDifferentMeetingForSortingTypeAndFilterTest() {
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017, 12, 22), "13h13", 3, "Sujet 3", getParticipants());
-        List<MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
+        Meeting meeting1 = new Meeting(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
+        Meeting meeting2 = new Meeting(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
+        Meeting meeting3 = new Meeting(2, LocalDate.of(2017, 12, 22), "13h13", 3, "Sujet 3", getParticipants());
+        List<Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting1);
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+        mMeetingListLiveData.setValue(meetingList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
 
     private void givenTwoSimilareMeetingDateAndOneOtherForSortingTypeAndFilterTest() {
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2020, 12, 23), "16h16", 3, "Sujet 3", getParticipants());
-        List<MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
+        Meeting meeting1 = new Meeting(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
+        Meeting meeting2 = new Meeting(1, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
+        Meeting meeting3 = new Meeting(2, LocalDate.of(2020, 12, 23), "16h16", 3, "Sujet 3", getParticipants());
+        List<Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting1);
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+        mMeetingListLiveData.setValue(meetingList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
 
     private void givenTwoSimilareMeetingRoomAndOneOtherForSortingTypeAndFilterTest() {
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 3", getParticipants());
-        List<MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
+        Meeting meeting1 = new Meeting(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
+        Meeting meeting2 = new Meeting(1, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
+        Meeting meeting3 = new Meeting(2, LocalDate.of(2020, 12, 23), "16h16", 2, "Sujet 3", getParticipants());
+        List<Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting1);
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+        mMeetingListLiveData.setValue(meetingList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
     }
 
     @Test
     public void shouldDisplayTwoMeetingsUiModelsWhenRepositoryHasTwoMeetings() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018,12,23), "16h16", 1, "Sujet 2", getParticipants());
-        List <MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        mMeetingListLiveData.setValue(meetingJavaList);
+        Meeting meeting1 = new Meeting(0, LocalDate.of(2019,12,22), "15h15", 1, "Sujet 1", getParticipants());
+        Meeting meeting2 = new Meeting(1, LocalDate.of(2018,12,23), "16h16", 1, "Sujet 2", getParticipants());
+        List <Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting1);
+        meetingList.add(meeting2);
+        mMeetingListLiveData.setValue(meetingList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
 
         // WHEN
@@ -328,14 +323,14 @@ public class MainViewModelTest {
     @Test
     public void shouldMeetingCorrectlyHaveOneIdOneSubjectThreeParticipantsOneRoomOneDateOneHour() throws InterruptedException {
         // GIVEN
-        MeetingJava meetingJava1 = new MeetingJava(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
-        MeetingJava meetingJava2 = new MeetingJava(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
-        MeetingJava meetingJava3 = new MeetingJava(2, LocalDate.of(2017, 12, 22), "13h13", 3, "Sujet 3", getParticipants());
-        List<MeetingJava> meetingJavaList = new ArrayList<>();
-        meetingJavaList.add(meetingJava1);
-        meetingJavaList.add(meetingJava2);
-        meetingJavaList.add(meetingJava3);
-        mMeetingListLiveData.setValue(meetingJavaList);
+        Meeting meeting1 = new Meeting(0, LocalDate.of(2019, 12, 22), "15h15", 1, "Sujet 1", getParticipants());
+        Meeting meeting2 = new Meeting(1, LocalDate.of(2018, 12, 23), "16h16", 2, "Sujet 2", getParticipants());
+        Meeting meeting3 = new Meeting(2, LocalDate.of(2017, 12, 22), "13h13", 3, "Sujet 3", getParticipants());
+        List<Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting1);
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+        mMeetingListLiveData.setValue(meetingList);
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
 
         // WHEN (UiModel = all data are String)
@@ -380,20 +375,20 @@ public class MainViewModelTest {
 
     }
 
-    static private boolean assertEqualsHomeMade (MeetingJava meetingJava1, MeetingJava meetingJava2){
+    static private boolean assertEqualsHomeMade (Meeting meeting1, Meeting meeting2){
 
-        if (meetingJava1!=null) {
-            if (meetingJava1.getSubject()!=null) {
-                if (meetingJava1.getListOfEmailOfParticipant()!=null) {
-                    if (meetingJava1.getRoom()!=0) {
-                        if (meetingJava1.getDate()!=null) {
-                            if (meetingJava1.getHour()!=null) {
-                                if (meetingJava2!=null) {
-                                    if (meetingJava2.getSubject()!=null && meetingJava2.getSubject().equals(meetingJava1.getSubject())) {
-                                        if (meetingJava2.getListOfEmailOfParticipant()!=null && meetingJava2.getListOfEmailOfParticipant().equals(meetingJava1.getListOfEmailOfParticipant()) ) {
-                                            if (meetingJava2.getRoom()!=0 && meetingJava2.getRoom()==meetingJava1.getRoom() ) {
-                                                if (meetingJava2.getDate()!=null && meetingJava2.getDate().isEqual(meetingJava1.getDate())) {
-                                                    if (meetingJava2.getHour()!=null && meetingJava2.getHour().equals(meetingJava1.getHour())) {
+        if (meeting1 !=null) {
+            if (meeting1.getSubject()!=null) {
+                if (meeting1.getListOfEmailOfParticipant()!=null) {
+                    if (meeting1.getRoom()!=0) {
+                        if (meeting1.getDate()!=null) {
+                            if (meeting1.getHour()!=null) {
+                                if (meeting2 !=null) {
+                                    if (meeting2.getSubject()!=null && meeting2.getSubject().equals(meeting1.getSubject())) {
+                                        if (meeting2.getListOfEmailOfParticipant()!=null && meeting2.getListOfEmailOfParticipant().equals(meeting1.getListOfEmailOfParticipant()) ) {
+                                            if (meeting2.getRoom()!=0 && meeting2.getRoom()== meeting1.getRoom() ) {
+                                                if (meeting2.getDate()!=null && meeting2.getDate().isEqual(meeting1.getDate())) {
+                                                    if (meeting2.getHour()!=null && meeting2.getHour().equals(meeting1.getHour())) {
                                                         return true;
                                                     }
                                                 }

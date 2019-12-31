@@ -5,7 +5,7 @@ import org.threeten.bp.LocalDate;
 import java.io.Serializable;
 import java.util.List;
 
-public class MeetingJava implements Serializable, Comparable<MeetingJava> {
+public class Meeting implements Serializable, Comparable<Meeting> {
 
     private int id;
     private final LocalDate date;
@@ -14,7 +14,7 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
     private final String subject;
     private final List<String> listOfEmailOfParticipant;
 
-    public MeetingJava(int id, LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
+    public Meeting(int id, LocalDate date, String hour, int room, String subject, List<String> listOfEmailOfParticipant) {
         this.id = id;
         this.date = date;
         this.hour = hour;
@@ -48,8 +48,8 @@ public class MeetingJava implements Serializable, Comparable<MeetingJava> {
     }
 
     @Override
-    public int compareTo(MeetingJava meetingJava) {
-        return (this.room - meetingJava.room);
+    public int compareTo(Meeting meeting) {
+        return (this.room - meeting.room);
     }
 
     @Override

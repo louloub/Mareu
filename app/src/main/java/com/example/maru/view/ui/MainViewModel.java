@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.example.maru.service.model.MeetingJava;
+import com.example.maru.service.model.Meeting;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.DateFilterTypeUiModel;
 import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
@@ -41,27 +41,27 @@ import static com.example.maru.view.ui.SortingType.ROOM_ALPHABETICAL_DSC;
 
 public class MainViewModel extends ViewModel {
 
-    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_ASC = new Comparator<MeetingJava>() {
+    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_JAVA_ASC = new Comparator<Meeting>() {
         @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
+        public int compare(Meeting e1, Meeting e2) {
             return (e1.getRoom() - e2.getRoom());
         }
     };
-    private static final Comparator<MeetingJava> ROOM_COMPARATOR_MEETING_JAVA_DSC = new Comparator<MeetingJava>() {
+    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_JAVA_DSC = new Comparator<Meeting>() {
         @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
+        public int compare(Meeting e1, Meeting e2) {
             return (e2.getRoom() - e1.getRoom());
         }
     };
-    private static final Comparator<MeetingJava> DATE_COMPARATOR_ASC = new Comparator<MeetingJava>() {
+    private static final Comparator<Meeting> DATE_COMPARATOR_ASC = new Comparator<Meeting>() {
         @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
+        public int compare(Meeting e1, Meeting e2) {
             return (e1.getDate().compareTo(e2.getDate()));
         }
     };
-    private static final Comparator<MeetingJava> DATE_COMPARATOR_DSC = new Comparator<MeetingJava>() {
+    private static final Comparator<Meeting> DATE_COMPARATOR_DSC = new Comparator<Meeting>() {
         @Override
-        public int compare(MeetingJava e1, MeetingJava e2) {
+        public int compare(Meeting e1, Meeting e2) {
             return (e2.getDate().compareTo(e1.getDate()));
         }
     };
@@ -78,7 +78,7 @@ public class MainViewModel extends ViewModel {
     private final List<String> listOfItemSortMenu = new ArrayList<>();
     private final List<String> listOfItemFilterRoomMenu = new ArrayList<>();
 
-    private final LiveData<List<MeetingJava>> mMeetingListLiveData;
+    private final LiveData<List<Meeting>> mMeetingListLiveData;
 
     private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
@@ -102,11 +102,11 @@ public class MainViewModel extends ViewModel {
 
         // TODO 18/11/19 : il ne doit avoir que 3 sources : donnée / sorting / filter
 
-        mUiModelsLiveData.addSource(mMeetingListLiveData, new Observer<List<MeetingJava>>() {
+        mUiModelsLiveData.addSource(mMeetingListLiveData, new Observer<List<Meeting>>() {
             @Override
-            public void onChanged(List<MeetingJava> meetingJavas) {
+            public void onChanged(List<Meeting> meetings) {
                 mUiModelsLiveData.setValue(combineMeeting(
-                        meetingJavas,
+                        meetings,
                         mSortingTypeLiveData.getValue(),
                         mSelectedFilterTypeLiveData.getValue()));
             }
@@ -149,7 +149,7 @@ public class MainViewModel extends ViewModel {
 
     @Nullable
     private List<MeetingUiModel> combineMeeting(
-            @Nullable List<MeetingJava> meetings,
+            @Nullable List<Meeting> meetings,
             @Nullable SortingType sortingType,
             @Nullable Integer selectedMeetingRoomNumber) {
 
@@ -176,26 +176,26 @@ public class MainViewModel extends ViewModel {
 
         List<MeetingUiModel> result = new ArrayList<>();
 
-        for (MeetingJava meetingJava : meetings) {
+        for (Meeting meeting : meetings) {
 
-            if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meetingJava.getRoom()) {
-                createMeetingUiModelInCombienMeeting(result, meetingJava);
+            if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meeting.getRoom()) {
+                createMeetingUiModelInCombienMeeting(result, meeting);
             } else if (selectedMeetingRoomNumber == 0) {
-                createMeetingUiModelInCombienMeeting(result, meetingJava);
+                createMeetingUiModelInCombienMeeting(result, meeting);
             }
         }
 
         return result;
     }
 
-    private void createMeetingUiModelInCombienMeeting(List<MeetingUiModel> result, MeetingJava meetingJava) {
+    private void createMeetingUiModelInCombienMeeting(List<MeetingUiModel> result, Meeting meeting) {
         MeetingUiModel meetingUiModel = new MeetingUiModel(
-                meetingJava.getId(),
-                meetingJava.getDate().toString(),
-                meetingJava.getHour(),
-                Integer.toString(meetingJava.getRoom()),
-                meetingJava.getSubject(),
-                meetingJava.getListOfEmailOfParticipant().toString());
+                meeting.getId(),
+                meeting.getDate().toString(),
+                meeting.getHour(),
+                Integer.toString(meeting.getRoom()),
+                meeting.getSubject(),
+                meeting.getListOfEmailOfParticipant().toString());
 
         result.add(meetingUiModel);
     }
@@ -341,7 +341,7 @@ public class MainViewModel extends ViewModel {
         mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
     }
 
-    LiveData<List<MeetingJava>> getmMeetingListLiveData() { return mMeetingListLiveData; }
+    LiveData<List<Meeting>> getmMeetingListLiveData() { return mMeetingListLiveData; }
 
     LiveData<List<MeetingUiModel>> getUiModelsLiveData() { return mUiModelsLiveData; }
 

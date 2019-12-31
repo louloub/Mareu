@@ -2,7 +2,7 @@ package com.example.maru.utility;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.maru.service.model.MeetingJava;
+import com.example.maru.service.model.Meeting;
 
 import org.threeten.bp.LocalDate;
 
@@ -19,8 +19,8 @@ public class MeetingManager {
      * Single instance not pre-initialized
      */
     private static MeetingManager INSTANCE = null;
-    private final List<MeetingJava> mMeetingList = new ArrayList<>();
-    private MutableLiveData<List<MeetingJava>> mMeetingListLiveData = new MutableLiveData<>();
+    private final List<Meeting> mMeetingList = new ArrayList<>();
+    private MutableLiveData<List<Meeting>> mMeetingListLiveData = new MutableLiveData<>();
 
     private int mMeetingCount = 0;
 
@@ -50,22 +50,22 @@ public class MeetingManager {
                            String subject,
                            List<String> listOfEmailOfParticipant)
     {
-        mMeetingList.add(new MeetingJava(mMeetingCount,
+        mMeetingList.add(new Meeting(mMeetingCount,
                 date, hour, room, subject, listOfEmailOfParticipant));
         mMeetingCount++;
         mMeetingListLiveData.postValue(mMeetingList);
     }
 
-    public MutableLiveData<List<MeetingJava>> getMeetingListLiveData() {
+    public MutableLiveData<List<Meeting>> getMeetingListLiveData() {
         return mMeetingListLiveData;
     }
 
     public void deleteMeeting(int meetingId) {
 
-        for (Iterator<MeetingJava> iterator = mMeetingList.iterator(); iterator.hasNext();) {
-            MeetingJava meetingJava = iterator.next();
+        for (Iterator<Meeting> iterator = mMeetingList.iterator(); iterator.hasNext();) {
+            Meeting meeting = iterator.next();
 
-            if (meetingJava.getId() == meetingId) {
+            if (meeting.getId() == meetingId) {
                 iterator.remove();
                 break;
             }

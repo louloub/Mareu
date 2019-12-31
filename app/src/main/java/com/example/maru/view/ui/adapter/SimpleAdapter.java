@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.service.model.MeetingJava;
+import com.example.maru.service.model.Meeting;
 
 import org.threeten.bp.LocalDate;
 
@@ -21,9 +21,9 @@ import java.util.List;
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingViewHolder> {
 
     private Context mCtx;
-    private ArrayList<MeetingJava> listMeeting;
+    private ArrayList<Meeting> listMeeting;
 
-    public SimpleAdapter(Context mCtx, ArrayList<MeetingJava> listMeeting) {
+    public SimpleAdapter(Context mCtx, ArrayList<Meeting> listMeeting) {
         this.mCtx = mCtx;
         this.listMeeting = listMeeting;
     }
@@ -37,7 +37,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.MeetingVie
 
     @Override
     public void onBindViewHolder(final MeetingViewHolder holder, int position) {
-        MeetingJava meeting = listMeeting.get(position);
+        Meeting meeting = listMeeting.get(position);
 
         String subject = meeting.getSubject();
         List<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
