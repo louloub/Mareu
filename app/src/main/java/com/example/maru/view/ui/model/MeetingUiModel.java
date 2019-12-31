@@ -1,9 +1,5 @@
 package com.example.maru.view.ui.model;
 
-// Destiné à la vue, ce sont des données primitives
-// Il ne doit y avoir que des String à afficher
-// Donné que la vue doit afficher
-
 public class MeetingUiModel {
 
     private int id;
@@ -65,11 +61,5 @@ public class MeetingUiModel {
         if (o == null || getClass() != o.getClass()) return false;
         MeetingUiModel that = (MeetingUiModel) o;
         return id == that.id;
-
-        /*
-        return id == that.id &&
-                type.equals(that.type) &&
-                Objects.equals(mainAddress, that.mainAddress);
-        */
     }
 }

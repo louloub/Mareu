@@ -10,7 +10,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
 
-public class CreateMeetingActivityJavaTest {
+public class CreateMeetingActivityTest {
 
 
 }

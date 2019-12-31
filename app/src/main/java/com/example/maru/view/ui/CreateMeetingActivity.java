@@ -4,13 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,8 +21,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -40,22 +35,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
-import org.threeten.bp.ZoneId;
-import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-public class CreateMeetingActivityJava extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "TAG";
     final ArrayList<String> listOfParticipantChip = new ArrayList<>();
@@ -167,7 +154,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onClick(View v)
             {
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        CreateMeetingActivityJava.this,
+                        CreateMeetingActivity.this,
                     new DatePickerDialog.OnDateSetListener()
                     {
                         @RequiresApi(api = Build.VERSION_CODES.O)
@@ -254,7 +241,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             public void onClick(View v) {
 
                 final RangeTimePickerDialog timePickerDialog = new RangeTimePickerDialog(
-                        CreateMeetingActivityJava.this, new TimePickerDialog.OnTimeSetListener()
+                        CreateMeetingActivity.this, new TimePickerDialog.OnTimeSetListener()
                 {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -299,8 +286,8 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
                 // CLOSE ICON WORKS AND "," FOR WRITE NEW CHIP
                 if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n")))
                 {
-                    final Chip chip = new Chip(CreateMeetingActivityJava.this);
-                    chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivityJava.this, R.xml.chip));
+                    final Chip chip = new Chip(CreateMeetingActivity.this);
+                    chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
                     final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(SpannedLength, editable.length() - 1);
                     chip.setText(charSequenceParticipantMailFromChip);
 
@@ -334,7 +321,7 @@ public class CreateMeetingActivityJava extends AppCompatActivity implements Adap
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
-                if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivityJava.this)) {
+                if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivity.this)) {
                     // meeting.setRoom(Integer.parseInt(item.toString()));
                     mRoom = (Integer.parseInt(item.toString()));
                 }
