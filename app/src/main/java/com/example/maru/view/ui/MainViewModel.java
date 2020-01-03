@@ -79,17 +79,16 @@ public class MainViewModel extends ViewModel {
     private final List<String> listOfItemFilterRoomMenu = new ArrayList<>();
 
     private final LiveData<List<Meeting>> mMeetingListLiveData;
-
     private MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
+
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
-
-    private MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
-
     private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
 
+    private MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
+
+    private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
@@ -105,10 +104,13 @@ public class MainViewModel extends ViewModel {
         mMeetingUiModelsLiveData.addSource(mMeetingListLiveData, new Observer<List<Meeting>>() {
             @Override
             public void onChanged(List<Meeting> meetings) {
-                mMeetingUiModelsLiveData.setValue(combineMeeting(
-                        meetings,
-                        mSortingTypeLiveData.getValue(),
-                        mSelectedFilterTypeLiveData.getValue()));
+                mMeetingUiModelsLiveData.setValue(
+                        combineMeeting(
+                                meetings,
+                                mSortingTypeLiveData.getValue(),
+                                mSelectedFilterTypeLiveData.getValue()
+                        )
+                );
             }
         });
 
@@ -129,20 +131,25 @@ public class MainViewModel extends ViewModel {
         mMeetingUiModelsLiveData.addSource(mSelectedFilterTypeLiveData, new Observer<Integer>() {
             @Override
             public void onChanged(Integer selectedMeetingRoomNumber) {
-                mMeetingUiModelsLiveData.setValue(combineMeeting(
-                        mMeetingListLiveData.getValue(),
-                        mSortingTypeLiveData.getValue(),
-                        selectedMeetingRoomNumber));
+                mMeetingUiModelsLiveData.setValue(
+                        combineMeeting(
+                                mMeetingListLiveData.getValue(),
+                                mSortingTypeLiveData.getValue(),
+                                selectedMeetingRoomNumber)
+                );
             }
         });
 
         mMeetingUiModelsLiveData.addSource(mRoomFilterTypeLiveData, new Observer<RoomFilterType>() {
             @Override
             public void onChanged(RoomFilterType roomFilterType) {
-                mMeetingUiModelsLiveData.setValue(combineMeeting(
-                        mMeetingListLiveData.getValue(),
-                        mSortingTypeLiveData.getValue(),
-                        mSelectedFilterTypeLiveData.getValue()));
+                mMeetingUiModelsLiveData.setValue(
+                        combineMeeting(
+                                mMeetingListLiveData.getValue(),
+                                mSortingTypeLiveData.getValue(),
+                                mSelectedFilterTypeLiveData.getValue()
+                        )
+                );
             }
         });
     }
