@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maru.utility.MeetingManager;
+import com.example.maru.view.ui.model.AddMeetingUiModel;
 import com.example.maru.view.ui.model.HintUiModel;
 
 import org.threeten.bp.LocalDate;

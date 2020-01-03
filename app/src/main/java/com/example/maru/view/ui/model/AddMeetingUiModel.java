@@ -1,6 +1,6 @@
-package com.example.maru.view.ui;
+package com.example.maru.view.ui.model;
 
-class AddMeetingUiModel {
+public class AddMeetingUiModel {
 
     private final String subjectHint;
     private final String participantHint;

@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.maru.R;
 import com.example.maru.utility.RangeTimePickerDialog;
 import com.example.maru.view.ViewModelFactory;
+import com.example.maru.view.ui.model.AddMeetingUiModel;
 import com.example.maru.view.ui.model.HintUiModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
@@ -51,7 +52,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private LocalDate mLocalDate;
     private String mHour, participantHint;
     Calendar calendar = Calendar.getInstance();
-    DatePickerDialog picker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,34 +113,19 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
     public void retrieveXMLandLaunchMethod() {
-        // Text Input XML and Method for subject
         TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
-
-        // Text Input XML and Method for list of participant
         TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
         listOfParticipant.setBackground(null);
-
-        // Spinner for room
         Spinner roomOfMeeting = findViewById(R.id.create_meeting_spi_room);
         roomOfMeeting(roomOfMeeting);
-
-        // ScrollView for Chip
         HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
         horizontalScrollView.setBackground(listOfParticipant.getBackground());
-
-        // Chip & ChipGroup
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
         chipsForParticipant(listOfParticipant, chipGroup);
-
-        // Hour of meeting
         TextView chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
         launchTimerPickerDialog(chooseHour);
-
-        // Date of meeting
         TextView chooseDate = findViewById(R.id.create_meeting_et_edit_date);
         launchDatePickerDialog(chooseDate);
-
-        // Button for valid meeting & method
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
         onValidMeetingClick(validMeeting, listOfParticipant, subjectOfMeeting, chooseHour, chooseDate);
     }
@@ -211,7 +196,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             }
 
                             yearsSelectedInInt = year;
-                            // monthSelectedInInt = month+1;
                             daysSelectedInInt = dayOfMonth;
 
                             String dayInStringFormat = String.format("%02d", dayOfMonth);
@@ -268,7 +252,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -281,7 +264,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             @Override
             public void afterTextChanged(Editable editable) {
 
-                // CLOSE ICON WORKS AND "," FOR WRITE NEW CHIP
                 if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n")))
                 {
                     final Chip chip = new Chip(CreateMeetingActivity.this);
@@ -296,7 +278,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                         @Override
                         public void onClick(View v) {
                             chipGroup.removeView(chip);
-                            listOfParticipantChip.remove(listOfParticipantChip.indexOf(charSequenceParticipantMailFromChip.toString()));
+                            listOfParticipantChip.remove(charSequenceParticipantMailFromChip.toString());
                         }
                     });
 
@@ -313,9 +295,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
     public void roomOfMeeting(final Spinner roomOfMeeting) {
-
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 Object item = adapterView.getItemAtPosition(position);
@@ -323,14 +303,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                     mRoom = (Integer.parseInt(item.toString()));
                 }
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        // Spinner Drop down elements
         List<Integer> categories = new ArrayList<Integer>();
         categories.add(1);
         categories.add(2);
@@ -343,22 +319,14 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         categories.add(9);
         categories.add(10);
 
-        // Creating adapter for spinner
         ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, categories);
-
-        // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
         roomOfMeeting.setAdapter(dataAdapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
 
@@ -379,11 +347,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    // check if activity is launch for the first time for TOAST in "roomOfMeeting" method
     public static class MyPreferencesFirstLaunch {
-
         private static final String MY_PREFERENCES = "my_preferences";
-
         public static boolean isFirst(Context context) {
             final SharedPreferences reader = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
             final boolean first = reader.getBoolean("is_first", true);
