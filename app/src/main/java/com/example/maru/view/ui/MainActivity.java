@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getmSortingTypeUiModelLiveData().observe(this, new Observer<SortingTypeUiModel>() {
+        mViewModel.getSortingTypeUiModelLiveData().observe(this, new Observer<SortingTypeUiModel>() {
             @Override
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
                 mSortingTypeUiModel = sortingTypeUiModel;

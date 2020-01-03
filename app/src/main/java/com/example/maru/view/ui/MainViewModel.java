@@ -80,7 +80,7 @@ public class MainViewModel extends ViewModel {
 
     private final LiveData<List<Meeting>> mMeetingListLiveData;
 
-    private MediatorLiveData<List<MeetingUiModel>> mUiModelsLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
     private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
 
     private MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
@@ -102,44 +102,44 @@ public class MainViewModel extends ViewModel {
 
         // TODO 18/11/19 : il ne doit avoir que 3 sources : donnée / sorting / filter
 
-        mUiModelsLiveData.addSource(mMeetingListLiveData, new Observer<List<Meeting>>() {
+        mMeetingUiModelsLiveData.addSource(mMeetingListLiveData, new Observer<List<Meeting>>() {
             @Override
             public void onChanged(List<Meeting> meetings) {
-                mUiModelsLiveData.setValue(combineMeeting(
+                mMeetingUiModelsLiveData.setValue(combineMeeting(
                         meetings,
                         mSortingTypeLiveData.getValue(),
                         mSelectedFilterTypeLiveData.getValue()));
             }
         });
 
-        mUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingType>() {
+        mMeetingUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingType>() {
             @Override
             public void onChanged(SortingType sortingType) {
                 mUiModelsLiveData.setValue(combineMeeting(meetingLiveData.getValue(), sortingType));
             }
         });
 
-        mUiModelsLiveData.addSource(mSelectedSortingTypeIndexLiveData, new Observer<Integer>() {
+        mMeetingUiModelsLiveData.addSource(mSelectedSortingTypeIndexLiveData, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 selectedSortingTypeIndex = integer;
             }
         });
 
-        mUiModelsLiveData.addSource(mSelectedFilterTypeLiveData, new Observer<Integer>() {
+        mMeetingUiModelsLiveData.addSource(mSelectedFilterTypeLiveData, new Observer<Integer>() {
             @Override
             public void onChanged(Integer selectedMeetingRoomNumber) {
-                mUiModelsLiveData.setValue(combineMeeting(
+                mMeetingUiModelsLiveData.setValue(combineMeeting(
                         mMeetingListLiveData.getValue(),
                         mSortingTypeLiveData.getValue(),
                         selectedMeetingRoomNumber));
             }
         });
 
-        mUiModelsLiveData.addSource(mRoomFilterTypeLiveData, new Observer<RoomFilterType>() {
+        mMeetingUiModelsLiveData.addSource(mRoomFilterTypeLiveData, new Observer<RoomFilterType>() {
             @Override
             public void onChanged(RoomFilterType roomFilterType) {
-                mUiModelsLiveData.setValue(combineMeeting(
+                mMeetingUiModelsLiveData.setValue(combineMeeting(
                         mMeetingListLiveData.getValue(),
                         mSortingTypeLiveData.getValue(),
                         mSelectedFilterTypeLiveData.getValue()));
@@ -313,10 +313,10 @@ public class MainViewModel extends ViewModel {
                 MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(index);
 
                 meetingUiModelListWithDateFilter.add(meetingUiModelWithValidDateFilter);
-                mUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
 
             } else if (dateForFilter.isEmpty()) {
-                mUiModelsLiveData.setValue(meetingUiModelListWithoutDateFilter);
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithoutDateFilter);
             } else if (dateForFilter.length()!=10 && !dateForFilter.isEmpty()  ) {
 
             }
@@ -341,15 +341,15 @@ public class MainViewModel extends ViewModel {
         mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
     }
 
-    LiveData<List<MeetingUiModel>> getUiModelsLiveData() { return mUiModelsLiveData; }
+    LiveData<List<MeetingUiModel>> getUiModelsLiveData() { return mMeetingUiModelsLiveData; }
 
-    LiveData<SortingTypeUiModel> getmSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
-
-    LiveData<RoomFilterTypeUiModel> getFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
+    LiveData<SortingTypeUiModel> getSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
 
     LiveData<Integer> getSelectedSortingTypeIndexLiveData() { return mSelectedSortingTypeIndexLiveData; }
 
     LiveData<Integer> getSelectedFilterTypeIndexLiveData() {return mSelectedFilterTypeIndexLiveData; }
+
+    LiveData<RoomFilterTypeUiModel> getFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
 
     void displaySortingTypePopup() {
 
