@@ -67,7 +67,7 @@ public class MainViewModel extends ViewModel {
     };
 
     @NonNull
-    MeetingManager mMeetingManager;
+    private MeetingManager mMeetingManager;
 
     private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
     private RoomFilterTypeUiModel roomFilterTypeUiModel = new RoomFilterTypeUiModel();
@@ -207,7 +207,7 @@ public class MainViewModel extends ViewModel {
         result.add(meetingUiModel);
     }
 
-    public void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
+    void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
         switch (sortChoice) {
             case "Croissant salle":
                 mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
@@ -237,7 +237,7 @@ public class MainViewModel extends ViewModel {
         mSelectedSortingTypeIndexLiveData.setValue(selectedSortingTypeIndex);
     }
 
-    public void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
+    void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
         switch (filterChoice) {
             case "toutes les salles":
                 mRoomFilterTypeLiveData.setValue(ALL_ROOM);
@@ -297,7 +297,7 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    public void setDateFilterType(String dateForFilter) {
+    void setDateFilterType(String dateForFilter) {
 
         int size = 0;
         int index = 0;
@@ -348,7 +348,7 @@ public class MainViewModel extends ViewModel {
         mSelectedFilterTypeIndexLiveData.setValue(selectedFilterTypeIndex);
     }
 
-    LiveData<List<MeetingUiModel>> getUiModelsLiveData() { return mMeetingUiModelsLiveData; }
+    LiveData<List<MeetingUiModel>> getMeetingUiModelsLiveData() { return mMeetingUiModelsLiveData; }
 
     LiveData<SortingTypeUiModel> getSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
 
@@ -382,7 +382,7 @@ public class MainViewModel extends ViewModel {
         return sortingTypeUiModel;
     }
 
-    public void displayFilterRoomPopup() {
+    void displayFilterRoomPopup() {
 
         if (listOfItemFilterRoomMenu.size() == 11) {
             mFilterTypeUiModelLiveData.setValue(getRoomFilterTypeUiModel());
@@ -422,7 +422,7 @@ public class MainViewModel extends ViewModel {
         return null;
     }
 
-    public void deleteMeeting(int meetingId) {
+    void deleteMeeting(int meetingId) {
         MeetingManager.getInstance().deleteMeeting(meetingId);
     }
 }

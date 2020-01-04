@@ -113,7 +113,7 @@ public class MainViewModelTest {
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(2,result.size());
@@ -127,7 +127,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Croissant salle", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -143,7 +143,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Decroissant salle", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -159,7 +159,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Croissant date", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -175,7 +175,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Decroissant date", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -191,7 +191,7 @@ public class MainViewModelTest {
         mainViewModel.setRoomFilterType("salle 1", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(1,result.size());
@@ -205,7 +205,7 @@ public class MainViewModelTest {
         mainViewModel.setRoomFilterType("salle 2", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(1,result.size());
@@ -219,7 +219,7 @@ public class MainViewModelTest {
         mainViewModel.setRoomFilterType("salle 3", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(1,result.size());
@@ -233,7 +233,7 @@ public class MainViewModelTest {
         mainViewModel.setRoomFilterType("toutes les salles", Mockito.mock(RoomFilterTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -250,7 +250,7 @@ public class MainViewModelTest {
         mainViewModel.setDateFilterType("2019-12-22");
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -264,7 +264,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Croissant date", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -280,7 +280,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Decroissant date", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -296,7 +296,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Croissant salle", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(0,result.get(0).getId());
@@ -311,7 +311,7 @@ public class MainViewModelTest {
         mainViewModel.setSortingType("Decroissant salle", Mockito.mock(SortingTypeUiModel.class));
 
         // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         assertEquals(3,result.size());
@@ -334,7 +334,7 @@ public class MainViewModelTest {
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
 
         // WHEN (UiModel = all data are String)
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getUiModelsLiveData());
+        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
         Assert.assertThat(

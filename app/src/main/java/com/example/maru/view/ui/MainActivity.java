@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
         mViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(MainViewModel.class);
 
-        mViewModel.getUiModelsLiveData().observe(this, new Observer<List<MeetingUiModel>>() {
+        mViewModel.getMeetingUiModelsLiveData().observe(this, new Observer<List<MeetingUiModel>>() {
             @Override
-            public void onChanged(List<MeetingUiModel> meetingUiModels) {
-                adapter.submitList(meetingUiModels);
+            public void onChanged(List<MeetingUiModel> meetingListUiModel) {
+                adapter.submitList(meetingListUiModel);
             }
         });
 
