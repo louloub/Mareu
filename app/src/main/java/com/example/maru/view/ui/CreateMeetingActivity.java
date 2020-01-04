@@ -27,7 +27,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.maru.R;
 import com.example.maru.utility.RangeTimePickerDialog;
 import com.example.maru.view.ViewModelFactory;
-import com.example.maru.view.ui.model.SubjectAndParticipantHintMeetingUiModel;
 import com.example.maru.view.ui.model.HintUiModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
