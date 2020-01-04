@@ -1,11 +1,11 @@
 package com.example.maru.view.ui.model;
 
-public class AddMeetingUiModel {
+public class SubjectAndParticipantHintMeetingUiModel {
 
     private final String subjectHint;
     private final String participantHint;
 
-    public AddMeetingUiModel(String subjectHint, String participantHint) {
+    public SubjectAndParticipantHintMeetingUiModel(String subjectHint, String participantHint) {
         this.subjectHint = subjectHint;
         this.participantHint = participantHint;
     }

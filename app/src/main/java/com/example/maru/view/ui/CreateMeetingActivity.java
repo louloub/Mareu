@@ -27,7 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.maru.R;
 import com.example.maru.utility.RangeTimePickerDialog;
 import com.example.maru.view.ViewModelFactory;
-import com.example.maru.view.ui.model.AddMeetingUiModel;
+import com.example.maru.view.ui.model.SubjectAndParticipantHintMeetingUiModel;
 import com.example.maru.view.ui.model.HintUiModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
@@ -65,13 +65,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         final TextView date = findViewById(R.id.create_meeting_et_edit_date);
 
         mCreateMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(CreateMeetingViewModel.class);
-
-        mCreateMeetingViewModel.getAddMeetingUiModelLiveData().observe(this, new Observer<AddMeetingUiModel>() {
-            @Override
-            public void onChanged(AddMeetingUiModel addMeetingUiModel) {
-                subjectOfMeeting.setHint(addMeetingUiModel.getSubjectHint());
-            }
-        });
 
         mCreateMeetingViewModel.getViewActionLiveData().observe(this, new Observer<CreateMeetingViewModel.ViewAction>() {
             @Override

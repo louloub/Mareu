@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.view.ui.model.AddMeetingUiModel;
 import com.example.maru.view.ui.model.HintUiModel;
 
 import org.threeten.bp.LocalDate;
@@ -14,18 +13,12 @@ import java.util.List;
 
 public class CreateMeetingViewModel extends ViewModel {
 
-    private MutableLiveData<AddMeetingUiModel> mAddMeetingUiModelLiveData = new MutableLiveData<>();
     private MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
-
     private MutableLiveData<HintUiModel> mStringForHint = new MutableLiveData<>();
 
-    public MutableLiveData<AddMeetingUiModel> getAddMeetingUiModelLiveData() {
-        return mAddMeetingUiModelLiveData;
-    }
-    public MutableLiveData<ViewAction> getViewActionLiveData() {
+    MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
-
     LiveData<HintUiModel> getHintUiModel() { return mStringForHint; }
 
     public void createMeeting(
