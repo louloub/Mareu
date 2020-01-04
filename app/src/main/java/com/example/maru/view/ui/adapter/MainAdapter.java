@@ -80,8 +80,6 @@ public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainVie
                 public void onClick(View v) {
 
                     callbackListener.onMeetingClicked(model.getId());
-
-                    MeetingManager.getInstance().deleteMeeting(getLayoutPosition());
                 }
             });
         }
