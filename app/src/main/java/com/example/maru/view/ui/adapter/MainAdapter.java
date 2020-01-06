@@ -17,6 +17,10 @@ import com.example.maru.R;
 import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.MeetingUiModel;
 
+import java.util.Locale;
+
+import static androidx.core.content.res.TypedArrayUtils.getString;
+
 public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainViewHolder> {
 
     private CallbackListener callback;
@@ -64,11 +68,12 @@ public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainVie
             String hourString = hourAndMinutesString.substring(0 , iend);
 
             int minutesInt = Integer.parseInt(minutesString);
-            String minutesStringFormatted = String.format("%02d", minutesInt);
+            String minutesStringFormatted = String.format(Locale.FRANCE,"%02d", minutesInt);
 
-            textViewInformation.setText(
-                    model.getSubject() + " à " + hourString + "h" + minutesStringFormatted + " le "
-                            + model.getDate() + " salle n° " + model.getRoom());
+            String textWithAllInformationAboutMeeting = model.getSubject() + " à " + hourString + "h" + minutesStringFormatted + " le "
+                    + model.getDate() + " salle n° " + model.getRoom();
+
+            textViewInformation.setText(textWithAllInformationAboutMeeting);
 
             textViewInformation.setTypeface(null, Typeface.BOLD);
             textViewInformation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);

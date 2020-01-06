@@ -41,6 +41,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -190,10 +191,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             yearsSelectedInInt = year;
                             daysSelectedInInt = dayOfMonth;
 
-                            String dayInStringFormat = String.format("%02d", dayOfMonth);
-                            String monthInStringFormat = String.format("%02d", month);
+                            String dayInStringFormat = String.format(Locale.FRANCE,"%02d", dayOfMonth);
+                            String monthInStringFormat = String.format(Locale.FRANCE,"%02d", month);
 
-                            chooseDate.setText(dayInStringFormat + "/" + monthInStringFormat + "/" + year);
+                            String chosenDate = dayInStringFormat + "/" + monthInStringFormat + "/" + year;
+                            chooseDate.setText(chosenDate);
                             String yearInString = String.valueOf(year);
                             String dateString = dayInStringFormat + "-" + monthInStringFormat + "-" + yearInString;
 
@@ -219,7 +221,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                 {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        chooseHour.setText(hourOfDay + "h" + String.format("%02d", minutes));
+                        String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);
+                        chooseHour.setText(chosenHour);
                         String hourInString = String.valueOf(hourOfDay);
                         String minutesInString = String.valueOf(minutes);
                         String hour = hourInString + "h" + minutesInString;
@@ -348,7 +351,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             if (first) {
                 final SharedPreferences.Editor editor = reader.edit();
                 editor.putBoolean("is_first", false);
-                editor.commit();
+                editor.apply();
             }
             return first;
         }

@@ -36,7 +36,7 @@
                     app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
                     app:layout_constraintEnd_toStartOf="@id/meeting_iv_delete_meeting"
                     app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
-                    android:text="Sujet + hour + date + room">
+                    android:text="@string/sujet_hour_date_room">
                 </TextView>
 
                 <!-- PARTICIPANT -->
@@ -48,7 +48,7 @@
                     app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
                     app:layout_constraintEnd_toStartOf="@id/meeting_iv_delete_meeting"
                     app:layout_constraintTop_toBottomOf="@id/meeting_tv_information"
-                    android:text="Participants"/>
+                    android:text="@string/participants"/>
 
                 <!-- BUTTON DELETE -->
                 <androidx.appcompat.widget.AppCompatImageView

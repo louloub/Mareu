@@ -4,10 +4,14 @@
     <string name="empty_meeting">Pas de réunion pour le moment</string>
     <string name="subject">Sujet</string>
     <string name="participant">Participant(s)</string>
+    <string name="participants">Participants</string>
     <string name="heure">Choisir lheure</string>
     <string name="date">Choisir la date</string>
     <string name="room">Numéro de salle</string>
     <string name="Salle">Salle</string>
     <string name="meeting_empty">Pas de réunion actuellement</string>
     <string name="valider_ma_reunion">Valider ma réunion</string>
+    <string name="validate">Valider</string>
+    <string name="sujet_hour_date_room">Sujet + hour + date + room</string>
+    <string name="slash">/</string>
 </resources>
