@@ -1,0 +1,22 @@
+package com.example.mareu;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+// UNIT TEST : test method
+// GIVEN : starting test
+// WHEN : method call
+// THEN : assertion, we check if all is ok
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
+public class ExampleUnitTest {
+    @Test
+    public void addition_isCorrect() {
+        assertEquals(4, 2 + 2);
+    }
+}
