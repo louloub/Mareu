@@ -1,5 +1,6 @@
 package com.example.maru.service.model;
 
+import org.jetbrains.annotations.NotNull;
 import org.threeten.bp.LocalDate;
 
 import java.io.Serializable;
@@ -52,6 +53,7 @@ public class Meeting implements Serializable, Comparable<Meeting> {
         return (this.room - meeting.room);
     }
 
+    @NotNull
     @Override
     //this is required to print the user-friendly information about the Employee
     public String toString() {

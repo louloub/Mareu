@@ -238,7 +238,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                         && daysSelectedInInt == calendar.get(Calendar.DAY_OF_MONTH))
                 {
                     timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
-                } else {
                 }
                 timePickerDialog.show();
             }

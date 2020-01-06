@@ -1,5 +1,7 @@
 package com.example.maru.view.ui.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MeetingUiModel {
 
     private final int id;
@@ -43,6 +45,7 @@ public class MeetingUiModel {
         return listOfEmailOfParticipant;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "MeetingUiModel{" +

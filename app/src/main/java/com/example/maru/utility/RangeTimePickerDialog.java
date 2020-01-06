@@ -13,8 +13,8 @@ public class RangeTimePickerDialog extends TimePickerDialog {
     private int minHour = 0;
     private int minMinute = 0;
 
-    private int currentHour = 0;
-    private int currentMinute = 0;
+    private int currentHour;
+    private int currentMinute;
 
     private final Calendar calendar = Calendar.getInstance();
     private final DateFormat dateFormat;

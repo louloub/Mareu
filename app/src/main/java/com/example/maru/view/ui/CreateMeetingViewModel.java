@@ -27,43 +27,30 @@ public class CreateMeetingViewModel extends ViewModel {
             int room,
             String subject,
             List<String> listOfEmailOfParticipant) {
-        String subjectHint;
-        String participantHint;
-        String dateHint;
-        String hourHint;
-        String roomHint;
         String hintText;
 
         if (subject == null || subject.isEmpty()) {
             hintText = "           : Merci d'entrer le sujet de la réunion" ;
             HintUiModel hintUiModel = new HintUiModel(hintText,"Subject");
             mStringForHint.setValue(hintUiModel);
-        } else {
-            subjectHint = null;
         }
 
         if (listOfEmailOfParticipant.size() == 0) {
             hintText = "Merci d'entrer le(s) participant(s)";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
             mStringForHint.setValue(hintUiModel);
-        } else {
-            participantHint = null;
         }
 
         if (date == null) {
             hintText = "Merci de sélectionner une date";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Date");
             mStringForHint.setValue(hintUiModel);
-        } else {
-            dateHint = null;
         }
 
         if (hour == null) {
             hintText = "Merci de sélectionner une heure";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Hour");
             mStringForHint.setValue(hintUiModel);
-        } else {
-            hourHint = null;
         }
 
         if ((subject != null && !subject.isEmpty())
