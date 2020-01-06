@@ -286,6 +286,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
+
     public void roomOfMeeting(final Spinner roomOfMeeting) {
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
