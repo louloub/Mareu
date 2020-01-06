@@ -2,12 +2,12 @@ package com.example.maru.view.ui.model;
 
 public class MeetingUiModel {
 
-    private int id;
-    private String date;
-    private String hour;
-    private String room;
-    private String subject;
-    private String listOfEmailOfParticipant;
+    private final int id;
+    private final String date;
+    private final String hour;
+    private final String room;
+    private final String subject;
+    private final String listOfEmailOfParticipant;
 
     public MeetingUiModel(
             int id, String date, String hour, String room, String subject, String listOfEmailOfParticipant) {

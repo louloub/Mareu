@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CreateMeetingViewModel extends ViewModel {
 
-    private MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
-    private MutableLiveData<HintUiModel> mStringForHint = new MutableLiveData<>();
+    private final MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
+    private final MutableLiveData<HintUiModel> mStringForHint = new MutableLiveData<>();
 
     MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
@@ -47,6 +47,7 @@ public class CreateMeetingViewModel extends ViewModel {
             HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
             mStringForHint.setValue(hintUiModel);
         } else {
+            participantHint = null;
         }
 
         if (date == null) {

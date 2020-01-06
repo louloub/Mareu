@@ -23,7 +23,7 @@ import static androidx.core.content.res.TypedArrayUtils.getString;
 
 public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainViewHolder> {
 
-    private CallbackListener callback;
+    private final CallbackListener callback;
 
     public MainAdapter(CallbackListener callback) {
         super(new DiffCallback());

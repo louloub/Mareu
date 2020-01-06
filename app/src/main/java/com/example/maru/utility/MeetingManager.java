@@ -20,7 +20,7 @@ public class MeetingManager {
      */
     private static MeetingManager INSTANCE = null;
     private final List<Meeting> mMeetingList = new ArrayList<>();
-    private MutableLiveData<List<Meeting>> mMeetingListLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Meeting>> mMeetingListLiveData = new MutableLiveData<>();
 
     private int mMeetingCount = 0;
 

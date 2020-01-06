@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Meeting implements Serializable, Comparable<Meeting> {
 
-    private int id;
+    private final int id;
     private final LocalDate date;
     private final String hour;
     private final int room;

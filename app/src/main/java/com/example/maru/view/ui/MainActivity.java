@@ -33,11 +33,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
-    private static final String TAG = "tag";
-    final MainAdapter adapter = new MainAdapter(this);
-    int mSelectedSortingTypeIndex, mSelectedFilterTypeIndex;
-    SortingTypeUiModel mSortingTypeUiModel;
-    RoomFilterTypeUiModel mRoomFilterTypeUiModel;
+    private final MainAdapter adapter = new MainAdapter(this);
+    private int mSelectedSortingTypeIndex;
+    private int mSelectedFilterTypeIndex;
+    private SortingTypeUiModel mSortingTypeUiModel;
+    private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
     private MainViewModel mViewModel;
 
     @Override
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     }
 
     // Launch intent for create new meeting
-    public void launchCreateMeeting() {
+    private void launchCreateMeeting() {
         Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
         startActivity(intent);
     }
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     }
 
     // Alert Dialog Choice Sort
-    public void alertDialogChoiceSort(SortingTypeUiModel sortingTypeUiModel) {
+    private void alertDialogChoiceSort(SortingTypeUiModel sortingTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     }
 
     // Alert Dialog Room Filtre
-    public void alertDialogChoiceRoomFiltre(RoomFilterTypeUiModel roomFilterTypeUiModel) {
+    private void alertDialogChoiceRoomFiltre(RoomFilterTypeUiModel roomFilterTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     }
 
     // Alert Dialog Date Filtre
-    public void alertDialogChoiceDateFiltre () {
+    private void alertDialogChoiceDateFiltre () {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);

@@ -2,8 +2,8 @@ package com.example.maru.view.ui.model;
 
 public class HintUiModel {
 
-    private String textHint;
-    private String sourceHint;
+    private final String textHint;
+    private final String sourceHint;
 
     public HintUiModel(String textHint, String sourceHint) {
         this.textHint = textHint;

@@ -19,8 +19,8 @@ public class RangeTimePickerDialog extends TimePickerDialog {
     private int currentHour = 0;
     private int currentMinute = 0;
 
-    private Calendar calendar = Calendar.getInstance();
-    private DateFormat dateFormat;
+    private final Calendar calendar = Calendar.getInstance();
+    private final DateFormat dateFormat;
 
     public RangeTimePickerDialog(Context context, OnTimeSetListener callBack, int hourOfDay, int minute, boolean is24HourView) {
         super(context, callBack, hourOfDay, minute, is24HourView);
@@ -45,11 +45,6 @@ public class RangeTimePickerDialog extends TimePickerDialog {
         minMinute = minute;
     }
 
-    public void setMax(int hour, int minute) {
-        maxHour = hour;
-        maxMinute = minute;
-    }
-
     @Override
     public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 
@@ -68,10 +63,10 @@ public class RangeTimePickerDialog extends TimePickerDialog {
         }
 
         updateTime(currentHour, currentMinute);
-        updateDialogTitle(view, currentHour, currentMinute);
+        updateDialogTitle(currentHour, currentMinute);
     }
 
-    private void updateDialogTitle(TimePicker timePicker, int hourOfDay, int minute) {
+    private void updateDialogTitle(int hourOfDay, int minute) {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         String title = dateFormat.format(calendar.getTime());

@@ -15,10 +15,6 @@ public class SortingTypeUiModel {
     public SortingTypeUiModel() {
     }
 
-    public List<String> getNames() {
-        return names;
-    }
-
     public void setNames(List<String> names) {
         this.names = names;
     }

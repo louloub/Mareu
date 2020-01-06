@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.maru.service.model.Meeting;
 import com.example.maru.utility.MeetingManager;
-import com.example.maru.view.ui.model.DateFilterTypeUiModel;
 import com.example.maru.view.ui.model.RoomFilterTypeUiModel;
 import com.example.maru.view.ui.model.MeetingUiModel;
 import com.example.maru.view.ui.model.SortingTypeUiModel;
@@ -66,8 +65,8 @@ public class MainViewModel extends ViewModel {
         }
     };
 
-    private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
-    private RoomFilterTypeUiModel roomFilterTypeUiModel = new RoomFilterTypeUiModel();
+    private final SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
+    private final RoomFilterTypeUiModel roomFilterTypeUiModel = new RoomFilterTypeUiModel();
 
     private int selectedSortingTypeIndex = 0;
     private int selectedFilterTypeIndex = 0;
@@ -76,17 +75,17 @@ public class MainViewModel extends ViewModel {
     private final List<String> listOfItemFilterRoomMenu = new ArrayList<>();
 
     private final LiveData<List<Meeting>> mMeetingListLiveData;
-    private MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
+    private final MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
 
-    private MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
-    private MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
-    private MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
+    private final MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
+    private final MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
-    private MutableLiveData<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
+    private final MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
+    private final MutableLiveData<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
 
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
-    private MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
@@ -371,11 +370,10 @@ public class MainViewModel extends ViewModel {
         return sortingTypeUiModel;
     }
 
-    private SortingTypeUiModel setSortingTypeUiModel() {
+    private void setSortingTypeUiModel() {
         sortingTypeUiModel.setNames(listOfItemSortMenu);
         sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
         mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
-        return sortingTypeUiModel;
     }
 
     void displayFilterRoomPopup() {
@@ -402,21 +400,17 @@ public class MainViewModel extends ViewModel {
         return roomFilterTypeUiModel;
     }
 
-    private RoomFilterTypeUiModel setRoomFilterTypeUiModel() {
+    private void setRoomFilterTypeUiModel() {
         roomFilterTypeUiModel.setNames(listOfItemFilterRoomMenu);
         roomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
         mFilterTypeUiModelLiveData.setValue(roomFilterTypeUiModel);
-        return roomFilterTypeUiModel;
     }
 
     void displayFilterDatePopup(){
         setDateFilterTypeUiModel();
     }
 
-    private DateFilterTypeUiModel setDateFilterTypeUiModel(){
-
-        return null;
-    }
+    private void setDateFilterTypeUiModel(){ }
 
     void deleteMeeting(int meetingId) {
         MeetingManager.getInstance().deleteMeeting(meetingId);

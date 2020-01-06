@@ -50,7 +50,7 @@ public class MainViewModelTest {
     private MutableLiveData<List<Meeting>> mMeetingListLiveData;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mMeetingManager = Mockito.mock(MeetingManager.class);
         mMeetingListLiveData = new MutableLiveData<>();
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
@@ -373,33 +373,5 @@ public class MainViewModelTest {
                 getParticipants(),hasItem("test2@test.fr"));
 
 
-    }
-
-    static private boolean assertEqualsHomeMade (Meeting meeting1, Meeting meeting2){
-
-        if (meeting1 !=null) {
-            if (meeting1.getSubject()!=null) {
-                if (meeting1.getListOfEmailOfParticipant()!=null) {
-                    if (meeting1.getRoom()!=0) {
-                        if (meeting1.getDate()!=null) {
-                            if (meeting1.getHour()!=null) {
-                                if (meeting2 !=null) {
-                                    if (meeting2.getSubject()!=null && meeting2.getSubject().equals(meeting1.getSubject())) {
-                                        if (meeting2.getListOfEmailOfParticipant()!=null && meeting2.getListOfEmailOfParticipant().equals(meeting1.getListOfEmailOfParticipant()) ) {
-                                            if (meeting2.getRoom()!=0 && meeting2.getRoom()== meeting1.getRoom() ) {
-                                                if (meeting2.getDate()!=null && meeting2.getDate().isEqual(meeting1.getDate())) {
-                                                    return meeting2.getHour() != null && meeting2.getHour().equals(meeting1.getHour());
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     }
 }

@@ -47,13 +47,17 @@ import static com.example.maru.view.ui.CreateMeetingViewModel.ViewAction.OK;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private static final String TAG = "TAG";
-    final ArrayList<String> listOfParticipantChip = new ArrayList<>();
-    private int SpannedLength = 0, chipLength = 4, mRoom, yearsSelectedInInt, monthSelectedInInt, daysSelectedInInt;
+    private final ArrayList<String> listOfParticipantChip = new ArrayList<>();
+    private int SpannedLength = 0;
+    private int chipLength = 4;
+    private int mRoom;
+    private int yearsSelectedInInt;
+    private int monthSelectedInInt;
+    private int daysSelectedInInt;
     private CreateMeetingViewModel mCreateMeetingViewModel;
     private LocalDate mLocalDate;
     private String mHour, participantHint;
-    Calendar calendar = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +109,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
     }
 
-    public void retrieveXMLandLaunchMethod() {
+    private void retrieveXMLandLaunchMethod() {
         TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
         TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
         listOfParticipant.setBackground(null);
@@ -120,10 +124,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         TextView chooseDate = findViewById(R.id.create_meeting_et_edit_date);
         launchDatePickerDialog(chooseDate);
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
-        onValidMeetingClick(validMeeting, listOfParticipant, subjectOfMeeting, chooseHour, chooseDate);
+        onValidMeetingClick(validMeeting,subjectOfMeeting);
     }
 
-    public void launchDatePickerDialog(final TextView chooseDate) {
+    private void launchDatePickerDialog(final TextView chooseDate) {
         Button button = findViewById(R.id.create_meeting_bt_date);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,8 +204,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             String dateString = dayInStringFormat + "-" + monthInStringFormat + "-" + yearInString;
 
                             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                            LocalDate localDate = LocalDate.parse(dateString, dateTimeFormatter);
-                            mLocalDate = localDate;
+                            mLocalDate = LocalDate.parse(dateString, dateTimeFormatter);
                         }
                     }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -210,7 +213,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    public void launchTimerPickerDialog(final TextView chooseHour) {
+    private void launchTimerPickerDialog(final TextView chooseHour) {
         Button button = findViewById(R.id.create_meeting_bt_hour);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,8 +228,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                         chooseHour.setText(chosenHour);
                         String hourInString = String.valueOf(hourOfDay);
                         String minutesInString = String.valueOf(minutes);
-                        String hour = hourInString + "h" + minutesInString;
-                        mHour = hour;
+                        mHour = hourInString + "h" + minutesInString;
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
 
@@ -242,7 +244,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    public void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
+    private void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
 
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
@@ -290,7 +292,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
 
-    public void roomOfMeeting(final Spinner roomOfMeeting) {
+    private void roomOfMeeting(final Spinner roomOfMeeting) {
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -329,10 +331,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {}
 
-    public void onValidMeetingClick(
-            final Button validMeeting, final TextInputEditText listOfParticipant,
-            final TextInputEditText subjectOfMeeting, final TextView chooseHour,
-            final TextView chooseDate) {
+    private void onValidMeetingClick(
+            final Button validMeeting,
+            final TextInputEditText subjectOfMeeting) {
         validMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -343,9 +344,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    public static class MyPreferencesFirstLaunch {
+    private static class MyPreferencesFirstLaunch {
         private static final String MY_PREFERENCES = "my_preferences";
-        public static boolean isFirst(Context context) {
+        private static boolean isFirst(Context context) {
             final SharedPreferences reader = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
             final boolean first = reader.getBoolean("is_first", true);
             if (first) {
