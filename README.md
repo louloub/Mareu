@@ -1,7 +1,7 @@
 # Mareu
-Cette Application à pour but de simplifier la prise de réunion
+* Cette Application à pour but de simplifier la prise de réunion
 ## Fonctionnalités
-Création d'une réunion avec un sujet, des participants, une salle, une date et une heure
-Trie des réunions par ordre croissant / décroissant de date et salle
-Filtre des réunions par salle
-Filtre des réunions par date
+* Création d'une réunion avec un sujet, des participants, une salle, une date et une heure
+* Trie des réunions par ordre croissant / décroissant de date et salle
+* Filtre des réunions par salle
+* Filtre des réunions par date
