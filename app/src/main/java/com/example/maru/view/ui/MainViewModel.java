@@ -319,7 +319,7 @@ public class MainViewModel extends ViewModel {
 
             } else if (dateForFilter.isEmpty()) {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithoutDateFilter);
-            } else if (dateForFilter.length()!=10 && !dateForFilter.isEmpty()  ) {
+            } else if (dateForFilter.length() != 10) {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
             } else {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
