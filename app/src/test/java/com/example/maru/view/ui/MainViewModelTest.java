@@ -388,9 +388,7 @@ public class MainViewModelTest {
                                         if (meeting2.getListOfEmailOfParticipant()!=null && meeting2.getListOfEmailOfParticipant().equals(meeting1.getListOfEmailOfParticipant()) ) {
                                             if (meeting2.getRoom()!=0 && meeting2.getRoom()== meeting1.getRoom() ) {
                                                 if (meeting2.getDate()!=null && meeting2.getDate().isEqual(meeting1.getDate())) {
-                                                    if (meeting2.getHour()!=null && meeting2.getHour().equals(meeting1.getHour())) {
-                                                        return true;
-                                                    }
+                                                    return meeting2.getHour() != null && meeting2.getHour().equals(meeting1.getHour());
                                                 }
                                             }
                                         }

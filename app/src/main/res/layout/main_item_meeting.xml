@@ -36,7 +36,7 @@
                     app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
                     app:layout_constraintEnd_toStartOf="@id/meeting_iv_delete_meeting"
                     app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
-                    android:text="@string/sujet_hour_date_room">
+                    android:text="@string/subjet_hour_date_room">
                 </TextView>
 
                 <!-- PARTICIPANT -->

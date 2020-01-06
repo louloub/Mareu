@@ -66,9 +66,6 @@ public class MainViewModel extends ViewModel {
         }
     };
 
-    @NonNull
-    private MeetingManager mMeetingManager;
-
     private SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
     private RoomFilterTypeUiModel roomFilterTypeUiModel = new RoomFilterTypeUiModel();
 
@@ -92,8 +89,7 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
-        mMeetingManager = meetingManager;
-        mMeetingListLiveData = mMeetingManager.getMeetingListLiveData();
+        mMeetingListLiveData = meetingManager.getMeetingListLiveData();
         wireUpMediator();
     }
 

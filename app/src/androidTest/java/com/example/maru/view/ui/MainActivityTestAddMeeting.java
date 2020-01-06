@@ -13,7 +13,6 @@ import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.example.maru.AndroidTestUtil;
 import com.example.maru.R;
@@ -25,6 +24,7 @@ import org.hamcrest.core.AllOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;

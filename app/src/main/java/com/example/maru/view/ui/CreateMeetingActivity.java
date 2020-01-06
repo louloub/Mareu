@@ -43,6 +43,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.maru.view.ui.CreateMeetingViewModel.ViewAction.OK;
+
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "TAG";
@@ -69,10 +71,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mCreateMeetingViewModel.getViewActionLiveData().observe(this, new Observer<CreateMeetingViewModel.ViewAction>() {
             @Override
             public void onChanged(CreateMeetingViewModel.ViewAction viewAction) {
-                switch (viewAction) {
-                    case OK:
-                        finish();
-                        break;
+                if (viewAction.equals(OK)){
+                    finish();
                 }
             }
         });

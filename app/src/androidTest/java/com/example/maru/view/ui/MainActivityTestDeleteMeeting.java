@@ -11,7 +11,6 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.example.maru.AndroidTestUtil;
 import com.example.maru.R;
@@ -22,6 +21,7 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
