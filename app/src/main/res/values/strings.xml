@@ -7,7 +7,7 @@
     <string name="participants">Participants</string>
     <string name="hour">Choisir lheure</string>
     <string name="date">Choisir la date</string>
-    <string name="Salle">Salle</string>
+    <string name="room">Salle</string>
     <string name="validate_my_meeting">Valider ma réunion</string>
     <string name="subjet_hour_date_room">Sujet + hour + date + room</string>
 </resources>

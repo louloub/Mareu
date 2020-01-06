@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.CreateMeetingActivity">
 
-    <!-- TODO : 0dp = pour dire que ce sont les contraintes qui vont définir la taille du L -->
-
     <!-- START APPBAR -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout_abl_AppBarLayout"
@@ -105,7 +103,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="@string/Salle"
+        android:hint="@string/room"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="@id/create_meeting_spi_room"
         app:layout_constraintEnd_toStartOf="@+id/create_meeting_spi_room"
