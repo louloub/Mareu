@@ -14,12 +14,9 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maru.R;
-import com.example.maru.utility.MeetingManager;
 import com.example.maru.view.ui.model.MeetingUiModel;
 
 import java.util.Locale;
-
-import static androidx.core.content.res.TypedArrayUtils.getString;
 
 public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainViewHolder> {
 

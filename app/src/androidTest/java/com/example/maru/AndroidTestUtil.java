@@ -31,7 +31,9 @@ public class AndroidTestUtil {
 
             RecyclerView recyclerView = (RecyclerView) view;
             RecyclerView.Adapter adapter = recyclerView.getAdapter();
-            assertThat(adapter.getItemCount(), is(expectedCount));
+            if (adapter != null) {
+                assertThat(adapter.getItemCount(), is(expectedCount));
+            }
         }
     }
 

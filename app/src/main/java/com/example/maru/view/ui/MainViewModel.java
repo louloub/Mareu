@@ -320,7 +320,9 @@ public class MainViewModel extends ViewModel {
             } else if (dateForFilter.isEmpty()) {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithoutDateFilter);
             } else if (dateForFilter.length()!=10 && !dateForFilter.isEmpty()  ) {
-
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
+            } else {
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
             }
             index++;
         } // END WHILE
@@ -405,12 +407,6 @@ public class MainViewModel extends ViewModel {
         roomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
         mFilterTypeUiModelLiveData.setValue(roomFilterTypeUiModel);
     }
-
-    void displayFilterDatePopup(){
-        setDateFilterTypeUiModel();
-    }
-
-    private void setDateFilterTypeUiModel(){ }
 
     void deleteMeeting(int meetingId) {
         MeetingManager.getInstance().deleteMeeting(meetingId);

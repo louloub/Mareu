@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         } else if (item.getItemId() == R.id.toolbar_bt_filter_room_meeting) {
             mViewModel.displayFilterRoomPopup();
         } else if (item.getItemId() == R.id.toolbar_bt_filter_date_meeting) {
-            mViewModel.displayFilterDatePopup();
             alertDialogChoiceDateFiltre();
         }
         return super.onOptionsItemSelected(item);

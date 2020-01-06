@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import static com.example.maru.view.ui.CreateMeetingViewModel.ViewAction.OK;
 
@@ -49,7 +50,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     private final ArrayList<String> listOfParticipantChip = new ArrayList<>();
     private int SpannedLength = 0;
-    private int chipLength = 4;
+    private final int chipLength = 4;
     private int mRoom;
     private int yearsSelectedInInt;
     private int monthSelectedInInt;
@@ -57,7 +58,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private CreateMeetingViewModel mCreateMeetingViewModel;
     private LocalDate mLocalDate;
     private String mHour, participantHint;
-    private Calendar calendar = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -305,7 +306,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        List<Integer> categories = new ArrayList<Integer>();
+        List<Integer> categories = new ArrayList<>();
         categories.add(1);
         categories.add(2);
         categories.add(3);
@@ -317,7 +318,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         categories.add(9);
         categories.add(10);
 
-        ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roomOfMeeting.setAdapter(dataAdapter);
     }
@@ -338,7 +339,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             @Override
             public void onClick(View v) {
                 mCreateMeetingViewModel.createMeeting(
-                        mLocalDate, mHour, mRoom, subjectOfMeeting.getText().toString(),
+                        mLocalDate, mHour, mRoom, Objects.requireNonNull(subjectOfMeeting.getText()).toString(),
                         listOfParticipantChip);
             }
         });

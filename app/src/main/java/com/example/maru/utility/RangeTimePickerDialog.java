@@ -13,9 +13,6 @@ public class RangeTimePickerDialog extends TimePickerDialog {
     private int minHour = 0;
     private int minMinute = 0;
 
-    private int maxHour = 25;
-    private int maxMinute = 25;
-
     private int currentHour = 0;
     private int currentMinute = 0;
 
@@ -34,9 +31,7 @@ public class RangeTimePickerDialog extends TimePickerDialog {
             mTimePickerField.setAccessible(true);
             TimePicker mTimePicker = (TimePicker) mTimePickerField.get(this);
             mTimePicker.setOnTimeChangedListener(this);
-        } catch (NoSuchFieldException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
         }
     }
 
@@ -53,6 +48,8 @@ public class RangeTimePickerDialog extends TimePickerDialog {
             validTime = false;
         }
 
+        int maxMinute = 25;
+        int maxHour = 25;
         if (hourOfDay  > maxHour || (hourOfDay == maxHour && minute > maxMinute)){
             validTime = false;
         }
