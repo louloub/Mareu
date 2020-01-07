@@ -16,23 +16,24 @@ import java.util.Locale;
 public class CreateMeetingViewModel extends ViewModel {
 
     private final MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
-    private final MutableLiveData<HintUiModel> mStringForHint = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mMonthSelectedInInt = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mYearsSelectedInInt = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mDaysSelectedInInt = new MutableLiveData<>();
-    private final MutableLiveData<String> mChosenDateString = new MutableLiveData<>();
-    private final MutableLiveData<LocalDate> mLocalDate = new MutableLiveData<>();
-
+    private final MutableLiveData<HintUiModel> mStringForHintLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mMonthSelectedInIntData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mYearsSelectedInIntLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mDaysSelectedInIntLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> mChosenDateStringLiveData = new MutableLiveData<>();
+    private final MutableLiveData<LocalDate> mChosenDateLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> mChosenTimeStringLiveData = new MutableLiveData<>();
 
     MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
-    LiveData<HintUiModel> getHintUiModel() { return mStringForHint; }
-    MutableLiveData<Integer> getMonthSelectedInInt(){return mMonthSelectedInInt;}
-    MutableLiveData<Integer> getYearsSelectedInInt(){return mYearsSelectedInInt;}
-    MutableLiveData<Integer> getDaysSelectedInInt(){return mDaysSelectedInInt;}
-    MutableLiveData<String> getChosenDateString(){return mChosenDateString;}
-    MutableLiveData<LocalDate> getLocalDate(){return mLocalDate;}
+    LiveData<HintUiModel> getHintUiModel() { return mStringForHintLiveData; }
+    MutableLiveData<Integer> getMonthSelectedInInt(){return mMonthSelectedInIntData;}
+    MutableLiveData<Integer> getYearsSelectedInInt(){return mYearsSelectedInIntLiveData;}
+    MutableLiveData<Integer> getDaysSelectedInInt(){return mDaysSelectedInIntLiveData;}
+    MutableLiveData<String> getChosenDateString(){return mChosenDateStringLiveData;}
+    MutableLiveData<LocalDate> getChosenDate(){return mChosenDateLiveData;}
+    MutableLiveData<String> getChosenTime(){return mChosenTimeStringLiveData;}
 
     public void createMeeting(
             LocalDate date,
@@ -45,25 +46,25 @@ public class CreateMeetingViewModel extends ViewModel {
         if (subject == null || subject.isEmpty()) {
             hintText = "           : Merci d'entrer le sujet de la réunion" ;
             HintUiModel hintUiModel = new HintUiModel(hintText,"Subject");
-            mStringForHint.setValue(hintUiModel);
+            mStringForHintLiveData.setValue(hintUiModel);
         }
 
         if (listOfEmailOfParticipant.size() == 0) {
             hintText = "Merci d'entrer le(s) participant(s)";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
-            mStringForHint.setValue(hintUiModel);
+            mStringForHintLiveData.setValue(hintUiModel);
         }
 
         if (date == null) {
             hintText = "Merci de sélectionner une date";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Date");
-            mStringForHint.setValue(hintUiModel);
+            mStringForHintLiveData.setValue(hintUiModel);
         }
 
         if (hour == null) {
             hintText = "Merci de sélectionner une heure";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Hour");
-            mStringForHint.setValue(hintUiModel);
+            mStringForHintLiveData.setValue(hintUiModel);
         }
 
         if ((subject != null && !subject.isEmpty())
@@ -77,13 +78,13 @@ public class CreateMeetingViewModel extends ViewModel {
     }
 
     public void setHintForParticipants(String participantHint) {
-        mStringForHint.setValue(new HintUiModel(participantHint,"Participant"));
+        mStringForHintLiveData.setValue(new HintUiModel(participantHint,"Participant"));
     }
 
     public void setDateSelectedWithPickerDialog(int year, int month, int dayOfMonth){
-        mMonthSelectedInInt.setValue(month++);
-        mYearsSelectedInInt.setValue(year);
-        mDaysSelectedInInt.setValue(dayOfMonth);
+        mMonthSelectedInIntData.setValue(month++);
+        mYearsSelectedInIntLiveData.setValue(year);
+        mDaysSelectedInIntLiveData.setValue(dayOfMonth);
 
         String dayInStringFormat = String.format(Locale.FRANCE,"%02d", dayOfMonth);
         String monthInStringFormat = String.format(Locale.FRANCE,"%02d", month);
@@ -92,9 +93,14 @@ public class CreateMeetingViewModel extends ViewModel {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.FRANCE);
 
         LocalDate localDateFormatted = LocalDate.parse(chosenDate, dateTimeFormatter);
-        mLocalDate.setValue(localDateFormatted);
+        mChosenDateLiveData.setValue(localDateFormatted);
 
-        mChosenDateString.setValue(chosenDate);
+        mChosenDateStringLiveData.setValue(chosenDate);
+    }
+
+    public void setTimeSelectedWithPickerDialog(int hourOfDay, int minutes){
+        String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);
+        mChosenTimeStringLiveData.setValue(chosenHour);
     }
 
     public enum ViewAction {

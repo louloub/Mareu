@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,12 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,7 +33,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
-import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,10 +53,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private int mMonthSelectedInInt;
     private int mDaysSelectedInInt;
     private CreateMeetingViewModel mCreateMeetingViewModel;
-    private LocalDate mLocalDate;
-    private String mHour;
+    private LocalDate mChosenDate;
     private String mParticipantHint;
     private String mChosenDateString;
+    private String mChosenTimeString;
     private TextInputEditText meetingSubjectEditText;
     private TextInputEditText listOfParticipantEditText;
     private TextView chosenHourTextView;
@@ -119,12 +115,20 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        mCreateMeetingViewModel.getLocalDate().observe(this, new Observer<LocalDate>() {
+        mCreateMeetingViewModel.getChosenDate().observe(this, new Observer<LocalDate>() {
             @Override
-            public void onChanged(LocalDate localDate) {
-                mLocalDate = localDate;
+            public void onChanged(LocalDate chosenDate) {
+                mChosenDate = chosenDate;
             }
         });
+
+        mCreateMeetingViewModel.getChosenTime().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String chosenTime) {
+                mChosenTimeString = chosenTime;
+            }
+        });
+
     }
 
     private void setHint(HintUiModel hintUiModel,
@@ -180,8 +184,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                     new DatePickerDialog.OnDateSetListener()
                     {
                         @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
-                        {
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                             mCreateMeetingViewModel.setDateSelectedWithPickerDialog(year,month,dayOfMonth);
                             chooseDate.setText(mChosenDateString);
                         }
@@ -193,8 +196,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
     private void retriveTimeWithPickerDialog(final TextView chooseHour) {
-        Button button = findViewById(R.id.create_meeting_bt_hour);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button choseTimeButton = findViewById(R.id.create_meeting_bt_hour);
+        choseTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -203,11 +206,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                 {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);
-                        chooseHour.setText(chosenHour);
-                        String hourInString = String.valueOf(hourOfDay);
-                        String minutesInString = String.valueOf(minutes);
-                        mHour = hourInString + "h" + minutesInString;
+                        mCreateMeetingViewModel.setTimeSelectedWithPickerDialog(hourOfDay,minutes);
+                        chooseHour.setText(mChosenTimeString);
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
 
@@ -306,7 +306,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             @Override
             public void onClick(View v) {
                 mCreateMeetingViewModel.createMeeting(
-                        mLocalDate, mHour, mRoom, Objects.requireNonNull(meetingSubjectEditText.getText()).toString(),
+                        mChosenDate, mChosenTimeString, mRoom, Objects.requireNonNull(meetingSubjectEditText.getText()).toString(),
                         mListOfParticipantChip);
             }
         });
