@@ -34,12 +34,18 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
+import org.jetbrains.annotations.NotNull;
+import org.threeten.bp.DateTimeUtils;
+import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
+import org.threeten.bp.ZoneId;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -59,7 +65,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private LocalDate mLocalDate;
     private String mHour;
     private String mParticipantHint;
-    private final Calendar mCalendar = Calendar.getInstance();
+    // private final Calendar mCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +138,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private void launchDatePickerDialog(final TextView chooseDate) {
         Button button = findViewById(R.id.create_meeting_bt_date);
         button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v)
             {
@@ -209,7 +216,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             mLocalDate = LocalDate.parse(dateString, dateTimeFormatter);
                         }
                     }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
-                datePickerDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
+                // datePickerDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
+                datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
                 datePickerDialog.show();
             }
         });
@@ -234,11 +242,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
 
-                if (mYearsSelectedInInt == mCalendar.get(Calendar.YEAR)
-                        && mMonthSelectedInInt == mCalendar.get(Calendar.MONTH)
-                        && mDaysSelectedInInt == mCalendar.get(Calendar.DAY_OF_MONTH))
+                if (mYearsSelectedInInt == LocalDate.now().getYear()
+                        && mMonthSelectedInInt == LocalDate.now().getMonthValue()
+                        && mDaysSelectedInInt == LocalDate.now().getDayOfMonth())
                 {
-                    timePickerDialog.setMin(mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE));
+                    timePickerDialog.setMin(LocalDateTime.now().getHour(),LocalDateTime.now().getMinute());
                 }
                 timePickerDialog.show();
             }
