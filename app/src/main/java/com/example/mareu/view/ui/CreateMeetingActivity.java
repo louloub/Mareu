@@ -60,10 +60,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private LocalDate mLocalDate;
     private String mHour;
     private String mParticipantHint;
-    private final TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
-    private final TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
-    private final TextView hour = findViewById(R.id.create_meeting_et_edit_hour);
-    private final TextView date = findViewById(R.id.create_meeting_et_edit_date);
+    private TextInputEditText meetingSubjectEditText;
+    private TextInputEditText listOfParticipantEditText;
+    private TextView chosenHourTextView;
+    private TextView chosenDateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mCreateMeetingViewModel.getHintUiModel().observe(this, new Observer<HintUiModel>() {
             @Override
             public void onChanged(HintUiModel hintUiModel) {
-                setHint(hintUiModel, subjectOfMeeting, listOfParticipant, date, hour);
+                setHint(hintUiModel, meetingSubjectEditText, listOfParticipantEditText, chosenDateTextView, chosenHourTextView);
             }
         });
     }
@@ -112,21 +112,28 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
     private void init() {
-        TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
-        TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
-        listOfParticipant.setBackground(null);
-        Spinner roomOfMeeting = findViewById(R.id.create_meeting_spi_room);
-        retriveRoomWithSpinner(roomOfMeeting);
+        meetingSubjectEditText = findViewById(R.id.create_meeting_tiet_subject);
+
+        listOfParticipantEditText = findViewById(R.id.create_meeting_teit_listOfParticipant);
+        listOfParticipantEditText.setBackground(null);
+
+        Spinner meetingRoomSpinner = findViewById(R.id.create_meeting_spi_room);
+        retriveRoomWithSpinner(meetingRoomSpinner);
+
         HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
-        horizontalScrollView.setBackground(listOfParticipant.getBackground());
-        ChipGroup chipGroup = findViewById(R.id.chipGroup);
-        retriveParticipantsWithChips(listOfParticipant, chipGroup);
-        TextView chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
-        retriveTimeWithPickerDialog(chooseHour);
-        TextView chooseDate = findViewById(R.id.create_meeting_et_edit_date);
-        retriveDateWithPickerDialog(chooseDate);
-        Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
-        validateMeeting(validMeeting,subjectOfMeeting);
+        horizontalScrollView.setBackground(listOfParticipantEditText.getBackground());
+
+        ChipGroup participantChipGroup = findViewById(R.id.chipGroup);
+        retriveParticipantsWithChips(listOfParticipantEditText, participantChipGroup);
+
+        chosenHourTextView = findViewById(R.id.create_meeting_tv_edit_hour);
+        retriveTimeWithPickerDialog(chosenHourTextView);
+
+        chosenDateTextView = findViewById(R.id.create_meeting_tv_edit_date);
+        retriveDateWithPickerDialog(chosenDateTextView);
+
+        Button validateMeetingButton = findViewById(R.id.create_meeting_bt_valid_meeting);
+        validateMeeting(validateMeetingButton,meetingSubjectEditText);
     }
 
     private void retriveDateWithPickerDialog(final TextView chooseDate) {
@@ -210,7 +217,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             mLocalDate = LocalDate.parse(dateString, dateTimeFormatter);
                         }
                     }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
-                // datePickerDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
                 datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
                 datePickerDialog.show();
             }
@@ -325,13 +331,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
     private void validateMeeting(
-            final Button validMeeting,
-            final TextInputEditText subjectOfMeeting) {
-        validMeeting.setOnClickListener(new View.OnClickListener() {
+            final Button validateMeetingButton,
+            final TextInputEditText meetingSubjectEditText) {
+        validateMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCreateMeetingViewModel.createMeeting(
-                        mLocalDate, mHour, mRoom, Objects.requireNonNull(subjectOfMeeting.getText()).toString(),
+                        mLocalDate, mHour, mRoom, Objects.requireNonNull(meetingSubjectEditText.getText()).toString(),
                         mListOfParticipantChip);
             }
         });
