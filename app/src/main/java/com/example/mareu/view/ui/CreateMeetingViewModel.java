@@ -8,18 +8,31 @@ import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.view.ui.model.HintUiModel;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.List;
+import java.util.Locale;
 
 public class CreateMeetingViewModel extends ViewModel {
 
     private final MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
     private final MutableLiveData<HintUiModel> mStringForHint = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mMonthSelectedInInt = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mYearsSelectedInInt = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mDaysSelectedInInt = new MutableLiveData<>();
+    private final MutableLiveData<String> mChosenDateString = new MutableLiveData<>();
+    private final MutableLiveData<LocalDate> mLocalDate = new MutableLiveData<>();
+
 
     MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
     LiveData<HintUiModel> getHintUiModel() { return mStringForHint; }
+    MutableLiveData<Integer> getMonthSelectedInInt(){return mMonthSelectedInInt;}
+    MutableLiveData<Integer> getYearsSelectedInInt(){return mYearsSelectedInInt;}
+    MutableLiveData<Integer> getDaysSelectedInInt(){return mDaysSelectedInInt;}
+    MutableLiveData<String> getChosenDateString(){return mChosenDateString;}
+    MutableLiveData<LocalDate> getLocalDate(){return mLocalDate;}
 
     public void createMeeting(
             LocalDate date,
@@ -65,6 +78,23 @@ public class CreateMeetingViewModel extends ViewModel {
 
     public void setHintForParticipants(String participantHint) {
         mStringForHint.setValue(new HintUiModel(participantHint,"Participant"));
+    }
+
+    public void setDateSelectedWithPickerDialog(int year, int month, int dayOfMonth){
+        mMonthSelectedInInt.setValue(month++);
+        mYearsSelectedInInt.setValue(year);
+        mDaysSelectedInInt.setValue(dayOfMonth);
+
+        String dayInStringFormat = String.format(Locale.FRANCE,"%02d", dayOfMonth);
+        String monthInStringFormat = String.format(Locale.FRANCE,"%02d", month);
+
+        String chosenDate = dayInStringFormat + "-" + monthInStringFormat + "-" + year;
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.FRANCE);
+
+        LocalDate localDateFormatted = LocalDate.parse(chosenDate, dateTimeFormatter);
+        mLocalDate.setValue(localDateFormatted);
+
+        mChosenDateString.setValue(chosenDate);
     }
 
     public enum ViewAction {

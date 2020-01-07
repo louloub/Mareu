@@ -60,6 +60,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private LocalDate mLocalDate;
     private String mHour;
     private String mParticipantHint;
+    private String mChosenDateString;
     private TextInputEditText meetingSubjectEditText;
     private TextInputEditText listOfParticipantEditText;
     private TextView chosenHourTextView;
@@ -89,6 +90,41 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                 setHint(hintUiModel, meetingSubjectEditText, listOfParticipantEditText, chosenDateTextView, chosenHourTextView);
             }
         });
+
+        mCreateMeetingViewModel.getMonthSelectedInInt().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer monthSelectedInInt) {
+                mMonthSelectedInInt = monthSelectedInInt;
+            }
+        });
+
+        mCreateMeetingViewModel.getYearsSelectedInInt().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer yearsSelectedInInt) {
+                mYearsSelectedInInt = yearsSelectedInInt;
+            }
+        });
+
+        mCreateMeetingViewModel.getDaysSelectedInInt().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer daysSelectedInInt) {
+                mDaysSelectedInInt = daysSelectedInInt;
+            }
+        });
+
+        mCreateMeetingViewModel.getChosenDateString().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String chosenDateString) {
+                mChosenDateString = chosenDateString;
+            }
+        });
+
+        mCreateMeetingViewModel.getLocalDate().observe(this, new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate localDate) {
+                mLocalDate = localDate;
+            }
+        });
     }
 
     private void setHint(HintUiModel hintUiModel,
@@ -115,13 +151,9 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         meetingSubjectEditText = findViewById(R.id.create_meeting_tiet_subject);
 
         listOfParticipantEditText = findViewById(R.id.create_meeting_teit_listOfParticipant);
-        listOfParticipantEditText.setBackground(null);
 
         Spinner meetingRoomSpinner = findViewById(R.id.create_meeting_spi_room);
         retriveRoomWithSpinner(meetingRoomSpinner);
-
-        HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
-        horizontalScrollView.setBackground(listOfParticipantEditText.getBackground());
 
         ChipGroup participantChipGroup = findViewById(R.id.chipGroup);
         retriveParticipantsWithChips(listOfParticipantEditText, participantChipGroup);
@@ -137,8 +169,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
     private void retriveDateWithPickerDialog(final TextView chooseDate) {
-        Button button = findViewById(R.id.create_meeting_bt_date);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button chooseDateButton = findViewById(R.id.create_meeting_bt_date);
+        chooseDateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v)
@@ -147,74 +179,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                         CreateMeetingActivity.this,
                     new DatePickerDialog.OnDateSetListener()
                     {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
                         {
-                            switch (month) {
-                                case 0 :
-                                    month = 1;
-                                    mMonthSelectedInInt = 1;
-                                    break;
-                                case 1 :
-                                    month = 2;
-                                    mMonthSelectedInInt = 2;
-                                    break;
-                                case 2 :
-                                    month = 3;
-                                    mMonthSelectedInInt = 3;
-                                    break;
-                                case 3 :
-                                    month = 4;
-                                    mMonthSelectedInInt = 4;
-                                    break;
-                                case 4 :
-                                    month = 5;
-                                    mMonthSelectedInInt = 5;
-                                    break;
-                                case 5 :
-                                    month = 6;
-                                    mMonthSelectedInInt = 6;
-                                    break;
-                                case 6 :
-                                    month = 7;
-                                    mMonthSelectedInInt = 7;
-                                    break;
-                                case 7 :
-                                    month = 8;
-                                    mMonthSelectedInInt = 8;
-                                    break;
-                                case 8 :
-                                    month = 9;
-                                    mMonthSelectedInInt = 9;
-                                    break;
-                                case 9 :
-                                    month = 10;
-                                    mMonthSelectedInInt = 10;
-                                    break;
-                                case 10 :
-                                    month = 11;
-                                    mMonthSelectedInInt = 11;
-                                    break;
-                                case 11 :
-                                    month = 12;
-                                    mMonthSelectedInInt = 12;
-                                    break;
-                            }
-
-                            mYearsSelectedInInt = year;
-                            mDaysSelectedInInt = dayOfMonth;
-
-                            String dayInStringFormat = String.format(Locale.FRANCE,"%02d", dayOfMonth);
-                            String monthInStringFormat = String.format(Locale.FRANCE,"%02d", month);
-
-                            String chosenDate = dayInStringFormat + "/" + monthInStringFormat + "/" + year;
-                            chooseDate.setText(chosenDate);
-                            String yearInString = String.valueOf(year);
-                            String dateString = dayInStringFormat + "-" + monthInStringFormat + "-" + yearInString;
-
-                            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                            mLocalDate = LocalDate.parse(dateString, dateTimeFormatter);
+                            mCreateMeetingViewModel.setDateSelectedWithPickerDialog(year,month,dayOfMonth);
+                            chooseDate.setText(mChosenDateString);
                         }
                     }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
                 datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
