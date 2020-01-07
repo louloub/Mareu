@@ -1,5 +1,6 @@
 package com.example.mareu.utility;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mareu.service.model.Meeting;
@@ -18,7 +19,7 @@ public class MeetingManager {
     /**
      * Single instance not pre-initialized
      */
-    private static MeetingManager INSTANCE = null;
+    private static MeetingManager sInstance = null;
     private final List<Meeting> mMeetingList = new ArrayList<>();
     private final MutableLiveData<List<Meeting>> mMeetingListLiveData = new MutableLiveData<>();
 
@@ -34,14 +35,14 @@ public class MeetingManager {
      * Access point for unique instance of singleton
      */
     public static MeetingManager getInstance() {
-        if (INSTANCE == null) {
+        if (sInstance == null) {
             synchronized (MeetingManager.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new MeetingManager();
+                if (sInstance == null) {
+                    sInstance = new MeetingManager();
                 }
             }
         }
-        return INSTANCE;
+        return sInstance;
     }
 
     public void addMeeting(LocalDate date,
@@ -53,10 +54,10 @@ public class MeetingManager {
         mMeetingList.add(new Meeting(mMeetingCount,
                 date, hour, room, subject, listOfEmailOfParticipant));
         mMeetingCount++;
-        mMeetingListLiveData.postValue(mMeetingList);
+        mMeetingListLiveData.setValue(mMeetingList);
     }
 
-    public MutableLiveData<List<Meeting>> getMeetingListLiveData() {
+    public LiveData<List<Meeting>> getMeetingListLiveData() {
         return mMeetingListLiveData;
     }
 
@@ -71,6 +72,6 @@ public class MeetingManager {
             }
         }
 
-        mMeetingListLiveData.postValue(mMeetingList);
+        mMeetingListLiveData.setValue(mMeetingList);
     }
 }

@@ -48,17 +48,18 @@ import static com.example.mareu.view.ui.CreateMeetingViewModel.ViewAction.OK;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private final ArrayList<String> listOfParticipantChip = new ArrayList<>();
-    private int SpannedLength = 0;
-    private final int chipLength = 4;
+    private final ArrayList<String> mListOfParticipantChip = new ArrayList<>();
+    private int mSpannedLength = 0;
+    private final int mChipLength = 4;
     private int mRoom;
-    private int yearsSelectedInInt;
-    private int monthSelectedInInt;
-    private int daysSelectedInInt;
+    private int mYearsSelectedInInt;
+    private int mMonthSelectedInInt;
+    private int mDaysSelectedInInt;
     private CreateMeetingViewModel mCreateMeetingViewModel;
     private LocalDate mLocalDate;
-    private String mHour, participantHint;
-    private final Calendar calendar = Calendar.getInstance();
+    private String mHour;
+    private String mParticipantHint;
+    private final Calendar mCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,56 +146,56 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             switch (month) {
                                 case 0 :
                                     month = 1;
-                                    monthSelectedInInt = 1;
+                                    mMonthSelectedInInt = 1;
                                     break;
                                 case 1 :
                                     month = 2;
-                                    monthSelectedInInt = 2;
+                                    mMonthSelectedInInt = 2;
                                     break;
                                 case 2 :
                                     month = 3;
-                                    monthSelectedInInt = 3;
+                                    mMonthSelectedInInt = 3;
                                     break;
                                 case 3 :
                                     month = 4;
-                                    monthSelectedInInt = 4;
+                                    mMonthSelectedInInt = 4;
                                     break;
                                 case 4 :
                                     month = 5;
-                                    monthSelectedInInt = 5;
+                                    mMonthSelectedInInt = 5;
                                     break;
                                 case 5 :
                                     month = 6;
-                                    monthSelectedInInt = 6;
+                                    mMonthSelectedInInt = 6;
                                     break;
                                 case 6 :
                                     month = 7;
-                                    monthSelectedInInt = 7;
+                                    mMonthSelectedInInt = 7;
                                     break;
                                 case 7 :
                                     month = 8;
-                                    monthSelectedInInt = 8;
+                                    mMonthSelectedInInt = 8;
                                     break;
                                 case 8 :
                                     month = 9;
-                                    monthSelectedInInt = 9;
+                                    mMonthSelectedInInt = 9;
                                     break;
                                 case 9 :
                                     month = 10;
-                                    monthSelectedInInt = 10;
+                                    mMonthSelectedInInt = 10;
                                     break;
                                 case 10 :
                                     month = 11;
-                                    monthSelectedInInt = 11;
+                                    mMonthSelectedInInt = 11;
                                     break;
                                 case 11 :
                                     month = 12;
-                                    monthSelectedInInt = 12;
+                                    mMonthSelectedInInt = 12;
                                     break;
                             }
 
-                            yearsSelectedInInt = year;
-                            daysSelectedInInt = dayOfMonth;
+                            mYearsSelectedInInt = year;
+                            mDaysSelectedInInt = dayOfMonth;
 
                             String dayInStringFormat = String.format(Locale.FRANCE,"%02d", dayOfMonth);
                             String monthInStringFormat = String.format(Locale.FRANCE,"%02d", month);
@@ -208,7 +209,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             mLocalDate = LocalDate.parse(dateString, dateTimeFormatter);
                         }
                     }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
-                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+                datePickerDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
                 datePickerDialog.show();
             }
         });
@@ -233,11 +234,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
 
-                if (yearsSelectedInInt == calendar.get(Calendar.YEAR)
-                        && monthSelectedInInt == calendar.get(Calendar.MONTH)
-                        && daysSelectedInInt == calendar.get(Calendar.DAY_OF_MONTH))
+                if (mYearsSelectedInInt == mCalendar.get(Calendar.YEAR)
+                        && mMonthSelectedInInt == mCalendar.get(Calendar.MONTH)
+                        && mDaysSelectedInInt == mCalendar.get(Calendar.DAY_OF_MONTH))
                 {
-                    timePickerDialog.setMin(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE));
+                    timePickerDialog.setMin(mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE));
                 }
                 timePickerDialog.show();
             }
@@ -253,8 +254,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                if (charSequence.length() == SpannedLength - chipLength) {
-                    SpannedLength = charSequence.length();
+                if (charSequence.length() == mSpannedLength - mChipLength) {
+                    mSpannedLength = charSequence.length();
                 }
             }
 
@@ -265,26 +266,26 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                 {
                     final Chip chip = new Chip(CreateMeetingActivity.this);
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
-                    final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(SpannedLength, editable.length() - 1);
+                    final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(mSpannedLength, editable.length() - 1);
                     chip.setText(charSequenceParticipantMailFromChip);
 
                     // TODO : don't use TO STRING but use loop for delete []
-                    listOfParticipantChip.add(listOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
+                    mListOfParticipantChip.add(mListOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             chipGroup.removeView(chip);
-                            listOfParticipantChip.remove(charSequenceParticipantMailFromChip.toString());
+                            mListOfParticipantChip.remove(charSequenceParticipantMailFromChip.toString());
                         }
                     });
 
                     chipGroup.addView(chip);
                     editable.clear();
 
-                    if (listOfParticipantChip.size()>0) {
-                        participantHint = "";
-                        mCreateMeetingViewModel.setHintForParticipants(participantHint);
+                    if (mListOfParticipantChip.size()>0) {
+                        mParticipantHint = "";
+                        mCreateMeetingViewModel.setHintForParticipants(mParticipantHint);
                     }
                 }
             }
@@ -339,7 +340,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             public void onClick(View v) {
                 mCreateMeetingViewModel.createMeeting(
                         mLocalDate, mHour, mRoom, Objects.requireNonNull(subjectOfMeeting.getText()).toString(),
-                        listOfParticipantChip);
+                        mListOfParticipantChip);
             }
         });
     }

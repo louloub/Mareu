@@ -174,8 +174,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         }));
 
         myPopup.setCancelable(false);
-
-        AlertDialog dialog = myPopup.create();
         myPopup.show();
     }
 
@@ -210,8 +208,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         }));
 
         myPopup.setCancelable(false);
-
-        AlertDialog dialog = myPopup.create();
         myPopup.show();
     }
 
@@ -260,8 +256,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         }));
 
         myPopup.setCancelable(false);
-
-        AlertDialog dialog = myPopup.create();
         myPopup.show();
     }
 
