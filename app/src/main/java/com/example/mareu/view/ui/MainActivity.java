@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.setTitle("Choisis le trie que tu souhaites");
 
         myPopup.setSingleChoiceItems(sortingTypeUiModel.getListOfSortingType().toArray(
-                new CharSequence[sortingTypeUiModel.getListOfSortingType().size()]),
+                new CharSequence[0]),
                 sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.setTitle("Choisis la salle à filtrer");
 
         myPopup.setSingleChoiceItems(roomFilterTypeUiModel.getListOFilterType().toArray(
-                new CharSequence[roomFilterTypeUiModel.getListOFilterType().size()]),
+                new CharSequence[0]),
                 roomFilterTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

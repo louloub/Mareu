@@ -27,11 +27,13 @@ public class RangeTimePickerDialog extends TimePickerDialog {
 
         try {
             Class<?> superclass = getClass().getSuperclass();
+            assert superclass != null;
             Field mTimePickerField = superclass.getDeclaredField("mTimePicker");
             mTimePickerField.setAccessible(true);
             TimePicker mTimePicker = (TimePicker) mTimePickerField.get(this);
+            assert mTimePicker != null;
             mTimePicker.setOnTimeChangedListener(this);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException ignored) {
         }
     }
 
