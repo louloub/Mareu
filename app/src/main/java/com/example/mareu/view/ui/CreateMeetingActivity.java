@@ -17,7 +17,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,13 +33,9 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
-import org.jetbrains.annotations.NotNull;
-import org.threeten.bp.DateTimeUtils;
-import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
-import org.threeten.bp.ZoneId;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
@@ -65,18 +60,17 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private LocalDate mLocalDate;
     private String mHour;
     private String mParticipantHint;
-    // private final Calendar mCalendar = Calendar.getInstance();
+    private final TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
+    private final TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
+    private final TextView hour = findViewById(R.id.create_meeting_et_edit_hour);
+    private final TextView date = findViewById(R.id.create_meeting_et_edit_date);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
-        retrieveXMLandLaunchMethod();
+        init();
         AndroidThreeTen.init(this);
-        final TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
-        final TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
-        final TextView hour = findViewById(R.id.create_meeting_et_edit_hour);
-        final TextView date = findViewById(R.id.create_meeting_et_edit_date);
 
         mCreateMeetingViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(CreateMeetingViewModel.class);
 
@@ -117,25 +111,25 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         }
     }
 
-    private void retrieveXMLandLaunchMethod() {
+    private void init() {
         TextInputEditText subjectOfMeeting = findViewById(R.id.create_meeting_tiet_subject);
         TextInputEditText listOfParticipant = findViewById(R.id.create_meeting_teit_listOfParticipant);
         listOfParticipant.setBackground(null);
         Spinner roomOfMeeting = findViewById(R.id.create_meeting_spi_room);
-        roomOfMeeting(roomOfMeeting);
+        retriveRoomWithSpinner(roomOfMeeting);
         HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontal_scroll_view);
         horizontalScrollView.setBackground(listOfParticipant.getBackground());
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
-        chipsForParticipant(listOfParticipant, chipGroup);
+        retriveParticipantsWithChips(listOfParticipant, chipGroup);
         TextView chooseHour = findViewById(R.id.create_meeting_et_edit_hour);
-        launchTimerPickerDialog(chooseHour);
+        retriveTimeWithPickerDialog(chooseHour);
         TextView chooseDate = findViewById(R.id.create_meeting_et_edit_date);
-        launchDatePickerDialog(chooseDate);
+        retriveDateWithPickerDialog(chooseDate);
         Button validMeeting = findViewById(R.id.create_meeting_bt_valid_meeting);
-        onValidMeetingClick(validMeeting,subjectOfMeeting);
+        validateMeeting(validMeeting,subjectOfMeeting);
     }
 
-    private void launchDatePickerDialog(final TextView chooseDate) {
+    private void retriveDateWithPickerDialog(final TextView chooseDate) {
         Button button = findViewById(R.id.create_meeting_bt_date);
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -223,7 +217,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    private void launchTimerPickerDialog(final TextView chooseHour) {
+    private void retriveTimeWithPickerDialog(final TextView chooseHour) {
         Button button = findViewById(R.id.create_meeting_bt_hour);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +247,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-    private void chipsForParticipant(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
+    private void retriveParticipantsWithChips(final TextInputEditText listOfParticipant, final ChipGroup chipGroup) {
 
         listOfParticipant.addTextChangedListener(new TextWatcher() {
             @Override
@@ -277,7 +271,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                     final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(mSpannedLength, editable.length() - 1);
                     chip.setText(charSequenceParticipantMailFromChip);
 
-                    // TODO : don't use TO STRING but use loop for delete []
+                    // TODO : don't use TO STRING but use loop for delete [] (boucle charSeque... pour récupérer 1 par 1 les strings)
                     mListOfParticipantChip.add(mListOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
@@ -300,8 +294,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         });
     }
 
-
-    private void roomOfMeeting(final Spinner roomOfMeeting) {
+    private void retriveRoomWithSpinner(final Spinner roomOfMeeting) {
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -331,16 +324,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         roomOfMeeting.setAdapter(dataAdapter);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {}
-
-    private void onValidMeetingClick(
+    private void validateMeeting(
             final Button validMeeting,
             final TextInputEditText subjectOfMeeting) {
         validMeeting.setOnClickListener(new View.OnClickListener() {
@@ -351,6 +335,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                         mListOfParticipantChip);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 
     private static class MyPreferencesFirstLaunch {
