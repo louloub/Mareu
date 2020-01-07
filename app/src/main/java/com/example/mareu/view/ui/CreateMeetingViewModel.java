@@ -35,7 +35,7 @@ public class CreateMeetingViewModel extends ViewModel {
     MutableLiveData<LocalDate> getChosenDate(){return mChosenDateLiveData;}
     MutableLiveData<String> getChosenTime(){return mChosenTimeStringLiveData;}
 
-    public void createMeeting(
+    void createMeeting(
             LocalDate date,
             String hour,
             int room,
@@ -77,11 +77,11 @@ public class CreateMeetingViewModel extends ViewModel {
         }
     }
 
-    public void setHintForParticipants(String participantHint) {
+    void setHintForParticipants(String participantHint) {
         mStringForHintLiveData.setValue(new HintUiModel(participantHint,"Participant"));
     }
 
-    public void setDateSelectedWithPickerDialog(int year, int month, int dayOfMonth){
+    void setDateSelectedWithPickerDialog(int year, int month, int dayOfMonth){
         mMonthSelectedInIntData.setValue(month++);
         mYearsSelectedInIntLiveData.setValue(year);
         mDaysSelectedInIntLiveData.setValue(dayOfMonth);
@@ -98,7 +98,7 @@ public class CreateMeetingViewModel extends ViewModel {
         mChosenDateStringLiveData.setValue(chosenDate);
     }
 
-    public void setTimeSelectedWithPickerDialog(int hourOfDay, int minutes){
+    void setTimeSelectedWithPickerDialog(int hourOfDay, int minutes){
         String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);
         mChosenTimeStringLiveData.setValue(chosenHour);
     }

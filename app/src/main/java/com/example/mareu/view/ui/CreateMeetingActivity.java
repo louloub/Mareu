@@ -188,7 +188,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                             mCreateMeetingViewModel.setDateSelectedWithPickerDialog(year,month,dayOfMonth);
                             chooseDate.setText(mChosenDateString);
                         }
-                    }, LocalDate.now().getYear(), Calendar.getInstance().get(Calendar.MONTH), LocalDate.now().getDayOfMonth());
+                    }, LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, LocalDate.now().getDayOfMonth());
                 datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
                 datePickerDialog.show();
             }
