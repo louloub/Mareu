@@ -270,8 +270,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                     editable.clear();
 
                     if (mListOfParticipantChip.size()>0) {
-                        mParticipantHint = "";
-                        mCreateMeetingViewModel.setHintForParticipants(mParticipantHint);
+                        mCreateMeetingViewModel.setHintForParticipants();
                     }
                 }
             }

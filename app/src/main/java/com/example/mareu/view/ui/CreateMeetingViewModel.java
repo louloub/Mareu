@@ -28,7 +28,6 @@ public class CreateMeetingViewModel extends ViewModel {
     private final MutableLiveData<String> mChosenTimeStringLiveData = new MutableLiveData<>();
     private final MutableLiveData<CharSequence> mParticipantChip = new MutableLiveData<>();
 
-
     MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
@@ -59,6 +58,11 @@ public class CreateMeetingViewModel extends ViewModel {
             hintText = "Merci d'entrer le(s) participant(s)";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
             mStringForHintLiveData.setValue(hintUiModel);
+        } else {
+            listOfEmailOfParticipant.size();
+            hintText = "";
+            HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
+            mStringForHintLiveData.setValue(hintUiModel);
         }
 
         if (date == null) {
@@ -83,7 +87,8 @@ public class CreateMeetingViewModel extends ViewModel {
         }
     }
 
-    void setHintForParticipants(String participantHint) {
+    void setHintForParticipants() {
+        String participantHint = "";
         mStringForHintLiveData.setValue(new HintUiModel(participantHint,"Participant"));
     }
 
@@ -108,7 +113,6 @@ public class CreateMeetingViewModel extends ViewModel {
         CharSequence charSequenceParticipantFromChip = editable.subSequence(spannedLength, editable.length() - 1);
         mParticipantChip.setValue(charSequenceParticipantFromChip);
     }
-
 
     void setTimeSelectedWithPickerDialog(int hourOfDay, int minutes){
         String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);
