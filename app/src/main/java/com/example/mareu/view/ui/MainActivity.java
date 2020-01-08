@@ -33,7 +33,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
-    private final MainAdapter adapter = new MainAdapter(this);
     private SortingTypeUiModel mSortingTypeUiModel;
     private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
     private MainViewModel mViewModel;
@@ -44,8 +43,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         AndroidThreeTen.init(this);
         setContentView(R.layout.activity_main);
 
-        floatingButton();
-        setToolbar();
+        setupFloatingActionButton();
+        setupToolbar();
+
+        final MainAdapter adapter = new MainAdapter(this);
 
         configureRecyclerView(adapter);
 
@@ -75,36 +76,32 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         });
     }
 
-    private void setToolbar() {
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar_tb_toolbar);
         setSupportActionBar(toolbar);
     }
 
-    // Create floating button
-    private void floatingButton() {
+    private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchCreateMeeting();
+                launchCreateMeetingActivity();
             }
         });
     }
 
-    // RecyclerView
     private void configureRecyclerView(MainAdapter adapter) {
         RecyclerView recyclerView = findViewById(R.id.main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
-    // Launch intent for create new meeting
-    private void launchCreateMeeting() {
+    private void launchCreateMeetingActivity() {
         Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
         startActivity(intent);
     }
 
-    // Create option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         return true;
     }
 
-    // Item selected in toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -126,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         return super.onOptionsItemSelected(item);
     }
 
-    // Alert Dialog Choice Sort
     private void alertDialogChoiceSort(SortingTypeUiModel sortingTypeUiModel) {
 
         // Setup Alert builder
@@ -161,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    // Alert Dialog Room Filter
     private void alertDialogChoiceRoomFilter(RoomFilterTypeUiModel roomFilterTypeUiModel) {
 
         // Setup Alert builder
@@ -195,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    // Alert Dialog Date Filter
     private void alertDialogChoiceDateFilter() {
 
         // Setup Alert builder
