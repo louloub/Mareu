@@ -401,6 +401,7 @@ public class MainViewModel extends ViewModel {
         }
     }
 
+
     private SortingTypeUiModel getSortingTypeUiModel() {
         return sortingTypeUiModel;
     }
