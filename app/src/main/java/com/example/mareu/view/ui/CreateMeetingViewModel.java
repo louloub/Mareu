@@ -26,20 +26,19 @@ public class CreateMeetingViewModel extends ViewModel {
     private final MutableLiveData<String> mChosenDateStringLiveData = new MutableLiveData<>();
     private final MutableLiveData<LocalDate> mChosenDateLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> mChosenTimeStringLiveData = new MutableLiveData<>();
-    private final MutableLiveData<CharSequence> mParticipantChip = new MutableLiveData<>();
     private final MutableLiveData<Integer> mRoomSelected = new MutableLiveData<>();
 
-    MutableLiveData<ViewAction> getViewActionLiveData() {
+    LiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
     LiveData<HintUiModel> getHintUiModel() { return mHintUiModelLiveData; }
-    MutableLiveData<Integer> getMonthSelectedInInt(){return mMonthSelectedInIntData;}
-    MutableLiveData<Integer> getYearsSelectedInInt(){return mYearsSelectedInIntLiveData;}
-    MutableLiveData<Integer> getDaysSelectedInInt(){return mDaysSelectedInIntLiveData;}
-    MutableLiveData<String> getChosenDateString(){return mChosenDateStringLiveData;}
-    MutableLiveData<LocalDate> getChosenDate(){return mChosenDateLiveData;}
-    MutableLiveData<String> getChosenTime(){return mChosenTimeStringLiveData;}
-    MutableLiveData<Integer> getRoomSelected(){return mRoomSelected;}
+    LiveData<Integer> getMonthSelectedInInt(){return mMonthSelectedInIntData;}
+    LiveData<Integer> getYearsSelectedInInt(){return mYearsSelectedInIntLiveData;}
+    LiveData<Integer> getDaysSelectedInInt(){return mDaysSelectedInIntLiveData;}
+    LiveData<String> getChosenDateString(){return mChosenDateStringLiveData;}
+    LiveData<LocalDate> getChosenDate(){return mChosenDateLiveData;}
+    LiveData<String> getChosenTime(){return mChosenTimeStringLiveData;}
+    LiveData<Integer> getRoomSelected(){return mRoomSelected;}
 
     void createMeeting(
             LocalDate date,
@@ -49,32 +48,34 @@ public class CreateMeetingViewModel extends ViewModel {
             List<String> listOfEmailOfParticipant) {
         String hintText;
 
+        HintUiModel hintUiModel;
+
         if (subject == null || subject.isEmpty()) {
             hintText = "           : Merci d'entrer le sujet de la réunion" ;
-            HintUiModel hintUiModel = new HintUiModel(hintText,"Subject");
+            hintUiModel = new HintUiModel(hintText,"Subject");
             mHintUiModelLiveData.setValue(hintUiModel);
         }
 
         if (listOfEmailOfParticipant.size() == 0) {
             hintText = "Merci d'entrer le(s) participant(s)";
-            HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
+            hintUiModel = new HintUiModel(hintText,"Participant");
             mHintUiModelLiveData.setValue(hintUiModel);
         } else {
             listOfEmailOfParticipant.size();
             hintText = "";
-            HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
+            hintUiModel = new HintUiModel(hintText,"Participant");
             mHintUiModelLiveData.setValue(hintUiModel);
         }
 
         if (mChosenDateLiveData.getValue() == null) {
             hintText = "Merci de sélectionner une date";
-            HintUiModel hintUiModel = new HintUiModel(hintText,"Date");
+            hintUiModel = new HintUiModel(hintText,"Date");
             mHintUiModelLiveData.setValue(hintUiModel);
         }
 
         if (hour == null) {
             hintText = "Merci de sélectionner une heure";
-            HintUiModel hintUiModel = new HintUiModel(hintText,"Hour");
+            hintUiModel = new HintUiModel(hintText,"Hour");
             mHintUiModelLiveData.setValue(hintUiModel);
         }
 

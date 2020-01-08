@@ -2,8 +2,6 @@ package com.example.mareu.view.ui;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -59,7 +57,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private TextInputEditText mListOfParticipantEditText;
     private TextView mChosenHourTextView;
     private TextView mChosenDateTextView;
-    private CharSequence mParticipantChip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,8 +173,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
         Button validateMeetingButton = findViewById(R.id.create_meeting_bt_valid_meeting);
         validateMeeting(validateMeetingButton, mMeetingSubjectEditText);
-
-        // mChip = new Chip(CreateMeetingActivity.this);
     }
 
     private void retriveDateWithPickerDialog(final TextView chooseDate) {

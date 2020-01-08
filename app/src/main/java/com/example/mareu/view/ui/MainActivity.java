@@ -34,8 +34,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
     private final MainAdapter adapter = new MainAdapter(this);
-    private int mSelectedSortingTypeIndex;
-    private int mSelectedFilterTypeIndex;
     private SortingTypeUiModel mSortingTypeUiModel;
     private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
     private MainViewModel mViewModel;
@@ -65,20 +63,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
                 mSortingTypeUiModel = sortingTypeUiModel;
                 alertDialogChoiceSort(sortingTypeUiModel);
-            }
-        });
-
-        mViewModel.getSelectedSortingTypeIndexLiveData().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer newSortingTypeIndex) {
-                mSelectedSortingTypeIndex = newSortingTypeIndex;
-            }
-        });
-
-        mViewModel.getSelectedFilterTypeIndexLiveData().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer newFilterTypeIndex) {
-                mSelectedFilterTypeIndex = newFilterTypeIndex;
             }
         });
 
