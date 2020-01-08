@@ -240,12 +240,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                             Toast.LENGTH_LONG).show();
                     mViewModel.setDateFilterType(dateForFilter);
 
-                } else if (dateForFilter.length() !=10 && !dateForFilter.isEmpty() ) {
+                } else if (dateForFilter.length() !=10) {
                     Toast.makeText(
                             MainActivity.this.getApplicationContext(),
                             "La date est invalide",
                             Toast.LENGTH_LONG).show();
-                } else if (dateForFilter.length() == 10) {
+                } else {
                     Toast.makeText(
                             MainActivity.this.getApplicationContext(),
                             "Tu as choisi d'afficher les réunions de cette date : " + dateForFilter,

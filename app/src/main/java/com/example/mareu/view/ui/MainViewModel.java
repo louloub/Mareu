@@ -346,6 +346,7 @@ public class MainViewModel extends ViewModel {
         } // END WHILE
     }
 
+    // TODO : virer cette me"tode
     @NotNull
     private MeetingUiModel createMeetingUiModel(int index) {
         StringBuilder stringBuilder = new StringBuilder();

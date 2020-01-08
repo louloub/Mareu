@@ -1,7 +1,6 @@
 package com.example.mareu.view.ui;
 
 import android.text.Editable;
-import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.lifecycle.LiveData;
@@ -40,7 +39,6 @@ public class CreateMeetingViewModel extends ViewModel {
     MutableLiveData<String> getChosenDateString(){return mChosenDateStringLiveData;}
     MutableLiveData<LocalDate> getChosenDate(){return mChosenDateLiveData;}
     MutableLiveData<String> getChosenTime(){return mChosenTimeStringLiveData;}
-    MutableLiveData<CharSequence> getParticipantChip(){return mParticipantChip;}
     MutableLiveData<Integer> getRoomSelected(){return mRoomSelected;}
 
     void createMeeting(
@@ -68,7 +66,7 @@ public class CreateMeetingViewModel extends ViewModel {
             mHintUiModelLiveData.setValue(hintUiModel);
         }
 
-        if (date == null) {
+        if (mChosenDateLiveData.getValue() == null) {
             hintText = "Merci de sélectionner une date";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Date");
             mHintUiModelLiveData.setValue(hintUiModel);
@@ -121,11 +119,6 @@ public class CreateMeetingViewModel extends ViewModel {
     void setTimeSelectedWithPickerDialog(int hourOfDay, int minutes){
         String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);
         mChosenTimeStringLiveData.setValue(chosenHour);
-    }
-
-    void setTextOfChip(Editable editable, int spannedLength){
-        CharSequence charSequenceParticipantFromChip = editable.subSequence(spannedLength, editable.length() - 1);
-        mParticipantChip.setValue(charSequenceParticipantFromChip);
     }
 
     public enum ViewAction {

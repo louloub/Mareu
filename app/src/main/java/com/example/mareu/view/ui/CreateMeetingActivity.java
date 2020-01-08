@@ -128,15 +128,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-        // TODO : supprimer
-        mCreateMeetingViewModel.getParticipantChip().observe(this, new Observer<CharSequence>() {
-            @Override
-            public void onChanged(CharSequence charSequenceParticipantFromChip) {
-                // mParticipantChip = charSequenceParticipantFromChip;
-                // mChip.setText(mParticipantChip);
-            }
-        });
-
         mCreateMeetingViewModel.getRoomSelected().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer roomSelected) {
@@ -290,7 +281,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-
                 mCreateMeetingViewModel.setRoomSelected(adapterView, position);
             }
             @Override
@@ -330,19 +320,5 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-    }
-
-    private static class MyPreferencesFirstLaunch {
-        private static final String MY_PREFERENCES = "my_preferences";
-        private static boolean isFirst(Context context) {
-            final SharedPreferences reader = context.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-            final boolean first = reader.getBoolean("is_first", true);
-            if (first) {
-                final SharedPreferences.Editor editor = reader.edit();
-                editor.putBoolean("is_first", false);
-                editor.apply();
-            }
-            return first;
-        }
     }
 }
