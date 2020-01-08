@@ -1,11 +1,14 @@
 package com.example.mareu.view.ui;
 
+import android.text.Editable;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.view.ui.model.HintUiModel;
+import com.google.android.material.chip.Chip;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -23,6 +26,8 @@ public class CreateMeetingViewModel extends ViewModel {
     private final MutableLiveData<String> mChosenDateStringLiveData = new MutableLiveData<>();
     private final MutableLiveData<LocalDate> mChosenDateLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> mChosenTimeStringLiveData = new MutableLiveData<>();
+    private final MutableLiveData<CharSequence> mParticipantChip = new MutableLiveData<>();
+
 
     MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
@@ -34,6 +39,7 @@ public class CreateMeetingViewModel extends ViewModel {
     MutableLiveData<String> getChosenDateString(){return mChosenDateStringLiveData;}
     MutableLiveData<LocalDate> getChosenDate(){return mChosenDateLiveData;}
     MutableLiveData<String> getChosenTime(){return mChosenTimeStringLiveData;}
+    MutableLiveData<CharSequence> getParticipantChip(){return mParticipantChip;}
 
     void createMeeting(
             LocalDate date,
@@ -97,6 +103,12 @@ public class CreateMeetingViewModel extends ViewModel {
 
         mChosenDateStringLiveData.setValue(chosenDate);
     }
+
+    void setTextOfChip(Editable editable, int spannedLength){
+        CharSequence charSequenceParticipantFromChip = editable.subSequence(spannedLength, editable.length() - 1);
+        mParticipantChip.setValue(charSequenceParticipantFromChip);
+    }
+
 
     void setTimeSelectedWithPickerDialog(int hourOfDay, int minutes){
         String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);

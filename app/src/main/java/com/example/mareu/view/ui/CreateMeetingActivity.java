@@ -35,10 +35,8 @@ import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import static com.example.mareu.view.ui.CreateMeetingViewModel.ViewAction.OK;
@@ -57,10 +55,12 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private String mParticipantHint;
     private String mChosenDateString;
     private String mChosenTimeString;
-    private TextInputEditText meetingSubjectEditText;
-    private TextInputEditText listOfParticipantEditText;
-    private TextView chosenHourTextView;
-    private TextView chosenDateTextView;
+    private TextInputEditText mMeetingSubjectEditText;
+    private TextInputEditText mListOfParticipantEditText;
+    private TextView mChosenHourTextView;
+    private TextView mChosenDateTextView;
+    private CharSequence mParticipantChip;
+    private Chip mChip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mCreateMeetingViewModel.getHintUiModel().observe(this, new Observer<HintUiModel>() {
             @Override
             public void onChanged(HintUiModel hintUiModel) {
-                setHint(hintUiModel, meetingSubjectEditText, listOfParticipantEditText, chosenDateTextView, chosenHourTextView);
+                setHint(hintUiModel, mMeetingSubjectEditText, mListOfParticipantEditText, mChosenDateTextView, mChosenHourTextView);
             }
         });
 
@@ -129,6 +129,15 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+        mCreateMeetingViewModel.getParticipantChip().observe(this, new Observer<CharSequence>() {
+            @Override
+            public void onChanged(CharSequence charSequenceParticipantFromChip) {
+                mParticipantChip = charSequenceParticipantFromChip;
+                mChip.setText(mParticipantChip);
+
+            }
+        });
+
     }
 
     private void setHint(HintUiModel hintUiModel,
@@ -152,24 +161,26 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     }
 
     private void init() {
-        meetingSubjectEditText = findViewById(R.id.create_meeting_tiet_subject);
+        mMeetingSubjectEditText = findViewById(R.id.create_meeting_tiet_subject);
 
-        listOfParticipantEditText = findViewById(R.id.create_meeting_teit_listOfParticipant);
+        mListOfParticipantEditText = findViewById(R.id.create_meeting_teit_listOfParticipant);
 
         Spinner meetingRoomSpinner = findViewById(R.id.create_meeting_spi_room);
         retriveRoomWithSpinner(meetingRoomSpinner);
 
         ChipGroup participantChipGroup = findViewById(R.id.chipGroup);
-        retriveParticipantsWithChips(listOfParticipantEditText, participantChipGroup);
+        retriveParticipantsWithChips(mListOfParticipantEditText, participantChipGroup);
 
-        chosenHourTextView = findViewById(R.id.create_meeting_tv_edit_hour);
-        retriveTimeWithPickerDialog(chosenHourTextView);
+        mChosenHourTextView = findViewById(R.id.create_meeting_tv_edit_hour);
+        retriveTimeWithPickerDialog(mChosenHourTextView);
 
-        chosenDateTextView = findViewById(R.id.create_meeting_tv_edit_date);
-        retriveDateWithPickerDialog(chosenDateTextView);
+        mChosenDateTextView = findViewById(R.id.create_meeting_tv_edit_date);
+        retriveDateWithPickerDialog(mChosenDateTextView);
 
         Button validateMeetingButton = findViewById(R.id.create_meeting_bt_valid_meeting);
-        validateMeeting(validateMeetingButton,meetingSubjectEditText);
+        validateMeeting(validateMeetingButton, mMeetingSubjectEditText);
+
+        mChip = new Chip(CreateMeetingActivity.this);
     }
 
     private void retriveDateWithPickerDialog(final TextView chooseDate) {
@@ -241,23 +252,21 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
                 if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n")))
                 {
-                    final Chip chip = new Chip(CreateMeetingActivity.this);
-                    chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
-                    final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(mSpannedLength, editable.length() - 1);
-                    chip.setText(charSequenceParticipantMailFromChip);
+                    mChip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
+                    mCreateMeetingViewModel.setTextOfChip(editable,mSpannedLength);
 
                     // TODO : don't use TO STRING but use loop for delete [] (boucle charSeque... pour récupérer 1 par 1 les strings)
-                    mListOfParticipantChip.add(mListOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
+                    mListOfParticipantChip.add(mListOfParticipantChip.size(), mParticipantChip.toString());
 
-                    chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                    mChip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            chipGroup.removeView(chip);
-                            mListOfParticipantChip.remove(charSequenceParticipantMailFromChip.toString());
+                            chipGroup.removeView(mChip);
+                            mListOfParticipantChip.remove(mParticipantChip.toString());
                         }
                     });
 
-                    chipGroup.addView(chip);
+                    chipGroup.addView(mChip);
                     editable.clear();
 
                     if (mListOfParticipantChip.size()>0) {
