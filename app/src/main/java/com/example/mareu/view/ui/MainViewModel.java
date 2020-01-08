@@ -94,14 +94,11 @@ public class MainViewModel extends ViewModel {
 
     LiveData<List<MeetingUiModel>> getMeetingUiModelsLiveData() { return mMeetingUiModelsLiveData; }
     LiveData<SortingTypeUiModel> getSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
-    LiveData<Integer> getSelectedSortingTypeIndexLiveData() { return mSelectedSortingTypeIndexLiveData; }
-    LiveData<Integer> getSelectedFilterTypeIndexLiveData() {return mSelectedFilterTypeIndexLiveData; }
 
     LiveData<RoomFilterTypeUiModel> getRoomFilterTypeUiModelLiveData() { return mRoomFilterTypeUiModelLiveData; }
     LiveData<DateFilterUiModel> getChoiceDateFilterUiModelLiveData() {return mChoiceDateFilterUiModelData;}
 
     private RoomFilterTypeUiModel getRoomFilterTypeUiModel() { return mRoomFilterTypeUiModel;}
-    // private RoomFilterTypeUiModel mRoomFilterTypeUiModel() {}
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
@@ -409,6 +406,9 @@ public class MainViewModel extends ViewModel {
     }
 
     private void setSortingTypeUiModel() {
+        sortingTypeUiModel.setTitle("Choisis le trie que tu souhaites");
+        sortingTypeUiModel.setPositiveButtonText("Valider");
+        sortingTypeUiModel.setToastChoiceSorting("Tu as choisi ");
         sortingTypeUiModel.setNames(listOfItemSortMenu);
         sortingTypeUiModel.setSelectedIndex(selectedSortingTypeIndex);
         mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);

@@ -128,16 +128,15 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             mViewModel.displayFilterRoomPopup();
         } else if (item.getItemId() == R.id.toolbar_bt_filter_date_meeting) {
             mViewModel.displayChoiceDateFilterPopup();
-            // alertDialogChoiceDateFilter();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void alertDialogChoiceSort(SortingTypeUiModel sortingTypeUiModel) {
+    private void alertDialogChoiceSort(final SortingTypeUiModel sortingTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle("Choisis le trie que tu souhaites");
+        myPopup.setTitle(sortingTypeUiModel.getTitle());
 
         myPopup.setSingleChoiceItems(sortingTypeUiModel.getListOfSortingType().toArray(
                 new CharSequence[0]),
@@ -149,14 +148,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 }));
 
         // Setup "Valider" button
-        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(sortingTypeUiModel.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(
                         MainActivity.this.getApplicationContext(),
-                        "Tu as choisi " + checkedItemObject,
+                        sortingTypeUiModel.getToastChoiceSorting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
 
                 mViewModel.setSortingType((String) checkedItemObject, mSortingTypeUiModel);
