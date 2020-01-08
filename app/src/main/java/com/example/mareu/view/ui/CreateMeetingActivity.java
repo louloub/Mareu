@@ -60,7 +60,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private TextView mChosenHourTextView;
     private TextView mChosenDateTextView;
     private CharSequence mParticipantChip;
-    private Chip mChip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,12 +128,12 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+        // TODO : supprimer
         mCreateMeetingViewModel.getParticipantChip().observe(this, new Observer<CharSequence>() {
             @Override
             public void onChanged(CharSequence charSequenceParticipantFromChip) {
-                mParticipantChip = charSequenceParticipantFromChip;
-                mChip.setText(mParticipantChip);
-
+                // mParticipantChip = charSequenceParticipantFromChip;
+                // mChip.setText(mParticipantChip);
             }
         });
 

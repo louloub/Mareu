@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
+import com.example.mareu.utility.SingleLiveEvent;
 import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
 import com.example.mareu.view.ui.model.MeetingUiModel;
 import com.example.mareu.view.ui.model.SortingTypeUiModel;
@@ -77,15 +78,15 @@ public class MainViewModel extends ViewModel {
     private final LiveData<List<Meeting>> mMeetingListLiveData;
     private final MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
 
-    private final MutableLiveData<SortingType> mSortingTypeLiveData = new MutableLiveData<>();
-    private final MutableLiveData<SortingTypeUiModel> mSortingTypeUiModelLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mSelectedSortingTypeIndexLiveData = new MutableLiveData<>();
+    private final SingleLiveEvent<SortingType> mSortingTypeLiveData = new SingleLiveEvent<>();
+    private final SingleLiveEvent<SortingTypeUiModel> mSortingTypeUiModelLiveData = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Integer> mSelectedSortingTypeIndexLiveData = new SingleLiveEvent<>();
 
     private final MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
-    private final MutableLiveData<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new MutableLiveData<>();
+    private final SingleLiveEvent<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new SingleLiveEvent<>();
 
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Integer> mSelectedFilterTypeIndexLiveData = new MutableLiveData<>();
+    private final SingleLiveEvent<Integer> mSelectedFilterTypeIndexLiveData = new SingleLiveEvent<>();
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
