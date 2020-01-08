@@ -74,7 +74,7 @@ public class MainViewModel extends ViewModel {
     private int selectedSortingTypeIndex = 0;
     private int selectedFilterTypeIndex = 0;
 
-    private final List<String> listOfItemSortMenu = new ArrayList<>();
+    private final String[] listOfItemSortMenu;
     private final List<String> listOfItemFilterRoomMenu = new ArrayList<>();
 
     private final LiveData<List<Meeting>> mMeetingListLiveData;
@@ -103,6 +103,7 @@ public class MainViewModel extends ViewModel {
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
         wireUpMediator();
+        listOfItemSortMenu = new String[4];
     }
 
     private void wireUpMediator() {
@@ -390,21 +391,24 @@ public class MainViewModel extends ViewModel {
 
     void displaySortingTypePopup() {
 
-        if (listOfItemSortMenu.size() == 4) {
+        if (listOfItemSortMenu.length == 0) {
             mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModel());
         } else {
-            listOfItemSortMenu.add("Croissant salle");
-            listOfItemSortMenu.add("Decroissant salle");
-            listOfItemSortMenu.add("Croissant date");
-            listOfItemSortMenu.add("Decroissant date");
+            listOfItemSortMenu[0] = ("Croissant salle");
+            listOfItemSortMenu[1] = ("Decroissant salle");
+            listOfItemSortMenu[2] = ("Croissant date");
+            listOfItemSortMenu[3] = ("Decroissant date");
             setSortingTypeUiModel();
         }
     }
 
-
     private SortingTypeUiModel getSortingTypeUiModel() {
         return sortingTypeUiModel;
     }
+
+    // private RoomFilterTypeUiModel getRoomFilterTypeUiModel() {
+    // return mRoomFilterTypeUiModel;}
+
 
     private void setSortingTypeUiModel() {
         sortingTypeUiModel.setTitle("Choisis le trie que tu souhaites");

@@ -138,8 +138,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle(sortingTypeUiModel.getTitle());
 
-        myPopup.setSingleChoiceItems(sortingTypeUiModel.getListOfSortingType().toArray(
-                new CharSequence[0]),
+        myPopup.setSingleChoiceItems(sortingTypeUiModel.getNames(),
                 sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
