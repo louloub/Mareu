@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mareu.R;
 import com.example.mareu.view.ViewModelFactory;
 import com.example.mareu.view.ui.adapter.MainAdapter;
+import com.example.mareu.view.ui.model.DateFilterUiModel;
 import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
 import com.example.mareu.view.ui.model.MeetingUiModel;
 import com.example.mareu.view.ui.model.SortingTypeUiModel;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
 
     private SortingTypeUiModel mSortingTypeUiModel;
     private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
+    private DateFilterUiModel mDateFilterUiModel;
     private MainViewModel mViewModel;
 
     @Override
@@ -67,11 +69,19 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getFilterTypeUiModelLiveData().observe(this, new Observer<RoomFilterTypeUiModel>() {
+        mViewModel.getRoomFilterTypeUiModelLiveData().observe(this, new Observer<RoomFilterTypeUiModel>() {
             @Override
             public void onChanged(RoomFilterTypeUiModel roomFilterTypeUiModel) {
                 mRoomFilterTypeUiModel = roomFilterTypeUiModel;
                 alertDialogChoiceRoomFilter(roomFilterTypeUiModel);
+            }
+        });
+
+        mViewModel.getChoiceDateFilterUiModelLiveData().observe(this, new Observer<DateFilterUiModel>() {
+            @Override
+            public void onChanged(DateFilterUiModel dateFilterUiModel) {
+                mDateFilterUiModel = dateFilterUiModel;
+                alertDialogChoiceDateFilter(dateFilterUiModel);
             }
         });
     }
@@ -117,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         } else if (item.getItemId() == R.id.toolbar_bt_filter_room_meeting) {
             mViewModel.displayFilterRoomPopup();
         } else if (item.getItemId() == R.id.toolbar_bt_filter_date_meeting) {
-            alertDialogChoiceDateFilter();
+            mViewModel.displayChoiceDateFilterPopup();
+            // alertDialogChoiceDateFilter();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -156,11 +167,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    private void alertDialogChoiceRoomFilter(RoomFilterTypeUiModel roomFilterTypeUiModel) {
+    private void alertDialogChoiceRoomFilter(final RoomFilterTypeUiModel roomFilterTypeUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle("Choisis la salle à filtrer");
+        myPopup.setTitle(roomFilterTypeUiModel.getTitle());
 
         myPopup.setSingleChoiceItems(roomFilterTypeUiModel.getListOFilterType().toArray(
                 new CharSequence[0]),
@@ -172,14 +183,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 }));
 
         // Setup validate button
-        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(roomFilterTypeUiModel.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(
                         MainActivity.this.getApplicationContext(),
-                        "Tu as choisi d'afficher les réunions : " + checkedItemObject,
+                        roomFilterTypeUiModel.getToastChoiceMeeting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
                 mViewModel.setRoomFilterType((String) checkedItemObject, mRoomFilterTypeUiModel);
             }
@@ -189,12 +200,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    private void alertDialogChoiceDateFilter() {
+    private void alertDialogChoiceDateFilter(final DateFilterUiModel dateFilterUiModel) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle("Choisis la date à filtrer");
-        myPopup.setMessage("Exemple : 2019-12-01");
+        myPopup.setTitle(dateFilterUiModel.getTitle());
+        myPopup.setMessage(dateFilterUiModel.getMessage());
 
         final EditText input = new EditText(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -204,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.setView(input);
 
         // Setup validate button
-        myPopup.setPositiveButton("Valider", (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(dateFilterUiModel.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SpannableString contentText = new SpannableString(input.getText());
@@ -213,19 +224,19 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 if (dateForFilter.isEmpty()) {
                     Toast.makeText(
                             MainActivity.this.getApplicationContext(),
-                            "Tu as choisi d'afficher toutes les réunions " + dateForFilter,
+                            dateFilterUiModel.getToastForDisplayAllMeeting() + dateForFilter,
                             Toast.LENGTH_LONG).show();
                     mViewModel.setDateFilterType(dateForFilter);
 
                 } else if (dateForFilter.length() !=10) {
                     Toast.makeText(
                             MainActivity.this.getApplicationContext(),
-                            "La date est invalide",
+                            dateFilterUiModel.getToastForInvalideDate(),
                             Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(
                             MainActivity.this.getApplicationContext(),
-                            "Tu as choisi d'afficher les réunions de cette date : " + dateForFilter,
+                            dateFilterUiModel.getToastForValideDate() + dateForFilter,
                             Toast.LENGTH_LONG).show();
                     mViewModel.setDateFilterType(dateForFilter);
                 }

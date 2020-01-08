@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.utility.SingleLiveEvent;
+import com.example.mareu.view.ui.model.DateFilterUiModel;
 import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
 import com.example.mareu.view.ui.model.MeetingUiModel;
 import com.example.mareu.view.ui.model.SortingTypeUiModel;
@@ -67,7 +68,8 @@ public class MainViewModel extends ViewModel {
     };
 
     private final SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
-    private final RoomFilterTypeUiModel roomFilterTypeUiModel = new RoomFilterTypeUiModel();
+    private final RoomFilterTypeUiModel mRoomFilterTypeUiModel = new RoomFilterTypeUiModel();
+    private final DateFilterUiModel mChoiceDateFilterUiModel = new DateFilterUiModel();
 
     private int selectedSortingTypeIndex = 0;
     private int selectedFilterTypeIndex = 0;
@@ -83,17 +85,23 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<Integer> mSelectedSortingTypeIndexLiveData = new SingleLiveEvent<>();
 
     private final MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
-    private final SingleLiveEvent<RoomFilterTypeUiModel> mFilterTypeUiModelLiveData = new SingleLiveEvent<>();
+    private final SingleLiveEvent<RoomFilterTypeUiModel> mRoomFilterTypeUiModelLiveData = new SingleLiveEvent<>();
 
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
     private final SingleLiveEvent<Integer> mSelectedFilterTypeIndexLiveData = new SingleLiveEvent<>();
+
+    private final SingleLiveEvent<DateFilterUiModel> mChoiceDateFilterUiModelData = new SingleLiveEvent<>();
 
     LiveData<List<MeetingUiModel>> getMeetingUiModelsLiveData() { return mMeetingUiModelsLiveData; }
     LiveData<SortingTypeUiModel> getSortingTypeUiModelLiveData() { return mSortingTypeUiModelLiveData; }
     LiveData<Integer> getSelectedSortingTypeIndexLiveData() { return mSelectedSortingTypeIndexLiveData; }
     LiveData<Integer> getSelectedFilterTypeIndexLiveData() {return mSelectedFilterTypeIndexLiveData; }
-    LiveData<RoomFilterTypeUiModel> getFilterTypeUiModelLiveData() { return mFilterTypeUiModelLiveData; }
 
+    LiveData<RoomFilterTypeUiModel> getRoomFilterTypeUiModelLiveData() { return mRoomFilterTypeUiModelLiveData; }
+    LiveData<DateFilterUiModel> getChoiceDateFilterUiModelLiveData() {return mChoiceDateFilterUiModelData;}
+
+    private RoomFilterTypeUiModel getRoomFilterTypeUiModel() { return mRoomFilterTypeUiModel;}
+    // private RoomFilterTypeUiModel mRoomFilterTypeUiModel() {}
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
@@ -353,7 +361,7 @@ public class MainViewModel extends ViewModel {
         } // END WHILE
     }
 
-    // TODO : virer cette me"tode
+    // TODO : virer cette methode
     @NotNull
     private MeetingUiModel createMeetingUiModel(int index) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -409,7 +417,7 @@ public class MainViewModel extends ViewModel {
     void displayFilterRoomPopup() {
 
         if (listOfItemFilterRoomMenu.size() == 11) {
-            mFilterTypeUiModelLiveData.setValue(getRoomFilterTypeUiModel());
+            mRoomFilterTypeUiModelLiveData.setValue(getRoomFilterTypeUiModel());
         } else {
             listOfItemFilterRoomMenu.add("toutes les salles");
             listOfItemFilterRoomMenu.add("salle 1");
@@ -426,14 +434,23 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    private RoomFilterTypeUiModel getRoomFilterTypeUiModel() {
-        return roomFilterTypeUiModel;
+    void displayChoiceDateFilterPopup(){
+        mChoiceDateFilterUiModel.setTitle("Choisis la date à filtrer");
+        mChoiceDateFilterUiModel.setMessage("Exemple : 2019-12-01");
+        mChoiceDateFilterUiModel.setPositiveButtonText("Valider");
+        mChoiceDateFilterUiModel.setToastForDisplayAllMeeting("Tu as choisi d'afficher toutes les réunions ");
+        mChoiceDateFilterUiModel.setToastForInvalideDate("La date est invalide");
+        mChoiceDateFilterUiModel.setToastForValideDate("Tu as choisi d'afficher les réunions de cette date : ");
+        mChoiceDateFilterUiModelData.setValue(mChoiceDateFilterUiModel);
     }
 
     private void setRoomFilterTypeUiModel() {
-        roomFilterTypeUiModel.setNames(listOfItemFilterRoomMenu);
-        roomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
-        mFilterTypeUiModelLiveData.setValue(roomFilterTypeUiModel);
+        mRoomFilterTypeUiModel.setTitle("Choisis la salle à filtrer");
+        mRoomFilterTypeUiModel.setPositiveButtonText("Valider");
+        mRoomFilterTypeUiModel.setToastChoiceMeeting("Tu as choisi d'afficher les réunions : ");
+        mRoomFilterTypeUiModel.setNames(listOfItemFilterRoomMenu);
+        mRoomFilterTypeUiModel.setSelectedIndex(selectedFilterTypeIndex);
+        mRoomFilterTypeUiModelLiveData.setValue(mRoomFilterTypeUiModel);
     }
 
     void deleteMeeting(int meetingId) {
