@@ -196,13 +196,25 @@ public class MainViewModel extends ViewModel {
     }
 
     private void createMeetingUiModelInCombineMeeting(List<MeetingUiModel> result, Meeting meeting) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        List<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
+
+        for (int i = 0; i < listOfEmailOfParticipant.size(); i++) {
+            String participant = listOfEmailOfParticipant.get(i);
+            stringBuilder.append(participant);
+            if (i+1<listOfEmailOfParticipant.size()) {
+                stringBuilder.append(", ");
+            }
+        }
+
         MeetingUiModel meetingUiModel = new MeetingUiModel(
                 meeting.getId(),
                 meeting.getDate().toString(),
                 meeting.getHour(),
                 Integer.toString(meeting.getRoom()),
                 meeting.getSubject(),
-                meeting.getListOfEmailOfParticipant().toString());
+                stringBuilder.toString());
 
         result.add(meetingUiModel);
     }
@@ -336,13 +348,25 @@ public class MainViewModel extends ViewModel {
 
     @NotNull
     private MeetingUiModel createMeetingUiModel(int index) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        List<String> listOfEmailOfParticipant = mMeetingListLiveData.getValue().get(index).getListOfEmailOfParticipant();
+
+        for (int i = 0; i < listOfEmailOfParticipant.size(); i++) {
+            String participant = listOfEmailOfParticipant.get(i);
+            stringBuilder.append(participant);
+            if (i+1<listOfEmailOfParticipant.size()) {
+                stringBuilder.append(", ");
+            }
+        }
+
         return new MeetingUiModel(
                 mMeetingListLiveData.getValue().get(index).getId(),
                 mMeetingListLiveData.getValue().get(index).getDate().toString(),
                 mMeetingListLiveData.getValue().get(index).getHour(),
                 Integer.toString(mMeetingListLiveData.getValue().get(index).getRoom()),
                 mMeetingListLiveData.getValue().get(index).getSubject(),
-                mMeetingListLiveData.getValue().get(index).getListOfEmailOfParticipant().toString());
+                stringBuilder.toString());
     }
 
     private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {

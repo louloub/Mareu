@@ -260,10 +260,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                 {
                     final Chip chip = new Chip(CreateMeetingActivity.this);
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
+
                     final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(mSpannedLength, editable.length() - 1);
                     chip.setText(charSequenceParticipantMailFromChip);
 
-                    // TODO : don't use TO STRING but use loop for delete []
                     mListOfParticipantChip.add(mListOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
                     chip.setOnCloseIconClickListener(new View.OnClickListener() {
