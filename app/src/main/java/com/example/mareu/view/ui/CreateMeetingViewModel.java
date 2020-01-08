@@ -1,6 +1,8 @@
 package com.example.mareu.view.ui;
 
 import android.text.Editable;
+import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,7 +10,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.view.ui.model.HintUiModel;
-import com.google.android.material.chip.Chip;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -19,7 +20,7 @@ import java.util.Locale;
 public class CreateMeetingViewModel extends ViewModel {
 
     private final MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
-    private final MutableLiveData<HintUiModel> mStringForHintLiveData = new MutableLiveData<>();
+    private final MutableLiveData<HintUiModel> mHintUiModelLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mMonthSelectedInIntData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mYearsSelectedInIntLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mDaysSelectedInIntLiveData = new MutableLiveData<>();
@@ -27,11 +28,12 @@ public class CreateMeetingViewModel extends ViewModel {
     private final MutableLiveData<LocalDate> mChosenDateLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> mChosenTimeStringLiveData = new MutableLiveData<>();
     private final MutableLiveData<CharSequence> mParticipantChip = new MutableLiveData<>();
+    private final MutableLiveData<Integer> mRoomSelected = new MutableLiveData<>();
 
     MutableLiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
     }
-    LiveData<HintUiModel> getHintUiModel() { return mStringForHintLiveData; }
+    LiveData<HintUiModel> getHintUiModel() { return mHintUiModelLiveData; }
     MutableLiveData<Integer> getMonthSelectedInInt(){return mMonthSelectedInIntData;}
     MutableLiveData<Integer> getYearsSelectedInInt(){return mYearsSelectedInIntLiveData;}
     MutableLiveData<Integer> getDaysSelectedInInt(){return mDaysSelectedInIntLiveData;}
@@ -39,6 +41,7 @@ public class CreateMeetingViewModel extends ViewModel {
     MutableLiveData<LocalDate> getChosenDate(){return mChosenDateLiveData;}
     MutableLiveData<String> getChosenTime(){return mChosenTimeStringLiveData;}
     MutableLiveData<CharSequence> getParticipantChip(){return mParticipantChip;}
+    MutableLiveData<Integer> getRoomSelected(){return mRoomSelected;}
 
     void createMeeting(
             LocalDate date,
@@ -51,30 +54,30 @@ public class CreateMeetingViewModel extends ViewModel {
         if (subject == null || subject.isEmpty()) {
             hintText = "           : Merci d'entrer le sujet de la réunion" ;
             HintUiModel hintUiModel = new HintUiModel(hintText,"Subject");
-            mStringForHintLiveData.setValue(hintUiModel);
+            mHintUiModelLiveData.setValue(hintUiModel);
         }
 
         if (listOfEmailOfParticipant.size() == 0) {
             hintText = "Merci d'entrer le(s) participant(s)";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
-            mStringForHintLiveData.setValue(hintUiModel);
+            mHintUiModelLiveData.setValue(hintUiModel);
         } else {
             listOfEmailOfParticipant.size();
             hintText = "";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Participant");
-            mStringForHintLiveData.setValue(hintUiModel);
+            mHintUiModelLiveData.setValue(hintUiModel);
         }
 
         if (date == null) {
             hintText = "Merci de sélectionner une date";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Date");
-            mStringForHintLiveData.setValue(hintUiModel);
+            mHintUiModelLiveData.setValue(hintUiModel);
         }
 
         if (hour == null) {
             hintText = "Merci de sélectionner une heure";
             HintUiModel hintUiModel = new HintUiModel(hintText,"Hour");
-            mStringForHintLiveData.setValue(hintUiModel);
+            mHintUiModelLiveData.setValue(hintUiModel);
         }
 
         if ((subject != null && !subject.isEmpty())
@@ -87,9 +90,15 @@ public class CreateMeetingViewModel extends ViewModel {
         }
     }
 
-    void setHintForParticipants() {
-        String participantHint = "";
-        mStringForHintLiveData.setValue(new HintUiModel(participantHint,"Participant"));
+    void setHintForParticipants(String mParticipantHint) {
+        mHintUiModelLiveData.setValue(new HintUiModel(mParticipantHint,"Participant"));
+    }
+
+    void setRoomSelected(AdapterView<?> adapterView, int position) {
+        int item = (int) adapterView.getItemAtPosition(position);
+        if (item != 0) {
+            mRoomSelected.setValue(item);
+        }
     }
 
     void setDateSelectedWithPickerDialog(int year, int month, int dayOfMonth){
@@ -109,14 +118,14 @@ public class CreateMeetingViewModel extends ViewModel {
         mChosenDateStringLiveData.setValue(chosenDate);
     }
 
-    void setTextOfChip(Editable editable, int spannedLength){
-        CharSequence charSequenceParticipantFromChip = editable.subSequence(spannedLength, editable.length() - 1);
-        mParticipantChip.setValue(charSequenceParticipantFromChip);
-    }
-
     void setTimeSelectedWithPickerDialog(int hourOfDay, int minutes){
         String chosenHour = hourOfDay + "h" + String.format(Locale.FRANCE,"%02d", minutes);
         mChosenTimeStringLiveData.setValue(chosenHour);
+    }
+
+    void setTextOfChip(Editable editable, int spannedLength){
+        CharSequence charSequenceParticipantFromChip = editable.subSequence(spannedLength, editable.length() - 1);
+        mParticipantChip.setValue(charSequenceParticipantFromChip);
     }
 
     public enum ViewAction {

@@ -238,6 +238,7 @@ public class MainViewModel extends ViewModel {
 
     void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
         switch (filterChoice) {
+            // TODO : changer "toutes les salles" en un enum
             case "toutes les salles":
                 mRoomFilterTypeLiveData.setValue(ALL_ROOM);
                 selectedFilterTypeIndex = 0;

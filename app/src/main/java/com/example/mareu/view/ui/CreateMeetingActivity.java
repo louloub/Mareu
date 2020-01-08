@@ -46,13 +46,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
     private final ArrayList<String> mListOfParticipantChip = new ArrayList<>();
     private int mSpannedLength = 0;
     private final int mChipLength = 4;
-    private int mRoom;
+    private int mRoomSelected;
     private int mYearsSelectedInInt;
     private int mMonthSelectedInInt;
     private int mDaysSelectedInInt;
+    private String mParticipantHint;
     private CreateMeetingViewModel mCreateMeetingViewModel;
     private LocalDate mChosenDate;
-    private String mParticipantHint;
     private String mChosenDateString;
     private String mChosenTimeString;
     private TextInputEditText mMeetingSubjectEditText;
@@ -138,6 +138,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+        mCreateMeetingViewModel.getRoomSelected().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer roomSelected) {
+                mRoomSelected = roomSelected;
+            }
+        });
+
     }
 
     private void setHint(HintUiModel hintUiModel,
@@ -180,7 +187,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         Button validateMeetingButton = findViewById(R.id.create_meeting_bt_valid_meeting);
         validateMeeting(validateMeetingButton, mMeetingSubjectEditText);
 
-        mChip = new Chip(CreateMeetingActivity.this);
+        // mChip = new Chip(CreateMeetingActivity.this);
     }
 
     private void retriveDateWithPickerDialog(final TextView chooseDate) {
@@ -252,25 +259,28 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
                 if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n")))
                 {
-                    mChip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
-                    mCreateMeetingViewModel.setTextOfChip(editable,mSpannedLength);
+                    final Chip chip = new Chip(CreateMeetingActivity.this);
+                    chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
+                    final CharSequence charSequenceParticipantMailFromChip = editable.subSequence(mSpannedLength, editable.length() - 1);
+                    chip.setText(charSequenceParticipantMailFromChip);
 
-                    // TODO : don't use TO STRING but use loop for delete [] (boucle charSeque... pour récupérer 1 par 1 les strings)
-                    mListOfParticipantChip.add(mListOfParticipantChip.size(), mParticipantChip.toString());
+                    // TODO : don't use TO STRING but use loop for delete []
+                    mListOfParticipantChip.add(mListOfParticipantChip.size(), charSequenceParticipantMailFromChip.toString());
 
-                    mChip.setOnCloseIconClickListener(new View.OnClickListener() {
+                    chip.setOnCloseIconClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            chipGroup.removeView(mChip);
-                            mListOfParticipantChip.remove(mParticipantChip.toString());
+                            chipGroup.removeView(chip);
+                            mListOfParticipantChip.remove(charSequenceParticipantMailFromChip.toString());
                         }
                     });
 
-                    chipGroup.addView(mChip);
+                    chipGroup.addView(chip);
                     editable.clear();
 
                     if (mListOfParticipantChip.size()>0) {
-                        mCreateMeetingViewModel.setHintForParticipants();
+                        mParticipantHint = "";
+                        mCreateMeetingViewModel.setHintForParticipants(mParticipantHint);
                     }
                 }
             }
@@ -281,10 +291,8 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         roomOfMeeting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Object item = adapterView.getItemAtPosition(position);
-                if (item != null && !MyPreferencesFirstLaunch.isFirst(CreateMeetingActivity.this)) {
-                    mRoom = (Integer.parseInt(item.toString()));
-                }
+
+                mCreateMeetingViewModel.setRoomSelected(adapterView, position);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -314,7 +322,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             @Override
             public void onClick(View v) {
                 mCreateMeetingViewModel.createMeeting(
-                        mChosenDate, mChosenTimeString, mRoom, Objects.requireNonNull(meetingSubjectEditText.getText()).toString(),
+                        mChosenDate, mChosenTimeString, mRoomSelected, Objects.requireNonNull(meetingSubjectEditText.getText()).toString(),
                         mListOfParticipantChip);
             }
         });
