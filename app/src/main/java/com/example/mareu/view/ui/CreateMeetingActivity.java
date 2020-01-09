@@ -42,8 +42,8 @@ import static com.example.mareu.view.ui.CreateMeetingViewModel.ViewAction.OK;
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private final ArrayList<String> mListOfParticipantChip = new ArrayList<>();
-    private int mSpannedLength = 0;
     private final int mChipLength = 4;
+    private int mSpannedLength = 0;
     private int mRoomSelected;
     private int mYearsSelectedInInt;
     private int mMonthSelectedInInt;
@@ -70,7 +70,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mCreateMeetingViewModel.getViewActionLiveData().observe(this, new Observer<CreateMeetingViewModel.ViewAction>() {
             @Override
             public void onChanged(CreateMeetingViewModel.ViewAction viewAction) {
-                if (viewAction.equals(OK)){
+                if (viewAction.equals(OK)) {
                     finish();
                 }
             }
@@ -143,13 +143,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         String hintText = hintUiModel.getTextHint();
 
         switch (hintSource) {
-            case "Subject" :
+            case "Subject":
                 subjectOfMeeting.setHint(hintText);
-            case "Participant" :
+            case "Participant":
                 listOfParticipant.setHint(hintText);
-            case "Date" :
+            case "Date":
                 date.setHint(hintText);
-            case "Hour" :
+            case "Hour":
                 hour.setHint(hintText);
         }
     }
@@ -180,18 +180,16 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         chooseDateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(
                         CreateMeetingActivity.this,
-                    new DatePickerDialog.OnDateSetListener()
-                    {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            mCreateMeetingViewModel.setDateSelectedWithPickerDialog(year,month,dayOfMonth);
-                            chooseDate.setText(mChosenDateString);
-                        }
-                    }, LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, LocalDate.now().getDayOfMonth());
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                mCreateMeetingViewModel.setDateSelectedWithPickerDialog(year, month, dayOfMonth);
+                                chooseDate.setText(mChosenDateString);
+                            }
+                        }, LocalDate.now().getYear(), LocalDate.now().getMonthValue() - 1, LocalDate.now().getDayOfMonth());
                 datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
                 datePickerDialog.show();
             }
@@ -205,20 +203,18 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             public void onClick(View v) {
 
                 final RangeTimePickerDialog timePickerDialog = new RangeTimePickerDialog(
-                        CreateMeetingActivity.this, new TimePickerDialog.OnTimeSetListener()
-                {
+                        CreateMeetingActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                        mCreateMeetingViewModel.setTimeSelectedWithPickerDialog(hourOfDay,minutes);
+                        mCreateMeetingViewModel.setTimeSelectedWithPickerDialog(hourOfDay, minutes);
                         chooseHour.setText(mChosenTimeString);
                     }
                 }, LocalTime.now().getHour(), LocalTime.now().getMinute(), true);
 
                 if (mYearsSelectedInInt == LocalDate.now().getYear()
                         && mMonthSelectedInInt == LocalDate.now().getMonthValue()
-                        && mDaysSelectedInInt == LocalDate.now().getDayOfMonth())
-                {
-                    timePickerDialog.setMin(LocalDateTime.now().getHour(),LocalDateTime.now().getMinute());
+                        && mDaysSelectedInInt == LocalDate.now().getDayOfMonth()) {
+                    timePickerDialog.setMin(LocalDateTime.now().getHour(), LocalDateTime.now().getMinute());
                 }
                 timePickerDialog.show();
             }
@@ -242,8 +238,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n")))
-                {
+                if (editable.length() > 1 && (editable.toString().endsWith(",") || editable.toString().endsWith("\n"))) {
                     final Chip chip = new Chip(CreateMeetingActivity.this);
                     chip.setChipDrawable(ChipDrawable.createFromResource(CreateMeetingActivity.this, R.xml.chip));
 
@@ -263,7 +258,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
                     chipGroup.addView(chip);
                     editable.clear();
 
-                    if (mListOfParticipantChip.size()>0) {
+                    if (mListOfParticipantChip.size() > 0) {
                         mParticipantHint = "";
                         mCreateMeetingViewModel.setHintForParticipants(mParticipantHint);
                     }
@@ -278,8 +273,10 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 mCreateMeetingViewModel.setRoomSelected(adapterView, position);
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
 
         List<Integer> categories = new ArrayList<>();

@@ -5,7 +5,7 @@ public class SortingTypeUiModel {
     private String title;
     private String positiveButtonText;
     private String toastChoiceSorting;
-    private String [] names;
+    private String[] names;
     private int selectedIndex;
 
     public SortingTypeUiModel() {
@@ -27,12 +27,12 @@ public class SortingTypeUiModel {
         this.positiveButtonText = positiveButtonText;
     }
 
-    public void setToastChoiceSorting(String toastChoiceSorting) {
-        this.toastChoiceSorting = toastChoiceSorting;
-    }
-
     public String getToastChoiceSorting() {
         return toastChoiceSorting;
+    }
+
+    public void setToastChoiceSorting(String toastChoiceSorting) {
+        this.toastChoiceSorting = toastChoiceSorting;
     }
 
     public int getSelectedIndex() {

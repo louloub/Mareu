@@ -10,14 +10,12 @@ import java.util.Calendar;
 
 public class RangeTimePickerDialog extends TimePickerDialog {
 
-    private int minHour = 0;
-    private int minMinute = 0;
-
-    private int currentHour;
-    private int currentMinute;
-
     private final Calendar calendar = Calendar.getInstance();
     private final DateFormat dateFormat;
+    private int minHour = 0;
+    private int minMinute = 0;
+    private int currentHour;
+    private int currentMinute;
 
     public RangeTimePickerDialog(Context context, OnTimeSetListener callBack, int hourOfDay, int minute, boolean is24HourView) {
         super(context, callBack, hourOfDay, minute, is24HourView);
@@ -46,13 +44,13 @@ public class RangeTimePickerDialog extends TimePickerDialog {
     public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 
         boolean validTime = true;
-        if (hourOfDay < minHour || (hourOfDay == minHour && minute < minMinute)){
+        if (hourOfDay < minHour || (hourOfDay == minHour && minute < minMinute)) {
             validTime = false;
         }
 
         int maxMinute = 25;
         int maxHour = 25;
-        if (hourOfDay  > maxHour || (hourOfDay == maxHour && minute > maxMinute)){
+        if (hourOfDay > maxHour || (hourOfDay == maxHour && minute > maxMinute)) {
             validTime = false;
         }
 

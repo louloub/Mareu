@@ -24,8 +24,8 @@ import com.example.mareu.R;
 import com.example.mareu.view.ViewModelFactory;
 import com.example.mareu.view.ui.adapter.MainAdapter;
 import com.example.mareu.view.ui.model.DateFilterUiModel;
-import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
 import com.example.mareu.view.ui.model.MeetingUiModel;
+import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
 import com.example.mareu.view.ui.model.SortingTypeUiModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                             Toast.LENGTH_LONG).show();
                     mViewModel.setDateFilterType(dateForFilter);
 
-                } else if (dateForFilter.length() !=10) {
+                } else if (dateForFilter.length() != 10) {
                     Toast.makeText(
                             MainActivity.this.getApplicationContext(),
                             dateFilterUiModel.getToastForInvalideDate(),

@@ -59,11 +59,11 @@ public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainVie
             String hourAndMinutesString = model.getHour();
             int iend = hourAndMinutesString.indexOf("h");
 
-            String minutesString = hourAndMinutesString.substring(iend+1);
-            String hourString = hourAndMinutesString.substring(0 , iend);
+            String minutesString = hourAndMinutesString.substring(iend + 1);
+            String hourString = hourAndMinutesString.substring(0, iend);
 
             int minutesInt = Integer.parseInt(minutesString);
-            String minutesStringFormatted = String.format(Locale.FRANCE,"%02d", minutesInt);
+            String minutesStringFormatted = String.format(Locale.FRANCE, "%02d", minutesInt);
 
             String textWithAllInformationAboutMeeting = model.getSubject() + " à " + hourString + "h" + minutesStringFormatted + " le "
                     + model.getDate() + " salle n° " + model.getRoom();

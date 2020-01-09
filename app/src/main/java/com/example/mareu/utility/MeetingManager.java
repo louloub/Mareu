@@ -49,8 +49,7 @@ public class MeetingManager {
                            String hour,
                            int room,
                            String subject,
-                           List<String> listOfEmailOfParticipant)
-    {
+                           List<String> listOfEmailOfParticipant) {
         mMeetingList.add(new Meeting(mMeetingCount,
                 date, hour, room, subject, listOfEmailOfParticipant));
         mMeetingCount++;
@@ -63,7 +62,7 @@ public class MeetingManager {
 
     public void deleteMeeting(int meetingId) {
 
-        for (Iterator<Meeting> iterator = mMeetingList.iterator(); iterator.hasNext();) {
+        for (Iterator<Meeting> iterator = mMeetingList.iterator(); iterator.hasNext(); ) {
             Meeting meeting = iterator.next();
 
             if (meeting.getId() == meetingId) {
