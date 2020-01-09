@@ -77,9 +77,6 @@ public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainVie
 
             textViewInformation.setText(textWithAllInformationAboutMeeting);
 
-            textViewInformation.setTypeface(null, Typeface.BOLD);
-            textViewInformation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
-
             textViewParticipant.setText(model.getListOfEmailOfParticipant());
 
             ivDeleteMeeting.setOnClickListener(new View.OnClickListener() {

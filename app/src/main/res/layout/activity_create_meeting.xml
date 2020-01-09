@@ -9,8 +9,8 @@
 
     <!-- START APPBAR -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout_abl_AppBarLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/app_bar_layout_abl_app_bar_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout_abl_AppBarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_abl_app_bar_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/create_meeting_tiet_subject"
@@ -49,7 +49,7 @@
 
     <!-- START PARTICIPANT -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/create_meeting_til_listOfParticipant"
+        android:id="@+id/create_meeting_til_list_of_participant"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -109,7 +109,7 @@
         app:layout_constraintEnd_toStartOf="@+id/create_meeting_spi_room"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_listOfParticipant" />
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_list_of_participant" />
     <!-- END TEXT ROOM NUMBER -->
 
     <!-- START ROOM NUMBER -->
@@ -119,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/create_meeting_til_listOfParticipant"
+        app:layout_constraintEnd_toEndOf="@+id/create_meeting_til_list_of_participant"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/create_meeting_tv_choose_room"
         app:layout_constraintTop_toTopOf="@+id/create_meeting_tv_choose_room" />
