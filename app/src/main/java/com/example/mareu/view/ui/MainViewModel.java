@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import static com.example.mareu.view.ui.RoomFilterType.ALL_ROOM;
@@ -153,13 +154,6 @@ public class MainViewModel extends ViewModel {
             }
         });
 
-       /* mMeetingUiModelsLiveData.addSource(mSelectedSortingTypeIndexLiveData, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                mSelectedSortingTypeIndex = integer;
-            }
-        });*/
-
         mMeetingUiModelsLiveData.addSource(mSelectedFilterTypeLiveData, new Observer<Integer>() {
             @Override
             public void onChanged(Integer selectedMeetingRoomNumber) {
@@ -276,6 +270,7 @@ public class MainViewModel extends ViewModel {
                 stringBuilder.toString());
     }
 
+    // SORTING TYPE
     void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
         switch (sortChoice) {
             case ROOM_ALPHABETICAL_ASC_STRING:
@@ -327,7 +322,7 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-
+    // ROOM FILTER
     private void setRoomFilterTypeUiModel() {
         mRoomFilterTypeUiModel.setTitle("Choisis la salle à filtrer");
         mRoomFilterTypeUiModel.setPositiveButtonText("Valider");
@@ -407,22 +402,22 @@ public class MainViewModel extends ViewModel {
         if (mListOfItemFilterRoomMenu.size() == 11) {
             mRoomFilterTypeUiModelLiveData.setValue(getRoomFilterTypeUiModel());
         } else {
-            mListOfItemFilterRoomMenu.add("toutes les salles");
-            mListOfItemFilterRoomMenu.add("salle 1");
-            mListOfItemFilterRoomMenu.add("salle 2");
-            mListOfItemFilterRoomMenu.add("salle 3");
-            mListOfItemFilterRoomMenu.add("salle 4");
-            mListOfItemFilterRoomMenu.add("salle 5");
-            mListOfItemFilterRoomMenu.add("salle 6");
-            mListOfItemFilterRoomMenu.add("salle 7");
-            mListOfItemFilterRoomMenu.add("salle 8");
-            mListOfItemFilterRoomMenu.add("salle 9");
-            mListOfItemFilterRoomMenu.add("salle 10");
+            mListOfItemFilterRoomMenu.add(ALL_ROOM_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_1_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_2_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_3_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_4_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_5_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_6_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_7_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_8_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_9_STRING);
+            mListOfItemFilterRoomMenu.add(ROOM_10_STRING);
             setRoomFilterTypeUiModel();
         }
     }
 
-
+    // DATE FILTER
     void setDateFilterType(String dateForFilter) {
 
         int size = 0;
@@ -469,7 +464,7 @@ public class MainViewModel extends ViewModel {
         mChoiceDateFilterUiModelData.setValue(mChoiceDateFilterUiModel);
     }
 
-
+    // DELETE MEETING
     void deleteMeeting(int meetingId) {
         MeetingManager.getInstance().deleteMeeting(meetingId);
     }
