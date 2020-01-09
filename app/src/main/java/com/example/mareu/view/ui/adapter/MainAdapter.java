@@ -1,7 +1,5 @@
 package com.example.mareu.view.ui.adapter;
 
-import android.graphics.Typeface;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
-import com.example.mareu.view.ui.MainViewModel;
 import com.example.mareu.view.ui.model.MeetingUiModel;
 
 import java.util.Locale;
@@ -25,7 +19,6 @@ import java.util.Locale;
 public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainViewHolder> {
 
     private final CallbackListener callback;
-    private static String textWithAllInformationAboutMeeting;
 
     public MainAdapter(CallbackListener callback) {
         super(new DiffCallback());

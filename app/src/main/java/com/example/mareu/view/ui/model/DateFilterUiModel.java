@@ -9,15 +9,6 @@ public class DateFilterUiModel {
     private String toastForInvalideDate;
     private String toastForValideDate;
 
-    public DateFilterUiModel(String title, String message, String positiveButtonText, String toastForDisplayAllMeeting, String toastForInvalideDate, String toastForValideDate) {
-        this.title = title;
-        this.message = message;
-        this.positiveButtonText = positiveButtonText;
-        this.toastForDisplayAllMeeting = toastForDisplayAllMeeting;
-        this.toastForInvalideDate = toastForInvalideDate;
-        this.toastForValideDate = toastForValideDate;
-    }
-
     public DateFilterUiModel() {
     }
 

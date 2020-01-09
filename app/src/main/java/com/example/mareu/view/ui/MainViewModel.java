@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mareu.R;
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.utility.SingleLiveEvent;
@@ -23,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import static com.example.mareu.view.ui.RoomFilterType.ALL_ROOM;
 import static com.example.mareu.view.ui.RoomFilterType.ROOM_1;

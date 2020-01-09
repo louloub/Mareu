@@ -1,6 +1,5 @@
 package com.example.mareu.view.ui;
 
-import android.text.Editable;
 import android.widget.AdapterView;
 
 import androidx.lifecycle.LiveData;
