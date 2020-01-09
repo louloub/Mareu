@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mareu.R;
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.utility.SingleLiveEvent;
@@ -67,10 +68,22 @@ public class MainViewModel extends ViewModel {
         }
     };
 
-    public static final String ROOM_ALPHABETICAL_ASC_STRING = "Croissant salle" ;
-    public static final String ROOM_ALPHABETICAL_DSC_STRING = "Decroissant salle" ;
-    public static final String DATE_ASC_STRING = "Croissant date";
-    public static final String DATE_DSC_STRING = "Decroissant date";
+    private static final String ROOM_ALPHABETICAL_ASC_STRING = "Croissant salle" ;
+    private static final String ROOM_ALPHABETICAL_DSC_STRING = "Decroissant salle" ;
+    private static final String DATE_ASC_STRING = "Croissant date";
+    private static final String DATE_DSC_STRING = "Decroissant date";
+
+    private static final String ALL_ROOM_STRING = "toutes les salles";
+    private static final String ROOM_1_STRING = "salle 1";
+    private static final String ROOM_2_STRING = "salle 2";
+    private static final String ROOM_3_STRING = "salle 3";
+    private static final String ROOM_4_STRING = "salle 4";
+    private static final String ROOM_5_STRING = "salle 5";
+    private static final String ROOM_6_STRING = "salle 6";
+    private static final String ROOM_7_STRING = "salle 7";
+    private static final String ROOM_8_STRING = "salle 8";
+    private static final String ROOM_9_STRING = "salle 9";
+    private static final String ROOM_10_STRING = "salle 10";
 
     private final SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
     private final RoomFilterTypeUiModel mRoomFilterTypeUiModel = new RoomFilterTypeUiModel();
@@ -206,8 +219,6 @@ public class MainViewModel extends ViewModel {
 
         for (Meeting meeting : meetings) {
 
-            // createMeetingUiModelInCombineMeeting(result, meeting);
-
             if (selectedMeetingRoomNumber == null || selectedMeetingRoomNumber == meeting.getRoom()) {
                 createMeetingUiModelInCombineMeeting(result, meeting);
             } else if (selectedMeetingRoomNumber == 0) {
@@ -298,58 +309,57 @@ public class MainViewModel extends ViewModel {
 
     void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
         switch (filterChoice) {
-            // TODO : changer "toutes les salles" en un enum
-            case "toutes les salles":
+            case ALL_ROOM_STRING:
                 mRoomFilterTypeLiveData.setValue(ALL_ROOM);
                 mSelectedFilterTypeIndex = 0;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 1":
+            case ROOM_1_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_1);
                 mSelectedFilterTypeIndex = 1;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 2":
+            case ROOM_2_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_2);
                 mSelectedFilterTypeIndex = 2;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 3":
+            case ROOM_3_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_3);
                 mSelectedFilterTypeIndex = 3;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 4":
+            case ROOM_4_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_4);
                 mSelectedFilterTypeIndex = 4;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 5":
+            case ROOM_5_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_5);
                 mSelectedFilterTypeIndex = 5;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 6":
+            case ROOM_6_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_6);
                 mSelectedFilterTypeIndex = 6;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 7":
+            case ROOM_7_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_7);
                 mSelectedFilterTypeIndex = 7;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 8":
+            case ROOM_8_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_8);
                 mSelectedFilterTypeIndex = 8;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 9":
+            case ROOM_9_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_9);
                 mSelectedFilterTypeIndex = 9;
                 setValueFilterUiModel(roomFilterTypeUiModel);
                 break;
-            case "salle 10":
+            case ROOM_10_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_10);
                 mSelectedFilterTypeIndex = 10;
                 setValueFilterUiModel(roomFilterTypeUiModel);
@@ -363,7 +373,7 @@ public class MainViewModel extends ViewModel {
         int index = 0;
 
         if (mMeetingListLiveData.getValue() != null) {
-            size = Objects.requireNonNull(mMeetingListLiveData.getValue()).size();
+            size = (mMeetingListLiveData.getValue()).size();
         }
 
         List<MeetingUiModel> meetingUiModelListWithDateFilter = new ArrayList<>();
@@ -404,10 +414,10 @@ public class MainViewModel extends ViewModel {
         if (mListOfItemSortMenu.length == 0) {
             mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModel());
         } else {
-            mListOfItemSortMenu[0] = ("Croissant salle");
-            mListOfItemSortMenu[1] = ("Decroissant salle");
-            mListOfItemSortMenu[2] = ("Croissant date");
-            mListOfItemSortMenu[3] = ("Decroissant date");
+            mListOfItemSortMenu[0] = ROOM_ALPHABETICAL_ASC_STRING;
+            mListOfItemSortMenu[1] = ROOM_ALPHABETICAL_DSC_STRING;
+            mListOfItemSortMenu[2] = DATE_ASC_STRING;
+            mListOfItemSortMenu[3] = DATE_DSC_STRING;
             setSortingTypeUiModel();
         }
     }
