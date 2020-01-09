@@ -10,7 +10,7 @@
     <!-- START APPBAR -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_abl_app_bar_layout"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,9 +31,9 @@
     <!-- START SUBJECT -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/create_meeting_til_subject"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_abl_app_bar_layout">
@@ -50,9 +50,9 @@
     <!-- START PARTICIPANT -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/create_meeting_til_list_of_participant"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_subject">
@@ -100,9 +100,9 @@
     <!-- START TEXT ROOM NUMBER -->
     <TextView
         android:id="@+id/create_meeting_tv_choose_room"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/small"
         android:hint="@string/room"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="@id/create_meeting_spi_room"
@@ -115,10 +115,10 @@
     <!-- START ROOM NUMBER -->
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/create_meeting_spi_room"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/small"
+        android:layout_marginTop="@dimen/small"
         app:layout_constraintEnd_toEndOf="@+id/create_meeting_til_list_of_participant"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/create_meeting_tv_choose_room"
@@ -128,9 +128,9 @@
     <!-- START HOUR BUTTON -->
     <Button
         android:id="@+id/create_meeting_bt_hour"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/small"
         android:text="@string/hour"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/create_meeting_tv_edit_hour"
@@ -142,9 +142,9 @@
     <!-- START HOUR TEXTVIEW -->
     <TextView
         android:id="@+id/create_meeting_tv_edit_hour"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/small"
         android:ems="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -155,9 +155,9 @@
     <!-- START BUTTON DATE -->
     <Button
         android:id="@+id/create_meeting_bt_date"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/small"
         android:text="@string/date"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -170,9 +170,9 @@
     <!-- START DATE TEXTVIEW -->
     <TextView
         android:id="@+id/create_meeting_tv_edit_date"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/small"
         android:ems="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

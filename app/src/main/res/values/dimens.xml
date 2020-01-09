@@ -1,2 +1,6 @@
 <resources>
+    <dimen name="fab_margin">48dp</dimen>
+    <dimen name="smallest">0dp</dimen>
+    <dimen name="small">8dp</dimen>
+
 </resources>
