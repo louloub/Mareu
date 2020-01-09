@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mareu.R;
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.utility.SingleLiveEvent;
@@ -83,9 +84,12 @@ public class MainViewModel extends ViewModel {
     private static final String ROOM_9_STRING = "salle 9";
     private static final String ROOM_10_STRING = "salle 10";
 
+    private static final String CHOOSE_SORTING_TITLE = "Choisis le trie que tu souhaites" ;
+    private static final String VALIDATE_CHOOSE_SORTING = "Valider" ;
+    private static final String YOUR_SORTING_CHOICE_IS = "Tu as choisi : ";
+
     private final RoomFilterTypeUiModel mRoomFilterTypeUiModel = new RoomFilterTypeUiModel();
     private final DateFilterUiModel mChoiceDateFilterUiModel = new DateFilterUiModel();
-    // private final String[] mListOfItemSortMenu;
     private final List<String> mListOfItemFilterRoomMenu = new ArrayList<>();
     private final LiveData<List<Meeting>> mMeetingListLiveData;
     private final MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
@@ -102,7 +106,6 @@ public class MainViewModel extends ViewModel {
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
         wireUpMediator();
-        // mListOfItemSortMenu = new String[4];
     }
 
     LiveData<List<MeetingUiModel>> getMeetingUiModelsLiveData() {
@@ -128,10 +131,6 @@ public class MainViewModel extends ViewModel {
     private RoomFilterTypeUiModel getRoomFilterTypeUiModel() {
         return mRoomFilterTypeUiModel;
     }
-
-    /*private SortingTypeUiModel getSortingTypeUiModel() {
-        return mSortingTypeUiModel;
-    }*/
 
     private void wireUpMediator() {
 
@@ -311,9 +310,9 @@ public class MainViewModel extends ViewModel {
         SortingTypeUiModel mSortingTypeUiModel = new SortingTypeUiModel();
         String[] mListOfItemSortMenu = new String[4];
 
-        mSortingTypeUiModel.setTitle("Choisis le trie que tu souhaites");
-        mSortingTypeUiModel.setPositiveButtonText("Valider");
-        mSortingTypeUiModel.setToastChoiceSorting("Tu as choisi ");
+        mSortingTypeUiModel.setTitle(CHOOSE_SORTING_TITLE);
+        mSortingTypeUiModel.setPositiveButtonText(VALIDATE_CHOOSE_SORTING);
+        mSortingTypeUiModel.setToastChoiceSorting(YOUR_SORTING_CHOICE_IS);
 
         mListOfItemSortMenu[0] = ROOM_ALPHABETICAL_ASC_STRING;
         mListOfItemSortMenu[1] = ROOM_ALPHABETICAL_DSC_STRING;

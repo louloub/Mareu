@@ -10,4 +10,5 @@
     <string name="room">Salle</string>
     <string name="validate_my_meeting">Valider ma réunion</string>
     <string name="subjet_hour_date_room">Sujet + hour + date + room</string>
+    <string name="chooseSorting">choisis le trie que tu souhaites</string>
 </resources>
