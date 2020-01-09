@@ -83,10 +83,9 @@ public class MainViewModel extends ViewModel {
     private static final String ROOM_9_STRING = "salle 9";
     private static final String ROOM_10_STRING = "salle 10";
 
-    private final SortingTypeUiModel sortingTypeUiModel = new SortingTypeUiModel();
     private final RoomFilterTypeUiModel mRoomFilterTypeUiModel = new RoomFilterTypeUiModel();
     private final DateFilterUiModel mChoiceDateFilterUiModel = new DateFilterUiModel();
-    private final String[] mListOfItemSortMenu;
+    // private final String[] mListOfItemSortMenu;
     private final List<String> mListOfItemFilterRoomMenu = new ArrayList<>();
     private final LiveData<List<Meeting>> mMeetingListLiveData;
     private final MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
@@ -96,13 +95,14 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<RoomFilterTypeUiModel> mRoomFilterTypeUiModelLiveData = new SingleLiveEvent<>();
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
     private final SingleLiveEvent<DateFilterUiModel> mChoiceDateFilterUiModelData = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mToastTextForChoiceDateFilter = new SingleLiveEvent<>();
     private int mSelectedSortingTypeIndex = 0;
     private int mSelectedFilterTypeIndex = 0;
 
     public MainViewModel(@NonNull MeetingManager meetingManager) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
         wireUpMediator();
-        mListOfItemSortMenu = new String[4];
+        // mListOfItemSortMenu = new String[4];
     }
 
     LiveData<List<MeetingUiModel>> getMeetingUiModelsLiveData() {
@@ -121,13 +121,17 @@ public class MainViewModel extends ViewModel {
         return mChoiceDateFilterUiModelData;
     }
 
+    LiveData<String> getToastTextForChoiceDateFilter(){
+        return mToastTextForChoiceDateFilter;
+    }
+
     private RoomFilterTypeUiModel getRoomFilterTypeUiModel() {
         return mRoomFilterTypeUiModel;
     }
 
-    private SortingTypeUiModel getSortingTypeUiModel() {
-        return sortingTypeUiModel;
-    }
+    /*private SortingTypeUiModel getSortingTypeUiModel() {
+        return mSortingTypeUiModel;
+    }*/
 
     private void wireUpMediator() {
 
@@ -304,24 +308,30 @@ public class MainViewModel extends ViewModel {
     }
 
     private void setSortingTypeUiModel() {
-        sortingTypeUiModel.setTitle("Choisis le trie que tu souhaites");
-        sortingTypeUiModel.setPositiveButtonText("Valider");
-        sortingTypeUiModel.setToastChoiceSorting("Tu as choisi ");
-        sortingTypeUiModel.setNames(mListOfItemSortMenu);
-        sortingTypeUiModel.setSelectedIndex(mSelectedSortingTypeIndex);
-        mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
+        SortingTypeUiModel mSortingTypeUiModel = new SortingTypeUiModel();
+        String[] mListOfItemSortMenu = new String[4];
+
+        mSortingTypeUiModel.setTitle("Choisis le trie que tu souhaites");
+        mSortingTypeUiModel.setPositiveButtonText("Valider");
+        mSortingTypeUiModel.setToastChoiceSorting("Tu as choisi ");
+
+        mListOfItemSortMenu[0] = ROOM_ALPHABETICAL_ASC_STRING;
+        mListOfItemSortMenu[1] = ROOM_ALPHABETICAL_DSC_STRING;
+        mListOfItemSortMenu[2] = DATE_ASC_STRING;
+        mListOfItemSortMenu[3] = DATE_DSC_STRING;
+
+        mSortingTypeUiModel.setNames(mListOfItemSortMenu);
+        mSortingTypeUiModel.setSelectedIndex(mSelectedSortingTypeIndex);
+
+        mSortingTypeUiModelLiveData.setValue(mSortingTypeUiModel);
     }
 
     void displaySortingTypePopup() {
 
-        if (mListOfItemSortMenu.length == 0) {
-            mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModel());
-        } else {
-            mListOfItemSortMenu[0] = ROOM_ALPHABETICAL_ASC_STRING;
-            mListOfItemSortMenu[1] = ROOM_ALPHABETICAL_DSC_STRING;
-            mListOfItemSortMenu[2] = DATE_ASC_STRING;
-            mListOfItemSortMenu[3] = DATE_DSC_STRING;
+        if (mSortingTypeUiModelLiveData.getValue()==null) {
             setSortingTypeUiModel();
+        } else {
+            mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModelLiveData().getValue());
         }
     }
 
@@ -462,9 +472,25 @@ public class MainViewModel extends ViewModel {
         mChoiceDateFilterUiModel.setMessage("Exemple : 2019-12-01");
         mChoiceDateFilterUiModel.setPositiveButtonText("Valider");
         mChoiceDateFilterUiModel.setToastForDisplayAllMeeting("Tu as choisi d'afficher toutes les réunions ");
-        mChoiceDateFilterUiModel.setToastForInvalideDate("La date est invalide");
+        mChoiceDateFilterUiModel.setToastForInvalideDate("La date est invalide : ");
         mChoiceDateFilterUiModel.setToastForValideDate("Tu as choisi d'afficher les réunions de cette date : ");
         mChoiceDateFilterUiModelData.setValue(mChoiceDateFilterUiModel);
+    }
+
+    void compareDateToFilter(String dateToFilter) {
+        if (dateToFilter.isEmpty()) {
+            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+            setDateFilterType(dateToFilter);
+        } else if (dateToFilter.length() != 10) {
+            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
+        } else {
+            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
+            setDateFilterType(dateToFilter);
+        }
+    }
+
+    void setToastTextForChoiceDateFilter(String toastText){
+        mToastTextForChoiceDateFilter.setValue(toastText);
     }
 
     // DELETE MEETING

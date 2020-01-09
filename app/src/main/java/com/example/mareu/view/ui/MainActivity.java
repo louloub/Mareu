@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
     private DateFilterUiModel mDateFilterUiModel;
     private MainViewModel mViewModel;
+    private String mToastTextForChoiceDateFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 alertDialogChoiceDateFilter(dateFilterUiModel);
             }
         });
+
+        mViewModel.getToastTextForChoiceDateFilter().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String toastTextForChoiceDateFilter) {
+                mToastTextForChoiceDateFilter = toastTextForChoiceDateFilter;
+            }
+        });
     }
 
     private void setupToolbar() {
@@ -110,26 +118,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     private void launchCreateMeetingActivity() {
         Intent intent = new Intent(this.getApplicationContext(), CreateMeetingActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
-            mViewModel.displaySortingTypePopup();
-        } else if (item.getItemId() == R.id.toolbar_bt_filter_room_meeting) {
-            mViewModel.displayFilterRoomPopup();
-        } else if (item.getItemId() == R.id.toolbar_bt_filter_date_meeting) {
-            mViewModel.displayChoiceDateFilterPopup();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void alertDialogChoiceSort(final SortingTypeUiModel sortingTypeUiModel) {
@@ -217,27 +205,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SpannableString contentText = new SpannableString(input.getText());
-                String dateForFilter = contentText.toString();
+                String dateToFilter = contentText.toString();
 
-                if (dateForFilter.isEmpty()) {
-                    Toast.makeText(
-                            MainActivity.this.getApplicationContext(),
-                            dateFilterUiModel.getToastForDisplayAllMeeting() + dateForFilter,
-                            Toast.LENGTH_LONG).show();
-                    mViewModel.setDateFilterType(dateForFilter);
+                mViewModel.compareDateToFilter(dateToFilter);
 
-                } else if (dateForFilter.length() != 10) {
-                    Toast.makeText(
-                            MainActivity.this.getApplicationContext(),
-                            dateFilterUiModel.getToastForInvalideDate(),
-                            Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(
-                            MainActivity.this.getApplicationContext(),
-                            dateFilterUiModel.getToastForValideDate() + dateForFilter,
-                            Toast.LENGTH_LONG).show();
-                    mViewModel.setDateFilterType(dateForFilter);
-                }
+                Toast.makeText(
+                        MainActivity.this.getApplicationContext(),
+                        mToastTextForChoiceDateFilter + dateToFilter,
+                        Toast.LENGTH_LONG).show();
             }
         }));
 
@@ -248,5 +223,25 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     @Override
     public void onMeetingClicked(int meetingId) {
         mViewModel.deleteMeeting(meetingId);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.toolbar_bt_sort_meeting) {
+            mViewModel.displaySortingTypePopup();
+        } else if (item.getItemId() == R.id.toolbar_bt_filter_room_meeting) {
+            mViewModel.displayFilterRoomPopup();
+        } else if (item.getItemId() == R.id.toolbar_bt_filter_date_meeting) {
+            mViewModel.displayChoiceDateFilterPopup();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

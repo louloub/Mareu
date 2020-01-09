@@ -59,10 +59,4 @@ public class DateFilterUiModel {
     public void setToastForValideDate(String toastForValideDate) {
         this.toastForValideDate = toastForValideDate;
     }
-
-    /*
-    mChoiceDateFilterUiModel.setToastTextForDisplayAllMeeting("Tu as choisi d'afficher toutes les réunions ");
-        mChoiceDateFilterUiModel.setToastTextForInvalideDate("La date est invalide");
-        mChoiceDateFilterUiModel.setToastTextForValideDate("Tu as choisi d'afficher les réunions de cette date : ");
-        */
 }
