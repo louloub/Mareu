@@ -100,13 +100,11 @@ public class MainViewModel extends ViewModel {
 
     private final SingleLiveEvent<SortingType> mSortingTypeLiveData = new SingleLiveEvent<>();
     private final SingleLiveEvent<SortingTypeUiModel> mSortingTypeUiModelLiveData = new SingleLiveEvent<>();
-    private final SingleLiveEvent<Integer> mSelectedSortingTypeIndexLiveData = new SingleLiveEvent<>();
 
     private final MutableLiveData<RoomFilterType> mRoomFilterTypeLiveData = new MutableLiveData<>();
     private final SingleLiveEvent<RoomFilterTypeUiModel> mRoomFilterTypeUiModelLiveData = new SingleLiveEvent<>();
 
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
-    private final SingleLiveEvent<Integer> mSelectedFilterTypeIndexLiveData = new SingleLiveEvent<>();
 
     private final SingleLiveEvent<DateFilterUiModel> mChoiceDateFilterUiModelData = new SingleLiveEvent<>();
 
@@ -155,12 +153,12 @@ public class MainViewModel extends ViewModel {
             }
         });
 
-        mMeetingUiModelsLiveData.addSource(mSelectedSortingTypeIndexLiveData, new Observer<Integer>() {
+       /* mMeetingUiModelsLiveData.addSource(mSelectedSortingTypeIndexLiveData, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 mSelectedSortingTypeIndex = integer;
             }
-        });
+        });*/
 
         mMeetingUiModelsLiveData.addSource(mSelectedFilterTypeLiveData, new Observer<Integer>() {
             @Override
@@ -229,6 +227,7 @@ public class MainViewModel extends ViewModel {
         return result;
     }
 
+    // TODO : virer cette methode ou l'autre
     private void createMeetingUiModelInCombineMeeting(List<MeetingUiModel> result, Meeting meeting) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -253,7 +252,7 @@ public class MainViewModel extends ViewModel {
         result.add(meetingUiModel);
     }
 
-    // TODO : virer cette methode
+    // TODO : virer cette methode ou l'autre
     @NotNull
     private MeetingUiModel createMeetingUiModel(int index) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -304,7 +303,43 @@ public class MainViewModel extends ViewModel {
 
     private void setValueSortingTypeUiModel(SortingTypeUiModel sortingTypeUiModel) {
         sortingTypeUiModel.setSelectedIndex(mSelectedSortingTypeIndex);
-        mSelectedSortingTypeIndexLiveData.setValue(mSelectedSortingTypeIndex);
+    }
+
+    private void setSortingTypeUiModel() {
+        sortingTypeUiModel.setTitle("Choisis le trie que tu souhaites");
+        sortingTypeUiModel.setPositiveButtonText("Valider");
+        sortingTypeUiModel.setToastChoiceSorting("Tu as choisi ");
+        sortingTypeUiModel.setNames(mListOfItemSortMenu);
+        sortingTypeUiModel.setSelectedIndex(mSelectedSortingTypeIndex);
+        mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
+    }
+
+    void displaySortingTypePopup() {
+
+        if (mListOfItemSortMenu.length == 0) {
+            mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModel());
+        } else {
+            mListOfItemSortMenu[0] = ROOM_ALPHABETICAL_ASC_STRING;
+            mListOfItemSortMenu[1] = ROOM_ALPHABETICAL_DSC_STRING;
+            mListOfItemSortMenu[2] = DATE_ASC_STRING;
+            mListOfItemSortMenu[3] = DATE_DSC_STRING;
+            setSortingTypeUiModel();
+        }
+    }
+
+
+    private void setRoomFilterTypeUiModel() {
+        mRoomFilterTypeUiModel.setTitle("Choisis la salle à filtrer");
+        mRoomFilterTypeUiModel.setPositiveButtonText("Valider");
+        mRoomFilterTypeUiModel.setToastChoiceMeeting("Tu as choisi d'afficher les réunions : ");
+        mRoomFilterTypeUiModel.setNames(mListOfItemFilterRoomMenu);
+        mRoomFilterTypeUiModel.setSelectedIndex(mSelectedFilterTypeIndex);
+        mRoomFilterTypeUiModelLiveData.setValue(mRoomFilterTypeUiModel);
+    }
+
+    private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
+        mSelectedFilterTypeLiveData.setValue(mSelectedFilterTypeIndex);
+        roomFilterTypeUiModel.setSelectedIndex(mSelectedFilterTypeIndex);
     }
 
     void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
@@ -367,70 +402,6 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    void setDateFilterType(String dateForFilter) {
-
-        int size = 0;
-        int index = 0;
-
-        if (mMeetingListLiveData.getValue() != null) {
-            size = (mMeetingListLiveData.getValue()).size();
-        }
-
-        List<MeetingUiModel> meetingUiModelListWithDateFilter = new ArrayList<>();
-        List<MeetingUiModel> meetingUiModelListWithoutDateFilter = new ArrayList<>();
-
-        while (mMeetingListLiveData.getValue() != null && size > index) {
-
-            MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(index);
-
-            meetingUiModelListWithoutDateFilter.add(meetingUiModelWithoutValidDateFilter);
-
-            if (mMeetingListLiveData.getValue().get(index).getDate().toString().equals(dateForFilter)) {
-
-                MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(index);
-
-                meetingUiModelListWithDateFilter.add(meetingUiModelWithValidDateFilter);
-                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
-
-            } else if (dateForFilter.isEmpty()) {
-                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithoutDateFilter);
-            } else if (dateForFilter.length() != 10) {
-                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
-            } else {
-                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithDateFilter);
-            }
-            index++;
-        } // END WHILE
-    }
-
-    private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
-        mSelectedFilterTypeLiveData.setValue(mSelectedFilterTypeIndex);
-        roomFilterTypeUiModel.setSelectedIndex(mSelectedFilterTypeIndex);
-        mSelectedFilterTypeIndexLiveData.setValue(mSelectedFilterTypeIndex);
-    }
-
-    void displaySortingTypePopup() {
-
-        if (mListOfItemSortMenu.length == 0) {
-            mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModel());
-        } else {
-            mListOfItemSortMenu[0] = ROOM_ALPHABETICAL_ASC_STRING;
-            mListOfItemSortMenu[1] = ROOM_ALPHABETICAL_DSC_STRING;
-            mListOfItemSortMenu[2] = DATE_ASC_STRING;
-            mListOfItemSortMenu[3] = DATE_DSC_STRING;
-            setSortingTypeUiModel();
-        }
-    }
-
-    private void setSortingTypeUiModel() {
-        sortingTypeUiModel.setTitle("Choisis le trie que tu souhaites");
-        sortingTypeUiModel.setPositiveButtonText("Valider");
-        sortingTypeUiModel.setToastChoiceSorting("Tu as choisi ");
-        sortingTypeUiModel.setNames(mListOfItemSortMenu);
-        sortingTypeUiModel.setSelectedIndex(mSelectedSortingTypeIndex);
-        mSortingTypeUiModelLiveData.setValue(sortingTypeUiModel);
-    }
-
     void displayFilterRoomPopup() {
 
         if (mListOfItemFilterRoomMenu.size() == 11) {
@@ -451,6 +422,43 @@ public class MainViewModel extends ViewModel {
         }
     }
 
+
+    void setDateFilterType(String dateForFilter) {
+
+        int size = 0;
+        int index = 0;
+
+        if (mMeetingListLiveData.getValue() != null) {
+            size = (mMeetingListLiveData.getValue()).size();
+        }
+
+        List<MeetingUiModel> meetingUiModelListWithValidDateFilter = new ArrayList<>();
+        List<MeetingUiModel> meetingUiModelListWithoutValidDateFilter = new ArrayList<>();
+
+        while (mMeetingListLiveData.getValue() != null && size > index) {
+
+            MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(index);
+
+            meetingUiModelListWithoutValidDateFilter.add(meetingUiModelWithoutValidDateFilter);
+
+            if (mMeetingListLiveData.getValue().get(index).getDate().toString().equals(dateForFilter)) {
+
+                MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(index);
+
+                meetingUiModelListWithValidDateFilter.add(meetingUiModelWithValidDateFilter);
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
+
+            } else if (dateForFilter.isEmpty()) {
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithoutValidDateFilter);
+            } else if (dateForFilter.length() != 10) {
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
+            } else {
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
+            }
+            index++;
+        } // END WHILE
+    }
+
     void displayChoiceDateFilterPopup(){
         mChoiceDateFilterUiModel.setTitle("Choisis la date à filtrer");
         mChoiceDateFilterUiModel.setMessage("Exemple : 2019-12-01");
@@ -461,14 +469,6 @@ public class MainViewModel extends ViewModel {
         mChoiceDateFilterUiModelData.setValue(mChoiceDateFilterUiModel);
     }
 
-    private void setRoomFilterTypeUiModel() {
-        mRoomFilterTypeUiModel.setTitle("Choisis la salle à filtrer");
-        mRoomFilterTypeUiModel.setPositiveButtonText("Valider");
-        mRoomFilterTypeUiModel.setToastChoiceMeeting("Tu as choisi d'afficher les réunions : ");
-        mRoomFilterTypeUiModel.setNames(mListOfItemFilterRoomMenu);
-        mRoomFilterTypeUiModel.setSelectedIndex(mSelectedFilterTypeIndex);
-        mRoomFilterTypeUiModelLiveData.setValue(mRoomFilterTypeUiModel);
-    }
 
     void deleteMeeting(int meetingId) {
         MeetingManager.getInstance().deleteMeeting(meetingId);

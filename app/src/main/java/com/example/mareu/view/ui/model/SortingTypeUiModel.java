@@ -1,7 +1,5 @@
 package com.example.mareu.view.ui.model;
 
-import java.util.List;
-
 public class SortingTypeUiModel {
 
     private String title;
