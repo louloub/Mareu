@@ -7,19 +7,10 @@ public class RoomFilterTypeUiModel {
     private String title;
     private String positiveButtonText;
     private String toastChoiceMeeting;
-    private List<String> names;
+    private String[] names;
     private int selectedIndex;
 
-    public RoomFilterTypeUiModel(String title, String positiveButtonText, String toastChoiceMeeting, List<String> names, int selectedIndex) {
-        this.title = title;
-        this.positiveButtonText = positiveButtonText;
-        this.toastChoiceMeeting = toastChoiceMeeting;
-        this.names = names;
-        this.selectedIndex = selectedIndex;
-    }
-
     public RoomFilterTypeUiModel() {
-
     }
 
     public String getTitle() {
@@ -46,7 +37,7 @@ public class RoomFilterTypeUiModel {
         this.toastChoiceMeeting = toastChoiceMeeting;
     }
 
-    public void setNames(List<String> names) {
+    public void setNames(String[] names) {
         this.names = names;
     }
 
@@ -58,8 +49,7 @@ public class RoomFilterTypeUiModel {
         this.selectedIndex = selectedIndex;
     }
 
-    public List<String> getListOFilterType() {
+    public String[] getListOFilterType() {
         return names;
     }
-
 }

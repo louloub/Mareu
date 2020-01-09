@@ -159,8 +159,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
         myPopup.setTitle(roomFilterTypeUiModel.getTitle());
 
-        myPopup.setSingleChoiceItems(roomFilterTypeUiModel.getListOFilterType().toArray(
-                new CharSequence[0]),
+        myPopup.setSingleChoiceItems(roomFilterTypeUiModel.getListOFilterType(),
                 roomFilterTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
