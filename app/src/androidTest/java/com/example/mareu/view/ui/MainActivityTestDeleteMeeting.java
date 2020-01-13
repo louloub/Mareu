@@ -22,14 +22,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import java.util.concurrent.TimeUnit;
-
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.contrib.PickerActions.setDate;
 import static androidx.test.espresso.contrib.PickerActions.setTime;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
@@ -70,9 +69,6 @@ public class MainActivityTestDeleteMeeting {
                 )
         );
 
-        // Delay few seconds
-        TimeUnit.SECONDS.sleep(1);
-
         // Check if meeting list is empty
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(0));
     }
@@ -98,9 +94,6 @@ public class MainActivityTestDeleteMeeting {
                 )
         );
 
-        // Delay few seconds
-        TimeUnit.SECONDS.sleep(5);
-
         // Check if meeting list contain two meeting
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
     }
@@ -121,15 +114,8 @@ public class MainActivityTestDeleteMeeting {
         floatingActionButton.perform(click());
 
         // Set Subject of Meeting 1
-        ViewInteraction textInputEditText = onView(
-                allOf(withId(R.id.create_meeting_tiet_subject),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.create_meeting_til_subject),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText.perform(replaceText(subject), closeSoftKeyboard());
+        onView(withId(R.id.create_meeting_til_subject)).perform(click());
+        onView(withId(R.id.create_meeting_tiet_subject)).perform(typeText(subject), closeSoftKeyboard());
 
         // Set Participant 1 of Meeting
         ViewInteraction textInputEditText2 = onView(
