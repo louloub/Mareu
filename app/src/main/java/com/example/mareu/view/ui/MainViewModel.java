@@ -18,7 +18,6 @@ import com.example.mareu.view.ui.model.SortingTypeUiModel;
 
 import org.jetbrains.annotations.NotNull;
 import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -212,16 +211,33 @@ public class MainViewModel extends ViewModel {
             @Nullable Integer selectedMeetingRoomNumber,
             @Nullable String dateToFilter) {
 
-        if (sortingCollectionFromSortingType(meetingList, sortingType)) return null;
+        int size = 0;
+        int index = 0;
 
         List<MeetingUiModel> meetingUiModelToShow = new ArrayList<>();
         List<MeetingUiModel> meetingUiModelListWithValidDateFilter = new ArrayList<>();
-        List<MeetingUiModel> meetingUiModelListWithoutValidDateFilter = new ArrayList<>();
         List<MeetingUiModel> allMeetingListUiModel = new ArrayList<>();
 
+        if (meetingList == null) {
+            return null;
+        }
 
-        int size = 0;
-        int index = 0;
+        if (sortingType == null || sortingType == ROOM_ALPHABETICAL_ASC) {
+
+            Collections.sort(meetingList, ROOM_COMPARATOR_MEETING_ASC);
+
+        } else if (sortingType == ROOM_ALPHABETICAL_DSC) {
+
+            Collections.sort(meetingList, ROOM_COMPARATOR_MEETING_DSC);
+
+        } else if (sortingType == DATE_ASC) {
+
+            Collections.sort(meetingList, DATE_COMPARATOR_ASC);
+
+        } else if (sortingType == DATE_DSC) {
+
+            Collections.sort(meetingList, DATE_COMPARATOR_DSC);
+        }
 
         if (mMeetingListLiveData.getValue() != null) {
             size = (mMeetingListLiveData.getValue()).size();
@@ -234,15 +250,11 @@ public class MainViewModel extends ViewModel {
 
         for (Meeting meeting : meetingList) {
 
-            MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(meeting.getId());
-
-            allMeetingListUiModel.add(meetingUiModelWithoutValidDateFilter);
+            MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(meeting,allMeetingListUiModel);
 
             if (meetingList.get(index).getDate().toString().equals(dateToFilter)) {
 
-                MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(index);
-
-                meetingUiModelListWithValidDateFilter.add(meetingUiModelWithValidDateFilter);
+                MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilter);
 
                 meetingUiModelToShow = meetingUiModelListWithValidDateFilter;
 
@@ -329,10 +341,10 @@ public class MainViewModel extends ViewModel {
 
     // TODO : virer cette methode ou l'autre
     @NotNull
-    private MeetingUiModel createMeetingUiModel(int index) {
+    private MeetingUiModel createMeetingUiModel(Meeting meeting, List<MeetingUiModel> result) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        List<String> listOfEmailOfParticipant = mMeetingListLiveData.getValue().get(index).getListOfEmailOfParticipant();
+        List<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
 
         for (int i = 0; i < listOfEmailOfParticipant.size(); i++) {
             String participant = listOfEmailOfParticipant.get(i);
@@ -342,13 +354,16 @@ public class MainViewModel extends ViewModel {
             }
         }
 
-        return new MeetingUiModel(
-                mMeetingListLiveData.getValue().get(index).getId(),
-                mMeetingListLiveData.getValue().get(index).getDate().toString(),
-                mMeetingListLiveData.getValue().get(index).getHour(),
-                Integer.toString(mMeetingListLiveData.getValue().get(index).getRoom()),
-                mMeetingListLiveData.getValue().get(index).getSubject(),
+        MeetingUiModel meetingUiModel = new MeetingUiModel(
+                meeting.getId(),
+                meeting.getDate().toString(),
+                meeting.getHour(),
+                Integer.toString(meeting.getRoom()),
+                meeting.getSubject(),
                 stringBuilder.toString());
+
+        result.add(meetingUiModel);
+        return meetingUiModel;
     }
 
     // SORTING TYPE
