@@ -99,7 +99,7 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<RoomFilterTypeUiModel> mRoomFilterTypeUiModelLiveData = new SingleLiveEvent<>();
     private final MutableLiveData<Integer> mSelectedFilterTypeLiveData = new MutableLiveData<>();
     private final SingleLiveEvent<DateFilterUiModel> mChoiceDateFilterUiModelData = new SingleLiveEvent<>();
-    private final SingleLiveEvent<String> mToastTextForChoiceDateFilter = new SingleLiveEvent<>();
+    private final SingleLiveEvent<String> mToastTextForChoiceDateFilterLiveData = new SingleLiveEvent<>();
     private int mSelectedSortingTypeIndex = 0;
     private int mSelectedFilterTypeIndex = 0;
 
@@ -125,7 +125,7 @@ public class MainViewModel extends ViewModel {
     }
 
     LiveData<String> getToastTextForChoiceDateFilter(){
-        return mToastTextForChoiceDateFilter;
+        return mToastTextForChoiceDateFilterLiveData;
     }
 
     private void wireUpMediator() {
@@ -431,6 +431,18 @@ public class MainViewModel extends ViewModel {
     }
 
     // DATE FILTER
+    void compareDateToFilter(String dateToFilter) {
+        if (dateToFilter.isEmpty()) {
+            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+            setDateFilterType(dateToFilter);
+        } else if (dateToFilter.length() != 10) {
+            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
+        } else {
+            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
+            setDateFilterType(dateToFilter);
+        }
+    }
+
     void setDateFilterType(String dateForFilter) {
 
         int size = 0;
@@ -467,20 +479,8 @@ public class MainViewModel extends ViewModel {
         } // END WHILE
     }
 
-    void compareDateToFilter(String dateToFilter) {
-        if (dateToFilter.isEmpty()) {
-            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
-            setDateFilterType(dateToFilter);
-        } else if (dateToFilter.length() != 10) {
-            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
-        } else {
-            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
-            setDateFilterType(dateToFilter);
-        }
-    }
-
     void setToastTextForChoiceDateFilter(String toastText){
-        mToastTextForChoiceDateFilter.setValue(toastText);
+        mToastTextForChoiceDateFilterLiveData.setValue(toastText);
     }
 
     void displayChoiceDateFilterPopup() {
