@@ -211,43 +211,29 @@ public class MainViewModel extends ViewModel {
             @Nullable Integer selectedMeetingRoomNumber,
             @Nullable String dateToFilter) {
 
-        int size = 0;
         int index = 0;
 
         List<MeetingUiModel> meetingUiModelToShow = new ArrayList<>();
         List<MeetingUiModel> meetingUiModelListWithValidDateFilter = new ArrayList<>();
         List<MeetingUiModel> allMeetingListUiModel = new ArrayList<>();
 
-        if (meetingList == null) {
-            return null;
-        }
-
-        if (sortingType == null || sortingType == ROOM_ALPHABETICAL_ASC) {
-
-            Collections.sort(meetingList, ROOM_COMPARATOR_MEETING_ASC);
-
-        } else if (sortingType == ROOM_ALPHABETICAL_DSC) {
-
-            Collections.sort(meetingList, ROOM_COMPARATOR_MEETING_DSC);
-
-        } else if (sortingType == DATE_ASC) {
-
-            Collections.sort(meetingList, DATE_COMPARATOR_ASC);
-
-        } else if (sortingType == DATE_DSC) {
-
-            Collections.sort(meetingList, DATE_COMPARATOR_DSC);
-        }
-
-        if (mMeetingListLiveData.getValue() != null) {
-            size = (mMeetingListLiveData.getValue()).size();
-        }
-
+        // TODO : NINO quand j'ajoute deux meeting il m'en affiche qu'un
+        // TODO : Je dois filter pour réaficcher les deux meetings depuis le menu filtre et en laissant le champ vide puis valider
         if (mChoiceDateFilterUiModelLiveData.getValue() == null) {
             dateToFilter = getActualDateStringForFilterDateWhenCreateFirstMeeting();
             mChoiceDateFilterUiModelLiveData.setValue(dateToFilter);
         }
 
+        // SORTING TYPE
+        if (sortingMeetingListWithSortingTypeInCombine(meetingList, sortingType)) return null;
+
+        // DATE FILTER
+        meetingUiModelToShow = filterMeetingListWithDateFilterInCombine(meetingList, dateToFilter, index, meetingUiModelToShow, meetingUiModelListWithValidDateFilter, allMeetingListUiModel);
+
+        return meetingUiModelToShow;
+    }
+
+    private List<MeetingUiModel> filterMeetingListWithDateFilterInCombine(@NotNull List<Meeting> meetingList, @NotNull String dateToFilter, int index, List<MeetingUiModel> meetingUiModelToShow, List<MeetingUiModel> meetingUiModelListWithValidDateFilter, List<MeetingUiModel> allMeetingListUiModel) {
         for (Meeting meeting : meetingList) {
 
             MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(meeting,allMeetingListUiModel);
@@ -263,34 +249,32 @@ public class MainViewModel extends ViewModel {
                 setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
 
             } else {
+
                 if (dateToFilter.isEmpty()) {
+
                     meetingUiModelToShow = allMeetingListUiModel;
+
                     mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
+
                     setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
                 } else if (dateToFilter.length() != 10) {
+
                     mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
+
                     setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
                 } else {
+
                     meetingUiModelToShow = meetingUiModelListWithValidDateFilter;
+
                     mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
                 }
             }
             index++;
         }
-
         return meetingUiModelToShow;
     }
 
-    private String getActualDateStringForFilterDateWhenCreateFirstMeeting() {
-
-        String yearsInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getYear());
-        String dayInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getDayOfMonth());
-        String monthInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getMonthValue());
-
-        return yearsInStringFormat + "-" + monthInStringFormat + "-" + dayInStringFormat;
-    }
-
-    private boolean sortingCollectionFromSortingType(@Nullable List<Meeting> meetingList, @Nullable SortingType sortingType) {
+    private boolean sortingMeetingListWithSortingTypeInCombine(@Nullable List<Meeting> meetingList, @Nullable SortingType sortingType) {
         if (meetingList == null) {
             return true;
         }
@@ -314,32 +298,15 @@ public class MainViewModel extends ViewModel {
         return false;
     }
 
-    // TODO : virer cette methode ou l'autre
-    private void createMeetingUiModelInCombineMeeting(List<MeetingUiModel> result, Meeting meeting) {
-        StringBuilder stringBuilder = new StringBuilder();
+    private String getActualDateStringForFilterDateWhenCreateFirstMeeting() {
 
-        List<String> listOfEmailOfParticipant = meeting.getListOfEmailOfParticipant();
+        String yearsInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getYear());
+        String dayInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getDayOfMonth());
+        String monthInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getMonthValue());
 
-        for (int i = 0; i < listOfEmailOfParticipant.size(); i++) {
-            String participant = listOfEmailOfParticipant.get(i);
-            stringBuilder.append(participant);
-            if (i + 1 < listOfEmailOfParticipant.size()) {
-                stringBuilder.append(", ");
-            }
-        }
-
-        MeetingUiModel meetingUiModel = new MeetingUiModel(
-                meeting.getId(),
-                meeting.getDate().toString(),
-                meeting.getHour(),
-                Integer.toString(meeting.getRoom()),
-                meeting.getSubject(),
-                stringBuilder.toString());
-
-        result.add(meetingUiModel);
+        return yearsInStringFormat + "-" + monthInStringFormat + "-" + dayInStringFormat;
     }
 
-    // TODO : virer cette methode ou l'autre
     @NotNull
     private MeetingUiModel createMeetingUiModel(Meeting meeting, List<MeetingUiModel> result) {
         StringBuilder stringBuilder = new StringBuilder();
