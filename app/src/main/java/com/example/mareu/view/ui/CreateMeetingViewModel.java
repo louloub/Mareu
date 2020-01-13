@@ -26,6 +26,7 @@ public class CreateMeetingViewModel extends ViewModel {
     private final MutableLiveData<LocalDate> mChosenDateLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> mChosenTimeStringLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mRoomSelected = new MutableLiveData<>();
+    private final MutableLiveData<String> mChoiceDateFilterUiModelLiveData = new MutableLiveData<>();
 
     LiveData<ViewAction> getViewActionLiveData() {
         return mViewActionLiveData;
