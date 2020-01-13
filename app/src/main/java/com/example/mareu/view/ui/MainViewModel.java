@@ -431,19 +431,7 @@ public class MainViewModel extends ViewModel {
     }
 
     // DATE FILTER
-    void compareDateToFilter(String dateToFilter) {
-        if (dateToFilter.isEmpty()) {
-            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
-            setDateFilterType(dateToFilter);
-        } else if (dateToFilter.length() != 10) {
-            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
-        } else {
-            setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
-            setDateFilterType(dateToFilter);
-        }
-    }
-
-    void setDateFilterType(String dateForFilter) {
+    void compareDateToFilter(String dateForFilter) {
 
         int size = 0;
         int index = 0;
@@ -467,11 +455,14 @@ public class MainViewModel extends ViewModel {
 
                 meetingUiModelListWithValidDateFilter.add(meetingUiModelWithValidDateFilter);
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
+                setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
 
             } else if (dateForFilter.isEmpty()) {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithoutValidDateFilter);
+                setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
             } else if (dateForFilter.length() != 10) {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
+                setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
             } else {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
             }
