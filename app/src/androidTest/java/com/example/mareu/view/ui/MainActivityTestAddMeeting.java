@@ -31,6 +31,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.contrib.PickerActions.setDate;
 import static androidx.test.espresso.contrib.PickerActions.setTime;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
@@ -103,15 +104,8 @@ public class MainActivityTestAddMeeting {
         floatingActionButton.perform(click());
 
         // Set Subject of Meeting 1
-        ViewInteraction textInputEditText = onView(
-                allOf(withId(R.id.create_meeting_tiet_subject),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.create_meeting_til_subject),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText.perform(replaceText(subject), closeSoftKeyboard());
+        onView(withId(R.id.create_meeting_til_subject)).perform(click());
+        onView(withId(R.id.create_meeting_tiet_subject)).perform(typeText(subject), closeSoftKeyboard());
 
         // Set Participant 1 of Meeting
         ViewInteraction textInputEditText2 = onView(
