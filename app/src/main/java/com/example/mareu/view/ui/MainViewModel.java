@@ -217,19 +217,29 @@ public class MainViewModel extends ViewModel {
         List<MeetingUiModel> meetingUiModelListWithValidDateFilter = new ArrayList<>();
         List<MeetingUiModel> allMeetingListUiModel = new ArrayList<>();
 
-        // TODO : NINO quand j'ajoute deux meeting il m'en affiche qu'un
-        // TODO : Je dois filter pour réaficcher les deux meetings depuis le menu filtre et en laissant le champ vide puis valider
         // TODO 14/01/2020 : intégrer le filtre par room
         if (mChoiceDateFilterUiModelLiveData.getValue() == null) {
             dateToFilter = " ";
             mChoiceDateFilterUiModelLiveData.setValue(dateToFilter);
         }
 
+        if (mSelectedFilterRoomLiveData.getValue() == null) {
+            selectedMeetingRoomNumber = 0;
+            mSelectedFilterRoomLiveData.setValue(selectedMeetingRoomNumber);
+        }
+
         // SORTING TYPE
         if (sortingMeetingListWithSortingTypeInCombine(meetingList, sortingType)) return null;
 
         // DATE FILTER
-        meetingUiModelToShow = filterMeetingListWithDateFilterInCombine(meetingList, dateToFilter, index, meetingUiModelToShow, meetingUiModelListWithValidDateFilter, allMeetingListUiModel, selectedMeetingRoomNumber);
+        meetingUiModelToShow = filterMeetingListWithDateFilterInCombine(
+                meetingList,
+                dateToFilter,
+                index,
+                meetingUiModelToShow,
+                meetingUiModelListWithValidDateFilter,
+                allMeetingListUiModel,
+                selectedMeetingRoomNumber);
 
         return meetingUiModelToShow;
     }
@@ -242,14 +252,15 @@ public class MainViewModel extends ViewModel {
             List<MeetingUiModel> meetingUiModelListWithValidDateFilter,
             List<MeetingUiModel> allMeetingListUiModel,
             Integer selectedMeetingRoomNumber) {
+
         for (Meeting meeting : meetingList) {
 
-            MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(meeting,allMeetingListUiModel);
+            createMeetingUiModel(meeting,allMeetingListUiModel);
 
             // TODO 14/01/2020 : tester ici avec selectedMeetingRoomNumber
             if (meetingList.get(index).getDate().toString().equals(dateToFilter)) {
 
-                MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilter);
+                createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilter);
 
                 meetingUiModelToShow = meetingUiModelListWithValidDateFilter;
 
