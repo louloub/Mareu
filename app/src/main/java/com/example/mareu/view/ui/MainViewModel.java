@@ -221,7 +221,7 @@ public class MainViewModel extends ViewModel {
         // TODO : Je dois filter pour réaficcher les deux meetings depuis le menu filtre et en laissant le champ vide puis valider
         // TODO 14/01/2020 : intégrer le filtre par room
         if (mChoiceDateFilterUiModelLiveData.getValue() == null) {
-            dateToFilter = getActualDateStringForFilterDateWhenCreateFirstMeeting();
+            dateToFilter = " ";
             mChoiceDateFilterUiModelLiveData.setValue(dateToFilter);
         }
 
@@ -246,8 +246,8 @@ public class MainViewModel extends ViewModel {
 
             MeetingUiModel meetingUiModelWithoutValidDateFilter = createMeetingUiModel(meeting,allMeetingListUiModel);
 
-            // TODO 14/01/2020 : tester ce IF avec selectedMeetingRoomNumber
-            if (meetingList.get(index).getDate().toString().equals(dateToFilter) || selectedMeetingRoomNumber == 0 || selectedMeetingRoomNumber == meeting.getRoom() ) {
+            // TODO 14/01/2020 : tester ici avec selectedMeetingRoomNumber
+            if (meetingList.get(index).getDate().toString().equals(dateToFilter)) {
 
                 MeetingUiModel meetingUiModelWithValidDateFilter = createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilter);
 
@@ -259,7 +259,7 @@ public class MainViewModel extends ViewModel {
 
             } else {
 
-                if (dateToFilter.isEmpty()) {
+                if (dateToFilter.equals(" ")) {
 
                     meetingUiModelToShow = allMeetingListUiModel;
 
