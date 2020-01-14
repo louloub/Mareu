@@ -269,23 +269,26 @@ public class MainViewModel extends ViewModel {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
 
                 setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
+            }
 
-                /*
-                if (meetingList.get(index).getRoom() == selectedMeetingRoomNumber) {
+            /*else if (meetingList.get(index).getDate().toString().equals(dateToFilter) && meetingList.get(index).getRoom() == selectedMeetingRoomNumber) {
 
-                    createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilterAndValidRoom);
+                createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilterAndValidRoom);
 
-                    meetingUiModelToShow = meetingUiModelListWithValidDateFilterAndValidRoom;
+                meetingUiModelToShow = meetingUiModelListWithValidDateFilterAndValidRoom;
 
-                    mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilterAndValidRoom);
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilterAndValidRoom);
+            }*/
 
-                } else {
-                }
-                */
+            else if (meetingList.get(index).getDate().toString().equals(dateToFilter) && meetingList.get(index).getRoom() == selectedMeetingRoomNumber) {
+                createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilterAndValidRoom);
 
-            } else {
+                meetingUiModelToShow = meetingUiModelListWithValidDateFilterAndValidRoom;
 
-                if (dateToFilter.equals(" ")) {
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilterAndValidRoom);
+            }
+
+                else if (dateToFilter.equals(" ")) {
 
                     meetingUiModelToShow = allMeetingListUiModel;
 
@@ -314,7 +317,49 @@ public class MainViewModel extends ViewModel {
 
                     mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
                 }
-            }
+
+
+            /*else {
+
+                if (meetingList.get(index).getDate().toString().equals(dateToFilter) && meetingList.get(index).getRoom() == selectedMeetingRoomNumber) {
+
+                    createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilterAndValidRoom);
+
+                    meetingUiModelToShow = meetingUiModelListWithValidDateFilterAndValidRoom;
+
+                    mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilterAndValidRoom);
+                }
+
+                else if (dateToFilter.equals(" ")) {
+
+                    meetingUiModelToShow = allMeetingListUiModel;
+
+                    mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
+
+                    setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+
+                    *//*if (meetingList.get(index).getRoom() == 0) {
+
+                        meetingUiModelToShow = allMeetingListUiModel;
+
+                        mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
+
+                        setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+                    }*//*
+
+                } else if (dateToFilter.length() != 10) {
+
+                    mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
+
+                    setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
+
+                } else {
+
+                    meetingUiModelToShow = meetingUiModelListWithValidDateFilter;
+
+                    mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
+                }
+            }*/
             index++;
         }
         return meetingUiModelToShow;
