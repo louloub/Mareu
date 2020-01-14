@@ -215,6 +215,7 @@ public class MainViewModel extends ViewModel {
 
         List<MeetingUiModel> meetingUiModelToShow = new ArrayList<>();
         List<MeetingUiModel> meetingUiModelListWithValidDateFilter = new ArrayList<>();
+        List<MeetingUiModel> meetingUiModelListWithValidDateFilterAndValidRoom = new ArrayList<>();
         List<MeetingUiModel> allMeetingListUiModel = new ArrayList<>();
 
         // TODO 14/01/2020 : intégrer le filtre par room
@@ -238,6 +239,7 @@ public class MainViewModel extends ViewModel {
                 index,
                 meetingUiModelToShow,
                 meetingUiModelListWithValidDateFilter,
+                meetingUiModelListWithValidDateFilterAndValidRoom,
                 allMeetingListUiModel,
                 selectedMeetingRoomNumber);
 
@@ -250,6 +252,7 @@ public class MainViewModel extends ViewModel {
             int index,
             List<MeetingUiModel> meetingUiModelToShow,
             List<MeetingUiModel> meetingUiModelListWithValidDateFilter,
+            List<MeetingUiModel> meetingUiModelListWithValidDateFilterAndValidRoom,
             List<MeetingUiModel> allMeetingListUiModel,
             Integer selectedMeetingRoomNumber) {
 
@@ -257,7 +260,7 @@ public class MainViewModel extends ViewModel {
 
             createMeetingUiModel(meeting,allMeetingListUiModel);
 
-            if (meetingList.get(index).getDate().toString().equals(dateToFilter) || meetingList.get(index).getRoom() == selectedMeetingRoomNumber ) {
+            if (meetingList.get(index).getDate().toString().equals(dateToFilter)) {
 
                 createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilter);
 
@@ -266,6 +269,19 @@ public class MainViewModel extends ViewModel {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
 
                 setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
+
+                /*
+                if (meetingList.get(index).getRoom() == selectedMeetingRoomNumber) {
+
+                    createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilterAndValidRoom);
+
+                    meetingUiModelToShow = meetingUiModelListWithValidDateFilterAndValidRoom;
+
+                    mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilterAndValidRoom);
+
+                } else {
+                }
+                */
 
             } else {
 
@@ -276,6 +292,15 @@ public class MainViewModel extends ViewModel {
                     mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
 
                     setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+
+                    /*if (meetingList.get(index).getRoom() == 0) {
+
+                        meetingUiModelToShow = allMeetingListUiModel;
+
+                        mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
+
+                        setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+                    }*/
 
                 } else if (dateToFilter.length() != 10) {
 
@@ -317,15 +342,6 @@ public class MainViewModel extends ViewModel {
             Collections.sort(meetingList, DATE_COMPARATOR_DSC);
         }
         return false;
-    }
-
-    private String getActualDateStringForFilterDateWhenCreateFirstMeeting() {
-
-        String yearsInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getYear());
-        String dayInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getDayOfMonth());
-        String monthInStringFormat = String.format(Locale.FRANCE, "%02d", LocalDate.now().getMonthValue());
-
-        return yearsInStringFormat + "-" + monthInStringFormat + "-" + dayInStringFormat;
     }
 
     @NotNull
