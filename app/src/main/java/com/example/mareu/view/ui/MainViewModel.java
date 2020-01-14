@@ -257,8 +257,7 @@ public class MainViewModel extends ViewModel {
 
             createMeetingUiModel(meeting,allMeetingListUiModel);
 
-            // TODO 14/01/2020 : tester ici avec selectedMeetingRoomNumber
-            if (meetingList.get(index).getDate().toString().equals(dateToFilter)) {
+            if (meetingList.get(index).getDate().toString().equals(dateToFilter) || meetingList.get(index).getRoom() == selectedMeetingRoomNumber ) {
 
                 createMeetingUiModel(meeting,meetingUiModelListWithValidDateFilter);
 
@@ -277,11 +276,13 @@ public class MainViewModel extends ViewModel {
                     mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
 
                     setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+
                 } else if (dateToFilter.length() != 10) {
 
                     mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
 
                     setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForInvalideDate());
+
                 } else {
 
                     meetingUiModelToShow = meetingUiModelListWithValidDateFilter;
