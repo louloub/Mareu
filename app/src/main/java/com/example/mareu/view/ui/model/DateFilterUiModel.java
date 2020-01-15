@@ -4,7 +4,6 @@ public class DateFilterUiModel {
 
     private String title;
     private String message;
-    private String dateToFilter;
     private String positiveButtonText;
     private String toastForDisplayAllMeeting;
     private String toastForInvalideDate;
@@ -27,14 +26,6 @@ public class DateFilterUiModel {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public void setDateToFilter(String dateToFilter) {
-        this.dateToFilter = dateToFilter;
-    }
-
-    public String getDateToFilter() {
-        return dateToFilter;
     }
 
     public String getPositiveButtonText() {

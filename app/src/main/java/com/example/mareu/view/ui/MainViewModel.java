@@ -215,14 +215,12 @@ public class MainViewModel extends ViewModel {
 
         List<MeetingUiModel> meetingUiModelToShow = new ArrayList<>();
         List<MeetingUiModel> meetingUiModelListWithValidDateFilter = new ArrayList<>();
-        List<MeetingUiModel> meetingUiModelListWithValidDateFilterAndValidRoom = new ArrayList<>();
         List<MeetingUiModel> allMeetingListUiModel = new ArrayList<>();
-        List<MeetingUiModel> meetingUiModelListWithValidRoom = new ArrayList<>();
 
         // TODO 14/01/2020 : intégrer le filtre par room
         if (mChoiceDateFilterUiModelLiveData.getValue() == null) {
             dateToFilter = " ";
-            mChoiceDateFilterUiModelLiveData.setValue(dateToFilter);
+            mChoiceDateFilterUiModelLiveData.setValue(" ");
         }
 
         if (mSelectedFilterRoomLiveData.getValue() == null) {
@@ -241,8 +239,6 @@ public class MainViewModel extends ViewModel {
                 index,
                 meetingUiModelToShow,
                 meetingUiModelListWithValidDateFilter,
-                meetingUiModelListWithValidDateFilterAndValidRoom,
-                meetingUiModelListWithValidRoom,
                 allMeetingListUiModel,
                 selectedMeetingRoomNumber);
 
@@ -255,9 +251,7 @@ public class MainViewModel extends ViewModel {
             @NotNull String dateToFilter,
             int index,
             List<MeetingUiModel> meetingUiModelToShow,
-            List<MeetingUiModel> meetingUiModelListWithValidDateFilter,
-            List<MeetingUiModel> meetingUiModelListWithValidDateFilterAndValidRoom,
-            List<MeetingUiModel> meetingUiModelListWithValidRoom,
+            List<MeetingUiModel> meetingUiModelListWithValidDateAndRoomFilter,
             List<MeetingUiModel> allMeetingListUiModel,
             @NonNull Integer selectedMeetingRoomNumber) {
 
@@ -289,15 +283,19 @@ public class MainViewModel extends ViewModel {
 
             if (isDateValid && isRoomValid)
             {
-                MeetingUiModel meetingUiModelForListWithValidDateFilter = createMeetingUiModel(meeting);
+                MeetingUiModel meetingUiModelForListWithValidDateAndRoomFilter = createMeetingUiModel(meeting);
 
-                meetingUiModelListWithValidDateFilter.add(meetingUiModelForListWithValidDateFilter);
+                meetingUiModelListWithValidDateAndRoomFilter.add(meetingUiModelForListWithValidDateAndRoomFilter);
 
-                meetingUiModelToShow = meetingUiModelListWithValidDateFilter;
+                meetingUiModelToShow = meetingUiModelListWithValidDateAndRoomFilter;
 
-                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateFilter);
+                mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateAndRoomFilter);
 
-                setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
+                if (dateToFilter.equals(" ")) {
+                    setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+                } else {
+                    setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
+                }
 
             } else if (dateToFilter.length() != 10) {
 
@@ -307,7 +305,7 @@ public class MainViewModel extends ViewModel {
 
             } else {
 
-                meetingUiModelToShow = meetingUiModelListWithValidDateFilter;
+                meetingUiModelToShow = meetingUiModelListWithValidDateAndRoomFilter;
 
                 mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
             }
@@ -536,7 +534,7 @@ public class MainViewModel extends ViewModel {
         mChoiceDateFilterUiModel.setMessage("Exemple : 2019-12-01");
         mChoiceDateFilterUiModel.setPositiveButtonText("Valider");
         mChoiceDateFilterUiModel.setToastForDisplayAllMeeting("Tu as choisi d'afficher toutes les réunions ");
-        mChoiceDateFilterUiModel.setToastForInvalideDate("La date est invalide : ");
+        mChoiceDateFilterUiModel.setToastForInvalideDate("La date est invalide");
         mChoiceDateFilterUiModel.setToastForValideDate("Tu as choisi d'afficher les réunions de cette date : ");
         mChoiceDateFilterUiModelData.setValue(mChoiceDateFilterUiModel);
     }
