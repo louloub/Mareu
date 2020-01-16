@@ -17,13 +17,11 @@ import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
 import com.example.mareu.view.ui.model.SortingTypeUiModel;
 
 import org.jetbrains.annotations.NotNull;
-import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import static com.example.mareu.view.ui.RoomFilterType.ALL_ROOM;
 import static com.example.mareu.view.ui.RoomFilterType.ROOM_1;
@@ -85,8 +83,8 @@ public class MainViewModel extends ViewModel {
     private static final String ROOM_9_STRING = "salle 9";
     private static final String ROOM_10_STRING = "salle 10";
 
-    private static final String CHOOSE_SORTING_TITLE = "Choisis le trie que tu souhaites" ;
-    private static final String VALIDATE_CHOICE = "Valider" ;
+    private static final String CHOOSE_SORTING_TITLE = "Choisis le trie que tu souhaites";
+    private static final String VALIDATE_CHOICE = "Valider";
     private static final String YOUR_SORTING_CHOICE_IS = "Tu as choisi : ";
 
     private static final String CHOOSE_ROOM_TO_FILTER = "Choisis la salle à filtrer";
@@ -127,8 +125,12 @@ public class MainViewModel extends ViewModel {
         return mChoiceDateFilterUiModelData;
     }
 
-    LiveData<String> getToastTextForChoiceDateFilter(){
+    LiveData<String> getToastTextForChoiceDateFilter() {
         return mToastTextForChoiceDateFilterLiveData;
+    }
+
+    void setToastTextForChoiceDateFilter(String toastText) {
+        mToastTextForChoiceDateFilterLiveData.setValue(toastText);
     }
 
     private void wireUpMediator() {
@@ -214,10 +216,9 @@ public class MainViewModel extends ViewModel {
         int index = 0;
 
         List<MeetingUiModel> meetingUiModelToShow = new ArrayList<>();
-        List<MeetingUiModel> meetingUiModelListWithValidDateFilter = new ArrayList<>();
+        List<MeetingUiModel> meetingUiModelListWithDateAndRoomFilter = new ArrayList<>();
         List<MeetingUiModel> allMeetingListUiModel = new ArrayList<>();
 
-        // TODO 14/01/2020 : intégrer le filtre par room
         if (mChoiceDateFilterUiModelLiveData.getValue() == null) {
             dateToFilter = " ";
             mChoiceDateFilterUiModelLiveData.setValue(" ");
@@ -231,22 +232,20 @@ public class MainViewModel extends ViewModel {
         // SORTING TYPE
         if (sortingMeetingListWithSortingTypeInCombine(meetingList, sortingType)) return null;
 
-        // TODO : 15/01/2020 : rename params
         // DATE & ROOM FILTER
-        meetingUiModelToShow = filterMeetingListWithDateFilterInCombine(
+        meetingUiModelToShow = filterMeetingListWithDateAndRoomFilterInCombine(
                 meetingList,
                 dateToFilter,
                 index,
                 meetingUiModelToShow,
-                meetingUiModelListWithValidDateFilter,
+                meetingUiModelListWithDateAndRoomFilter,
                 allMeetingListUiModel,
                 selectedMeetingRoomNumber);
 
         return meetingUiModelToShow;
     }
 
-    // TODO : 15/01/2020 : rename params
-    private List<MeetingUiModel> filterMeetingListWithDateFilterInCombine(
+    private List<MeetingUiModel> filterMeetingListWithDateAndRoomFilterInCombine(
             @NotNull List<Meeting> meetingList,
             @NotNull String dateToFilter,
             int index,
@@ -263,12 +262,11 @@ public class MainViewModel extends ViewModel {
 
             Meeting curentMeeting = meetingList.get(index);
 
-            boolean shouldCheckRoom = selectedMeetingRoomNumber!=0;
+            boolean shouldCheckRoom = selectedMeetingRoomNumber != 0;
 
             boolean isRoomValid = true;
 
-            if (curentMeeting.getRoom() != selectedMeetingRoomNumber && shouldCheckRoom)
-            {
+            if (curentMeeting.getRoom() != selectedMeetingRoomNumber && shouldCheckRoom) {
                 isRoomValid = false;
             }
 
@@ -276,13 +274,11 @@ public class MainViewModel extends ViewModel {
 
             boolean isDateValid = true;
 
-            if (!curentMeeting.getDate().toString().equals(dateToFilter) && shouldCheckDate)
-            {
+            if (!curentMeeting.getDate().toString().equals(dateToFilter) && shouldCheckDate) {
                 isDateValid = false;
             }
 
-            if (isDateValid && isRoomValid)
-            {
+            if (isDateValid && isRoomValid) {
                 MeetingUiModel meetingUiModelForListWithValidDateAndRoomFilter = createMeetingUiModel(meeting);
 
                 meetingUiModelListWithValidDateAndRoomFilter.add(meetingUiModelForListWithValidDateAndRoomFilter);
@@ -292,8 +288,11 @@ public class MainViewModel extends ViewModel {
                 mMeetingUiModelsLiveData.setValue(meetingUiModelListWithValidDateAndRoomFilter);
 
                 if (dateToFilter.equals(" ")) {
+
                     setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForDisplayAllMeeting());
+
                 } else {
+
                     setToastTextForChoiceDateFilter(mChoiceDateFilterUiModel.getToastForValideDate());
                 }
 
@@ -413,7 +412,7 @@ public class MainViewModel extends ViewModel {
 
     void displaySortingTypePopup() {
 
-        if (mSortingTypeUiModelLiveData.getValue()==null) {
+        if (mSortingTypeUiModelLiveData.getValue() == null) {
             setSortingTypeUiModel();
         } else {
             mSortingTypeUiModelLiveData.setValue(getSortingTypeUiModelLiveData().getValue());
@@ -513,7 +512,7 @@ public class MainViewModel extends ViewModel {
 
     void displayFilterRoomPopup() {
 
-        if (mRoomFilterTypeUiModelLiveData.getValue()==null){
+        if (mRoomFilterTypeUiModelLiveData.getValue() == null) {
             setRoomFilterTypeUiModel();
         } else {
             mRoomFilterTypeUiModelLiveData.setValue(getRoomFilterTypeUiModelLiveData().getValue());
@@ -523,10 +522,6 @@ public class MainViewModel extends ViewModel {
     // DATE FILTER
     void compareDateToFilter(String dateForFilter) {
         mChoiceDateFilterUiModelLiveData.setValue(dateForFilter);
-    }
-
-    void setToastTextForChoiceDateFilter(String toastText){
-        mToastTextForChoiceDateFilterLiveData.setValue(toastText);
     }
 
     void displayChoiceDateFilterPopup() {

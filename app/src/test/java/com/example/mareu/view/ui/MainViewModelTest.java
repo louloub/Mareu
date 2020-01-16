@@ -241,13 +241,13 @@ public class MainViewModelTest {
     public void shouldMeetingAreFilterWithGoodDate() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setDateFilterType("2019-12-22");
+        mainViewModel.compareDateToFilter("2019-12-22");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
-        assertEquals(3,result.size());
+        assertEquals(1,result.size());
         assertEquals("2019-12-22",result.get(0).getDate());
     }
 
