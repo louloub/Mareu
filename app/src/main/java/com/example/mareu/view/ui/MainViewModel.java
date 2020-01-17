@@ -21,7 +21,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.example.mareu.view.ui.RoomFilterType.ALL_ROOM;
 import static com.example.mareu.view.ui.RoomFilterType.ROOM_1;
@@ -143,7 +145,6 @@ public class MainViewModel extends ViewModel {
                         combineMeeting(
                                 meetings,
                                 mSortingTypeLiveData.getValue(),
-                                mSelectedFilterRoomLiveData.getValue(),
                                 mChoiceDateFilterUiModelLiveData.getValue(),
                                 mRoomFilterTypeLiveData.getValue()
                         )
@@ -158,7 +159,6 @@ public class MainViewModel extends ViewModel {
                         combineMeeting(
                                 mMeetingListLiveData.getValue(),
                                 sortingType,
-                                mSelectedFilterRoomLiveData.getValue(),
                                 mChoiceDateFilterUiModelLiveData.getValue(),
                                 mRoomFilterTypeLiveData.getValue()
                         )
@@ -166,7 +166,7 @@ public class MainViewModel extends ViewModel {
             }
         });
 
-        mMeetingUiModelsLiveData.addSource(mSelectedFilterRoomLiveData, new Observer<Integer>() {
+        /*mMeetingUiModelsLiveData.addSource(mSelectedFilterRoomLiveData, new Observer<Integer>() {
             @Override
             public void onChanged(Integer selectedMeetingRoomNumber) {
                 mMeetingUiModelsLiveData.setValue(
@@ -179,7 +179,7 @@ public class MainViewModel extends ViewModel {
                         )
                 );
             }
-        });
+        });*/
 
         mMeetingUiModelsLiveData.addSource(mRoomFilterTypeLiveData, new Observer<RoomFilterType>() {
             @Override
@@ -188,7 +188,6 @@ public class MainViewModel extends ViewModel {
                         combineMeeting(
                                 mMeetingListLiveData.getValue(),
                                 mSortingTypeLiveData.getValue(),
-                                mSelectedFilterRoomLiveData.getValue(),
                                 mChoiceDateFilterUiModelLiveData.getValue(),
                                 roomFilterType
                         )
@@ -203,7 +202,6 @@ public class MainViewModel extends ViewModel {
                         combineMeeting(
                                 mMeetingListLiveData.getValue(),
                                 mSortingTypeLiveData.getValue(),
-                                mSelectedFilterRoomLiveData.getValue(),
                                 dateToFilter,
                                 mRoomFilterTypeLiveData.getValue()
                         )
@@ -218,7 +216,6 @@ public class MainViewModel extends ViewModel {
     private List<MeetingUiModel> combineMeeting(
             @Nullable List<Meeting> meetingList,
             @Nullable SortingType sortingType,
-            @Nullable Integer selectedMeetingRoomNumber,
             @Nullable String dateToFilter,
             @Nullable RoomFilterType roomFilterType) {
 
@@ -233,10 +230,17 @@ public class MainViewModel extends ViewModel {
             mChoiceDateFilterUiModelLiveData.setValue(" ");
         }
 
-        if (mSelectedFilterRoomLiveData.getValue() == null) {
-            selectedMeetingRoomNumber = 0;
-            mSelectedFilterRoomLiveData.setValue(selectedMeetingRoomNumber);
+        if (mRoomFilterTypeUiModelLiveData.getValue() == null) {
+            roomFilterType = ALL_ROOM;
         }
+
+        /*if (mSelectedFilterRoomLiveData.getValue() == null) {
+            // roomFilterType = ALL_ROOM;
+            electedMeetingRoomNumber = 0;
+            mSelectedFilterRoomLiveData.setValue(selectedMeetingRoomNumber);
+        }*/
+
+        int roomFilterTypeSelected = filterMeetingListWithRoomInCombine(meetingList,roomFilterType);
 
         // SORTING TYPE
         if (sortingMeetingListWithSortingTypeInCombine(meetingList, sortingType)) return null;
@@ -249,7 +253,7 @@ public class MainViewModel extends ViewModel {
                 meetingUiModelToShow,
                 meetingUiModelListWithDateAndRoomFilter,
                 allMeetingListUiModel,
-                selectedMeetingRoomNumber);
+                roomFilterTypeSelected);
 
         return meetingUiModelToShow;
     }
@@ -261,7 +265,20 @@ public class MainViewModel extends ViewModel {
             List<MeetingUiModel> meetingUiModelToShow,
             List<MeetingUiModel> meetingUiModelListWithValidDateAndRoomFilter,
             List<MeetingUiModel> allMeetingListUiModel,
-            @NonNull Integer selectedMeetingRoomNumber) {
+            @NonNull int roomFilterTypeSelected) {
+
+        Set<Integer> allRoomForCompare = new HashSet<Integer>();
+        allRoomForCompare.add(0);
+        allRoomForCompare.add(1);
+        allRoomForCompare.add(2);
+        allRoomForCompare.add(3);
+        allRoomForCompare.add(4);
+        allRoomForCompare.add(5);
+        allRoomForCompare.add(6);
+        allRoomForCompare.add(7);
+        allRoomForCompare.add(8);
+        allRoomForCompare.add(9);
+        allRoomForCompare.add(10);
 
         for (Meeting meeting : meetingList) {
 
@@ -271,11 +288,14 @@ public class MainViewModel extends ViewModel {
 
             Meeting curentMeeting = meetingList.get(index);
 
-            boolean shouldCheckRoom = selectedMeetingRoomNumber != 0;
+            // boolean shouldCheckRoom = roomFilterTypeSelected!=null;
 
             boolean isRoomValid = true;
 
-            if (curentMeeting.getRoom() != selectedMeetingRoomNumber && shouldCheckRoom) {
+            // int i = filterMeetingListWithRoomInCombine(meetingList,roomFilterType);
+
+            // TODO
+            if (!allRoomForCompare.contains(curentMeeting.getRoom())) {
                 isRoomValid = false;
             }
 
@@ -287,7 +307,8 @@ public class MainViewModel extends ViewModel {
                 isDateValid = false;
             }
 
-            if (isDateValid && isRoomValid) {
+            if (isDateValid && isRoomValid && roomFilterTypeSelected == 0) {
+
                 MeetingUiModel meetingUiModelForListWithValidDateAndRoomFilter = createMeetingUiModel(meeting);
 
                 meetingUiModelListWithValidDateAndRoomFilter.add(meetingUiModelForListWithValidDateAndRoomFilter);
@@ -321,6 +342,52 @@ public class MainViewModel extends ViewModel {
             index++;
         }
         return meetingUiModelToShow;
+    }
+
+    private int filterMeetingListWithRoomInCombine(@Nullable List<Meeting> meetingList, @Nullable RoomFilterType roomFilterType){
+        if (meetingList == null) {
+            return 0;
+        }
+
+        int i = 0;
+
+        switch (roomFilterType) {
+            case ALL_ROOM:
+                i= 0;
+                break;
+            case ROOM_1:
+                i = 1;
+                break;
+            case ROOM_2:
+                i = 2;
+                break;
+            case ROOM_3:
+                i = 3;
+                break;
+            case ROOM_4:
+                i = 4;
+                break;
+            case ROOM_5:
+                i = 5;
+                break;
+            case ROOM_6:
+                i = 6;
+                break;
+            case ROOM_7:
+                i = 7;
+                break;
+            case ROOM_8:
+                i = 8;
+                break;
+            case ROOM_9:
+                i = 9;
+                break;
+            case ROOM_10:
+                i = 10;
+                break;
+        }
+
+        return i;
     }
 
     private boolean sortingMeetingListWithSortingTypeInCombine(@Nullable List<Meeting> meetingList, @Nullable SortingType sortingType) {
@@ -432,59 +499,68 @@ public class MainViewModel extends ViewModel {
     void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
         switch (filterChoice) {
             case ALL_ROOM_STRING:
+
                 mRoomFilterTypeLiveData.setValue(ALL_ROOM);
                 mSelectedFilterRoomIndex = 0;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
+
+                /*roomFilterTypeUiModel.setSelectedIndex(0);
+                mRoomFilterTypeUiModelLiveData.setValue(roomFilterTypeUiModel);*/
+
                 break;
             case ROOM_1_STRING:
+
+                /*roomFilterTypeUiModel.setSelectedIndex(1);
+                mRoomFilterTypeUiModelLiveData.setValue(roomFilterTypeUiModel);*/
+
                 mRoomFilterTypeLiveData.setValue(ROOM_1);
                 mSelectedFilterRoomIndex = 1;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_2_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_2);
                 mSelectedFilterRoomIndex = 2;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_3_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_3);
                 mSelectedFilterRoomIndex = 3;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_4_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_4);
                 mSelectedFilterRoomIndex = 4;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_5_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_5);
                 mSelectedFilterRoomIndex = 5;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_6_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_6);
                 mSelectedFilterRoomIndex = 6;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_7_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_7);
                 mSelectedFilterRoomIndex = 7;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_8_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_8);
                 mSelectedFilterRoomIndex = 8;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_9_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_9);
                 mSelectedFilterRoomIndex = 9;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
             case ROOM_10_STRING:
                 mRoomFilterTypeLiveData.setValue(ROOM_10);
                 mSelectedFilterRoomIndex = 10;
-                setValueFilterUiModel(roomFilterTypeUiModel);
+                setValueRoomFilterUiModel(roomFilterTypeUiModel);
                 break;
         }
     }
@@ -514,7 +590,7 @@ public class MainViewModel extends ViewModel {
         mRoomFilterTypeUiModelLiveData.setValue(mRoomFilterTypeUiModel);
     }
 
-    private void setValueFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
+    private void setValueRoomFilterUiModel(RoomFilterTypeUiModel roomFilterTypeUiModel) {
         mSelectedFilterRoomLiveData.setValue(mSelectedFilterRoomIndex);
         roomFilterTypeUiModel.setSelectedIndex(mSelectedFilterRoomIndex);
     }
