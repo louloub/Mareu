@@ -61,18 +61,21 @@ public class MainActivityFiltre {
             return (e1.getRoom() - e2.getRoom());
         }
     };
+
     private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_DSC = new Comparator<Meeting>() {
         @Override
         public int compare(Meeting e1, Meeting e2) {
             return (e2.getRoom() - e1.getRoom());
         }
     };
+
     private static final Comparator<Meeting> DATE_COMPARATOR_ASC = new Comparator<Meeting>() {
         @Override
         public int compare(Meeting e1, Meeting e2) {
             return (e1.getDate().compareTo(e2.getDate()));
         }
     };
+
     private static final Comparator<Meeting> DATE_COMPARATOR_DSC = new Comparator<Meeting>() {
         @Override
         public int compare(Meeting e1, Meeting e2) {
@@ -88,7 +91,58 @@ public class MainActivityFiltre {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityFiltre() {
+    public void filtreAscRoom() {
+
+        // Add Meeting
+        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+
+        // Add Meeting
+        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+
+        // Add Meeting
+        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+
+        // BUTTON FILTER SORT
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        // DSC ROOM
+        DataInteraction appCompatCheckedTextView3 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(0);
+        appCompatCheckedTextView3.perform(click());
+
+        ViewInteraction materialButton16 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton16.perform(scrollTo(), click());
+
+        List<Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+        meetingList.add(meeting1);
+
+        Collections.sort(meetingList,ROOM_COMPARATOR_MEETING_ASC);
+
+        assertEquals(1,meetingList.get(0).getRoom());
+    }
+
+    @Test
+    public void filtreDscRoom() {
 
         // Add Meeting
         Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
@@ -128,7 +182,7 @@ public class MainActivityFiltre {
                                 3)));
         materialButton16.perform(scrollTo(), click());
 
-        List<Meeting> meetingList = new ArrayList<Meeting>();
+        List<Meeting> meetingList = new ArrayList<>();
         meetingList.add(meeting2);
         meetingList.add(meeting3);
         meetingList.add(meeting1);
@@ -136,8 +190,116 @@ public class MainActivityFiltre {
         Collections.sort(meetingList, ROOM_COMPARATOR_MEETING_DSC);
 
         assertEquals(3,meetingList.get(0).getRoom());
+    }
 
-        /*// TODO : check if list is in good order with 3 meeting
+    @Test
+    public void filterDateAsc(){
+
+        // Add Meeting
+        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+
+        // Add Meeting
+        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+
+        // Add Meeting
+        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+
+        // BUTTON FILTER SORT
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        DataInteraction appCompatCheckedTextView4 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(2);
+        appCompatCheckedTextView4.perform(click());
+
+        ViewInteraction materialButton16 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton16.perform(scrollTo(), click());
+
+        List<Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+        meetingList.add(meeting1);
+
+        Collections.sort(meetingList, DATE_COMPARATOR_ASC);
+
+        String dateToCompareInOrderedList = String.valueOf(meetingList.get(0).getDate());
+
+        assertEquals("2020-02-27",dateToCompareInOrderedList);
+    }
+
+    @Test
+    public void filterDateDsc() {
+
+        // Add Meeting
+        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+
+        // Add Meeting
+        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+
+        // Add Meeting
+        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+
+        // BUTTON FILTER SORT
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        DataInteraction appCompatCheckedTextView4 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(2);
+        appCompatCheckedTextView4.perform(click());
+
+        ViewInteraction materialButton16 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton16.perform(scrollTo(), click());
+
+        List<Meeting> meetingList = new ArrayList<>();
+        meetingList.add(meeting1);
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+
+        Collections.sort(meetingList, DATE_COMPARATOR_DSC);
+
+        String dateToCompareInOrderedList = String.valueOf(meetingList.get(0).getDate());
+
+        assertEquals("2020-05-11",dateToCompareInOrderedList);
+    }
+
+    @Test
+    public void sortingRoom(){
+        /*
+        // TODO : check if list is in good order with 3 meeting
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView2 = onView(
                 allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
@@ -319,28 +481,6 @@ public class MainActivityFiltre {
         materialButton22.perform(scrollTo(), click());
 
         // TODO : check if list is in good order*/
-
-    }
-
-    private Matcher<? super List<Integer>> isInDescendingOrdering()
-    {
-        return new TypeSafeMatcher<List<Integer>>()
-        {
-            @Override
-            public void describeTo (Description description)
-            {
-                description.appendText("describe the error has you like more");
-            }
-
-            @Override
-            protected boolean matchesSafely (List<Integer> item)
-            {
-                for(int i = 0 ; i < item.size() -1; i++) {
-                    if(item.get(i) <= item.get(i+1)) return false;
-                }
-                return true;
-            }
-        };
     }
 
     private Meeting createMeeting(String subject, int room, int year, int month, int day, int hour, int minutes){
