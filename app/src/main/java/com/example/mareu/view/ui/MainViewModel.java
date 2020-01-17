@@ -267,48 +267,32 @@ public class MainViewModel extends ViewModel {
             List<MeetingUiModel> allMeetingListUiModel,
             @NonNull int roomFilterTypeSelected) {
 
-        Set<Integer> allRoomForCompare = new HashSet<Integer>();
-        allRoomForCompare.add(0);
-        allRoomForCompare.add(1);
-        allRoomForCompare.add(2);
-        allRoomForCompare.add(3);
-        allRoomForCompare.add(4);
-        allRoomForCompare.add(5);
-        allRoomForCompare.add(6);
-        allRoomForCompare.add(7);
-        allRoomForCompare.add(8);
-        allRoomForCompare.add(9);
-        allRoomForCompare.add(10);
-
         for (Meeting meeting : meetingList) {
 
             MeetingUiModel meetingUiModelForAllMeetingListUiModel = createMeetingUiModel(meeting);
 
             allMeetingListUiModel.add(meetingUiModelForAllMeetingListUiModel);
 
+            // Get the current meeting and check if it matches the filters
             Meeting curentMeeting = meetingList.get(index);
 
-            // boolean shouldCheckRoom = roomFilterTypeSelected!=null;
-
+            // Check room filter
+            boolean shouldCheckRoom = roomFilterTypeSelected != 0;
             boolean isRoomValid = true;
-
-            // int i = filterMeetingListWithRoomInCombine(meetingList,roomFilterType);
-
-            // TODO
-            if (!allRoomForCompare.contains(curentMeeting.getRoom())) {
+            if (curentMeeting.getRoom() != roomFilterTypeSelected && shouldCheckRoom)
+            {
                 isRoomValid = false;
             }
 
+            // Check date filter
             boolean shouldCheckDate = !dateToFilter.equals(" ");
-
             boolean isDateValid = true;
-
             if (!curentMeeting.getDate().toString().equals(dateToFilter) && shouldCheckDate) {
                 isDateValid = false;
             }
 
-            if (isDateValid && isRoomValid && roomFilterTypeSelected == 0) {
-
+            if (isDateValid && isRoomValid)
+            {
                 MeetingUiModel meetingUiModelForListWithValidDateAndRoomFilter = createMeetingUiModel(meeting);
 
                 meetingUiModelListWithValidDateAndRoomFilter.add(meetingUiModelForListWithValidDateAndRoomFilter);
