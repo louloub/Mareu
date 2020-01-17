@@ -14,6 +14,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.example.mareu.R;
+import com.example.mareu.service.model.Meeting;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -21,6 +22,12 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.threeten.bp.LocalDate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -31,6 +38,7 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.contrib.PickerActions.setDate;
 import static androidx.test.espresso.contrib.PickerActions.setTime;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
@@ -41,10 +49,36 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class MainActivityFiltre {
+
+    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_ASC = new Comparator<Meeting>() {
+        @Override
+        public int compare(Meeting e1, Meeting e2) {
+            return (e1.getRoom() - e2.getRoom());
+        }
+    };
+    private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_DSC = new Comparator<Meeting>() {
+        @Override
+        public int compare(Meeting e1, Meeting e2) {
+            return (e2.getRoom() - e1.getRoom());
+        }
+    };
+    private static final Comparator<Meeting> DATE_COMPARATOR_ASC = new Comparator<Meeting>() {
+        @Override
+        public int compare(Meeting e1, Meeting e2) {
+            return (e1.getDate().compareTo(e2.getDate()));
+        }
+    };
+    private static final Comparator<Meeting> DATE_COMPARATOR_DSC = new Comparator<Meeting>() {
+        @Override
+        public int compare(Meeting e1, Meeting e2) {
+            return (e2.getDate().compareTo(e1.getDate()));
+        }
+    };
 
     private static final String PARTICIPANT1 = "participant1@google.fr";
     private static final String PARTICIPANT2 = "participant2@google.fr";
@@ -56,14 +90,14 @@ public class MainActivityFiltre {
     @Test
     public void mainActivityFiltre() {
 
-        // Add Meeting 1
-        createMeeting("Sujet 2",2,2020,5,11,12,20);
+        // Add Meeting
+        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
 
-        // Add Meeting 2
-        createMeeting("Sujet 3",3,2020,3,12,15,30);
+        // Add Meeting
+        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
 
-        // Add Meeting 3
-        createMeeting("Sujet 4",1,2020,2,30,10,10);
+        // Add Meeting
+        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -94,7 +128,16 @@ public class MainActivityFiltre {
                                 3)));
         materialButton16.perform(scrollTo(), click());
 
-        // TODO : check if list is in good order
+        List<Meeting> meetingList = new ArrayList<Meeting>();
+        meetingList.add(meeting2);
+        meetingList.add(meeting3);
+        meetingList.add(meeting1);
+
+        Collections.sort(meetingList, ROOM_COMPARATOR_MEETING_DSC);
+
+        assertEquals(3,meetingList.get(0).getRoom());
+
+        /*// TODO : check if list is in good order with 3 meeting
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView2 = onView(
                 allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
@@ -275,11 +318,32 @@ public class MainActivityFiltre {
                                 3)));
         materialButton22.perform(scrollTo(), click());
 
-        // TODO : check if list is in good order
+        // TODO : check if list is in good order*/
 
     }
 
-    private void createMeeting(String subject, int room, int year, int month, int day, int hour, int minutes){
+    private Matcher<? super List<Integer>> isInDescendingOrdering()
+    {
+        return new TypeSafeMatcher<List<Integer>>()
+        {
+            @Override
+            public void describeTo (Description description)
+            {
+                description.appendText("describe the error has you like more");
+            }
+
+            @Override
+            protected boolean matchesSafely (List<Integer> item)
+            {
+                for(int i = 0 ; i < item.size() -1; i++) {
+                    if(item.get(i) <= item.get(i+1)) return false;
+                }
+                return true;
+            }
+        };
+    }
+
+    private Meeting createMeeting(String subject, int room, int year, int month, int day, int hour, int minutes){
         // Click on FAB button for create new Meeting 1
         ViewInteraction floatingActionButton = onView(
                 allOf(withId(R.id.fab),
@@ -383,6 +447,16 @@ public class MainActivityFiltre {
                                 9),
                         isDisplayed()));
         materialButton5.perform(click());
+
+        List<String> listOfEmailOfParticipant = new ArrayList<>();
+        listOfEmailOfParticipant.add(PARTICIPANT1);
+        listOfEmailOfParticipant.add(PARTICIPANT2);
+        listOfEmailOfParticipant.add(PARTICIPANT3);
+
+        LocalDate date = LocalDate.of(year,month,day);
+        String hourString = String.valueOf(hour);
+
+        return new Meeting(0,date,hourString,room,subject,listOfEmailOfParticipant);
     }
 
     private static Matcher<View> childAtPosition(

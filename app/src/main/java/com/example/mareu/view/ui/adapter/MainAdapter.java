@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
+import com.example.mareu.service.model.Meeting;
 import com.example.mareu.view.ui.model.MeetingUiModel;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainViewHolder> {
