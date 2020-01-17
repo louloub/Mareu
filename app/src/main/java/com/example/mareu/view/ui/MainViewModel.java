@@ -66,6 +66,7 @@ public class MainViewModel extends ViewModel {
         }
     };
 
+    // TODO : mettre dans Strings?xml
     private static final String ROOM_ALPHABETICAL_ASC_STRING = "Croissant salle";
     private static final String ROOM_ALPHABETICAL_DSC_STRING = "Decroissant salle";
     private static final String DATE_ASC_STRING = "Croissant date";
@@ -143,7 +144,8 @@ public class MainViewModel extends ViewModel {
                                 meetings,
                                 mSortingTypeLiveData.getValue(),
                                 mSelectedFilterRoomLiveData.getValue(),
-                                mChoiceDateFilterUiModelLiveData.getValue()
+                                mChoiceDateFilterUiModelLiveData.getValue(),
+                                mRoomFilterTypeLiveData.getValue()
                         )
                 );
             }
@@ -157,7 +159,8 @@ public class MainViewModel extends ViewModel {
                                 mMeetingListLiveData.getValue(),
                                 sortingType,
                                 mSelectedFilterRoomLiveData.getValue(),
-                                mChoiceDateFilterUiModelLiveData.getValue()
+                                mChoiceDateFilterUiModelLiveData.getValue(),
+                                mRoomFilterTypeLiveData.getValue()
                         )
                 );
             }
@@ -171,7 +174,8 @@ public class MainViewModel extends ViewModel {
                                 mMeetingListLiveData.getValue(),
                                 mSortingTypeLiveData.getValue(),
                                 selectedMeetingRoomNumber,
-                                mChoiceDateFilterUiModelLiveData.getValue()
+                                mChoiceDateFilterUiModelLiveData.getValue(),
+                                mRoomFilterTypeLiveData.getValue()
                         )
                 );
             }
@@ -185,7 +189,8 @@ public class MainViewModel extends ViewModel {
                                 mMeetingListLiveData.getValue(),
                                 mSortingTypeLiveData.getValue(),
                                 mSelectedFilterRoomLiveData.getValue(),
-                                mChoiceDateFilterUiModelLiveData.getValue()
+                                mChoiceDateFilterUiModelLiveData.getValue(),
+                                roomFilterType
                         )
                 );
             }
@@ -199,19 +204,23 @@ public class MainViewModel extends ViewModel {
                                 mMeetingListLiveData.getValue(),
                                 mSortingTypeLiveData.getValue(),
                                 mSelectedFilterRoomLiveData.getValue(),
-                                dateToFilter
+                                dateToFilter,
+                                mRoomFilterTypeLiveData.getValue()
                         )
                 );
             }
         });
     }
 
+
+    // TODO : use "roomFilterType"
     @Nullable
     private List<MeetingUiModel> combineMeeting(
             @Nullable List<Meeting> meetingList,
             @Nullable SortingType sortingType,
             @Nullable Integer selectedMeetingRoomNumber,
-            @Nullable String dateToFilter) {
+            @Nullable String dateToFilter,
+            @Nullable RoomFilterType roomFilterType) {
 
         int index = 0;
 
