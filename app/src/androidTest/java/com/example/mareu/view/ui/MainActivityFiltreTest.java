@@ -113,14 +113,10 @@ public class MainActivityFiltreTest {
                 .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
 
         onView(withId(R.id.main_rv))
-                .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
+                .check(matches(atPosition(1, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
 
         onView(withId(R.id.main_rv))
-                .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
-
-        // TODO : pareil pour participant etc / Chaque ligne affiche ce qu'on souhaite
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
+                .check(matches(atPosition(2, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
 
 
         /*onView(withId(R.id.main_rv)).check(
@@ -161,17 +157,17 @@ public class MainActivityFiltreTest {
         // assertEquals("sujet 2",meetingList.get(0).getSubject());
     }
 
-    /*@Test
+    @Test
     public void filtreDscRoom() {
 
         // Add Meeting
-        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2",2,2020,5,11,12,20);
 
         // Add Meeting
-        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3",3,2020,3,12,15,30);
 
         // Add Meeting
-        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1",1,2020,2,27,10,10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -202,27 +198,28 @@ public class MainActivityFiltreTest {
                                 3)));
         materialButton16.perform(scrollTo(), click());
 
-        List<Meeting> meetingList = new ArrayList<>();
-        meetingList.add(meeting2);
-        meetingList.add(meeting3);
-        meetingList.add(meeting1);
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(0, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
 
-        Collections.sort(meetingList, ROOM_COMPARATOR_MEETING_DSC);
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(1, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
 
-        assertEquals(3,meetingList.get(0).getRoom());
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(2, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
+
     }
 
     @Test
     public void filterDateAsc(){
 
         // Add Meeting
-        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2",2,2020,5,11,12,20);
 
         // Add Meeting
-        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3",3,2020,3,12,15,30);
 
         // Add Meeting
-        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1",1,2020,2,27,10,10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -252,29 +249,28 @@ public class MainActivityFiltreTest {
                                 3)));
         materialButton16.perform(scrollTo(), click());
 
-        List<Meeting> meetingList = new ArrayList<>();
-        meetingList.add(meeting2);
-        meetingList.add(meeting3);
-        meetingList.add(meeting1);
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
 
-        Collections.sort(meetingList, DATE_COMPARATOR_ASC);
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(1, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
 
-        String dateToCompareInOrderedList = String.valueOf(meetingList.get(0).getDate());
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(2, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
 
-        assertEquals("2020-02-27",dateToCompareInOrderedList);
     }
 
     @Test
     public void filterDateDsc() {
 
         // Add Meeting
-        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2",2,2020,5,11,12,20);
 
         // Add Meeting
-        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3",3,2020,3,12,15,30);
 
         // Add Meeting
-        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1",1,2020,2,27,10,10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -292,7 +288,7 @@ public class MainActivityFiltreTest {
                         childAtPosition(
                                 withId(R.id.contentPanel),
                                 0)))
-                .atPosition(2);
+                .atPosition(3);
         appCompatCheckedTextView4.perform(click());
 
         ViewInteraction materialButton16 = onView(
@@ -304,32 +300,30 @@ public class MainActivityFiltreTest {
                                 3)));
         materialButton16.perform(scrollTo(), click());
 
-        List<Meeting> meetingList = new ArrayList<>();
-        meetingList.add(meeting1);
-        meetingList.add(meeting2);
-        meetingList.add(meeting3);
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(0, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
 
-        Collections.sort(meetingList, DATE_COMPARATOR_DSC);
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(1, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
 
-        String dateToCompareInOrderedList = String.valueOf(meetingList.get(0).getDate());
-
-        assertEquals("2020-05-11",dateToCompareInOrderedList);
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(2, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
     }
-*/
+
     @Test
     public void sortingRoom1(){
 
         // Add Meeting
-        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2",2,2020,5,11,12,20);
 
         // Add Meeting
-        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3",3,2020,3,12,15,30);
 
         // Add Meeting
-        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1",1,2020,2,27,10,10);
 
         // Add Meeting
-        Meeting meeting4 = createMeeting("Sujet 1",1,2020,7,10,11,11);
+        createMeeting("Sujet 1",1,2020,7,10,11,11);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView4 = onView(
@@ -360,11 +354,7 @@ public class MainActivityFiltreTest {
                                 3)));
         materialButton19.perform(scrollTo(), click());
 
-        List<Meeting> meetingList = new ArrayList<>();
-        meetingList.add(meeting1);
-        meetingList.add(meeting2);
-        meetingList.add(meeting3);
-        meetingList.add(meeting4);
+
 
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
     }
@@ -372,16 +362,16 @@ public class MainActivityFiltreTest {
     @Test
     public void sortingRoom1NextSortringAllRoom(){
         // Add Meeting
-        Meeting meeting2 = createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2",2,2020,5,11,12,20);
 
         // Add Meeting
-        Meeting meeting3 = createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3",3,2020,3,12,15,30);
 
         // Add Meeting
-        Meeting meeting1 = createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1",1,2020,2,27,10,10);
 
         // Add Meeting
-        Meeting meeting4 = createMeeting("Sujet 1",1,2020,7,10,11,11);
+        createMeeting("Sujet 1",1,2020,7,10,11,11);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView4 = onView(
@@ -440,11 +430,11 @@ public class MainActivityFiltreTest {
                                 3)));
         materialButton22.perform(scrollTo(), click());
 
-        List<Meeting> meetingList = new ArrayList<>();
+        /*List<Meeting> meetingList = new ArrayList<>();
         meetingList.add(meeting1);
         meetingList.add(meeting2);
         meetingList.add(meeting3);
-        meetingList.add(meeting4);
+        meetingList.add(meeting4);*/
 
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(4));
     }
@@ -688,7 +678,7 @@ public class MainActivityFiltreTest {
         LocalDate date = LocalDate.of(year,month,day);
         String hourString = String.valueOf(hour);
 
-        return new Meeting(0,date,hourString,room,subject,listOfEmailOfParticipant);
+        // return new Meeting(0,date,hourString,room,subject,listOfEmailOfParticipant);
     }
 
     private static Matcher<View> childAtPosition(
