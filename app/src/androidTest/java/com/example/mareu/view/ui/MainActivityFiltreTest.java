@@ -354,8 +354,6 @@ public class MainActivityFiltreTest {
                                 3)));
         materialButton19.perform(scrollTo(), click());
 
-
-
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
     }
 
@@ -429,12 +427,6 @@ public class MainActivityFiltreTest {
                                         0),
                                 3)));
         materialButton22.perform(scrollTo(), click());
-
-        /*List<Meeting> meetingList = new ArrayList<>();
-        meetingList.add(meeting1);
-        meetingList.add(meeting2);
-        meetingList.add(meeting3);
-        meetingList.add(meeting4);*/
 
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(4));
     }
