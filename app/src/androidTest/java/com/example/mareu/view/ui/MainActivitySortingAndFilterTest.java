@@ -59,7 +59,7 @@ import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityFiltreTest {
+public class MainActivitySortingAndFilterTest {
 
     private static final String PARTICIPANT1 = "participant1@google.fr";
     private static final String PARTICIPANT2 = "participant2@google.fr";
@@ -72,13 +72,13 @@ public class MainActivityFiltreTest {
     public void filtreAscRoom() {
 
         // Add Meeting
-        createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
 
         // Add Meeting
-        createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -117,57 +117,19 @@ public class MainActivityFiltreTest {
 
         onView(withId(R.id.main_rv))
                 .check(matches(atPosition(2, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
-
-
-        /*onView(withId(R.id.main_rv)).check(
-                RecyclerViewActions.actionOnItemAtPosition(
-                        0,matches(withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
-
-
-
-        onView(withRecyclerView(R.id.scroll_view).atPosition(3))
-                .check(matches(hasDescendant(withText("Some content"))));
-
-
-
-        onView(withId(R.id.main_rv)).check(
-                RecyclerViewActions.actionOnItemAtPosition(0,
-                        AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
-                ),textView2.check(matches(withText("s2 à 16h10 le 2020-01-18 salle n° 2")));
-
-        );
-
-        onView(withId(R.id.main_rv)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0,
-                        AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
-                )
-        );
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.meeting_tv_information), withText("s2 à 16h10 le 2020-01-18 salle n° 2"),
-                        childAtPosition(
-                                allOf(withId(R.id.meeting_cl_constraint_layout),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        textView2.check(matches(withText("s2 à 16h10 le 2020-01-18 salle n° 2")));*/
-
-        // assertEquals("sujet 2",meetingList.get(0).getSubject());
     }
 
     @Test
     public void filtreDscRoom() {
 
         // Add Meeting
-        createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
 
         // Add Meeting
-        createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -210,16 +172,16 @@ public class MainActivityFiltreTest {
     }
 
     @Test
-    public void filterDateAsc(){
+    public void filterDateAsc() {
 
         // Add Meeting
-        createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
 
         // Add Meeting
-        createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -264,13 +226,13 @@ public class MainActivityFiltreTest {
     public void filterDateDsc() {
 
         // Add Meeting
-        createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
 
         // Add Meeting
-        createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
@@ -311,19 +273,19 @@ public class MainActivityFiltreTest {
     }
 
     @Test
-    public void sortingRoom1(){
+    public void sortingRoom1() {
 
         // Add Meeting
-        createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
 
         // Add Meeting
-        createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,7,10,11,11);
+        createMeeting("Sujet 1", 1, 2020, 7, 10, 11, 11);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView4 = onView(
@@ -358,18 +320,18 @@ public class MainActivityFiltreTest {
     }
 
     @Test
-    public void sortingRoom1NextSortringAllRoom(){
+    public void sortingRoom1NextSortringAllRoom() {
         // Add Meeting
-        createMeeting("Sujet 2",2,2020,5,11,12,20);
+        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
 
         // Add Meeting
-        createMeeting("Sujet 3",3,2020,3,12,15,30);
+        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,2,27,10,10);
+        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
 
         // Add Meeting
-        createMeeting("Sujet 1",1,2020,7,10,11,11);
+        createMeeting("Sujet 1", 1, 2020, 7, 10, 11, 11);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView4 = onView(
@@ -429,6 +391,53 @@ public class MainActivityFiltreTest {
         materialButton22.perform(scrollTo(), click());
 
         onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(4));
+    }
+
+    @Test
+    public void filterWithSpecificDate(){
+        // Add Meeting
+        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
+
+        // Add Meeting
+        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
+
+        // Add Meeting
+        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
+
+        // Add Meeting
+        createMeeting("Sujet 1", 1, 2020, 7, 10, 11, 11);
+
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.toolbar_bt_filter_date_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                2),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        ViewInteraction editText = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.custom),
+                                childAtPosition(
+                                        withId(R.id.customPanel),
+                                        0)),
+                        0),
+                        isDisplayed()));
+        editText.perform(replaceText("2020-07-10"), closeSoftKeyboard());
+
+        ViewInteraction materialButton11 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton11.perform(scrollTo(), click());
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(0, withText("Sujet 1 à 11h11 le 2020-07-10 salle n° 1"))));
     }
 
     public void commentedCode(){
