@@ -68,57 +68,7 @@ public class MainActivitySortingAndFilterTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
-    @Test
-    public void filtreAscRoom() {
-
-        // Add Meeting
-        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
-
-        // Add Meeting
-        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
-
-        // BUTTON FILTER SORT
-        ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.toolbar_tb_toolbar),
-                                        1),
-                                0),
-                        isDisplayed()));
-        actionMenuItemView.perform(click());
-
-        // DSC ROOM
-        DataInteraction appCompatCheckedTextView3 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
-                        childAtPosition(
-                                withId(R.id.contentPanel),
-                                0)))
-                .atPosition(0);
-        appCompatCheckedTextView3.perform(click());
-
-        ViewInteraction materialButton16 = onView(
-                allOf(withId(android.R.id.button1), withText("Valider"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                3)));
-        materialButton16.perform(scrollTo(), click());
-
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
-
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(1, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
-
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(2, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
-    }
-
+    // 1
     @Test
     public void filtreDscRoom() {
 
@@ -171,167 +121,75 @@ public class MainActivitySortingAndFilterTest {
 
     }
 
+    // 2
     @Test
-    public void filterDateAsc() {
-
-        // Add Meeting
-        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
-
-        // Add Meeting
-        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
-
-        // BUTTON FILTER SORT
+    public void filterWithSpecificDate(){
         ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
+                allOf(withId(R.id.toolbar_bt_filter_date_meeting), withContentDescription("Settings"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.toolbar_tb_toolbar),
                                         1),
-                                0),
+                                2),
                         isDisplayed()));
         actionMenuItemView.perform(click());
 
-        DataInteraction appCompatCheckedTextView4 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
-                        childAtPosition(
-                                withId(R.id.contentPanel),
-                                0)))
-                .atPosition(2);
-        appCompatCheckedTextView4.perform(click());
+        ViewInteraction editText = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.custom),
+                                childAtPosition(
+                                        withId(R.id.customPanel),
+                                        0)),
+                        0),
+                        isDisplayed()));
+        editText.perform(replaceText("2020-02-27"), closeSoftKeyboard());
 
-        ViewInteraction materialButton16 = onView(
+        ViewInteraction materialButton = onView(
                 allOf(withId(android.R.id.button1), withText("Valider"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.buttonPanel),
                                         0),
                                 3)));
-        materialButton16.perform(scrollTo(), click());
+        materialButton.perform(scrollTo(), click());
 
         onView(withId(R.id.main_rv))
                 .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
 
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(1, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
-
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(2, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
-
-    }
-
-    @Test
-    public void filterDateDsc() {
-
-        // Add Meeting
-        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
-
-        // Add Meeting
-        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
-
-        // BUTTON FILTER SORT
-        ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
+        // Filter with all date
+        ViewInteraction actionMenuItemView2 = onView(
+                allOf(withId(R.id.toolbar_bt_filter_date_meeting), withContentDescription("Settings"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.toolbar_tb_toolbar),
                                         1),
-                                0),
+                                2),
                         isDisplayed()));
-        actionMenuItemView.perform(click());
+        actionMenuItemView2.perform(click());
 
-        DataInteraction appCompatCheckedTextView4 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
-                        childAtPosition(
-                                withId(R.id.contentPanel),
-                                0)))
-                .atPosition(3);
-        appCompatCheckedTextView4.perform(click());
+        ViewInteraction editText2 = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.custom),
+                                childAtPosition(
+                                        withId(R.id.customPanel),
+                                        0)),
+                        0),
+                        isDisplayed()));
+        editText2.perform(replaceText(" "), closeSoftKeyboard());
 
-        ViewInteraction materialButton16 = onView(
+        ViewInteraction materialButton2 = onView(
                 allOf(withId(android.R.id.button1), withText("Valider"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.buttonPanel),
                                         0),
                                 3)));
-        materialButton16.perform(scrollTo(), click());
-
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(0, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
-
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(1, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
-
-        onView(withId(R.id.main_rv))
-                .check(matches(atPosition(2, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
+        materialButton2.perform(scrollTo(), click());
     }
 
-    @Test
-    public void sortingRoom1() {
-
-        // Add Meeting
-        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
-
-        // Add Meeting
-        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 7, 10, 11, 11);
-
-        // BUTTON FILTER SORT
-        ViewInteraction actionMenuItemView4 = onView(
-                allOf(withId(R.id.toolbar_bt_filter_room_meeting), withContentDescription("Settings"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.toolbar_tb_toolbar),
-                                        1),
-                                1),
-                        isDisplayed()));
-        actionMenuItemView4.perform(click());
-
-        // ROOM 1
-        DataInteraction appCompatCheckedTextView6 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
-                        childAtPosition(
-                                withId(R.id.contentPanel),
-                                0)))
-                .atPosition(1);
-        appCompatCheckedTextView6.perform(click());
-
-        ViewInteraction materialButton19 = onView(
-                allOf(withId(android.R.id.button1), withText("Valider"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                3)));
-        materialButton19.perform(scrollTo(), click());
-
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
-    }
-
+    // 3
     @Test
     public void sortingRoom1NextSortringAllRoom() {
-        // Add Meeting
-        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
-
-        // Add Meeting
-        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 7, 10, 11, 11);
 
         // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView4 = onView(
@@ -390,58 +248,177 @@ public class MainActivitySortingAndFilterTest {
                                 3)));
         materialButton22.perform(scrollTo(), click());
 
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(4));
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(3));
 
         mActivityTestRule.finishActivity();
     }
 
+    // 4
     @Test
-    public void filterWithSpecificDate(){
-        // Add Meeting
-        createMeeting("Sujet 2", 2, 2020, 5, 11, 12, 20);
+    public void filtreAscRoom() {
 
-        // Add Meeting
-        createMeeting("Sujet 3", 3, 2020, 3, 12, 15, 30);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 2, 27, 10, 10);
-
-        // Add Meeting
-        createMeeting("Sujet 1", 1, 2020, 7, 10, 11, 11);
-
+        // BUTTON FILTER SORT
         ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.toolbar_bt_filter_date_meeting), withContentDescription("Settings"),
+                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.toolbar_tb_toolbar),
                                         1),
-                                2),
+                                0),
                         isDisplayed()));
         actionMenuItemView.perform(click());
 
-        ViewInteraction editText = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.custom),
-                                childAtPosition(
-                                        withId(R.id.customPanel),
-                                        0)),
-                        0),
-                        isDisplayed()));
-        editText.perform(replaceText("2020-07-10"), closeSoftKeyboard());
+        // DSC ROOM
+        DataInteraction appCompatCheckedTextView3 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(0);
+        appCompatCheckedTextView3.perform(click());
 
-        ViewInteraction materialButton11 = onView(
+        ViewInteraction materialButton16 = onView(
                 allOf(withId(android.R.id.button1), withText("Valider"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.buttonPanel),
                                         0),
                                 3)));
-        materialButton11.perform(scrollTo(), click());
+        materialButton16.perform(scrollTo(), click());
 
         onView(withId(R.id.main_rv))
-                .check(matches(atPosition(0, withText("Sujet 1 à 11h11 le 2020-07-10 salle n° 1"))));
+                .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(1, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(2, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
+    }
+
+    // 5
+    @Test
+    public void sortingRoom1() {
+
+        // BUTTON FILTER SORT
+        ViewInteraction actionMenuItemView4 = onView(
+                allOf(withId(R.id.toolbar_bt_filter_room_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        actionMenuItemView4.perform(click());
+
+        // ROOM 1
+        DataInteraction appCompatCheckedTextView6 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(1);
+        appCompatCheckedTextView6.perform(click());
+
+        ViewInteraction materialButton19 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton19.perform(scrollTo(), click());
+
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(1));
+    }
+
+    // 6
+    @Test
+    public void filterDateAsc() {
+
+        // BUTTON FILTER SORT
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        DataInteraction appCompatCheckedTextView4 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(2);
+        appCompatCheckedTextView4.perform(click());
+
+        ViewInteraction materialButton16 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton16.perform(scrollTo(), click());
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(0, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(1, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(2, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
 
     }
+
+    // 7
+    @Test
+    public void filterDateDsc() {
+
+        // BUTTON FILTER SORT
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.toolbar_bt_sort_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        DataInteraction appCompatCheckedTextView4 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(3);
+        appCompatCheckedTextView4.perform(click());
+
+        ViewInteraction materialButton16 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton16.perform(scrollTo(), click());
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(0, withText("Sujet 2 à 12h20 le 2020-05-11 salle n° 2"))));
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(1, withText("Sujet 3 à 15h30 le 2020-03-12 salle n° 3"))));
+
+        onView(withId(R.id.main_rv))
+                .check(matches(atPosition(2, withText("Sujet 1 à 10h10 le 2020-02-27 salle n° 1"))));
+
+    }
+
+
 
     private void createMeeting(String subject, int room, int year, int month, int day, int hour, int minutes){
         // Click on FAB button for create new Meeting 1
