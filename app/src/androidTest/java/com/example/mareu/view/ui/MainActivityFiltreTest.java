@@ -439,7 +439,133 @@ public class MainActivitySortingAndFilterTest {
         onView(withId(R.id.main_rv))
                 .check(matches(atPosition(0, withText("Sujet 1 à 11h11 le 2020-07-10 salle n° 1"))));
     }
-    
+
+    public void commentedCode(){
+        /*
+        // TODO : check if list is in good order
+        // BUTTON FILTER ROOM
+        ViewInteraction actionMenuItemView4 = onView(
+                allOf(withId(R.id.toolbar_bt_filter_room_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        actionMenuItemView4.perform(click());
+
+        // ROOM 1
+        DataInteraction appCompatCheckedTextView6 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(1);
+        appCompatCheckedTextView6.perform(click());
+
+        ViewInteraction materialButton19 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton19.perform(scrollTo(), click());
+
+        // TODO : check if list is in good order
+
+        // ROOM 2
+        ViewInteraction actionMenuItemView5 = onView(
+                allOf(withId(R.id.toolbar_bt_filter_room_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        actionMenuItemView5.perform(click());
+
+        DataInteraction appCompatCheckedTextView7 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(2);
+        appCompatCheckedTextView7.perform(click());
+
+        ViewInteraction materialButton20 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton20.perform(scrollTo(), click());
+
+        // TODO : check if list is in good order
+
+        // ROOM 3
+        ViewInteraction actionMenuItemView6 = onView(
+                allOf(withId(R.id.toolbar_bt_filter_room_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        actionMenuItemView6.perform(click());
+
+        DataInteraction appCompatCheckedTextView8 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(3);
+        appCompatCheckedTextView8.perform(click());
+
+        ViewInteraction materialButton21 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton21.perform(scrollTo(), click());
+
+        // TODO : check if list is in good order
+
+        // ALL ROOM
+
+        ViewInteraction actionMenuItemView7 = onView(
+                allOf(withId(R.id.toolbar_bt_filter_room_meeting), withContentDescription("Settings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.toolbar_tb_toolbar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        actionMenuItemView7.perform(click());
+
+        DataInteraction appCompatCheckedTextView9 = onData(anything())
+                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
+                        childAtPosition(
+                                withId(R.id.contentPanel),
+                                0)))
+                .atPosition(0);
+        appCompatCheckedTextView9.perform(click());
+
+        ViewInteraction materialButton22 = onView(
+                allOf(withId(android.R.id.button1), withText("Valider"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.buttonPanel),
+                                        0),
+                                3)));
+        materialButton22.perform(scrollTo(), click());
+
+        // TODO : check if list is in good order*/
+    }
+
     private void createMeeting(String subject, int room, int year, int month, int day, int hour, int minutes){
         // Click on FAB button for create new Meeting 1
         ViewInteraction floatingActionButton = onView(
