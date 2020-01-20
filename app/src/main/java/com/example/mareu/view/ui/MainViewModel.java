@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 // import static com.example.mareu.R.string.ROOM_ALPHABETICAL_ASC_STRING;
 import static com.example.mareu.view.ui.RoomFilterType.ALL_ROOM;
@@ -194,7 +195,7 @@ public class MainViewModel extends ViewModel {
             mChoiceDateFilterUiModelLiveData.setValue(" ");
         }
 
-        if (roomFilterType == null) {
+        if (mRoomFilterTypeUiModelLiveData.getValue() == null) {
             roomFilterType = ALL_ROOM;
         }
 
@@ -231,10 +232,13 @@ public class MainViewModel extends ViewModel {
 
             allMeetingListUiModel.add(meetingUiModelForAllMeetingListUiModel);
 
+            // Get the current meeting and check if it matches the filters
+            Meeting curentMeeting = meetingList.get(index);
+
             // Check room filter
             boolean shouldCheckRoom = roomFilterTypeSelected != 0;
             boolean isRoomValid = true;
-            if (meeting.getRoom() != roomFilterTypeSelected && shouldCheckRoom)
+            if (curentMeeting.getRoom() != roomFilterTypeSelected && shouldCheckRoom)
             {
                 isRoomValid = false;
             }
@@ -242,7 +246,7 @@ public class MainViewModel extends ViewModel {
             // Check date filter
             boolean shouldCheckDate = !dateToFilter.equals(" ");
             boolean isDateValid = true;
-            if (!meeting.getDate().toString().equals(dateToFilter) && shouldCheckDate) {
+            if (!curentMeeting.getDate().toString().equals(dateToFilter) && shouldCheckDate) {
                 isDateValid = false;
             }
 
@@ -277,6 +281,8 @@ public class MainViewModel extends ViewModel {
 
                 mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
             }
+
+            index++;
         }
         return meetingUiModelToShow;
     }
@@ -377,22 +383,22 @@ public class MainViewModel extends ViewModel {
     // SORTING TYPE
     void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
 
-        if (mResources.getString(R.string.room_alphabetical_asc_string).equals(sortChoice)) {
+        if (Objects.equals(mResources.getString(R.string.room_alphabetical_asc_string), sortChoice)) {
             mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
             mSelectedSortingTypeIndex = 0;
             setValueSortingTypeUiModel(sortingTypeUiModel);
 
-        } else if (mResources.getString(R.string.room_alphabetical_dsc_string).equals(sortChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_alphabetical_dsc_string), sortChoice)) {
             mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
             mSelectedSortingTypeIndex = 1;
             setValueSortingTypeUiModel(sortingTypeUiModel);
 
-        } else if (mResources.getString(R.string.date_asc_string).equals(sortChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.date_asc_string), sortChoice)) {
             mSortingTypeLiveData.setValue(DATE_ASC);
             mSelectedSortingTypeIndex = 2;
             setValueSortingTypeUiModel(sortingTypeUiModel);
 
-        } else if (mResources.getString(R.string.date_dsc_string).equals(sortChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.date_dsc_string), sortChoice)) {
             mSortingTypeLiveData.setValue(DATE_DSC);
             mSelectedSortingTypeIndex = 3;
             setValueSortingTypeUiModel(sortingTypeUiModel);
