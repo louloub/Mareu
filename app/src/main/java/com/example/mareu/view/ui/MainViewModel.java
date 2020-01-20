@@ -1,5 +1,7 @@
 package com.example.mareu.view.ui;
 
+import android.content.res.Resources;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -8,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mareu.R;
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.utility.SingleLiveEvent;
@@ -23,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.example.mareu.view.ui.RoomFilterType.ALL_ROOM;

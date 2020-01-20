@@ -1,5 +1,7 @@
 package com.example.mareu.view.ui;
 
+import android.content.res.Resources;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
@@ -42,13 +44,14 @@ public class MainViewModelTest {
     private MeetingManager mMeetingManager;
     private MainViewModel mainViewModel;
     private MutableLiveData<List<Meeting>> mMeetingListLiveData;
+    private Resources mResources;
 
     @Before
     public void setUp() {
         mMeetingManager = Mockito.mock(MeetingManager.class);
         mMeetingListLiveData = new MutableLiveData<>();
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
-        mainViewModel = new MainViewModel(mMeetingManager);
+        mainViewModel = new MainViewModel(mMeetingManager, mResources);
     }
 
     private List<String> getParticipants() {
