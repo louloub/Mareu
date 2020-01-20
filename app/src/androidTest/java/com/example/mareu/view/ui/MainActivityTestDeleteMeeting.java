@@ -89,7 +89,7 @@ public class MainActivityTestDeleteMeeting {
 
         // Delete meeting
         onView(withId(R.id.main_rv)).perform(
-            RecyclerViewActions.actionOnItemAtPosition(1,
+            RecyclerViewActions.actionOnItemAtPosition(0,
                         AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
                 )
         );
