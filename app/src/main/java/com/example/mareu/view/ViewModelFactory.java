@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mareu.MainApplication;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.view.ui.CreateMeetingViewModel;
 import com.example.mareu.view.ui.MainViewModel;
@@ -32,7 +33,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
-            return (T) new MainViewModel(MeetingManager.getInstance());
+            return (T) new MainViewModel(MeetingManager.getInstance(), MainApplication.getInstance().getResources());
+
         } else if (modelClass.isAssignableFrom(CreateMeetingViewModel.class)) {
             return (T) new CreateMeetingViewModel();
         }
