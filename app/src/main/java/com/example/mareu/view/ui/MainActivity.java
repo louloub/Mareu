@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
+import com.example.mareu.utility.ResourceProvider;
 import com.example.mareu.view.ViewModelFactory;
 import com.example.mareu.view.ui.adapter.MainAdapter;
 import com.example.mareu.view.ui.model.DateFilterUiModel;
@@ -39,6 +40,15 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
     private DateFilterUiModel mDateFilterUiModel;
     private MainViewModel mViewModel;
     private String mToastTextForChoiceDateFilter;
+
+    // TODO : testing for resource 20/01/2020
+    private ResourceProvider mResourceProvider;
+    public ResourceProvider getResourceProvider() {
+        if (mResourceProvider == null)
+            mResourceProvider = new ResourceProvider(this);
+
+        return mResourceProvider;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

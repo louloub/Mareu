@@ -10,4 +10,6 @@
     <string name="room">Salle</string>
     <string name="validate_my_meeting">Valider ma réunion</string>
     <string name="subjet_hour_date_room">Sujet + hour + date + room</string>
+    <string name="room_alphabetical_asc_string">Croissant salle</string>
+    <string name="room_alphabetical_dsc_string">Decroissant salle</string>
 </resources>

@@ -1,9 +1,13 @@
 package com.example.mareu.view.ui;
 
+import android.content.res.Resources;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mareu.LiveDataTestUtil;
+import com.example.mareu.MainApplication;
+import com.example.mareu.R;
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.view.ui.model.MeetingUiModel;
@@ -42,13 +46,20 @@ public class MainViewModelTest {
     private MeetingManager mMeetingManager;
     private MainViewModel mainViewModel;
     private MutableLiveData<List<Meeting>> mMeetingListLiveData;
+    private Resources mResources;
 
     @Before
     public void setUp() {
         mMeetingManager = Mockito.mock(MeetingManager.class);
+        mResources = Mockito.mock(Resources.class);
+
+        // TODO : faire pareil pour toutes les string du viewmodel
+        Mockito.doReturn("room_alphabetical_asc_string").when(mResources).getString(R.string.room_alphabetical_asc_string);
+        Mockito.doReturn("room_alphabetical_dsc_string").when(mResources).getString(R.string.room_alphabetical_dsc_string);
+
         mMeetingListLiveData = new MutableLiveData<>();
         Mockito.doReturn(mMeetingListLiveData).when(mMeetingManager).getMeetingListLiveData();
-        mainViewModel = new MainViewModel(mMeetingManager);
+        mainViewModel = new MainViewModel(mMeetingManager, mResources);
     }
 
     private List<String> getParticipants() {
