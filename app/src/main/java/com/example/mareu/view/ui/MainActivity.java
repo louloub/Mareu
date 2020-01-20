@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
-import com.example.mareu.utility.ResourceProvider;
 import com.example.mareu.view.ViewModelFactory;
 import com.example.mareu.view.ui.adapter.MainAdapter;
 import com.example.mareu.view.ui.model.DateFilterUiModel;
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                         sortingTypeUiModel.getToastChoiceSorting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
 
-                mViewModel.setSortingType((String) checkedItemObject,mSortingTypeUiModel);
+                mViewModel.setSortingType((String) checkedItemObject, mSortingTypeUiModel);
             }
         }));
 

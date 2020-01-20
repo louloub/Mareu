@@ -6,8 +6,8 @@ public class MainApplication extends Application {
 
     private static MainApplication sInstance;
 
-    public static MainApplication getInstance(){
-      return sInstance;
+    public static MainApplication getInstance() {
+        return sInstance;
     }
 
     @Override

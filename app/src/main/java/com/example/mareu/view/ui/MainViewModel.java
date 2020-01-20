@@ -196,7 +196,7 @@ public class MainViewModel extends ViewModel {
             roomFilterType = ALL_ROOM;
         }
 
-        int roomFilterTypeSelected = filterMeetingListWithRoomInCombine(meetingList,roomFilterType);
+        int roomFilterTypeSelected = filterMeetingListWithRoomInCombine(meetingList, roomFilterType);
 
         // SORTING TYPE
         if (sortingMeetingListWithSortingTypeInCombine(meetingList, sortingType)) return null;
@@ -235,8 +235,7 @@ public class MainViewModel extends ViewModel {
             // Check room filter
             boolean shouldCheckRoom = roomFilterTypeSelected != 0;
             boolean isRoomValid = true;
-            if (curentMeeting.getRoom() != roomFilterTypeSelected && shouldCheckRoom)
-            {
+            if (curentMeeting.getRoom() != roomFilterTypeSelected && shouldCheckRoom) {
                 isRoomValid = false;
             }
 
@@ -247,8 +246,7 @@ public class MainViewModel extends ViewModel {
                 isDateValid = false;
             }
 
-            if (isDateValid && isRoomValid)
-            {
+            if (isDateValid && isRoomValid) {
                 MeetingUiModel meetingUiModelForListWithValidDateAndRoomFilter = createMeetingUiModel(meeting);
 
                 meetingUiModelListWithValidDateAndRoomFilter.add(meetingUiModelForListWithValidDateAndRoomFilter);
@@ -284,7 +282,7 @@ public class MainViewModel extends ViewModel {
         return meetingUiModelToShow;
     }
 
-    private int filterMeetingListWithRoomInCombine(@Nullable List<Meeting> meetingList, @Nullable RoomFilterType roomFilterType){
+    private int filterMeetingListWithRoomInCombine(@Nullable List<Meeting> meetingList, @Nullable RoomFilterType roomFilterType) {
         if (meetingList == null) {
             return 0;
         }
@@ -293,7 +291,7 @@ public class MainViewModel extends ViewModel {
 
         switch (roomFilterType) {
             case ALL_ROOM:
-                i= 0;
+                i = 0;
                 break;
             case ROOM_1:
                 i = 1;
