@@ -10,6 +10,28 @@
     <string name="room">Salle</string>
     <string name="validate_my_meeting">Valider ma réunion</string>
     <string name="subjet_hour_date_room">Sujet + hour + date + room</string>
+
     <string name="room_alphabetical_asc_string">Croissant salle</string>
     <string name="room_alphabetical_dsc_string">Decroissant salle</string>
+    <string name="date_asc_string">Croissant date</string>
+    <string name="date_dsc_string">Decroissant date</string>
+
+    <string name="all_room_string">toutes les salles</string>
+    <string name="room_1_string">salle 1</string>
+    <string name="room_2_string">salle 2</string>
+    <string name="room_3_string">salle 3</string>
+    <string name="room_4_string">salle 4</string>
+    <string name="room_5_string">salle 5</string>
+    <string name="room_6_string">salle 6</string>
+    <string name="room_7_string">salle 7</string>
+    <string name="room_8_string">salle 8</string>
+    <string name="room_9_string">salle 9</string>
+    <string name="room_10_string">salle 10</string>
+
+    <string name="choose_sorting_title">Choisis le trie que tu souhaites</string>
+    <string name="validate_choice">Valider</string>
+    <string name="your_sorting_choice_is">Tu as choisi : </string>
+    <string name="choose_room_to_filter">Choisis la salle à filtrer</string>
+    <string name="your_filter_room_choice_is">Tu as choisi d\'afficher les réunions : </string>
+
 </resources>

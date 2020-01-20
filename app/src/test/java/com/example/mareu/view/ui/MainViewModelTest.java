@@ -6,13 +6,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mareu.LiveDataTestUtil;
-import com.example.mareu.MainApplication;
 import com.example.mareu.R;
 import com.example.mareu.service.model.Meeting;
 import com.example.mareu.utility.MeetingManager;
 import com.example.mareu.view.ui.model.MeetingUiModel;
-import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
-import com.example.mareu.view.ui.model.SortingTypeUiModel;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.allOf;
@@ -129,7 +126,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreSortingWithRoomAscendantWhenThisSortIsChoice() throws InterruptedException  {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Croissant salle", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Croissant salle");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -145,7 +142,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreSortingWithRoomDescendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Decroissant salle", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Decroissant salle");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -161,7 +158,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreSortingWithDateAscendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Croissant date", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Croissant date");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -177,7 +174,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreSortingWithDateDescendantWhenThisSortIsChoice() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Decroissant date", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Decroissant date");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -193,7 +190,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreFilterWithSelectedRoom1() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setRoomFilterType("salle 1", Mockito.mock(RoomFilterTypeUiModel.class));
+        mainViewModel.setRoomFilterType("salle 1");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -207,7 +204,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreFilterWithSelectedRoom2() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setRoomFilterType("salle 2", Mockito.mock(RoomFilterTypeUiModel.class));
+        mainViewModel.setRoomFilterType("salle 2");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -221,7 +218,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreFilterWithSelectedRoom3() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setRoomFilterType("salle 3", Mockito.mock(RoomFilterTypeUiModel.class));
+        mainViewModel.setRoomFilterType("salle 3");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -235,7 +232,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreFilterWithAllRoom() throws InterruptedException {
         // GIVEN
         givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setRoomFilterType("toutes les salles", Mockito.mock(RoomFilterTypeUiModel.class));
+        mainViewModel.setRoomFilterType("toutes les salles");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -266,7 +263,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreCorrectlySortingAscendantWithTwoMeetingWithSameDateAndOneOther() throws InterruptedException {
         // GIVEN
         givenTwoSimilarMeetingDateAndOneOtherForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Croissant date", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Croissant date");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -282,7 +279,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreCorrectlySortingDescendantWithTwoMeetingWithSameDateAndOneOther() throws InterruptedException {
         // GIVEN
         givenTwoSimilarMeetingDateAndOneOtherForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Decroissant date", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Decroissant date");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -298,7 +295,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreCorrectlySortingAscendantWithTwoMeetingWithSameRoomAndOneOther() throws InterruptedException  {
         // GIVEN
         givenTwoSimilarMeetingRoomAndOneOtherForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Croissant salle", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Croissant salle");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
@@ -313,7 +310,7 @@ public class MainViewModelTest {
     public void shouldMeetingAreCorrectlySortingDescendantWithTwoMeetingWithSameRoomAndOneOther() throws InterruptedException  {
         // GIVEN
         givenTwoSimilarMeetingRoomAndOneOtherForSortingTypeAndFilterTest();
-        mainViewModel.setSortingType("Decroissant salle", Mockito.mock(SortingTypeUiModel.class));
+        mainViewModel.setSortingType("Decroissant salle");
 
         // WHEN
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());

@@ -35,20 +35,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
-    private SortingTypeUiModel mSortingTypeUiModel;
+    // private SortingTypeUiModel mSortingTypeUiModel;
     private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
     private DateFilterUiModel mDateFilterUiModel;
     private MainViewModel mViewModel;
     private String mToastTextForChoiceDateFilter;
-
-    // TODO : testing for resource 20/01/2020
-    private ResourceProvider mResourceProvider;
-    public ResourceProvider getResourceProvider() {
-        if (mResourceProvider == null)
-            mResourceProvider = new ResourceProvider(this);
-
-        return mResourceProvider;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         mViewModel.getSortingTypeUiModelLiveData().observe(this, new Observer<SortingTypeUiModel>() {
             @Override
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
-                mSortingTypeUiModel = sortingTypeUiModel;
+                // mSortingTypeUiModel = sortingTypeUiModel;
                 alertDialogChoiceSort(sortingTypeUiModel);
             }
         });
@@ -155,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                         sortingTypeUiModel.getToastChoiceSorting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
 
-                mViewModel.setSortingType((String) checkedItemObject, mSortingTypeUiModel);
+                mViewModel.setSortingType((String) checkedItemObject);
             }
         }));
 
