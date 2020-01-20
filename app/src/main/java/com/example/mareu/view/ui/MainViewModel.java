@@ -277,7 +277,6 @@ public class MainViewModel extends ViewModel {
 
                 mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
             }
-            index++;
         }
         return meetingUiModelToShow;
     }
