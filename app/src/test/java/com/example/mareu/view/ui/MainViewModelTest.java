@@ -135,7 +135,6 @@ public class MainViewModelTest {
 
         // THEN
         assertEquals(2,result.size());
-        assertEquals(2,result.size());
     }
 
     @Test
@@ -212,36 +211,7 @@ public class MainViewModelTest {
         List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
 
         // THEN
-        assertEquals(1,result.size());
         assertEquals("1",result.get(0).getRoom());
-    }
-
-    @Test
-    public void shouldMeetingAreFilterWithSelectedRoom2() throws InterruptedException {
-        // GIVEN
-        givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setRoomFilterType(mResources.getString(R.string.room_2_string),Mockito.mock(RoomFilterTypeUiModel.class));
-
-        // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
-
-        // THEN
-        assertEquals(1,result.size());
-        assertEquals("2",result.get(0).getRoom());
-    }
-
-    @Test
-    public void shouldMeetingAreFilterWithSelectedRoom3() throws InterruptedException {
-        // GIVEN
-        givenThreeDifferentMeetingForSortingTypeAndFilterTest();
-        mainViewModel.setRoomFilterType(mResources.getString(R.string.room_3_string), Mockito.mock(RoomFilterTypeUiModel.class));
-
-        // WHEN
-        List<MeetingUiModel> result = LiveDataTestUtil.getOrAwaitValue(mainViewModel.getMeetingUiModelsLiveData());
-
-        // THEN
-        assertEquals(1,result.size());
-        assertEquals("3",result.get(0).getRoom());
     }
 
     @Test
