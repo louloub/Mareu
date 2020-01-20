@@ -9,8 +9,7 @@ public class DateFilterUiModel {
     private String toastForInvalideDate;
     private String toastForValideDate;
 
-    public DateFilterUiModel() {
-    }
+    public DateFilterUiModel() { }
 
     public String getTitle() {
         return title;
