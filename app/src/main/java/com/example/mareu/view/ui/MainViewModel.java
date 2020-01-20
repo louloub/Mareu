@@ -1,5 +1,7 @@
 package com.example.mareu.view.ui;
 
+import android.content.res.Resources;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -21,9 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.example.mareu.view.ui.RoomFilterType.ALL_ROOM;
 import static com.example.mareu.view.ui.RoomFilterType.ROOM_1;
@@ -106,10 +106,12 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<String> mToastTextForChoiceDateFilterLiveData = new SingleLiveEvent<>();
     private int mSelectedSortingTypeIndex = 0;
     private int mSelectedFilterRoomIndex = 0;
+    private Resources mResources;
 
-    public MainViewModel(@NonNull MeetingManager meetingManager) {
+    public MainViewModel(@NonNull MeetingManager meetingManager, Resources resources) {
         mMeetingListLiveData = meetingManager.getMeetingListLiveData();
         wireUpMediator();
+        mResources = resources;
     }
 
     LiveData<List<MeetingUiModel>> getMeetingUiModelsLiveData() {

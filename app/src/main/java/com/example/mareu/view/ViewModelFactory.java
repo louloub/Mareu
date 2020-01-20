@@ -33,7 +33,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
-            return (T) new MainViewModel(MeetingManager.getInstance());
+            return (T) new MainViewModel(MeetingManager.getInstance(),MainApplication.getInstance().getResources());
 
         } else if (modelClass.isAssignableFrom(CreateMeetingViewModel.class)) {
             return (T) new CreateMeetingViewModel();
