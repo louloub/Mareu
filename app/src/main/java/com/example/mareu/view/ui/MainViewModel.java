@@ -432,47 +432,47 @@ public class MainViewModel extends ViewModel {
 
     // ROOM FILTER
     void setRoomFilterType(String filterChoice, RoomFilterTypeUiModel roomFilterTypeUiModel) {
-        if (mResources.getString(R.string.all_room_string).equals(filterChoice)) {
+        if (Objects.equals(mResources.getString(R.string.all_room_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ALL_ROOM);
             mSelectedFilterRoomIndex = 0;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_1_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_1_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_1);
             mSelectedFilterRoomIndex = 1;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_2_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_2_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_2);
             mSelectedFilterRoomIndex = 2;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_3_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_3_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_3);
             mSelectedFilterRoomIndex = 3;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_4_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_4_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_4);
             mSelectedFilterRoomIndex = 4;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_5_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_5_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_5);
             mSelectedFilterRoomIndex = 5;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_6_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_6_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_6);
             mSelectedFilterRoomIndex = 6;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_7_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_7_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_7);
             mSelectedFilterRoomIndex = 7;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_8_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_8_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_8);
             mSelectedFilterRoomIndex = 8;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_9_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_9_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_9);
             mSelectedFilterRoomIndex = 9;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_10_string).equals(filterChoice)) {
+        } else if (Objects.equals(mResources.getString(R.string.room_10_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_10);
             mSelectedFilterRoomIndex = 10;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
