@@ -35,7 +35,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
-    // private SortingTypeUiModel mSortingTypeUiModel;
+    private SortingTypeUiModel mSortingTypeUiModel;
     private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
     private DateFilterUiModel mDateFilterUiModel;
     private MainViewModel mViewModel;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         mViewModel.getSortingTypeUiModelLiveData().observe(this, new Observer<SortingTypeUiModel>() {
             @Override
             public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
-                // mSortingTypeUiModel = sortingTypeUiModel;
+                mSortingTypeUiModel = sortingTypeUiModel;
                 alertDialogChoiceSort(sortingTypeUiModel);
             }
         });
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                         sortingTypeUiModel.getToastChoiceSorting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
 
-                mViewModel.setSortingType((String) checkedItemObject);
+                mViewModel.setSortingType((String) checkedItemObject,mSortingTypeUiModel);
             }
         }));
 

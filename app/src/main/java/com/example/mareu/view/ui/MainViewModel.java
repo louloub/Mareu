@@ -207,6 +207,7 @@ public class MainViewModel extends ViewModel {
         meetingUiModelToShow = filterMeetingListWithDateAndRoomFilterInCombine(
                 meetingList,
                 dateToFilter,
+                index,
                 meetingUiModelToShow,
                 meetingUiModelListWithDateAndRoomFilter,
                 allMeetingListUiModel,
@@ -218,6 +219,7 @@ public class MainViewModel extends ViewModel {
     private List<MeetingUiModel> filterMeetingListWithDateAndRoomFilterInCombine(
             @NotNull List<Meeting> meetingList,
             @NotNull String dateToFilter,
+            int index,
             List<MeetingUiModel> meetingUiModelToShow,
             List<MeetingUiModel> meetingUiModelListWithValidDateAndRoomFilter,
             List<MeetingUiModel> allMeetingListUiModel,
@@ -275,6 +277,7 @@ public class MainViewModel extends ViewModel {
 
                 mMeetingUiModelsLiveData.setValue(meetingUiModelToShow);
             }
+            index++;
         }
         return meetingUiModelToShow;
     }
@@ -373,21 +376,33 @@ public class MainViewModel extends ViewModel {
     }
 
     // SORTING TYPE
-    void setSortingType(String sortChoice) {
+    void setSortingType(String sortChoice, SortingTypeUiModel sortingTypeUiModel) {
 
         if (mResources.getString(R.string.room_alphabetical_asc_string).equals(sortChoice)) {
             mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_ASC);
             mSelectedSortingTypeIndex = 0;
+            setValueSortingTypeUiModel(sortingTypeUiModel);
+
         } else if (mResources.getString(R.string.room_alphabetical_dsc_string).equals(sortChoice)) {
             mSortingTypeLiveData.setValue(ROOM_ALPHABETICAL_DSC);
             mSelectedSortingTypeIndex = 1;
+            setValueSortingTypeUiModel(sortingTypeUiModel);
+
         } else if (mResources.getString(R.string.date_asc_string).equals(sortChoice)) {
             mSortingTypeLiveData.setValue(DATE_ASC);
             mSelectedSortingTypeIndex = 2;
+            setValueSortingTypeUiModel(sortingTypeUiModel);
+
         } else if (mResources.getString(R.string.date_dsc_string).equals(sortChoice)) {
             mSortingTypeLiveData.setValue(DATE_DSC);
             mSelectedSortingTypeIndex = 3;
+            setValueSortingTypeUiModel(sortingTypeUiModel);
+
         }
+    }
+
+    private void setValueSortingTypeUiModel(SortingTypeUiModel sortingTypeUiModel) {
+        sortingTypeUiModel.setSelectedIndex(mSelectedSortingTypeIndex);
     }
 
     private void setSortingTypeUiModel() {
@@ -424,19 +439,19 @@ public class MainViewModel extends ViewModel {
             mRoomFilterTypeLiveData.setValue(ALL_ROOM);
             mSelectedFilterRoomIndex = 0;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_2_string).equals(filterChoice)) {
+        } else if (mResources.getString(R.string.room_1_string).equals(filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_1);
             mSelectedFilterRoomIndex = 1;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_3_string).equals(filterChoice)) {
+        } else if (mResources.getString(R.string.room_2_string).equals(filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_2);
             mSelectedFilterRoomIndex = 2;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_4_string).equals(filterChoice)) {
+        } else if (mResources.getString(R.string.room_3_string).equals(filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_3);
             mSelectedFilterRoomIndex = 3;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
-        } else if (mResources.getString(R.string.room_5_string).equals(filterChoice)) {
+        } else if (mResources.getString(R.string.room_4_string).equals(filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_4);
             mSelectedFilterRoomIndex = 4;
             setValueRoomFilterUiModel(roomFilterTypeUiModel);
