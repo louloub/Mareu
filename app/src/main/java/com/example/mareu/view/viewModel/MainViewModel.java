@@ -17,6 +17,7 @@ import com.example.mareu.utility.SingleLiveEvent;
 import com.example.mareu.view.helper.RoomFilterEnum;
 import com.example.mareu.view.helper.DateFilterType;
 import com.example.mareu.view.helper.RoomFilterType;
+import com.example.mareu.view.helper.SortingFilterEnum;
 import com.example.mareu.view.model.MeetingUiModel;
 import com.example.mareu.view.helper.SortingFilterType;
 
@@ -76,7 +77,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<String> mChoiceDateFilterUiModelLiveData = new MutableLiveData<>();
     private final LiveData<List<Meeting>> mMeetingListLiveData;
     private final MediatorLiveData<List<MeetingUiModel>> mMeetingUiModelsLiveData = new MediatorLiveData<>();
-    private final SingleLiveEvent<SortingFilterType> mSortingTypeLiveData = new SingleLiveEvent<>();
+    private final SingleLiveEvent<SortingFilterEnum> mSortingTypeLiveData = new SingleLiveEvent<>();
     private final SingleLiveEvent<SortingFilterType> mSortingTypeUiModelLiveData = new SingleLiveEvent<>();
     private final MutableLiveData<RoomFilterEnum> mRoomFilterTypeLiveData = new MutableLiveData<>();
     private final SingleLiveEvent<RoomFilterType> mRoomFilterTypeUiModelLiveData = new SingleLiveEvent<>();
@@ -133,13 +134,13 @@ public class MainViewModel extends ViewModel {
             }
         });
 
-        mMeetingUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingFilterType>() {
+        mMeetingUiModelsLiveData.addSource(mSortingTypeLiveData, new Observer<SortingFilterEnum>() {
             @Override
-            public void onChanged(SortingFilterType sortingFilterType) {
+            public void onChanged(SortingFilterEnum sortingFilterEnum) {
                 mMeetingUiModelsLiveData.setValue(
                         combineMeeting(
                                 mMeetingListLiveData.getValue(),
-                                sortingFilterType,
+                                sortingFilterEnum,
                                 mChoiceDateFilterUiModelLiveData.getValue(),
                                 mRoomFilterTypeLiveData.getValue()
                         )
@@ -179,7 +180,7 @@ public class MainViewModel extends ViewModel {
     @Nullable
     private List<MeetingUiModel> combineMeeting(
             @Nullable List<Meeting> meetingList,
-            @Nullable SortingFilterType sortingFilterType,
+            @Nullable SortingFilterEnum sortingFilterType,
             @Nullable String dateToFilter,
             @Nullable RoomFilterEnum roomFilterEnum) {
 
@@ -332,7 +333,7 @@ public class MainViewModel extends ViewModel {
         return i;
     }
 
-    private boolean sortingMeetingListWithSortingTypeInCombine(@Nullable List<Meeting> meetingList, @Nullable SortingFilterType sortingFilterType) {
+    private boolean sortingMeetingListWithSortingTypeInCombine(@Nullable List<Meeting> meetingList, @Nullable SortingFilterEnum sortingFilterType) {
         if (meetingList == null) {
             return true;
         }
