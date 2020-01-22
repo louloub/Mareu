@@ -1,6 +1,6 @@
-package com.example.mareu.view;
+package com.example.mareu.view.helper;
 
-enum SortingType {
+enum SortingFilterEnum {
     ROOM_ALPHABETICAL_DSC,
     ROOM_ALPHABETICAL_ASC,
     DATE_DSC,

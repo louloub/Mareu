@@ -1,4 +1,4 @@
-package com.example.mareu.utility;
+package com.example.mareu.manager;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

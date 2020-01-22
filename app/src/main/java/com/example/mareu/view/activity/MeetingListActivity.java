@@ -1,4 +1,4 @@
-package com.example.mareu.view;
+package com.example.mareu.view.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,21 +21,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
-import com.example.mareu.view.helper.DateFilter;
+import com.example.mareu.view.adapter.MeetingListAdapter;
+import com.example.mareu.view.viewModel.ViewModelFactory;
+import com.example.mareu.view.helper.DateFilterType;
 import com.example.mareu.view.model.MeetingUiModel;
 import com.example.mareu.view.helper.RoomFilterType;
-import com.example.mareu.view.helper.SortingType;
+import com.example.mareu.view.helper.SortingFilterType;
 import com.example.mareu.view.viewModel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
+public class MeetingListActivity extends AppCompatActivity implements MeetingListAdapter.CallbackListener {
 
-    private SortingType mSortingType;
+    private SortingFilterType mSortingFilterType;
     private RoomFilterType mRoomFilterType;
-    private DateFilter mDateFilter;
+    private DateFilterType mDateFilterType;
     private MainViewModel mViewModel;
     private String mToastTextForChoiceDateFilter;
 
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         setupFloatingActionButton();
         setupToolbar();
 
-        final MainAdapter adapter = new MainAdapter(this);
+        final MeetingListAdapter adapter = new MeetingListAdapter(this);
 
         configureRecyclerView(adapter);
 
@@ -61,11 +63,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getSortingTypeUiModelLiveData().observe(this, new Observer<SortingType>() {
+        mViewModel.getSortingTypeUiModelLiveData().observe(this, new Observer<SortingFilterType>() {
             @Override
-            public void onChanged(SortingType sortingType) {
-                mSortingType = sortingType;
-                alertDialogChoiceSort(sortingType);
+            public void onChanged(SortingFilterType sortingFilterType) {
+                mSortingFilterType = sortingFilterType;
+                alertDialogChoiceSort(sortingFilterType);
             }
         });
 
@@ -77,11 +79,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getChoiceDateFilterUiModelLiveData().observe(this, new Observer<DateFilter>() {
+        mViewModel.getChoiceDateFilterUiModelLiveData().observe(this, new Observer<DateFilterType>() {
             @Override
-            public void onChanged(DateFilter dateFilter) {
-                mDateFilter = dateFilter;
-                alertDialogChoiceDateFilter(dateFilter);
+            public void onChanged(DateFilterType dateFilterType) {
+                mDateFilterType = dateFilterType;
+                alertDialogChoiceDateFilter(dateFilterType);
             }
         });
 
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         });
     }
 
-    private void configureRecyclerView(MainAdapter adapter) {
+    private void configureRecyclerView(MeetingListAdapter adapter) {
         RecyclerView recyclerView = findViewById(R.id.main_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -119,14 +121,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         startActivity(intent);
     }
 
-    private void alertDialogChoiceSort(final SortingType sortingType) {
+    private void alertDialogChoiceSort(final SortingFilterType sortingFilterType) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle(sortingType.getTitle());
+        myPopup.setTitle(sortingFilterType.getTitle());
 
-        myPopup.setSingleChoiceItems(sortingType.getNames(),
-                sortingType.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+        myPopup.setSingleChoiceItems(sortingFilterType.getNames(),
+                sortingFilterType.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -134,17 +136,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 }));
 
         // Setup "Valider" button
-        myPopup.setPositiveButton(sortingType.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(sortingFilterType.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(
-                        MainActivity.this.getApplicationContext(),
-                        sortingType.getToastChoiceSorting() + checkedItemObject,
+                        MeetingListActivity.this.getApplicationContext(),
+                        sortingFilterType.getToastChoiceSorting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
 
-                mViewModel.setSortingType((String) checkedItemObject, mSortingType);
+                mViewModel.setSortingType((String) checkedItemObject, mSortingFilterType);
             }
         }));
 
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(
-                        MainActivity.this.getApplicationContext(),
+                        MeetingListActivity.this.getApplicationContext(),
                         roomFilterType.getToastChoiceMeeting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
                 mViewModel.setRoomFilterType((String) checkedItemObject, mRoomFilterType);
@@ -184,14 +186,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    private void alertDialogChoiceDateFilter(final DateFilter dateFilter) {
+    private void alertDialogChoiceDateFilter(final DateFilterType dateFilterType) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle(dateFilter.getTitle());
-        myPopup.setMessage(dateFilter.getMessage());
+        myPopup.setTitle(dateFilterType.getTitle());
+        myPopup.setMessage(dateFilterType.getMessage());
 
-        final EditText input = new EditText(MainActivity.this);
+        final EditText input = new EditText(MeetingListActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -199,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.setView(input);
 
         // Setup validate button
-        myPopup.setPositiveButton(dateFilter.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(dateFilterType.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SpannableString contentText = new SpannableString(input.getText());
@@ -208,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 mViewModel.compareDateToFilter(dateToFilter);
 
                 Toast.makeText(
-                        MainActivity.this.getApplicationContext(),
+                        MeetingListActivity.this.getApplicationContext(),
                         mToastTextForChoiceDateFilter + dateToFilter,
                         Toast.LENGTH_LONG).show();
             }

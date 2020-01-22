@@ -14,7 +14,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.example.mareu.AndroidTestUtil;
 import com.example.mareu.R;
-import com.example.mareu.view.MainActivity;
+import com.example.mareu.view.activity.MeetingListActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -49,14 +49,14 @@ import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivitySortingAndFilterTest {
+public class MeetingListActivitySortingAndFilterTest {
 
     private static final String PARTICIPANT1 = "participant1@google.fr";
     private static final String PARTICIPANT2 = "participant2@google.fr";
     private static final String PARTICIPANT3 = "participant3@google.fr";
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MeetingListActivity> mActivityTestRule = new ActivityTestRule<>(MeetingListActivity.class);
 
     // 1
     @Test

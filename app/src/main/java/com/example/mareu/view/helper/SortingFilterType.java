@@ -1,6 +1,6 @@
 package com.example.mareu.view.helper;
 
-public class SortingType {
+public class SortingFilterType {
 
     private String title;
     private String positiveButtonText;
@@ -8,7 +8,7 @@ public class SortingType {
     private String[] names;
     private int selectedIndex;
 
-    public SortingType() {
+    public SortingFilterType() {
     }
 
     public String getTitle() {

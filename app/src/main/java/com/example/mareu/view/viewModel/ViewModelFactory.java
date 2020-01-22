@@ -1,13 +1,11 @@
-package com.example.mareu.view;
+package com.example.mareu.view.viewModel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mareu.MainApplication;
-import com.example.mareu.utility.MeetingManager;
-import com.example.mareu.view.viewModel.CreateMeetingViewModel;
-import com.example.mareu.view.viewModel.MainViewModel;
+import com.example.mareu.manager.MeetingManager;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 

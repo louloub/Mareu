@@ -1,4 +1,4 @@
-package com.example.mareu.utility;
+package com.example.mareu.view.alertDialog;
 
 import android.app.TimePickerDialog;
 import android.content.Context;

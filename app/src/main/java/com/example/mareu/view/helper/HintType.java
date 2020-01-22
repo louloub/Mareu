@@ -1,11 +1,11 @@
 package com.example.mareu.view.helper;
 
-public class Hint {
+public class HintType {
 
     private final String textHint;
     private final String sourceHint;
 
-    public Hint(String textHint, String sourceHint) {
+    public HintType(String textHint, String sourceHint) {
         this.textHint = textHint;
         this.sourceHint = sourceHint;
     }

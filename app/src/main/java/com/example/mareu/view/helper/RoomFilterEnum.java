@@ -1,6 +1,6 @@
-package com.example.mareu.view;
+package com.example.mareu.view.helper;
 
-public enum RoomFilterType {
+public enum RoomFilterEnum {
     ALL_ROOM,
     ROOM_1,
     ROOM_2,

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.CreateMeetingActivity">
+    tools:context=".view.activity.CreateMeetingActivity">
 
     <!-- START APPBAR -->
     <com.google.android.material.appbar.AppBarLayout
@@ -42,7 +42,7 @@
             android:id="@+id/create_meeting_tiet_subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/subject"
+            android:hintType="@string/subject"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
     <!-- END SUBJECT -->
@@ -84,7 +84,7 @@
                     android:id="@+id/create_meeting_teit_listOfParticipant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/participant"
+                    android:hintType="@string/participant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/chipGroup"
@@ -103,7 +103,7 @@
         android:layout_width="@dimen/smallest"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/small"
-        android:hint="@string/room"
+        android:hintType="@string/room"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="@id/create_meeting_spi_room"
         app:layout_constraintEnd_toStartOf="@+id/create_meeting_spi_room"

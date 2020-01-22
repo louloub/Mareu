@@ -1,4 +1,4 @@
-package com.example.mareu.view;
+package com.example.mareu.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +16,11 @@ import com.example.mareu.view.model.MeetingUiModel;
 
 import java.util.Locale;
 
-public class MainAdapter extends ListAdapter<MeetingUiModel, MainAdapter.MainViewHolder> {
+public class MeetingListAdapter extends ListAdapter<MeetingUiModel, MeetingListAdapter.MainViewHolder> {
 
     private final CallbackListener callback;
 
-    public MainAdapter(CallbackListener callback) {
+    public MeetingListAdapter(CallbackListener callback) {
         super(new DiffCallback());
         this.callback = callback;
     }

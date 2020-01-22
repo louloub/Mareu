@@ -4,20 +4,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.mareu.AndroidTestUtil;
 import com.example.mareu.R;
-import com.example.mareu.view.MainActivity;
+import com.example.mareu.view.activity.MeetingListActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.AllOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,60 +50,47 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTestDeleteMeeting {
+public class MeetingListActivityTestAddMeeting {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
     private static final String PARTICIPANT1 = "participant1@google.fr";
     private static final String PARTICIPANT2 = "participant2@google.fr";
     private static final String PARTICIPANT3 = "participant3@google.fr";
 
+    @Rule
+    public ActivityTestRule<MeetingListActivity> mActivityTestRule = new ActivityTestRule<>(MeetingListActivity.class);
+
     /**
-     * Delete One Meeting
+     * Add One Meeting test
      */
     @Test
-    public void deleteOneMeetingInListOfOneMeeting() throws InterruptedException {
-        // Add one meeting
-        createMeeting("Sujet 1",1,2020,2,30,10,10);
+    public void addOneMeeting() {
+        // Add Meeting
+        createMeeting("Subject 1",1,2020,2,30,10,10);
 
-        // Delete meeting
-        onView(withId(R.id.main_rv)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0,
-                        AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
-                )
-        );
-
-        // Check if meeting list is empty
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(0));
+        // Check if meeting is on Recycler View
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(4));
     }
 
     /**
-     * Delete One Meeting in list
+     * Add Three Different Meeting test
      */
     @Test
-    public void deleteOneMeetingInListOfThreeMeeting() throws InterruptedException {
+    public void addThreeDifferentMeeting() {
         // Add Meeting 1
-        createMeeting("Sujet 1",1,2020,2,30,10,10);
-
-        // Add Meeting 2
         createMeeting("Sujet 2",2,2020,5,11,12,20);
 
-        // Add Meeting 3
+        // Add Meeting 2
         createMeeting("Sujet 3",3,2020,3,12,15,30);
 
-        // Delete meeting
-        onView(withId(R.id.main_rv)).perform(
-            RecyclerViewActions.actionOnItemAtPosition(0,
-                        AndroidTestUtil.MyRecyclerViewFinder.clickChildViewWithId(R.id.meeting_iv_delete_meeting)
-                )
-        );
+        // Add Meeting 3
+        createMeeting("Sujet 4",1,2020,2,30,10,10);
 
-        // Check if meeting list contain two meeting
-        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(2));
+        // Check if meeting is on Recycler View
+        onView(withId(R.id.main_rv)).check(new AndroidTestUtil.RecyclerViewItemCountAssertion(3));
     }
 
     /**
-     * Create Meeting with Settings
+     * Create Meeting with settings
      */
     private void createMeeting(String subject, int room, int year, int month, int day, int hour, int minutes){
         // Click on FAB button for create new Meeting 1
@@ -223,6 +213,26 @@ public class MainActivityTestDeleteMeeting {
                 ViewParent parent = view.getParent();
                 return parent instanceof ViewGroup && parentMatcher.matches(parent)
                         && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
+
+    public static ViewAction setTextInTextView(final String value){
+        return new ViewAction() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public Matcher<View> getConstraints() {
+                return AllOf.allOf(isDisplayed(), isAssignableFrom(TextView.class));
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                ((TextView) view).setText(value);
+            }
+
+            @Override
+            public String getDescription() {
+                return "replace text";
             }
         };
     }
