@@ -74,7 +74,7 @@ public class MainViewModel extends ViewModel {
     private final SingleLiveEvent<SortingFilterType> mSortingTypeLiveData = new SingleLiveEvent<>();
     private final SingleLiveEvent<SortingFilterType> mSortingTypeUiModelLiveData = new SingleLiveEvent<>();
     private final MutableLiveData<RoomFilterEnum> mRoomFilterTypeLiveData = new MutableLiveData<>();
-    private final SingleLiveEvent<RoomFilterEnum> mRoomFilterTypeUiModelLiveData = new SingleLiveEvent<>();
+    private final SingleLiveEvent<RoomFilterType> mRoomFilterTypeUiModelLiveData = new SingleLiveEvent<>();
     private final MutableLiveData<Integer> mSelectedFilterRoomLiveData = new MutableLiveData<>();
     private final SingleLiveEvent<DateFilterType> mChoiceDateFilterUiModelData = new SingleLiveEvent<>();
     private final SingleLiveEvent<String> mToastTextForChoiceDateFilterLiveData = new SingleLiveEvent<>();
@@ -96,7 +96,7 @@ public class MainViewModel extends ViewModel {
         return mSortingTypeUiModelLiveData;
     }
 
-    public LiveData<RoomFilterEnum> getRoomFilterTypeUiModelLiveData() {
+    public LiveData<RoomFilterType> getRoomFilterTypeUiModelLiveData() {
         return mRoomFilterTypeUiModelLiveData;
     }
 
@@ -428,61 +428,61 @@ public class MainViewModel extends ViewModel {
     }
 
     // ROOM FILTER
-    public void setRoomFilterType(String filterChoice, RoomFilterType roomFilterEnum) {
+    public void setRoomFilterType(String filterChoice, RoomFilterType roomFilterType) {
         if (Objects.equals(mResources.getString(R.string.all_room_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ALL_ROOM);
             mSelectedFilterRoomIndex = 0;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_1_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_1);
             mSelectedFilterRoomIndex = 1;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_2_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_2);
             mSelectedFilterRoomIndex = 2;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_3_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_3);
             mSelectedFilterRoomIndex = 3;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_4_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_4);
             mSelectedFilterRoomIndex = 4;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_5_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_5);
             mSelectedFilterRoomIndex = 5;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_6_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_6);
             mSelectedFilterRoomIndex = 6;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_7_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_7);
             mSelectedFilterRoomIndex = 7;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_8_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_8);
             mSelectedFilterRoomIndex = 8;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_9_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_9);
             mSelectedFilterRoomIndex = 9;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         } else if (Objects.equals(mResources.getString(R.string.room_10_string), filterChoice)) {
             mRoomFilterTypeLiveData.setValue(ROOM_10);
             mSelectedFilterRoomIndex = 10;
-            setValueRoomFilterUiModel(roomFilterEnum);
+            setValueRoomFilterUiModel(roomFilterType);
         }
     }
 
     private void setRoomFilterTypeUiModel() {
-        RoomFilterEnum mRoomFilterEnum = new RoomFilterEnum();
+        RoomFilterType mRoomFilterType = new RoomFilterType();
         String[] listOfItemFilterRoomMenu = new String[11];
 
-        mRoomFilterEnum.setTitle(mResources.getString(R.string.choose_room_to_filter));
-        mRoomFilterEnum.setPositiveButtonText(mResources.getString(R.string.validate_choice));
-        mRoomFilterEnum.setToastChoiceMeeting(mResources.getString(R.string.your_filter_room_choice_is));
+        mRoomFilterType.setTitle(mResources.getString(R.string.choose_room_to_filter));
+        mRoomFilterType.setPositiveButtonText(mResources.getString(R.string.validate_choice));
+        mRoomFilterType.setToastChoiceMeeting(mResources.getString(R.string.your_filter_room_choice_is));
 
         listOfItemFilterRoomMenu[0] = mResources.getString(R.string.all_room_string);
         listOfItemFilterRoomMenu[1] = mResources.getString(R.string.room_1_string);
@@ -496,14 +496,14 @@ public class MainViewModel extends ViewModel {
         listOfItemFilterRoomMenu[9] = mResources.getString(R.string.room_9_string);
         listOfItemFilterRoomMenu[10] = mResources.getString(R.string.room_10_string);
 
-        mRoomFilterEnum.setNames(listOfItemFilterRoomMenu);
-        mRoomFilterEnum.setSelectedIndex(mSelectedFilterRoomIndex);
-        mRoomFilterTypeUiModelLiveData.setValue(mRoomFilterEnum);
+        mRoomFilterType.setNames(listOfItemFilterRoomMenu);
+        mRoomFilterType.setSelectedIndex(mSelectedFilterRoomIndex);
+        mRoomFilterTypeUiModelLiveData.setValue(mRoomFilterType);
     }
 
-    private void setValueRoomFilterUiModel(RoomFilterEnum roomFilterEnum) {
+    private void setValueRoomFilterUiModel(RoomFilterType roomFilterType) {
         mSelectedFilterRoomLiveData.setValue(mSelectedFilterRoomIndex);
-        roomFilterEnum.setSelectedIndex(mSelectedFilterRoomIndex);
+        roomFilterType.setSelectedIndex(mSelectedFilterRoomIndex);
     }
 
     public void displayFilterRoomPopup() {

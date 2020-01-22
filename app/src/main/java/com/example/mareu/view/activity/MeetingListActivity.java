@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
 import com.example.mareu.view.adapter.MeetingListAdapter;
+import com.example.mareu.view.helper.RoomFilterEnum;
 import com.example.mareu.view.viewModel.ViewModelFactory;
 import com.example.mareu.view.helper.DateFilterType;
 import com.example.mareu.view.model.MeetingUiModel;
