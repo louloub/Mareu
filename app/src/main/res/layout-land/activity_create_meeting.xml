@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.CreateMeetingActivity">
+
+    <!-- START APPBAR -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout_abl_app_bar_layout"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_tb_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark" />
+    </com.google.android.material.appbar.AppBarLayout>
+    <!-- END APPBAR -->
+
+    <!-- START SUBJECT -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/create_meeting_til_subject"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_abl_app_bar_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/create_meeting_tiet_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/subject"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- END SUBJECT -->
+
+    <!-- START PARTICIPANT -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/create_meeting_til_list_of_participant"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_subject">
+
+        <HorizontalScrollView
+            android:id="@+id/horizontal_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!--ChipGroup to hold multiple CreateChips and help in removal by getting child elements-->
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/create_meeting_teit_listOfParticipant"
+                    app:layout_constraintEnd_toStartOf="@+id/create_meeting_teit_listOfParticipant"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/create_meeting_teit_listOfParticipant" />
+
+                <!--Entering chip generation text and using commas to detect when a new chip is to be generated-->
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/create_meeting_teit_listOfParticipant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/participant"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chipGroup"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </HorizontalScrollView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- END PARTICIPANT -->
+
+    <!-- START TEXT ROOM NUMBER -->
+    <TextView
+        android:id="@+id/create_meeting_tv_choose_room"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:hint="@string/room"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="@id/create_meeting_spi_room"
+        app:layout_constraintEnd_toStartOf="@+id/create_meeting_spi_room"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_til_list_of_participant" />
+    <!-- END TEXT ROOM NUMBER -->
+
+    <!-- START ROOM NUMBER -->
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/create_meeting_spi_room"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small"
+        android:layout_marginTop="@dimen/small"
+        app:layout_constraintEnd_toEndOf="@+id/create_meeting_til_list_of_participant"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/create_meeting_tv_choose_room"
+        app:layout_constraintTop_toTopOf="@+id/create_meeting_tv_choose_room" />
+    <!-- END ROOM NUMBER -->
+
+    <!-- START HOUR BUTTON -->
+    <Button
+        android:id="@+id/create_meeting_bt_hour"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:text="@string/hour"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/create_meeting_tv_edit_hour"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_bt_date" />
+    <!-- END HOUR BUTTON -->
+
+    <!-- START HOUR TEXTVIEW -->
+    <TextView
+        android:id="@+id/create_meeting_tv_edit_hour"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:ems="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/create_meeting_bt_hour"
+        app:layout_constraintTop_toTopOf="@+id/create_meeting_bt_hour" />
+    <!-- END HOUR TEXTVIEW -->
+
+    <!-- START BUTTON DATE -->
+    <Button
+        android:id="@+id/create_meeting_bt_date"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:text="@string/date"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/create_meeting_tv_edit_date"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_tv_choose_room" />
+    <!-- END BUTTON DATE -->
+
+    <!-- START DATE TEXTVIEW -->
+    <TextView
+        android:id="@+id/create_meeting_tv_edit_date"
+        android:layout_width="@dimen/smallest"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small"
+        android:ems="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/create_meeting_bt_date"
+        app:layout_constraintTop_toTopOf="@+id/create_meeting_bt_date" />
+
+    <!-- START BUTTON VALID MEETING -->
+
+    <Button
+        android:id="@+id/create_meeting_bt_valid_meeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="@string/validate_my_meeting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_meeting_bt_hour" />
+    <!-- END BUTTON VALID MEETING -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

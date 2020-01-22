@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    android:layout_margin="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/meeting_cl_constraint_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- LOGO OF MEETING -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:padding="16dp"
+                    android:id="@+id/meeting_iv_logo_of_meeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_account_circle_blue_48dp">
+                </androidx.appcompat.widget.AppCompatImageView>
+
+                <!-- ALL INFORMATION IN FIRST LIGN -->
+                <TextView
+                    android:id="@+id/meeting_tv_information"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:padding="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
+                    app:layout_constraintEnd_toStartOf="@id/meeting_iv_delete_meeting"
+                    app:layout_constraintTop_toTopOf="@id/meeting_cl_constraint_layout"
+                    android:text="@string/subjet_hour_date_room">
+                </TextView>
+
+                <!-- PARTICIPANT -->
+                <TextView
+                    android:id="@+id/meeting_tv_participant_meeting"
+                    android:padding="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/meeting_iv_logo_of_meeting"
+                    app:layout_constraintEnd_toStartOf="@id/meeting_iv_delete_meeting"
+                    app:layout_constraintTop_toBottomOf="@id/meeting_tv_information"
+                    android:text="@string/participants"/>
+
+                <!-- BUTTON DELETE -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:padding="16dp"
+                    android:id="@+id/meeting_iv_delete_meeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete_blue_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                </androidx.appcompat.widget.AppCompatImageView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
