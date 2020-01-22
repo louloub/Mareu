@@ -1,14 +1,14 @@
-package com.example.mareu.view.ui.model;
+package com.example.mareu.view.helper;
 
-public class SortingTypeUiModel {
+public class RoomFilterType {
 
     private String title;
     private String positiveButtonText;
-    private String toastChoiceSorting;
+    private String toastChoiceMeeting;
     private String[] names;
     private int selectedIndex;
 
-    public SortingTypeUiModel() {
+    public RoomFilterType() {
     }
 
     public String getTitle() {
@@ -27,12 +27,16 @@ public class SortingTypeUiModel {
         this.positiveButtonText = positiveButtonText;
     }
 
-    public String getToastChoiceSorting() {
-        return toastChoiceSorting;
+    public String getToastChoiceMeeting() {
+        return toastChoiceMeeting;
     }
 
-    public void setToastChoiceSorting(String toastChoiceSorting) {
-        this.toastChoiceSorting = toastChoiceSorting;
+    public void setToastChoiceMeeting(String toastChoiceMeeting) {
+        this.toastChoiceMeeting = toastChoiceMeeting;
+    }
+
+    public void setNames(String[] names) {
+        this.names = names;
     }
 
     public int getSelectedIndex() {
@@ -43,13 +47,7 @@ public class SortingTypeUiModel {
         this.selectedIndex = selectedIndex;
     }
 
-    public String[] getNames() {
+    public String[] getListOFilterType() {
         return names;
     }
-
-    public void setNames(String[] names) {
-        this.names = names;
-    }
 }
-
-

@@ -1,4 +1,4 @@
-package com.example.mareu.view.ui;
+package com.example.mareu.view;
 
 enum SortingType {
     ROOM_ALPHABETICAL_DSC,

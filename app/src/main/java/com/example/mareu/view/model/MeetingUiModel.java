@@ -1,4 +1,4 @@
-package com.example.mareu.view.ui.model;
+package com.example.mareu.view.model;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -15,6 +15,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.example.mareu.AndroidTestUtil;
 import com.example.mareu.R;
+import com.example.mareu.view.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

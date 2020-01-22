@@ -1,4 +1,4 @@
-package com.example.mareu.view.ui;
+package com.example.mareu.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,12 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
-import com.example.mareu.view.ViewModelFactory;
-import com.example.mareu.view.ui.adapter.MainAdapter;
-import com.example.mareu.view.ui.model.DateFilterUiModel;
-import com.example.mareu.view.ui.model.MeetingUiModel;
-import com.example.mareu.view.ui.model.RoomFilterTypeUiModel;
-import com.example.mareu.view.ui.model.SortingTypeUiModel;
+import com.example.mareu.view.helper.DateFilter;
+import com.example.mareu.view.model.MeetingUiModel;
+import com.example.mareu.view.helper.RoomFilterType;
+import com.example.mareu.view.helper.SortingType;
+import com.example.mareu.view.viewModel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
@@ -34,9 +33,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.CallbackListener {
 
-    private SortingTypeUiModel mSortingTypeUiModel;
-    private RoomFilterTypeUiModel mRoomFilterTypeUiModel;
-    private DateFilterUiModel mDateFilterUiModel;
+    private SortingType mSortingType;
+    private RoomFilterType mRoomFilterType;
+    private DateFilter mDateFilter;
     private MainViewModel mViewModel;
     private String mToastTextForChoiceDateFilter;
 
@@ -62,27 +61,27 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
             }
         });
 
-        mViewModel.getSortingTypeUiModelLiveData().observe(this, new Observer<SortingTypeUiModel>() {
+        mViewModel.getSortingTypeUiModelLiveData().observe(this, new Observer<SortingType>() {
             @Override
-            public void onChanged(SortingTypeUiModel sortingTypeUiModel) {
-                mSortingTypeUiModel = sortingTypeUiModel;
-                alertDialogChoiceSort(sortingTypeUiModel);
+            public void onChanged(SortingType sortingType) {
+                mSortingType = sortingType;
+                alertDialogChoiceSort(sortingType);
             }
         });
 
-        mViewModel.getRoomFilterTypeUiModelLiveData().observe(this, new Observer<RoomFilterTypeUiModel>() {
+        mViewModel.getRoomFilterTypeUiModelLiveData().observe(this, new Observer<RoomFilterType>() {
             @Override
-            public void onChanged(RoomFilterTypeUiModel roomFilterTypeUiModel) {
-                mRoomFilterTypeUiModel = roomFilterTypeUiModel;
-                alertDialogChoiceRoomFilter(roomFilterTypeUiModel);
+            public void onChanged(RoomFilterType roomFilterType) {
+                mRoomFilterType = roomFilterType;
+                alertDialogChoiceRoomFilter(roomFilterType);
             }
         });
 
-        mViewModel.getChoiceDateFilterUiModelLiveData().observe(this, new Observer<DateFilterUiModel>() {
+        mViewModel.getChoiceDateFilterUiModelLiveData().observe(this, new Observer<DateFilter>() {
             @Override
-            public void onChanged(DateFilterUiModel dateFilterUiModel) {
-                mDateFilterUiModel = dateFilterUiModel;
-                alertDialogChoiceDateFilter(dateFilterUiModel);
+            public void onChanged(DateFilter dateFilter) {
+                mDateFilter = dateFilter;
+                alertDialogChoiceDateFilter(dateFilter);
             }
         });
 
@@ -120,14 +119,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         startActivity(intent);
     }
 
-    private void alertDialogChoiceSort(final SortingTypeUiModel sortingTypeUiModel) {
+    private void alertDialogChoiceSort(final SortingType sortingType) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle(sortingTypeUiModel.getTitle());
+        myPopup.setTitle(sortingType.getTitle());
 
-        myPopup.setSingleChoiceItems(sortingTypeUiModel.getNames(),
-                sortingTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+        myPopup.setSingleChoiceItems(sortingType.getNames(),
+                sortingType.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -135,17 +134,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 }));
 
         // Setup "Valider" button
-        myPopup.setPositiveButton(sortingTypeUiModel.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(sortingType.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(
                         MainActivity.this.getApplicationContext(),
-                        sortingTypeUiModel.getToastChoiceSorting() + checkedItemObject,
+                        sortingType.getToastChoiceSorting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
 
-                mViewModel.setSortingType((String) checkedItemObject, mSortingTypeUiModel);
+                mViewModel.setSortingType((String) checkedItemObject, mSortingType);
             }
         }));
 
@@ -153,14 +152,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    private void alertDialogChoiceRoomFilter(final RoomFilterTypeUiModel roomFilterTypeUiModel) {
+    private void alertDialogChoiceRoomFilter(final RoomFilterType roomFilterType) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle(roomFilterTypeUiModel.getTitle());
+        myPopup.setTitle(roomFilterType.getTitle());
 
-        myPopup.setSingleChoiceItems(roomFilterTypeUiModel.getListOFilterType(),
-                roomFilterTypeUiModel.getSelectedIndex(), (new DialogInterface.OnClickListener() {
+        myPopup.setSingleChoiceItems(roomFilterType.getListOFilterType(),
+                roomFilterType.getSelectedIndex(), (new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -168,16 +167,16 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
                 }));
 
         // Setup validate button
-        myPopup.setPositiveButton(roomFilterTypeUiModel.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(roomFilterType.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ListView lw = ((AlertDialog) dialog).getListView();
                 Object checkedItemObject = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                 Toast.makeText(
                         MainActivity.this.getApplicationContext(),
-                        roomFilterTypeUiModel.getToastChoiceMeeting() + checkedItemObject,
+                        roomFilterType.getToastChoiceMeeting() + checkedItemObject,
                         Toast.LENGTH_LONG).show();
-                mViewModel.setRoomFilterType((String) checkedItemObject, mRoomFilterTypeUiModel);
+                mViewModel.setRoomFilterType((String) checkedItemObject, mRoomFilterType);
             }
         }));
 
@@ -185,12 +184,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.show();
     }
 
-    private void alertDialogChoiceDateFilter(final DateFilterUiModel dateFilterUiModel) {
+    private void alertDialogChoiceDateFilter(final DateFilter dateFilter) {
 
         // Setup Alert builder
         final AlertDialog.Builder myPopup = new AlertDialog.Builder(this);
-        myPopup.setTitle(dateFilterUiModel.getTitle());
-        myPopup.setMessage(dateFilterUiModel.getMessage());
+        myPopup.setTitle(dateFilter.getTitle());
+        myPopup.setMessage(dateFilter.getMessage());
 
         final EditText input = new EditText(MainActivity.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.Callb
         myPopup.setView(input);
 
         // Setup validate button
-        myPopup.setPositiveButton(dateFilterUiModel.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
+        myPopup.setPositiveButton(dateFilter.getPositiveButtonText(), (new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 SpannableString contentText = new SpannableString(input.getText());

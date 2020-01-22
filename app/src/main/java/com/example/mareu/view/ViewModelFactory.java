@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mareu.MainApplication;
 import com.example.mareu.utility.MeetingManager;
-import com.example.mareu.view.ui.CreateMeetingViewModel;
-import com.example.mareu.view.ui.MainViewModel;
+import com.example.mareu.view.viewModel.CreateMeetingViewModel;
+import com.example.mareu.view.viewModel.MainViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 

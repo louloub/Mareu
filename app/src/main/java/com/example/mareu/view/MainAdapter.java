@@ -1,4 +1,4 @@
-package com.example.mareu.view.ui.adapter;
+package com.example.mareu.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
-import com.example.mareu.view.ui.model.MeetingUiModel;
+import com.example.mareu.view.model.MeetingUiModel;
 
 import java.util.Locale;
 

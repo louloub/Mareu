@@ -1,4 +1,4 @@
-package com.example.mareu.view.ui;
+package com.example.mareu.view.viewModel;
 
 import android.widget.AdapterView;
 
@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mareu.utility.MeetingManager;
-import com.example.mareu.view.ui.model.HintUiModel;
+import com.example.mareu.view.helper.Hint;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -18,7 +18,7 @@ import java.util.Locale;
 public class CreateMeetingViewModel extends ViewModel {
 
     private final MutableLiveData<ViewAction> mViewActionLiveData = new MutableLiveData<>();
-    private final MutableLiveData<HintUiModel> mHintUiModelLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Hint> mHintUiModelLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mMonthSelectedInIntData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mYearsSelectedInIntLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> mDaysSelectedInIntLiveData = new MutableLiveData<>();
@@ -32,7 +32,7 @@ public class CreateMeetingViewModel extends ViewModel {
         return mViewActionLiveData;
     }
 
-    LiveData<HintUiModel> getHintUiModel() {
+    LiveData<Hint> getHintUiModel() {
         return mHintUiModelLiveData;
     }
 
@@ -72,35 +72,35 @@ public class CreateMeetingViewModel extends ViewModel {
             List<String> listOfEmailOfParticipant) {
         String hintText;
 
-        HintUiModel hintUiModel;
+        Hint hint;
 
         if (subject == null || subject.isEmpty()) {
             hintText = "           : Merci d'entrer le sujet de la réunion";
-            hintUiModel = new HintUiModel(hintText, "Subject");
-            mHintUiModelLiveData.setValue(hintUiModel);
+            hint = new Hint(hintText, "Subject");
+            mHintUiModelLiveData.setValue(hint);
         }
 
         if (listOfEmailOfParticipant.size() == 0) {
             hintText = "Merci d'entrer le(s) participant(s)";
-            hintUiModel = new HintUiModel(hintText, "Participant");
-            mHintUiModelLiveData.setValue(hintUiModel);
+            hint = new Hint(hintText, "Participant");
+            mHintUiModelLiveData.setValue(hint);
         } else {
             listOfEmailOfParticipant.size();
             hintText = "";
-            hintUiModel = new HintUiModel(hintText, "Participant");
-            mHintUiModelLiveData.setValue(hintUiModel);
+            hint = new Hint(hintText, "Participant");
+            mHintUiModelLiveData.setValue(hint);
         }
 
         if (mChosenDateLiveData.getValue() == null) {
             hintText = "Merci de sélectionner une date";
-            hintUiModel = new HintUiModel(hintText, "Date");
-            mHintUiModelLiveData.setValue(hintUiModel);
+            hint = new Hint(hintText, "Date");
+            mHintUiModelLiveData.setValue(hint);
         }
 
         if (hour == null) {
             hintText = "Merci de sélectionner une heure";
-            hintUiModel = new HintUiModel(hintText, "Hour");
-            mHintUiModelLiveData.setValue(hintUiModel);
+            hint = new Hint(hintText, "Hour");
+            mHintUiModelLiveData.setValue(hint);
         }
 
         if ((subject != null && !subject.isEmpty())
@@ -113,7 +113,7 @@ public class CreateMeetingViewModel extends ViewModel {
     }
 
     void setHintForParticipants(String mParticipantHint) {
-        mHintUiModelLiveData.setValue(new HintUiModel(mParticipantHint, "Participant"));
+        mHintUiModelLiveData.setValue(new Hint(mParticipantHint, "Participant"));
     }
 
     void setRoomSelected(AdapterView<?> adapterView, int position) {

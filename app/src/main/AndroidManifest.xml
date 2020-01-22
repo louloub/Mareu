@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name="com.example.mareu.view.ui.CreateMeetingActivity" />
+        <activity android:name="com.example.mareu.view.CreateMeetingActivity" />
 
         <activity
-            android:name="com.example.mareu.view.ui.MainActivity"
+            android:name="com.example.mareu.view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

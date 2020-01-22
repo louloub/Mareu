@@ -1,6 +1,6 @@
-package com.example.mareu.view.ui.model;
+package com.example.mareu.view.helper;
 
-public class DateFilterUiModel {
+public class DateFilter {
 
     private String title;
     private String message;
@@ -9,7 +9,7 @@ public class DateFilterUiModel {
     private String toastForInvalideDate;
     private String toastForValideDate;
 
-    public DateFilterUiModel() { }
+    public DateFilter() { }
 
     public String getTitle() {
         return title;

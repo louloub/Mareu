@@ -1,11 +1,11 @@
-package com.example.mareu.view.ui.model;
+package com.example.mareu.view.helper;
 
-public class HintUiModel {
+public class Hint {
 
     private final String textHint;
     private final String sourceHint;
 
-    public HintUiModel(String textHint, String sourceHint) {
+    public Hint(String textHint, String sourceHint) {
         this.textHint = textHint;
         this.sourceHint = sourceHint;
     }

@@ -1,4 +1,4 @@
-package com.example.mareu.view.ui;
+package com.example.mareu.view;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -20,8 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mareu.R;
 import com.example.mareu.utility.RangeTimePickerDialog;
-import com.example.mareu.view.ViewModelFactory;
-import com.example.mareu.view.ui.model.HintUiModel;
+import com.example.mareu.view.helper.Hint;
+import com.example.mareu.view.viewModel.CreateMeetingViewModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static com.example.mareu.view.ui.CreateMeetingViewModel.ViewAction.OK;
+import static com.example.mareu.view.viewModel.CreateMeetingViewModel.ViewAction.OK;
 
 public class CreateMeetingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -70,16 +70,16 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
         mCreateMeetingViewModel.getViewActionLiveData().observe(this, new Observer<CreateMeetingViewModel.ViewAction>() {
             @Override
             public void onChanged(CreateMeetingViewModel.ViewAction viewAction) {
-                if (viewAction.equals(OK)) {
+                if (viewAction.equals(ViewAction.OK)) {
                     finish();
                 }
             }
         });
 
-        mCreateMeetingViewModel.getHintUiModel().observe(this, new Observer<HintUiModel>() {
+        mCreateMeetingViewModel.getHintUiModel().observe(this, new Observer<Hint>() {
             @Override
-            public void onChanged(HintUiModel hintUiModel) {
-                setHint(hintUiModel, mMeetingSubjectEditText, mListOfParticipantEditText, mChosenDateTextView, mChosenHourTextView);
+            public void onChanged(Hint hint) {
+                setHint(hint, mMeetingSubjectEditText, mListOfParticipantEditText, mChosenDateTextView, mChosenHourTextView);
             }
         });
 
@@ -134,13 +134,13 @@ public class CreateMeetingActivity extends AppCompatActivity implements AdapterV
 
     }
 
-    private void setHint(HintUiModel hintUiModel,
+    private void setHint(Hint hint,
                          TextInputEditText subjectOfMeeting,
                          TextInputEditText listOfParticipant,
                          TextView date,
                          TextView hour) {
-        String hintSource = hintUiModel.getSourceHint();
-        String hintText = hintUiModel.getTextHint();
+        String hintSource = hint.getSourceHint();
+        String hintText = hint.getTextHint();
 
         switch (hintSource) {
             case "Subject":

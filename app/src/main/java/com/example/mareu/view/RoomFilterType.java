@@ -1,4 +1,4 @@
-package com.example.mareu.view.ui;
+package com.example.mareu.view;
 
 public enum RoomFilterType {
     ALL_ROOM,
