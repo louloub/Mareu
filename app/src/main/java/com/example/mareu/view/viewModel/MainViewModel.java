@@ -40,6 +40,11 @@ import static com.example.mareu.view.helper.RoomFilterEnum.ROOM_7;
 import static com.example.mareu.view.helper.RoomFilterEnum.ROOM_8;
 import static com.example.mareu.view.helper.RoomFilterEnum.ROOM_9;
 
+import static com.example.mareu.view.helper.SortingFilterEnum.DATE_ASC;
+import static com.example.mareu.view.helper.SortingFilterEnum.DATE_DSC;
+import static com.example.mareu.view.helper.SortingFilterEnum.ROOM_ALPHABETICAL_ASC;
+import static com.example.mareu.view.helper.SortingFilterEnum.ROOM_ALPHABETICAL_DSC;
+
 public class MainViewModel extends ViewModel {
 
     private static final Comparator<Meeting> ROOM_COMPARATOR_MEETING_ASC = new Comparator<Meeting>() {
