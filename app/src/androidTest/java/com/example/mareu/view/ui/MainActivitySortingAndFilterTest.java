@@ -418,8 +418,6 @@ public class MainActivitySortingAndFilterTest {
 
     }
 
-
-
     private void createMeeting(String subject, int room, int year, int month, int day, int hour, int minutes){
         // Click on FAB button for create new Meeting 1
         ViewInteraction floatingActionButton = onView(
